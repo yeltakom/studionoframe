@@ -16,6 +16,14 @@ npm run build    # production build to dist/
 npm run preview  # preview the production build
 ```
 
+## Admin panel (CMS)
+
+Content can be edited in the browser via [Sveltia CMS](https://github.com/sveltia/sveltia-cms)
+at https://yeltakom.github.io/studionoframe/admin/. Sign in with **Sign In with
+Token** using a GitHub personal access token that has read/write access to this
+repo's contents (the login dialog links to the token page with scopes
+pre-selected). Saving in the CMS commits to `main`, which triggers a deploy.
+
 ## Adding a project
 
 Create a markdown file in `src/content/projects/` — the filename becomes the

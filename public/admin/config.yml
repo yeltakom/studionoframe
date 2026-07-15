@@ -1,0 +1,30 @@
+backend:
+  name: github
+  repo: yeltakom/studionoframe
+  branch: main
+
+media_folder: public/images
+public_folder: /images
+
+collections:
+  - name: projects
+    label: Projects
+    label_singular: Project
+    folder: src/content/projects
+    extension: md
+    format: frontmatter
+    create: true
+    slug: '{{slug}}'
+    sortable_fields: [year, title]
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Year, name: year, widget: number, value_type: int }
+      - { label: Category, name: category, widget: string }
+      - { label: Cover, name: cover, widget: image }
+      - label: Images
+        name: images
+        widget: list
+        required: false
+        field: { label: Image, name: image, widget: image }
+      - { label: Description, name: description, widget: text }
+      - { label: Body, name: body, widget: markdown, required: false }
