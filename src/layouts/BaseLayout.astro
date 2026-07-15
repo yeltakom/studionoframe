@@ -1,0 +1,41 @@
+---
+import '../styles/global.css';
+
+interface Props {
+  title?: string;
+  description?: string;
+}
+
+const { title, description = 'Studio No Frame — design studio' } = Astro.props;
+const pageTitle = title ? `${title} — Studio No Frame` : 'Studio No Frame';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+---
+
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="description" content={description} />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <title>{pageTitle}</title>
+  </head>
+  <body>
+    <header class="site-header">
+      <a class="site-title" href={`${base}/`}>Studio No Frame</a>
+      <nav class="site-nav">
+        <a href={`${base}/`}>Work</a>
+        <a href={`${base}/about`}>About</a>
+        <a href={`${base}/contact`}>Contact</a>
+      </nav>
+    </header>
+
+    <main class="site-main">
+      <slot />
+    </main>
+
+    <footer class="site-footer">
+      <p>&copy; {new Date().getFullYear()} Studio No Frame</p>
+    </footer>
+  </body>
+</html>

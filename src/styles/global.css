@@ -1,0 +1,89 @@
+/* Intentionally bare-bones: black & white, system font.
+   The real design phase replaces this file. */
+
+*,
+*::before,
+*::after {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  font-family: system-ui, sans-serif;
+  color: #000;
+  background: #fff;
+  line-height: 1.5;
+}
+
+a {
+  color: #000;
+}
+
+img {
+  max-width: 100%;
+  height: auto;
+  display: block;
+}
+
+.site-header,
+.site-main,
+.site-footer {
+  padding: 1rem;
+  max-width: 72rem;
+  margin: 0 auto;
+}
+
+.site-header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  flex-wrap: wrap;
+}
+
+.site-title {
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.site-nav {
+  display: flex;
+  gap: 1rem;
+}
+
+.project-grid {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: 1rem;
+  padding: 0;
+  margin: 0;
+  list-style: none;
+}
+
+.project-card a {
+  text-decoration: none;
+  display: block;
+}
+
+.project-card img {
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: #eee;
+}
+
+.project-meta {
+  font-size: 0.875rem;
+  color: #555;
+}
+
+.project-images {
+  display: grid;
+  gap: 1rem;
+  margin-top: 1rem;
+}
+
+.site-footer {
+  font-size: 0.875rem;
+  color: #555;
+}

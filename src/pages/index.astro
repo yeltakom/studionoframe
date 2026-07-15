@@ -1,0 +1,28 @@
+---
+import { getCollection } from 'astro:content';
+import BaseLayout from '../layouts/BaseLayout.astro';
+
+const projects = (await getCollection('projects')).sort(
+  (a, b) => b.data.year - a.data.year
+);
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+---
+
+<BaseLayout>
+  <h1>Work</h1>
+  <ul class="project-grid">
+    {
+      projects.map((project) => (
+        <li class="project-card">
+          <a href={`${base}/projects/${project.id}`}>
+            <img src={`${base}${project.data.cover}`} alt={project.data.title} />
+            <h2>{project.data.title}</h2>
+            <p class="project-meta">
+              {project.data.category} · {project.data.year}
+            </p>
+          </a>
+        </li>
+      ))
+    }
+  </ul>
+</BaseLayout>
