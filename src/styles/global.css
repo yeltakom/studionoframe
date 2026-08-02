@@ -1,5 +1,5 @@
-/* Intentionally bare-bones: black & white, system font.
-   The real design phase replaces this file. */
+/* Studio No Frame — design phase
+   Rainbow gradient backdrop, heavy black type (Persona-era look). */
 
 *,
 *::before,
@@ -7,16 +7,50 @@
   box-sizing: border-box;
 }
 
+:root {
+  --ink: #000;
+  --ink-soft: rgba(0, 0, 0, 0.55);
+  --gradient: linear-gradient(
+    180deg,
+    #ff47c8 0%,
+    #ff9a2e 28%,
+    #ffd91f 52%,
+    #63d95d 76%,
+    #1fc9e8 100%
+  );
+}
+
+html {
+  min-height: 100%;
+  background: var(--gradient) no-repeat fixed;
+  background-size: 100% 100vh;
+}
+
 body {
   margin: 0;
-  font-family: system-ui, sans-serif;
-  color: #000;
-  background: #fff;
+  min-height: 100vh;
+  font-family: 'Helvetica Neue', Helvetica, Arial, system-ui, sans-serif;
+  font-weight: 700;
+  font-size: clamp(1.05rem, 1.4vw + 0.6rem, 1.4rem);
   line-height: 1.5;
+  color: var(--ink);
+  display: flex;
+  flex-direction: column;
 }
 
 a {
-  color: #000;
+  color: var(--ink);
+  text-decoration: none;
+}
+
+a:hover {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
+}
+
+p a {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 img {
@@ -25,12 +59,24 @@ img {
   display: block;
 }
 
+h1 {
+  font-size: clamp(1.6rem, 3vw, 2.4rem);
+  line-height: 1.15;
+  margin: 0 0 1.5rem;
+}
+
+h2 {
+  font-size: 1em;
+  margin: 0.5rem 0 0;
+}
+
+/* layout */
+
 .site-header,
 .site-main,
 .site-footer {
-  padding: 1rem;
-  max-width: 72rem;
-  margin: 0 auto;
+  padding: 5.7vmin;
+  width: 100%;
 }
 
 .site-header {
@@ -39,51 +85,84 @@ img {
   align-items: baseline;
   gap: 1rem;
   flex-wrap: wrap;
+  padding-bottom: 0;
 }
 
 .site-title {
-  font-weight: 700;
-  text-decoration: none;
+  font-size: 1.2em;
 }
 
 .site-nav {
   display: flex;
-  gap: 1rem;
+  gap: 1.5rem;
 }
+
+.site-main {
+  flex: 1;
+}
+
+.site-main > p {
+  max-width: 60rem;
+}
+
+.site-footer {
+  font-size: 0.8em;
+  color: var(--ink-soft);
+  padding-top: 0;
+}
+
+/* prose pages (about, contact) */
+
+.prose {
+  max-width: 62rem;
+}
+
+.prose p {
+  margin: 0 0 1.4em;
+}
+
+/* work grid */
 
 .project-grid {
   display: grid;
-  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
-  gap: 1rem;
+  grid-template-columns: repeat(auto-fill, minmax(17rem, 1fr));
+  gap: 2.5rem 1.5rem;
   padding: 0;
   margin: 0;
   list-style: none;
 }
 
 .project-card a {
-  text-decoration: none;
   display: block;
+}
+
+.project-card a:hover {
+  text-decoration: none;
+}
+
+.project-card a:hover h2 {
+  text-decoration: underline;
+  text-underline-offset: 0.15em;
 }
 
 .project-card img {
   width: 100%;
   aspect-ratio: 4 / 3;
   object-fit: cover;
-  background: #eee;
+  background: rgba(255, 255, 255, 0.4);
 }
 
 .project-meta {
-  font-size: 0.875rem;
-  color: #555;
+  font-size: 0.8em;
+  color: var(--ink-soft);
+  margin: 0.15rem 0 0;
 }
+
+/* project detail */
 
 .project-images {
   display: grid;
-  gap: 1rem;
-  margin-top: 1rem;
-}
-
-.site-footer {
-  font-size: 0.875rem;
-  color: #555;
+  gap: 1.5rem;
+  margin-top: 2rem;
+  max-width: 70rem;
 }
