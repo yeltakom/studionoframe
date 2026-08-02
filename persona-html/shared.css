@@ -1,4 +1,3 @@
-<style>
 .snf, .snf * { box-sizing: border-box; margin: 0; padding: 0; }
 .snf { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; color: #000; line-height: 1.5; font-size: clamp(17px, 1.4vw + 10px, 22px); min-height: 100vh; display: flex; flex-direction: column;
   background: linear-gradient(180deg, #ff47c8 0%, #ff9a2e 28%, #ffd91f 52%, #63d95d 76%, #1fc9e8 100%); }
@@ -20,25 +19,3 @@
 .snf-h1 { font-size: clamp(26px, 3vw, 38px); line-height: 1.15; }
 .snf-images { display: grid; gap: 1.5rem; margin-top: 2rem; max-width: 70rem; }
 .snf-back { display: inline-block; margin-top: 2.5rem; }
-</style>
-<div class="snf">
-  <header class="snf-header">
-    <a class="snf-logo" href="/">Studio No Frame</a>
-    <nav class="snf-nav">
-      <a href="/">Work</a>
-      <a href="/#about">About</a>
-      <a href="/contact">Contact</a>
-    </nav>
-  </header>
-
-  <section class="snf-section snf-prose">
-    <p>If you'd like to explore a project together, please get in touch and
-    request our portfolio. →</p>
-    <p><a href="mailto:contact@noframe.studio">contact@noframe.studio</a></p>
-    <p class="snf-meta">Studio No Frame · Berlin</p>
-  </section>
-
-  <footer class="snf-footer">
-    <p>© 2026 Studio No Frame · <a href="/impressum">Impressum</a> · <a href="/datenschutz">Datenschutz</a></p>
-  </footer>
-</div>
