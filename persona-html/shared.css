@@ -12,6 +12,8 @@
 .snf-grid { display: grid; list-style: none; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2.5rem 1.5rem; }
 .snf-grid img, .snf-ph { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; background: rgba(255,255,255,.45); }
 .snf-card h3 { font-size: 1em; margin-top: .5rem; }
+.snf-card { position: relative; }
+.snf-card img { pointer-events: none; }
 .snf-meta { font-size: .8em; color: rgba(0,0,0,.55); }
 .snf-prose { max-width: 62rem; }
 .snf-prose p { margin-bottom: 1.4em; }
