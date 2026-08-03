@@ -19,3 +19,4 @@
 .snf-h1 { font-size: clamp(26px, 3vw, 38px); line-height: 1.15; }
 .snf-images { display: grid; gap: 1.5rem; margin-top: 2rem; max-width: 70rem; }
 .snf-back { display: inline-block; margin-top: 2.5rem; }
+#backdrop { pointer-events: none; }

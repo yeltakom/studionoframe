@@ -1,3 +1,27 @@
+<style>
+.snf, .snf * { box-sizing: border-box; margin: 0; padding: 0; }
+.snf { font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif; font-weight: 700; color: #000; line-height: 1.5; font-size: clamp(17px, 1.4vw + 10px, 22px); min-height: 100vh; display: flex; flex-direction: column;
+  background: linear-gradient(180deg, #ff47c8 0%, #ff9a2e 28%, #ffd91f 52%, #63d95d 76%, #1fc9e8 100%); }
+.snf a { color: #000; text-decoration: none; }
+.snf a:hover { text-decoration: underline; text-underline-offset: .15em; }
+.snf p a { text-decoration: underline; text-underline-offset: .15em; }
+.snf-header, .snf-section, .snf-footer { padding: 5.7vmin; }
+.snf-header { display: flex; justify-content: space-between; align-items: baseline; flex-wrap: wrap; gap: 1rem; padding-bottom: 0; }
+.snf-logo { font-size: 1.2em; }
+.snf-nav { display: flex; gap: 1.5em; }
+.snf-section { flex: 1; }
+.snf-grid { display: grid; list-style: none; grid-template-columns: repeat(auto-fill, minmax(260px, 1fr)); gap: 2.5rem 1.5rem; }
+.snf-grid img, .snf-ph { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; display: block; background: rgba(255,255,255,.45); }
+.snf-card h3 { font-size: 1em; margin-top: .5rem; }
+.snf-meta { font-size: .8em; color: rgba(0,0,0,.55); }
+.snf-prose { max-width: 62rem; }
+.snf-prose p { margin-bottom: 1.4em; }
+.snf-footer { font-size: .8em; color: rgba(0,0,0,.55); }
+.snf-h1 { font-size: clamp(26px, 3vw, 38px); line-height: 1.15; }
+.snf-images { display: grid; gap: 1.5rem; margin-top: 2rem; max-width: 70rem; }
+.snf-back { display: inline-block; margin-top: 2.5rem; }
+#backdrop { pointer-events: none; }
+</style>
 <div class="snf">
   <header class="snf-header">
     <a class="snf-logo" href="/">Studio No Frame</a>
