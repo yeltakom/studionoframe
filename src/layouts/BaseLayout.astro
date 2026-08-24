@@ -1,14 +1,28 @@
 ---
+import { getCollection } from 'astro:content';
+import { SITE } from '../site';
 import '../styles/global.css';
 
 interface Props {
   title?: string;
   description?: string;
+  /** slug of the project being viewed, so the spectrum can mark it */
+  current?: string;
 }
 
-const { title, description = 'Studio No Frame — design studio' } = Astro.props;
-const pageTitle = title ? `${title} — Studio No Frame` : 'Studio No Frame';
+const { title, description = SITE.tagline, current } = Astro.props;
+const pageTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — Exhibition architecture`;
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const path = Astro.url.pathname.replace(/\/+$/, '');
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const ga = SITE.GA_MEASUREMENT_ID;
+
+const nav = [
+  { href: `${base}/`, label: 'Work' },
+  { href: `${base}/about`, label: 'About' },
+  { href: `${base}/contact`, label: 'Contact' },
+];
 ---
 
 <!doctype html>
@@ -17,25 +31,66 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
     <meta charset="utf-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1" />
     <meta name="description" content={description} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={description} />
+    <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="preconnect" href="https://fonts.googleapis.com" />
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+    <link
+      rel="stylesheet"
+      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap"
+    />
     <title>{pageTitle}</title>
+    {ga && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${ga}`}></script>
+        <script is:inline define:vars={{ ga }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', ga, { anonymize_ip: true });
+        </script>
+      </>
+    )}
   </head>
   <body>
     <header class="site-header">
       <a class="site-title" href={`${base}/`}>Studio No Frame</a>
       <nav class="site-nav">
-        <a href={`${base}/`}>Work</a>
-        <a href={`${base}/about`}>About</a>
-        <a href={`${base}/contact`}>Contact</a>
+        {nav.map((item) => (
+          <a href={item.href} aria-current={path === item.href.replace(/\/+$/, '') ? 'page' : undefined}>
+            {item.label}
+          </a>
+        ))}
       </nav>
     </header>
 
-    <main class="site-main">
+    <nav class="spectrum" aria-label="All exhibitions">
+      {projects.map((project) => (
+        <a
+          href={`${base}/projects/${project.id}`}
+          style={`--seg: ${project.data.accent}`}
+          class={current === project.id ? 'is-current' : undefined}
+          aria-current={current === project.id ? 'page' : undefined}
+        >
+          <span>{project.data.title} · {project.data.year}</span>
+        </a>
+      ))}
+    </nav>
+
+    <main>
       <slot />
     </main>
 
     <footer class="site-footer">
-      <p>&copy; {new Date().getFullYear()} Studio No Frame</p>
+      <p>© {new Date().getFullYear()} Studio No Frame · Berlin</p>
+      <nav>
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        <a href={`${base}/impressum`}>Impressum</a>
+        <a href={`${base}/datenschutz`}>Datenschutz</a>
+        <a href={`${base}/internships`}>Internships</a>
+      </nav>
     </footer>
   </body>
 </html>

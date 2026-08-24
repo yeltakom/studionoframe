@@ -1,15 +1,29 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../site';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 ---
 
-<BaseLayout title="Contact">
-  <div class="prose">
-    <p>
-      If you'd like to explore a project together, please get in touch and
-      request our portfolio. →
-    </p>
-    <p>
-      <a href="mailto:hello@studionoframe.com">hello@studionoframe.com</a>
-    </p>
-  </div>
+<BaseLayout title="Contact" description="Get in touch with Studio No Frame.">
+  <section class="page">
+    <span class="label">Contact</span>
+    <h1>Tell us what you are building.</h1>
+
+    <div class="prose">
+      <p>
+        Write to us with the exhibition, the venue and the dates you are working
+        towards, and we will send the full portfolio and a first read on what the
+        project needs.
+      </p>
+      <p style="margin: 2rem 0 2.5rem">
+        <a class="contact-line" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      </p>
+      <p class="credit">Studio No Frame · Berlin</p>
+      <p>
+        Looking for an internship? Read the
+        <a href={`${base}/internships`}>internships page</a> first — it explains
+        what we offer and what to send.
+      </p>
+    </div>
+  </section>
 </BaseLayout>

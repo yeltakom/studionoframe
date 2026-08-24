@@ -1,0 +1,38 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../site';
+---
+
+<BaseLayout title="Internships" description="Paid, structured internships at Studio No Frame for students in design, architecture, art and cultural studies.">
+  <section class="page">
+    <span class="label">Internships</span>
+    <h1>Paid internships, structured around real projects.</h1>
+
+    <div class="prose">
+      <p>
+        We offer remote, well-structured internships for students in design,
+        architecture, art, cultural studies and related fields. We especially
+        welcome students who need to complete a mandatory or curricular
+        internship as part of their studies.
+      </p>
+      <p>
+        Our practice merges design research and spatial strategies, working at
+        the intersection of architecture, cultural production and artistic
+        experimentation. Projects range from conceptual frameworks and critical
+        spatial practices to the realisation of exhibitions and public art
+        installations, developed closely with artists, designers and
+        researchers.
+      </p>
+      <p>
+        <strong>We do not offer unpaid internships.</strong> We believe in fair
+        compensation and a supportive, structured experience where your work is
+        valued.
+      </p>
+      <p>
+        To apply, send your portfolio and CV to
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a>, and tell us the dates
+        you are available and whether the internship is required by your school.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

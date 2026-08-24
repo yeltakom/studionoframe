@@ -3,30 +3,52 @@ import { getCollection, render } from 'astro:content';
 import BaseLayout from '../../layouts/BaseLayout.astro';
 
 export async function getStaticPaths() {
-  const projects = await getCollection('projects');
-  return projects.map((project) => ({
+  const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+  return projects.map((project, i) => ({
     params: { slug: project.id },
-    props: { project },
+    props: {
+      project,
+      prev: projects[i - 1] ?? projects[projects.length - 1],
+      next: projects[i + 1] ?? projects[0],
+    },
   }));
 }
 
-const { project } = Astro.props;
+const { project, prev, next } = Astro.props;
 const { Content } = await render(project);
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const { title, venue, year, role, accent, summary, images } = project.data;
 ---
 
-<BaseLayout title={project.data.title} description={project.data.description}>
-  <h1>{project.data.title}</h1>
-  <p class="project-meta">{project.data.category} · {project.data.year}</p>
-  <p>{project.data.description}</p>
+<BaseLayout title={title} description={summary} current={project.id}>
+  <div style={`--accent: ${accent}`}>
+    <div class="project-band"></div>
 
-  <div class="project-images">
-    {
-      project.data.images.map((image) => (
-        <img src={`${base}${image}`} alt={project.data.title} />
-      ))
-    }
+    <header class="project-head">
+      <h1>{title}</h1>
+      <p class="credit project-credit">
+        {venue} · {year}<br />
+        {role}
+      </p>
+    </header>
+
+    <div class="project-body prose">
+      <Content />
+    </div>
+
+    <div class="project-images">
+      {images.map((image, i) => (
+        <img src={`${base}${image}`} alt={`${title} — installation view ${i + 1}`} loading="lazy" />
+      ))}
+    </div>
+
+    <nav class="project-nav">
+      <a href={`${base}/projects/${prev.id}`}>
+        <span class="dir">← Previous</span>{prev.data.title}
+      </a>
+      <a class="next" href={`${base}/projects/${next.id}`}>
+        <span class="dir">Next →</span>{next.data.title}
+      </a>
+    </nav>
   </div>
-
-  <Content />
 </BaseLayout>

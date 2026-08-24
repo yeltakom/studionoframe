@@ -1,41 +1,60 @@
 ---
 import BaseLayout from '../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 ---
 
-<BaseLayout title="About">
-  <div class="prose">
-    <p>
-      Studio No Frame is a Berlin-based creative studio working across art
-      direction, exhibition design, art production, project management,
-      curation, and consulting. We collaborate with artists, cultural
-      institutions, NGOs, project spaces, and universities to realize
-      interdisciplinary and socially engaged projects.
-    </p>
-    <p>
-      With a flexible structure and a diverse team, we approach each project
-      with care, curiosity, and a strong emphasis on dialogue. Our practice
-      values collective thinking, experimental methods, and process-oriented
-      making.
-    </p>
-    <p>
-      We have worked with a wide range of partners including Haus der Kulturen
-      der Welt, Istanbul Foundation for Culture and Arts (IKSV), Istanbul
-      Modern, Ludwig Museum, MAXXI Rome, Pera Museum, SALT, La Biennale di
-      Venezia – Venice Architecture Biennale, Istanbul Biennial, Istanbul
-      Design Biennial, and Timișoara Biennial. We have also collaborated with
-      artists such as Abbas Zahedi, Ahmet Öğüt, Amy Lien &amp; Enzo Camacho,
-      Ayşe Erkmen, Füsun Onur, Gülsüm Karamustafa, Leman Darıcıoğlu, Monira Al
-      Qadiri, Raul Walch, and Tomás Saraceno.
-    </p>
-    <p>We believe in open conversations and sustainable production processes.</p>
-    <p>
-      Want to see our work or collaborate with us? If you'd like to explore a
-      project together, please <a href="mailto:hello@studionoframe.com">get in
-      touch</a> and request our portfolio.
-    </p>
-    <p>
-      Looking to join us? If you're interested in an internship, you can find
-      all details <a href="mailto:hello@studionoframe.com">here</a>. →
-    </p>
-  </div>
+<BaseLayout title="About" description="Studio No Frame is a Berlin-based studio working across exhibition architecture, art production, project management and curation.">
+  <section class="page">
+    <span class="label">About</span>
+    <h1>A studio that takes the shape of the work it houses.</h1>
+
+    <div class="prose">
+      <p>
+        Studio No Frame is a Berlin-based studio working across art direction,
+        exhibition design, art production, project management, curation and
+        consulting. We work with artists, cultural institutions, NGOs, project
+        spaces and universities on interdisciplinary and socially engaged
+        projects.
+      </p>
+      <p>
+        Our structure is flexible and our team is mixed by design. Each project
+        starts from its own material: the works, the building, the people who
+        will move through it. We value collective thinking, experimental
+        methods and process-oriented making, and we plan production so that
+        material and budget are spent where visitors actually feel them.
+      </p>
+
+      <h2>Partners</h2>
+      <p>
+        Haus der Kulturen der Welt, Istanbul Foundation for Culture and Arts
+        (İKSV), Istanbul Modern, Museum Ludwig, MAXXI Rome, Pera Museum, SALT,
+        La Biennale di Venezia, the Istanbul Biennial, the Istanbul Design
+        Biennial and the Timișoara Biennial. Artists we have worked with
+        include Abbas Zahedi, Ahmet Öğüt, Amy Lien &amp; Enzo Camacho, Ayşe
+        Erkmen, Füsun Onur, Gülsün Karamustafa, Leman Darıcıoğlu, Monira Al
+        Qadiri, Raul Walch and Tomás Saraceno.
+      </p>
+
+      <h2>Team</h2>
+      <p>
+        The studio is led by <strong>Yelta Köm</strong>, an Istanbul-born
+        architect and artist who has lived and worked in Berlin for over a
+        decade. His practice centres on spatial interventions and temporary
+        setups built with institutions, artists and communities.
+      </p>
+      <p>
+        We work with a rotating group of designers, researchers and production
+        managers, and we bring in collaborators to suit each exhibition rather
+        than fitting every show to a fixed team.
+      </p>
+
+      <h2>Working with us</h2>
+      <p>
+        To see the full portfolio or discuss a project,
+        <a href={`${base}/contact`}>get in touch</a>. If you are looking for an
+        internship, the details are on the
+        <a href={`${base}/internships`}>internships page</a>.
+      </p>
+    </div>
+  </section>
 </BaseLayout>

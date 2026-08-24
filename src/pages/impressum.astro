@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../site';
+---
+
+<BaseLayout title="Impressum" description="Angaben gemäß § 5 TMG.">
+  <section class="page">
+    <span class="label">Rechtliches</span>
+    <h1>Impressum</h1>
+
+    <div class="prose">
+      <h2>Angaben gemäß § 5 TMG</h2>
+      <p>
+        Studio No Frame<br />
+        Yelta Köm<br />
+        [Straße und Hausnummer]<br />
+        [PLZ] Berlin<br />
+        Deutschland
+      </p>
+
+      <h2>Kontakt</h2>
+      <p>E-Mail: <a href={`mailto:${SITE.email}`}>{SITE.email}</a></p>
+
+      <h2>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2>
+      <p>Yelta Köm, Anschrift wie oben.</p>
+
+      <h2>Haftung für Inhalte</h2>
+      <p>
+        Die Inhalte dieser Seiten wurden mit größter Sorgfalt erstellt. Für die
+        Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir
+        jedoch keine Gewähr übernehmen.
+      </p>
+
+      <h2>Urheberrecht</h2>
+      <p>
+        Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen
+        Seiten unterliegen dem deutschen Urheberrecht. Fotografien sind, soweit
+        angegeben, mit Bildnachweis versehen; alle Rechte verbleiben bei den
+        jeweiligen Urheber:innen.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

@@ -1,27 +1,46 @@
 ---
 import { getCollection } from 'astro:content';
 import BaseLayout from '../layouts/BaseLayout.astro';
+import { SITE } from '../site';
 
-const projects = (await getCollection('projects')).sort(
-  (a, b) => b.data.year - a.data.year
-);
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+
+const years = projects.flatMap((p) => (p.data.year.match(/\d{4}/g) ?? []).map(Number));
+const span = `${Math.min(...years)}–${Math.max(...years)}`;
 ---
 
-<BaseLayout>
-  <ul class="project-grid">
-    {
-      projects.map((project) => (
-        <li class="project-card">
-          <a href={`${base}/projects/${project.id}`}>
-            <img src={`${base}${project.data.cover}`} alt={project.data.title} />
+<BaseLayout description={SITE.tagline}>
+  <section class="statement">
+    <span class="label">{SITE.tagline}</span>
+    <blockquote>
+      For me, architecture is not just about constructing physical spaces; it’s
+      about creating opportunities for conversation and collective thinking.
+    </blockquote>
+    <footer>Yelta Köm — architect, artist, founder of Studio No Frame</footer>
+  </section>
+
+  <div class="section-head">
+    <span class="label">Selected work</span>
+    <span class="label">{projects.length} exhibitions · {span}</span>
+  </div>
+
+  <ul class="work">
+    {projects.map((project) => (
+      <li class="work-card" style={`--accent: ${project.data.accent}`}>
+        <a href={`${base}/projects/${project.id}`}>
+          <div class="work-figure">
+            <img src={`${base}${project.data.cover}`} alt={project.data.title} loading="lazy" />
+          </div>
+          <div class="work-label">
             <h2>{project.data.title}</h2>
-            <p class="project-meta">
-              {project.data.category} · {project.data.year}
+            <p class="credit">
+              {project.data.venue} · {project.data.year}<br />
+              {project.data.role}
             </p>
-          </a>
-        </li>
-      ))
-    }
+          </div>
+        </a>
+      </li>
+    ))}
   </ul>
 </BaseLayout>
