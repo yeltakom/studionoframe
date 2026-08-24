@@ -6,9 +6,11 @@ ROOT = Path(__file__).resolve().parent.parent
 CSV_PATH = ROOT / 'studio' / 'projects.csv'
 PHOTOS_DIR = ROOT / 'studio' / 'photos'
 CONTENT_DIR = ROOT / 'src' / 'content' / 'projects'
+CONTENT_DE_DIR = ROOT / 'src' / 'content' / 'projects-de'
 IMAGES_DIR = ROOT / 'public' / 'images' / 'projects'
 
-COLUMNS = ['order', 'slug', 'title', 'venue', 'year', 'role', 'summary', 'description']
+COLUMNS = ['order', 'slug', 'title', 'venue', 'year', 'role', 'summary', 'description',
+           'role_de', 'summary_de', 'description_de']
 
 TR = str.maketrans('çğıöşüÇĞİÖŞÜåÅäÄéÉèÈüÜñÑ', 'cgiosucgiosuaAaAeEeEuUnN')
 

@@ -61,6 +61,11 @@ fotoğraflara dokunulmaz.
 | `role` | `Exhibition Design & Installation Management` |
 | `summary` | Tek cümle. Google'da ve link paylaşımlarında görünür. Boş bırakırsan açıklamanın ilk cümlesi kullanılır. |
 | `description` | Proje sayfasındaki metin. Uzun olabilir. `*italik*` yazabilirsin. |
+| `role_de` | Rolün Almancası: `Ausstellungsgestaltung & Aufbauleitung` |
+| `description_de` | Açıklamanın Almancası. **Boş bırakırsan** o sergi Almanca sitede İngilizce metinle görünür — kırılmaz. |
+
+Başlık, mekân ve yıl çevrilmiyor: sergi adları özel isim, iki dilde de aynı kalıyor.
+Almanca özet (`summary_de`) boşsa Almanca açıklamanın ilk cümlesi kullanılır.
 
 ---
 
@@ -72,7 +77,7 @@ fotoğraflara dokunulmaz.
 | `npm run publish` | Tablo + fotoğraflar → site → yayına gönderir |
 | `npm run sync` | Aynısını yapar ama yayına göndermez (önce yerelde görmek için) |
 | `npm run dev` | Siteyi kendi bilgisayarında açar: http://localhost:4321 |
-| `npm run export` | Siteyi tabloya geri yazar |
+| `npm run export` | Siteyi tabloya geri yazar (İngilizce + Almanca) |
 
 `npm run export` şu durumda gerekli: siteyi tarayıcıdaki panelden
 (`/admin/`) veya doğrudan dosyadan düzenlediysen. Tabloya dokunmadan önce

@@ -22,8 +22,12 @@ npm run publish                     # table + photos -> site -> live
 the live content back into the table — run it after editing through the browser
 CMS at `/admin/`, so the table does not overwrite those edits.
 
-Under the hood each exhibition is one markdown file in `src/content/projects/`.
-The filename is the URL (`vardiya.md` → `/projects/vardiya`).
+The site is bilingual: English at `/`, German at `/de/`, with `hreflang` pairs
+and a switcher in the header. Under the hood each exhibition is one markdown
+file in `src/content/projects/` (English) and, when translated, one in
+`src/content/projects-de/`. The filename is the URL (`vardiya.md` →
+`/projects/vardiya` and `/de/projects/vardiya`). An exhibition without a German
+file falls back to its English text rather than disappearing from `/de/`.
 
 ```markdown
 ---
@@ -75,6 +79,7 @@ Google Analytics on. Left empty, no tracking script is emitted.
 - `src/content/projects/` — one markdown file per exhibition
 - `src/styles/global.css` — all styling
 - `src/site.ts` — studio name, contact address, analytics id
+- `src/i18n.ts` — every interface string, in both languages
 - `studio/` — the content table and photo drop folders
 - `tools/` — sync, export and publish scripts
 - `public/admin/` — browser CMS

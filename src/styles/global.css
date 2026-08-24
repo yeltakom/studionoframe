@@ -286,3 +286,6 @@ img { display: block; max-width: 100%; height: auto; }
 }
 
 .plate-nav .label { display: block; margin-bottom: 0.2rem; }
+
+.site-nav .lang-switch { color: var(--soft); }
+.site-nav .lang-switch:hover { color: var(--ink); border-bottom-color: var(--ink); }

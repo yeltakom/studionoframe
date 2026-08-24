@@ -1,12 +1,12 @@
 ---
 import { render } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProjectPlate from '../../components/ProjectPlate.astro';
-import { getProjects } from '../../lib/projects';
-import { projectSchema } from '../../lib/schema';
+import BaseLayout from '../../../layouts/BaseLayout.astro';
+import ProjectPlate from '../../../components/ProjectPlate.astro';
+import { getProjects } from '../../../lib/projects';
+import { projectSchema } from '../../../lib/schema';
 
 export async function getStaticPaths() {
-  const projects = await getProjects('en');
+  const projects = await getProjects('de');
   return projects.map((project, i) => ({
     params: { slug: project.id },
     props: {
@@ -25,15 +25,15 @@ const { data } = project;
 ---
 
 <BaseLayout
-  lang="en"
+  lang="de"
   title={`${data.title} — ${data.venue}`}
   description={data.summary}
   image={`${base}/images/og/${project.id}.jpg`}
-  schema={projectSchema('en', site, base, project.id, data)}
+  schema={projectSchema('de', site, base, project.id, data)}
 >
   <ProjectPlate
-    lang="en"
-    home={base}
+    lang="de"
+    home={`${base}/de`}
     base={base}
     data={data}
     prev={{ id: prev.id, title: prev.data.title }}

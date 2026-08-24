@@ -1,0 +1,67 @@
+---
+import { UI, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  home: string;
+  base: string;
+  data: Record<string, any>;
+  prev: { id: string; title: string };
+  next: { id: string; title: string };
+}
+
+const { lang, home, base, data, prev, next } = Astro.props;
+const t = UI[lang];
+const { title, venue, year, role, images } = data;
+const [lead, ...rest] = images;
+---
+
+<header class="plate-head">
+  <h1>{title}</h1>
+  <dl class="plate-credits">
+    <div><dt class="label">{t.columns.venue}</dt><dd>{venue}</dd></div>
+    <div><dt class="label">{t.columns.year}</dt><dd>{year}</dd></div>
+    <div><dt class="label">{t.columns.role}</dt><dd>{role}</dd></div>
+  </dl>
+</header>
+
+{lead && (
+  <div class="plate-lead">
+    <img
+      src={`${base}${lead}`}
+      alt={`${title} — ${venue}, ${year}`}
+      fetchpriority="high"
+      decoding="async"
+    />
+  </div>
+)}
+
+<div class="plate-text">
+  <div class="prose"><slot /></div>
+</div>
+
+{rest.length > 0 && (
+  <div class="plate-figures">
+    {rest.map((image: string, i: number) => (
+      <figure>
+        <img
+          src={`${base}${image}`}
+          alt={`${title}, ${venue} — ${t.installationView(i + 2)}`}
+          loading="lazy"
+          decoding="async"
+        />
+      </figure>
+    ))}
+  </div>
+)}
+
+<nav class="plate-nav">
+  <a href={`${home}/projects/${prev.id}`}>
+    <span class="label">{t.prev}</span>
+    <strong>{prev.title}</strong>
+  </a>
+  <a href={`${home}/projects/${next.id}`} style="text-align: right; margin-left: auto">
+    <span class="label">{t.next}</span>
+    <strong>{next.title}</strong>
+  </a>
+</nav>

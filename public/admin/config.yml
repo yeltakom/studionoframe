@@ -31,3 +31,28 @@ collections:
         required: false
         field: { label: Image, name: image, widget: image }
       - { label: Description, name: body, widget: markdown, required: false }
+
+  - name: projects_de
+    label: Projekte (Deutsch)
+    label_singular: Projekt
+    folder: src/content/projects-de
+    extension: md
+    format: frontmatter
+    create: true
+    slug: '{{slug}}'
+    sortable_fields: [order, year, title]
+    summary: '{{order}} · {{title}} — {{venue}}'
+    fields:
+      - { label: Titel, name: title, widget: string, hint: 'Same as the English page — exhibition titles are not translated' }
+      - { label: Ort, name: venue, widget: string }
+      - { label: Jahr, name: year, widget: string }
+      - { label: Rolle, name: role, widget: string, hint: 'e.g. Ausstellungsgestaltung & Aufbauleitung' }
+      - { label: Reihenfolge, name: order, widget: number, value_type: int }
+      - { label: Kurzfassung, name: summary, widget: text }
+      - { label: Cover, name: cover, widget: image }
+      - label: Bilder
+        name: images
+        widget: list
+        required: false
+        field: { label: Bild, name: image, widget: image }
+      - { label: Beschreibung, name: body, widget: markdown, required: false }

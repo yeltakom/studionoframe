@@ -1,0 +1,66 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+---
+
+<BaseLayout
+  lang="de"
+  title="Über das Studio"
+  description="Studio No Frame ist ein Berliner Studio für Ausstellungsarchitektur, Kunstproduktion, Projektmanagement und Kuratierung, geleitet von Yelta Köm. Partner sind unter anderem HKW, Pera Museum, SALT, Museum Ludwig sowie die Biennalen von Venedig und Istanbul."
+>
+  <section class="page">
+    <span class="label">Studio</span>
+    <h1>Ein Studio, das die Form der Arbeit annimmt, die es beherbergt.</h1>
+
+    <div class="prose">
+      <p>
+        Studio No Frame ist ein Berliner Studio für Art Direction,
+        Ausstellungsgestaltung, Kunstproduktion, Projektmanagement, Kuratierung
+        und Beratung. Wir arbeiten mit Künstler:innen, Kulturinstitutionen,
+        NGOs, Projekträumen und Hochschulen an interdisziplinären und
+        gesellschaftlich engagierten Projekten.
+      </p>
+      <p>
+        Unsere Struktur ist beweglich, unser Team bewusst gemischt. Jedes
+        Projekt beginnt bei seinem eigenen Material: den Arbeiten, dem Gebäude,
+        den Menschen, die sich darin bewegen werden. Wir schätzen kollektives
+        Denken, experimentelle Methoden und prozessorientiertes Arbeiten — und
+        planen die Produktion so, dass Material und Budget dort eingesetzt
+        werden, wo Besucher:innen sie tatsächlich spüren.
+      </p>
+
+      <h2>Partner</h2>
+      <p>
+        Haus der Kulturen der Welt, Istanbul Foundation for Culture and Arts
+        (İKSV), Istanbul Modern, Museum Ludwig, MAXXI Rom, Pera Museum, SALT,
+        La Biennale di Venezia, Istanbul Biennale, Istanbul Design Biennale und
+        die Biennale Timișoara. Zu den Künstler:innen, mit denen wir gearbeitet
+        haben, zählen Abbas Zahedi, Ahmet Öğüt, Amy Lien &amp; Enzo Camacho,
+        Ayşe Erkmen, Füsun Onur, Gülsün Karamustafa, Leman Darıcıoğlu, Monira Al
+        Qadiri, Raul Walch und Tomás Saraceno.
+      </p>
+
+      <h2>Team</h2>
+      <p>
+        Geleitet wird das Studio von <strong>Yelta Köm</strong>, Architekt und
+        Künstler, geboren in Istanbul, seit über zehn Jahren in Berlin. Seine
+        Arbeit dreht sich um räumliche Interventionen und temporäre Bauten, die
+        gemeinsam mit Institutionen, Künstler:innen und Communities entstehen.
+      </p>
+      <p>
+        Wir arbeiten mit einem wechselnden Kreis von Gestalter:innen,
+        Forscher:innen und Produktionsleiter:innen und stellen das Team für jede
+        Ausstellung neu zusammen, statt jede Ausstellung einem festen Team
+        anzupassen.
+      </p>
+
+      <h2>Zusammenarbeit</h2>
+      <p>
+        Für das vollständige Portfolio oder ein konkretes Projekt:
+        <a href={`${base}/de/contact`}>schreiben Sie uns</a>. Wenn Sie ein
+        Praktikum suchen, finden Sie die Angaben auf der
+        <a href={`${base}/de/internships`}>Praktikumsseite</a>.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

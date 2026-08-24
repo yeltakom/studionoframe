@@ -1,0 +1,33 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../site';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+---
+
+<BaseLayout
+  lang="de"
+  title="Kontakt"
+  description="Studio No Frame für Ausstellungsarchitektur, Produktion oder Kuratierung beauftragen. Schreiben Sie an contact@noframe.studio mit Ausstellung, Ort und Zeitraum."
+>
+  <section class="page">
+    <span class="label">Kontakt</span>
+    <h1>Erzählen Sie uns, was Sie bauen.</h1>
+
+    <div class="prose">
+      <p>
+        Schreiben Sie uns mit der Ausstellung, dem Ort und dem Zeitraum, auf den
+        Sie hinarbeiten — wir schicken das vollständige Portfolio und eine erste
+        Einschätzung, was das Projekt braucht.
+      </p>
+      <p style="margin: 2rem 0 2.5rem">
+        <a class="contact-line" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+      </p>
+      <p class="credit">Studio No Frame · Berlin</p>
+      <p>
+        Sie suchen ein Praktikum? Lesen Sie zuerst die
+        <a href={`${base}/de/internships`}>Praktikumsseite</a> — dort steht, was
+        wir anbieten und was Sie schicken sollten.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

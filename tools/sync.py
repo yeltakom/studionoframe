@@ -7,11 +7,11 @@ For every row in the table:
 A project with no folder in studio/photos/ keeps the photos it already has,
 so you only drop in photos for the projects you are actually changing.
 """
-import sys, shutil
+import re, sys, shutil
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from lib import (CONTENT_DIR, IMAGES_DIR, PHOTOS_DIR, read_csv, yaml_str, run)
+from lib import (CONTENT_DIR, CONTENT_DE_DIR, IMAGES_DIR, PHOTOS_DIR, read_csv, yaml_str, run)
 
 OG_DIR = IMAGES_DIR.parent / 'og'
 
@@ -60,6 +60,13 @@ def make_share_image(cover: Path, dst: Path) -> bool:
         return True
     except Exception:
         return False
+
+
+def first_sentence(text: str) -> str:
+    """A meta description is plain text, so tags go and one sentence stays."""
+    plain = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', text)).strip()
+    head = re.split(r'(?<=[.!?])\s', plain)[0].strip()
+    return head if head.endswith(('.', '!', '?')) else head + '.'
 
 
 def sync_photos(slug: str) -> list[str]:
@@ -117,29 +124,44 @@ def main() -> None:
                 shutil.copyfile(OG_DIR / f'{slug}.jpg', OG_DIR / 'default.jpg')
 
         description = row.get('description', '').strip()
-        summary = row.get('summary', '').strip() or description.split('. ')[0].strip()
+        summary = row.get('summary', '').strip() or first_sentence(description)
         web = [f'/images/projects/{slug}/{n}' for n in images]
 
-        front = [
-            '---',
-            f'title: {yaml_str(row["title"].strip())}',
-            f'venue: {yaml_str(row["venue"].strip())}',
-            f'year: {yaml_str(row["year"].strip())}',
-            f'role: {yaml_str(row["role"].strip())}',
-            f'order: {int(row["order"] or 999)}',
-            f'summary: {yaml_str(summary)}',
-            f'cover: {yaml_str(web[0] if web else "")}',
-            'images:',
-            *[f'  - {yaml_str(u)}' for u in web],
-            '---',
-            '',
-            description,
-            '',
-        ]
-        target = CONTENT_DIR / f'{slug}.md'
-        new = '\n'.join(front)
-        if not target.exists() or target.read_text() != new:
-            target.write_text(new)
+        def page(role_text: str, summary_text: str, body_text: str) -> str:
+            return '\n'.join([
+                '---',
+                f'title: {yaml_str(row["title"].strip())}',
+                f'venue: {yaml_str(row["venue"].strip())}',
+                f'year: {yaml_str(row["year"].strip())}',
+                f'role: {yaml_str(role_text)}',
+                f'order: {int(row["order"] or 999)}',
+                f'summary: {yaml_str(summary_text)}',
+                f'cover: {yaml_str(web[0] if web else "")}',
+                'images:',
+                *[f'  - {yaml_str(u)}' for u in web],
+                '---',
+                '',
+                body_text,
+                '',
+            ])
+
+        def put(path, text):
+            nonlocal_changed = not path.exists() or path.read_text() != text
+            if nonlocal_changed:
+                path.parent.mkdir(parents=True, exist_ok=True)
+                path.write_text(text)
+            return nonlocal_changed
+
+        changed += put(CONTENT_DIR / f'{slug}.md', page(row['role'].strip(), summary, description))
+
+        de_body = row.get('description_de', '').strip()
+        de_target = CONTENT_DE_DIR / f'{slug}.md'
+        if de_body:
+            de_role = row.get('role_de', '').strip() or row['role'].strip()
+            de_summary = row.get('summary_de', '').strip() or first_sentence(de_body)
+            changed += put(de_target, page(de_role, de_summary, de_body))
+        elif de_target.exists():
+            de_target.unlink()
             changed += 1
 
     orphans = sorted(p.stem for p in CONTENT_DIR.glob('*.md') if p.stem not in seen)

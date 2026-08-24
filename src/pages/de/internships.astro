@@ -1,0 +1,43 @@
+---
+import BaseLayout from '../../layouts/BaseLayout.astro';
+import { SITE } from '../../site';
+---
+
+<BaseLayout
+  lang="de"
+  title="Praktika"
+  description="Bezahlte, strukturierte Remote-Praktika bei Studio No Frame in Berlin für Studierende der Gestaltung, Architektur, Kunst und Kulturwissenschaften. Pflicht- und Studienpraktika willkommen."
+>
+  <section class="page">
+    <span class="label">Praktika</span>
+    <h1>Bezahlte Praktika, aufgebaut um echte Projekte.</h1>
+
+    <div class="prose">
+      <p>
+        Wir bieten strukturierte Remote-Praktika für Studierende der Gestaltung,
+        Architektur, Kunst, Kulturwissenschaften und verwandter Fächer. Besonders
+        willkommen sind Studierende, die ein Pflicht- oder Studienpraktikum
+        absolvieren müssen.
+      </p>
+      <p>
+        Unsere Praxis verbindet Designforschung mit räumlichen Strategien, an der
+        Schnittstelle von Architektur, kultureller Produktion und künstlerischem
+        Experiment. Die Projekte reichen von konzeptuellen Rahmensetzungen und
+        kritischen Raumpraktiken bis zur Realisierung von Ausstellungen und
+        Kunst im öffentlichen Raum — entwickelt in enger Zusammenarbeit mit
+        Künstler:innen, Gestalter:innen und Forscher:innen.
+      </p>
+      <p>
+        <strong>Unbezahlte Praktika bieten wir nicht an.</strong> Wir glauben an
+        faire Vergütung und an eine begleitete, klar strukturierte Zeit, in der
+        Ihre Arbeit zählt.
+      </p>
+      <p>
+        Schicken Sie Portfolio und Lebenslauf an
+        <a href={`mailto:${SITE.email}`}>{SITE.email}</a> und nennen Sie Ihren
+        möglichen Zeitraum sowie ob das Praktikum von Ihrer Hochschule
+        vorgeschrieben ist.
+      </p>
+    </div>
+  </section>
+</BaseLayout>

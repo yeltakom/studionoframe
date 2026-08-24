@@ -1,0 +1,67 @@
+---
+import { UI, type Lang } from '../i18n';
+
+interface Props {
+  lang: Lang;
+  /** Prefix for links in this language, e.g. '/studionoframe' or '/studionoframe/de'. */
+  home: string;
+  base: string;
+  projects: { id: string; data: Record<string, any> }[];
+}
+
+const { lang, home, base, projects } = Astro.props;
+const t = UI[lang];
+const years = projects.flatMap((p) => (p.data.year.match(/\d{4}/g) ?? []).map(Number));
+---
+
+<h1 class="standfirst">
+  {t.lead}{' '}
+  <span>{t.leadDetail(projects.length, Math.min(...years))}</span>
+</h1>
+
+<div class="checklist-head">
+  <span class="label">{t.columns.year}</span>
+  <span class="label">{t.columns.exhibition}</span>
+  <span class="label">{t.columns.venue}</span>
+  <span class="label">{t.columns.role}</span>
+</div>
+
+<ol class="checklist">
+  {projects.map((p) => (
+    <li>
+      <a class="row" href={`${home}/projects/${p.id}`} data-peek={`${base}${p.data.cover}`}>
+        <span class="year">{p.data.year}</span>
+        <span class="title">{p.data.title}</span>
+        <span class="venue">{p.data.venue}</span>
+        <span class="role">{p.data.role}</span>
+        <img class="thumb-inline" src={`${base}${p.data.cover}`} alt="" loading="lazy" />
+      </a>
+    </li>
+  ))}
+</ol>
+
+<img class="peek" alt="" aria-hidden="true" />
+
+<script is:inline>
+  const peek = document.querySelector('.peek');
+  const rows = document.querySelectorAll('.row[data-peek]');
+  let frame = 0;
+  const follow = (event) => {
+    cancelAnimationFrame(frame);
+    frame = requestAnimationFrame(() => {
+      peek.style.left = event.clientX + 'px';
+      peek.style.top = event.clientY + 'px';
+    });
+  };
+  rows.forEach((row) => {
+    row.addEventListener('mouseenter', () => {
+      peek.src = row.dataset.peek;
+      peek.classList.add('is-visible');
+      window.addEventListener('mousemove', follow);
+    });
+    row.addEventListener('mouseleave', () => {
+      peek.classList.remove('is-visible');
+      window.removeEventListener('mousemove', follow);
+    });
+  });
+</script>
