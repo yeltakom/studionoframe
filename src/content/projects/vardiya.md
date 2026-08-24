@@ -4,7 +4,6 @@ venue: "Pavilion of Turkey, 16th Venice Architecture Biennale"
 year: "2018"
 role: "Associate Curator"
 order: 13
-accent: "#0a78b9"
 summary: "Responding to the Biennale Architettura 2018 theme of Freespace, Vardiya / The Shift transformed the Pavilion of Turkey into a staging ground for creative encounters, collaborative production and cultural exchange, hosting 122 international architecture students across rotating shifts."
 cover: "/images/projects/vardiya/vardiya-01.jpg"
 images:

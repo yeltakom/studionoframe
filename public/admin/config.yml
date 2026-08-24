@@ -23,7 +23,6 @@ collections:
       - { label: Year, name: year, widget: string, hint: '2025, or 2018–2019 for a run' }
       - { label: Role, name: role, widget: string, hint: 'e.g. Exhibition Design & Installation Management' }
       - { label: Order, name: order, widget: number, value_type: int, hint: 'Position on the work grid — 1 comes first' }
-      - { label: Accent colour, name: accent, widget: color, default: '#121110', hint: 'Sampled from the installation photos; keys this project across the site' }
       - { label: Summary, name: summary, widget: text, hint: 'One sentence, used for search results and link previews' }
       - { label: Cover, name: cover, widget: image }
       - label: Images

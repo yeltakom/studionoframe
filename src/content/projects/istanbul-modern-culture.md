@@ -4,7 +4,6 @@ venue: "Istanbul Modern"
 year: "2015"
 role: "Curator & Exhibition Designer — KOTUstudio"
 order: 12
-accent: "#283580"
 summary: "VitrA Contemporary Architecture Series presents an exhibition on architectural culture, coordinated by Pelin Derviş with exhibition design by KOTUstudio (Erdem Tüzün, Yelta Köm)."
 cover: "/images/projects/istanbul-modern-culture/istanbul-modern-culture-01.jpg"
 images:

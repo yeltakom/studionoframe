@@ -4,7 +4,6 @@ venue: "SALT Beyoğlu, Istanbul"
 year: "2014"
 role: "Participant & Exhibition Designer — with Herkes İçin Mimarlık"
 order: 5
-accent: "#a77d12"
 summary: "Curated by Marco Scotini and Andris Brinkmanis, with architectural setting by Herkes İçin Mimarlık."
 cover: "/images/projects/disobedience-archive/disobedience-archive-01.jpg"
 images:

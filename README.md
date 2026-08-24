@@ -7,17 +7,23 @@ monthly fee: the site is plain HTML once built.
 
 **Preview:** https://yeltakom.github.io/studionoframe
 
-## Editing content in the browser
+## Adding and editing exhibitions
 
-Go to https://yeltakom.github.io/studionoframe/admin/ and choose **Sign In with
-Token**, using a GitHub personal access token with read/write access to this
-repo. Saving commits to `main`, which rebuilds and redeploys the site in about
-a minute. Nothing else needs to run.
+Content lives in a table and a photo folder — see **[studio/README.md](studio/README.md)**
+for the full walkthrough (in Turkish).
 
-## Editing content in files
+```sh
+npm run new -- "Exhibition Title"   # adds a row and a photo folder
+# drop photos into studio/photos/<slug>/, fill the row in studio/projects.csv
+npm run publish                     # table + photos -> site -> live
+```
 
-Each exhibition is one markdown file in `src/content/projects/`. The filename
-is the URL (`vardiya.md` → `/projects/vardiya`).
+`npm run sync` does the same without publishing, and `npm run export` writes
+the live content back into the table — run it after editing through the browser
+CMS at `/admin/`, so the table does not overwrite those edits.
+
+Under the hood each exhibition is one markdown file in `src/content/projects/`.
+The filename is the URL (`vardiya.md` → `/projects/vardiya`).
 
 ```markdown
 ---
@@ -25,8 +31,7 @@ title: "Vardiya / The Shift"
 venue: "Pavilion of Turkey, 16th Venice Architecture Biennale"
 year: "2018"
 role: "Associate Curator"
-order: 13              # position on the work grid, 1 comes first
-accent: "#0a78b9"      # colour sampled from the installation photos
+order: 13              # position in the checklist, 1 comes first
 summary: "One sentence, used for link previews."
 cover: "/images/projects/vardiya/vardiya-01.jpg"
 images:
@@ -41,10 +46,10 @@ root-relative path.
 
 ## Design
 
-The studio takes the colour of the show it builds: the ground stays
-gallery-neutral and every project carries an `accent` sampled from its own
-installation photographs. Those accents make the spectrum strip under the
-header — the whole practice in one line, and a link to every exhibition.
+The index is an exhibition checklist — year, title, venue, role — with each
+show's photograph summoned at the cursor. Project pages do the opposite: the
+work large, opening on a full-width lead image. One typeface throughout,
+Helvetica falling back to Arial, with no webfonts loaded.
 
 ## Local development
 
@@ -70,5 +75,7 @@ Google Analytics on. Left empty, no tracking script is emitted.
 - `src/content/projects/` — one markdown file per exhibition
 - `src/styles/global.css` — all styling
 - `src/site.ts` — studio name, contact address, analytics id
+- `studio/` — the content table and photo drop folders
+- `tools/` — sync, export and publish scripts
 - `public/admin/` — browser CMS
 - `.github/workflows/deploy.yml` — build and deploy

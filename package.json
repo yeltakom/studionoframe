@@ -7,7 +7,11 @@
     "dev": "astro dev",
     "build": "astro build",
     "preview": "astro preview",
-    "astro": "astro"
+    "astro": "astro",
+    "export": "python3 tools/export_csv.py",
+    "sync": "python3 tools/sync.py",
+    "new": "python3 tools/new_project.py",
+    "publish": "bash tools/publish.sh"
   },
   "dependencies": {
     "astro": "^7.0.9"

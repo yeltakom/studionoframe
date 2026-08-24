@@ -4,7 +4,6 @@ venue: "Pera Museum, Istanbul"
 year: "2023"
 role: "Exhibition Design & Installation Management"
 order: 4
-accent: "#f9a306"
 summary: "Full exhibition design and installation management for Souvenirs of the Future at Pera Museum."
 cover: "/images/projects/gelecek-hatiralari/gelecek-hatiralari-01.jpg"
 images:

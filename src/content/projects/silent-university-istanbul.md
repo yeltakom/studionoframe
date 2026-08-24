@@ -4,7 +4,6 @@ venue: "17th Istanbul Biennial"
 year: "2022"
 role: "Exhibition Coordination, Installation & Production Design"
 order: 9
-accent: "#ddae06"
 summary: "Coordination, installation and production design for The Silent University Orientation Program, initiated by Ahmet Öğüt at the 17th Istanbul Biennial."
 cover: "/images/projects/silent-university-istanbul/silent-university-istanbul-01.jpg"
 images:

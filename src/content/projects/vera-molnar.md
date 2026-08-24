@@ -4,7 +4,6 @@ venue: "Pera Museum, Istanbul"
 year: "2024"
 role: "Exhibition Design & Installation Management"
 order: 16
-accent: "#055aa4"
 summary: "Exhibition design and installation management for Calculations and Coincidences at Pera Museum, bringing together three pioneers of algorithmic art — Vera Molnár, Dóra Maurer, and Gizella Rákóczy — with works from the Hungarian National Bank Collection."
 cover: "/images/projects/vera-molnar/vera-molnar-01.jpg"
 images:

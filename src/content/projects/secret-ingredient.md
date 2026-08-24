@@ -4,7 +4,6 @@ venue: "3rd Chicago Architecture Biennial"
 year: "2019"
 role: "With Architecture for All (Herkes İçin Mimarlık)"
 order: 8
-accent: "#e89a17"
 summary: "A project for the 3rd Chicago Architecture Biennial at Anthony Overton Elementary School in Bronzeville, aiming to reconnect the closed school with the local community through participatory design and food culture."
 cover: "/images/projects/secret-ingredient/secret-ingredient-01.jpg"
 images:

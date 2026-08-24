@@ -4,7 +4,6 @@ venue: "SALT Beyoğlu, Istanbul"
 year: "2014"
 role: "Editor & Coordinator — with Herkes İçin Mimarlık"
 order: 7
-accent: "#804028"
 summary: "An archive project documenting the spatial practices of the Gezi resistance."
 cover: "/images/projects/occupy-gezi-architecture/occupy-gezi-architecture-01.jpg"
 images:
