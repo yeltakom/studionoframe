@@ -1,0 +1,48 @@
+---
+import { getCollection } from 'astro:content';
+import PreviewLayout from '../../layouts/PreviewLayout.astro';
+import '../../styles/design-c.css';
+
+const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+---
+
+<PreviewLayout title="Studio No Frame — Vitrine" variant="c" fonts="family=Syne:wght@600;700;800&family=Archivo:wght@400;500">
+  <div class="topbar">
+    <span>Exhibition architecture · Berlin</span>
+    <nav>
+      <a href="#work">Work</a>
+      <a href="#endnote">About</a>
+      <a href="mailto:contact@noframe.studio">Contact</a>
+    </nav>
+  </div>
+
+  <h1 class="nameplate">Studio No Frame</h1>
+
+  <p class="subhead">
+    <b>We build the rooms exhibitions happen in.</b> Nineteen shows with
+    museums, biennials and artists — the sequence, the sightlines, the
+    production that gets it standing on time.
+  </p>
+
+  <ul class="vitrine" id="work">
+    {projects.map((p) => (
+      <li>
+        <a href={`${base}/designs/c/${p.id}`}>
+          <figure>
+            <img src={`${base}${p.data.cover}`} alt={p.data.title} loading="lazy" />
+            <figcaption>
+              <h2>{p.data.title}</h2>
+              <span class="meta">{p.data.venue} · {p.data.year}</span>
+            </figcaption>
+          </figure>
+        </a>
+      </li>
+    ))}
+  </ul>
+
+  <div class="endnote" id="endnote">
+    <span>Studio No Frame — led by Yelta Köm, architect and artist, Berlin</span>
+    <a href="mailto:contact@noframe.studio">contact@noframe.studio</a>
+  </div>
+</PreviewLayout>

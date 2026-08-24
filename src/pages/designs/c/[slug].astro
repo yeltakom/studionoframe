@@ -1,0 +1,43 @@
+---
+import { getCollection, render } from 'astro:content';
+import PreviewLayout from '../../../layouts/PreviewLayout.astro';
+import '../../../styles/design-c.css';
+
+export async function getStaticPaths() {
+  const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
+  return projects.map((project, i) => ({
+    params: { slug: project.id },
+    props: { project, next: projects[i + 1] ?? projects[0] },
+  }));
+}
+
+const { project, next } = Astro.props;
+const { Content } = await render(project);
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const { title, venue, year, role, images } = project.data;
+---
+
+<PreviewLayout title={`${title} — Studio No Frame`} variant="c" fonts="family=Syne:wght@600;700;800&family=Archivo:wght@400;500">
+  <div class="topbar">
+    <a href={`${base}/designs/c`}>Studio No Frame</a>
+    <nav><a href={`${base}/designs/c#work`}>Back to work</a></nav>
+  </div>
+
+  <header class="show-head">
+    <h1>{title}</h1>
+    <p class="show-meta">{venue} · {year} — {role}</p>
+  </header>
+
+  <div class="show-text"><Content /></div>
+
+  <div class="show-plates">
+    {images.map((image, i) => (
+      <figure><img src={`${base}${image}`} alt={`${title} — installation view ${i + 1}`} loading="lazy" /></figure>
+    ))}
+  </div>
+
+  <div class="endnote">
+    <span>Next</span>
+    <a href={`${base}/designs/c/${next.id}`}>{next.data.title} →</a>
+  </div>
+</PreviewLayout>
