@@ -21,6 +21,7 @@ html { -webkit-text-size-adjust: 100%; }
 
 body {
   margin: 0;
+  overflow-x: clip;          /* hover labels at the strip's end must not widen the page */
   background: var(--paper);
   color: var(--ink);
   font-family: var(--display);
@@ -126,6 +127,9 @@ img { display: block; max-width: 100%; height: auto; }
 .spectrum a span {
   position: absolute;
   left: 0;
+  max-width: 60vw;
+  overflow: hidden;
+  text-overflow: ellipsis;
   top: calc(100% + 8px);
   white-space: nowrap;
   font-family: var(--mono);
@@ -343,5 +347,7 @@ img { display: block; max-width: 100%; height: auto; }
     transition-duration: 0.01ms !important;
   }
 }
+
+.spectrum a.anchor-right span { left: auto; right: 0; padding: 2px 0 2px 6px; }
 
 .spectrum a.is-current { flex-grow: 2.4; }

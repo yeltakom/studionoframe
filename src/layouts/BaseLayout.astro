@@ -67,11 +67,13 @@ const nav = [
     </header>
 
     <nav class="spectrum" aria-label="All exhibitions">
-      {projects.map((project) => (
+      {projects.map((project, i) => (
         <a
           href={`${base}/projects/${project.id}`}
           style={`--seg: ${project.data.accent}`}
-          class={current === project.id ? 'is-current' : undefined}
+          class={[current === project.id && 'is-current', i > projects.length * 0.6 && 'anchor-right']
+            .filter(Boolean)
+            .join(' ') || undefined}
           aria-current={current === project.id ? 'page' : undefined}
         >
           <span>{project.data.title} · {project.data.year}</span>
