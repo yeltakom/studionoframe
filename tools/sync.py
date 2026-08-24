@@ -13,8 +13,11 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from lib import (CONTENT_DIR, IMAGES_DIR, PHOTOS_DIR, read_csv, yaml_str, run)
 
+OG_DIR = IMAGES_DIR.parent / 'og'
+
 MAX_EDGE = 1800
 QUALITY = 82
+OG_SIZE = (1200, 630)          # what Google, WhatsApp and LinkedIn show for a link
 SOURCE_TYPES = {'.jpg', '.jpeg', '.png', '.tif', '.tiff', '.webp', '.heic', '.heif', '.avif'}
 
 def convert(src: Path, dst: Path) -> bool:
@@ -34,6 +37,26 @@ def convert(src: Path, dst: Path) -> bool:
             im = ImageOps.exif_transpose(im).convert('RGB')
             im.thumbnail((MAX_EDGE, MAX_EDGE), Image.LANCZOS)
             im.save(dst, 'JPEG', quality=QUALITY, optimize=True, progressive=True)
+        return True
+    except Exception:
+        return False
+
+
+def make_share_image(cover: Path, dst: Path) -> bool:
+    """Crop a 1200x630 card from the cover, so a shared link shows the work."""
+    dst.parent.mkdir(parents=True, exist_ok=True)
+    if shutil.which('sips'):
+        r = run(['sips', '-s', 'format', 'jpeg', '-s', 'formatOptions', '78',
+                 '--resampleHeightWidthMax', str(max(OG_SIZE)),
+                 str(cover), '--out', str(dst)])
+        if r.returncode == 0 and dst.exists():
+            run(['sips', '--cropToHeightWidth', str(OG_SIZE[1]), str(OG_SIZE[0]), str(dst)])
+            return True
+    try:
+        from PIL import Image, ImageOps
+        with Image.open(cover) as im:
+            ImageOps.fit(im.convert('RGB'), OG_SIZE, Image.LANCZOS).save(
+                dst, 'JPEG', quality=78, optimize=True)
         return True
     except Exception:
         return False
@@ -87,6 +110,11 @@ def main() -> None:
         images = sync_photos(slug)
         if not images:
             print(f'  ! {slug} için hiç fotoğraf yok — studio/photos/{slug}/ içine koy')
+
+        if images:
+            made = make_share_image(IMAGES_DIR / slug / images[0], OG_DIR / f'{slug}.jpg')
+            if made and int(row['order'] or 999) == 1:
+                shutil.copyfile(OG_DIR / f'{slug}.jpg', OG_DIR / 'default.jpg')
 
         description = row.get('description', '').strip()
         summary = row.get('summary', '').strip() or description.split('. ')[0].strip()

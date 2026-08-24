@@ -6,16 +6,55 @@ import { SITE } from '../site';
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const years = projects.flatMap((p) => (p.data.year.match(/\d{4}/g) ?? []).map(Number));
+const site = (Astro.site ?? new URL(Astro.url.origin)).href.replace(/\/+$/, '');
+
+const schema = [
+  {
+    '@context': 'https://schema.org',
+    '@type': 'Organization',
+    '@id': `${site}${base}/#studio`,
+    name: SITE.name,
+    url: `${site}${base}/`,
+    description: SITE.description,
+    email: SITE.email,
+    founder: { '@type': 'Person', name: SITE.founder, jobTitle: 'Architect and artist' },
+    address: { '@type': 'PostalAddress', addressLocality: SITE.city, addressCountry: SITE.country },
+    knowsAbout: [
+      'Exhibition architecture',
+      'Exhibition design',
+      'Art production',
+      'Curation',
+      'Scenography',
+    ],
+  },
+  {
+    '@context': 'https://schema.org',
+    '@type': 'CollectionPage',
+    name: `${SITE.name} — selected exhibitions`,
+    url: `${site}${base}/`,
+    hasPart: projects.map((p) => ({
+      '@type': 'CreativeWork',
+      name: p.data.title,
+      url: `${site}${base}/projects/${p.id}`,
+      dateCreated: (p.data.year.match(/\d{4}/) ?? [''])[0],
+      locationCreated: { '@type': 'Place', name: p.data.venue },
+    })),
+  },
+];
 ---
 
-<BaseLayout description={SITE.tagline}>
-  <p class="standfirst">
+<BaseLayout
+  description={SITE.description}
+  image={`${base}/images/og/default.jpg`}
+  schema={schema}
+>
+  <h1 class="standfirst">
     Exhibition architecture, production and curation, from Berlin.{' '}
     <span>
       {projects.length} shows built with museums, biennials and artists since
       {' '}{Math.min(...years)}. Hover a line to see the room it became.
     </span>
-  </p>
+  </h1>
 
   <div class="checklist-head">
     <span class="label">Year</span>
