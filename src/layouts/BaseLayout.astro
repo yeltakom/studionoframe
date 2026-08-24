@@ -1,21 +1,13 @@
 ---
-import { getCollection } from 'astro:content';
 import { SITE } from '../site';
 import '../styles/global.css';
 
-interface Props {
-  title?: string;
-  description?: string;
-  /** slug of the project being viewed, so the spectrum can mark it */
-  current?: string;
-}
+interface Props { title?: string; description?: string }
 
-const { title, description = SITE.tagline, current } = Astro.props;
+const { title, description = SITE.tagline } = Astro.props;
 const pageTitle = title ? `${title} — ${SITE.name}` : `${SITE.name} — Exhibition architecture`;
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const path = Astro.url.pathname.replace(/\/+$/, '');
-
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const ga = SITE.GA_MEASUREMENT_ID;
 
 const nav = [
@@ -35,12 +27,6 @@ const nav = [
     <meta property="og:description" content={description} />
     <meta property="og:type" content="website" />
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
-    <link rel="preconnect" href="https://fonts.googleapis.com" />
-    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
-    <link
-      rel="stylesheet"
-      href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@62..125,400..800&family=IBM+Plex+Mono:wght@400;500&display=swap"
-    />
     <title>{pageTitle}</title>
     {ga && (
       <>
@@ -66,21 +52,6 @@ const nav = [
       </nav>
     </header>
 
-    <nav class="spectrum" aria-label="All exhibitions">
-      {projects.map((project, i) => (
-        <a
-          href={`${base}/projects/${project.id}`}
-          style={`--seg: ${project.data.accent}`}
-          class={[current === project.id && 'is-current', i > projects.length * 0.6 && 'anchor-right']
-            .filter(Boolean)
-            .join(' ') || undefined}
-          aria-current={current === project.id ? 'page' : undefined}
-        >
-          <span>{project.data.title} · {project.data.year}</span>
-        </a>
-      ))}
-    </nav>
-
     <main>
       <slot />
     </main>
@@ -89,9 +60,9 @@ const nav = [
       <p>© {new Date().getFullYear()} Studio No Frame · Berlin</p>
       <nav>
         <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        <a href={`${base}/internships`}>Internships</a>
         <a href={`${base}/impressum`}>Impressum</a>
         <a href={`${base}/datenschutz`}>Datenschutz</a>
-        <a href={`${base}/internships`}>Internships</a>
       </nav>
     </footer>
   </body>

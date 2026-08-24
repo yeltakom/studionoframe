@@ -17,38 +17,48 @@ export async function getStaticPaths() {
 const { project, prev, next } = Astro.props;
 const { Content } = await render(project);
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
-const { title, venue, year, role, accent, summary, images } = project.data;
+const { title, venue, year, role, summary, images } = project.data;
+const [lead, ...rest] = images;
 ---
 
-<BaseLayout title={title} description={summary} current={project.id}>
-  <div style={`--accent: ${accent}`}>
-    <div class="project-band"></div>
+<BaseLayout title={title} description={summary}>
+  <header class="plate-head">
+    <h1>{title}</h1>
+    <dl class="plate-credits">
+      <div><dt class="label">Venue</dt><dd>{venue}</dd></div>
+      <div><dt class="label">Year</dt><dd>{year}</dd></div>
+      <div><dt class="label">Role</dt><dd>{role}</dd></div>
+    </dl>
+  </header>
 
-    <header class="project-head">
-      <h1>{title}</h1>
-      <p class="credit project-credit">
-        {venue} · {year}<br />
-        {role}
-      </p>
-    </header>
-
-    <div class="project-body prose">
-      <Content />
+  {lead && (
+    <div class="plate-lead">
+      <img src={`${base}${lead}`} alt={`${title} — installation view`} />
     </div>
+  )}
 
-    <div class="project-images">
-      {images.map((image, i) => (
-        <img src={`${base}${image}`} alt={`${title} — installation view ${i + 1}`} loading="lazy" />
+  <div class="plate-text">
+    <div class="prose"><Content /></div>
+  </div>
+
+  {rest.length > 0 && (
+    <div class="plate-figures">
+      {rest.map((image, i) => (
+        <figure>
+          <img src={`${base}${image}`} alt={`${title} — installation view ${i + 2}`} loading="lazy" />
+        </figure>
       ))}
     </div>
+  )}
 
-    <nav class="project-nav">
-      <a href={`${base}/projects/${prev.id}`}>
-        <span class="dir">← Previous</span>{prev.data.title}
-      </a>
-      <a class="next" href={`${base}/projects/${next.id}`}>
-        <span class="dir">Next →</span>{next.data.title}
-      </a>
-    </nav>
-  </div>
+  <nav class="plate-nav">
+    <a href={`${base}/projects/${prev.id}`}>
+      <span class="label">Previous</span>
+      <strong>{prev.data.title}</strong>
+    </a>
+    <a href={`${base}/projects/${next.id}`} style="text-align: right; margin-left: auto">
+      <span class="label">Next</span>
+      <strong>{next.data.title}</strong>
+    </a>
+  </nav>
 </BaseLayout>

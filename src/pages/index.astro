@@ -5,42 +5,62 @@ import { SITE } from '../site';
 
 const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
-
 const years = projects.flatMap((p) => (p.data.year.match(/\d{4}/g) ?? []).map(Number));
-const span = `${Math.min(...years)}–${Math.max(...years)}`;
 ---
 
 <BaseLayout description={SITE.tagline}>
-  <section class="statement">
-    <span class="label">{SITE.tagline}</span>
-    <blockquote>
-      For me, architecture is not just about constructing physical spaces; it’s
-      about creating opportunities for conversation and collective thinking.
-    </blockquote>
-    <footer>Yelta Köm — architect, artist, founder of Studio No Frame</footer>
-  </section>
+  <p class="standfirst">
+    Exhibition architecture, production and curation, from Berlin.{' '}
+    <span>
+      {projects.length} shows built with museums, biennials and artists since
+      {' '}{Math.min(...years)}. Hover a line to see the room it became.
+    </span>
+  </p>
 
-  <div class="section-head">
-    <span class="label">Selected work</span>
-    <span class="label">{projects.length} exhibitions · {span}</span>
+  <div class="checklist-head">
+    <span class="label">Year</span>
+    <span class="label">Exhibition</span>
+    <span class="label">Venue</span>
+    <span class="label">Role</span>
   </div>
 
-  <ul class="work">
-    {projects.map((project) => (
-      <li class="work-card" style={`--accent: ${project.data.accent}`}>
-        <a href={`${base}/projects/${project.id}`}>
-          <div class="work-figure">
-            <img src={`${base}${project.data.cover}`} alt={project.data.title} loading="lazy" />
-          </div>
-          <div class="work-label">
-            <h2>{project.data.title}</h2>
-            <p class="credit">
-              {project.data.venue} · {project.data.year}<br />
-              {project.data.role}
-            </p>
-          </div>
+  <ol class="checklist">
+    {projects.map((p) => (
+      <li>
+        <a class="row" href={`${base}/projects/${p.id}`} data-peek={`${base}${p.data.cover}`}>
+          <span class="year">{p.data.year}</span>
+          <span class="title">{p.data.title}</span>
+          <span class="venue">{p.data.venue}</span>
+          <span class="role">{p.data.role}</span>
+          <img class="thumb-inline" src={`${base}${p.data.cover}`} alt="" loading="lazy" />
         </a>
       </li>
     ))}
-  </ul>
+  </ol>
+
+  <img class="peek" alt="" aria-hidden="true" />
+
+  <script is:inline>
+    const peek = document.querySelector('.peek');
+    const rows = document.querySelectorAll('.row[data-peek]');
+    let frame = 0;
+    const follow = (event) => {
+      cancelAnimationFrame(frame);
+      frame = requestAnimationFrame(() => {
+        peek.style.left = event.clientX + 'px';
+        peek.style.top = event.clientY + 'px';
+      });
+    };
+    rows.forEach((row) => {
+      row.addEventListener('mouseenter', () => {
+        peek.src = row.dataset.peek;
+        peek.classList.add('is-visible');
+        window.addEventListener('mousemove', follow);
+      });
+      row.addEventListener('mouseleave', () => {
+        peek.classList.remove('is-visible');
+        window.removeEventListener('mousemove', follow);
+      });
+    });
+  </script>
 </BaseLayout>
