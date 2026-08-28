@@ -1,0 +1,62 @@
+---
+import PreviewShell from '../../layouts/PreviewShell.astro';
+import { getProjects } from '../../lib/projects';
+import '../../styles/dir-c.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+
+const frames = projects.flatMap((p) =>
+  p.data.images.map((src: string, i: number) => ({
+    src,
+    slug: p.id,
+    title: p.data.title,
+    venue: p.data.venue,
+    year: p.data.year,
+    no: `${String(i + 1).padStart(2, '0')}`,
+  }))
+);
+---
+
+<PreviewShell title="Studio No Frame — Kontaktbogen" variant="c">
+  <header class="head">
+    <h1>Studio No Frame</h1>
+    <p>Exhibition architecture, production and curation · Berlin</p>
+    <p>{frames.length} frames · {projects.length} exhibitions · 2014–2026</p>
+  </header>
+
+  <nav class="filters" aria-label="Filter by exhibition">
+    <button type="button" data-filter="all" aria-pressed="true">All</button>
+    {projects.map((p) => (
+      <button type="button" data-filter={p.id} aria-pressed="false">{p.data.title}</button>
+    ))}
+  </nav>
+
+  <div class="sheet">
+    {frames.map((f) => (
+      <a class="frame" href={`${base}/projects/${f.slug}`} data-project={f.slug}>
+        <img src={`${base}${f.src}`} alt={`${f.title} — ${f.venue}`} loading="lazy" decoding="async" />
+        <span><b>{f.title}</b>{f.venue} · {f.year} · {f.no}</span>
+      </a>
+    ))}
+  </div>
+
+  <div class="foot">
+    <span>Led by Yelta Köm, architect and artist · Berlin</span>
+    <a href="mailto:contact@noframe.studio">contact@noframe.studio</a>
+  </div>
+
+  <script is:inline>
+    const buttons = document.querySelectorAll('.filters button');
+    const frames = document.querySelectorAll('.frame');
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const wanted = button.dataset.filter;
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+        frames.forEach((frame) => {
+          frame.classList.toggle('is-hidden', wanted !== 'all' && frame.dataset.project !== wanted);
+        });
+      });
+    });
+  </script>
+</PreviewShell>

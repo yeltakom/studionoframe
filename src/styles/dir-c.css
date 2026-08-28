@@ -1,0 +1,130 @@
+/* Yön C — Kontaktbogen.
+   An install is photographed by the hundred and read on a contact sheet before
+   anything is chosen. The studio is shown the same way: every frame at once,
+   numbered, with a filter bar instead of a menu. */
+
+:root {
+  --ink: #0b0b0b;
+  --soft: #8a8a8a;
+  --rule: #e0e0e0;
+  --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --gutter: clamp(0.75rem, 2.5vw, 2rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  letter-spacing: -0.006em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+.back-to-picker {
+  position: fixed;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 60;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.8rem;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem 2rem;
+  flex-wrap: wrap;
+  padding: clamp(1rem, 3vw, 2rem) var(--gutter) 0.85rem;
+}
+.head h1 { margin: 0; font-size: 1.05rem; font-weight: 700; letter-spacing: -0.022em; }
+.head p { margin: 0; color: var(--soft); font-size: 0.8rem; }
+
+/* the filter bar is the navigation: nineteen shows, one line each */
+.filters {
+  position: sticky;
+  top: 0;
+  z-index: 30;
+  background: #fff;
+  border-top: 1px solid var(--ink);
+  border-bottom: 1px solid var(--rule);
+  padding: 0.5rem var(--gutter);
+  display: flex;
+  flex-wrap: wrap;
+  gap: 0.3rem 0.75rem;
+  font-size: 0.72rem;
+  letter-spacing: 0.01em;
+}
+
+.filters button {
+  appearance: none;
+  border: 0;
+  background: none;
+  padding: 0.15rem 0;
+  font: inherit;
+  color: var(--soft);
+  cursor: pointer;
+  border-bottom: 2px solid transparent;
+}
+.filters button:hover { color: var(--ink); }
+.filters button[aria-pressed='true'] { color: var(--ink); border-bottom-color: var(--ink); }
+
+.sheet {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(8.5rem, 30vw), 1fr));
+  gap: clamp(0.4rem, 1vw, 0.9rem);
+  padding: clamp(0.75rem, 2vw, 1.25rem) var(--gutter) clamp(3rem, 7vw, 5rem);
+}
+
+.frame { display: block; }
+.frame.is-hidden { display: none; }
+
+.frame img {
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  display: block;
+  background: #f0f0f0;
+  transition: opacity 160ms ease;
+}
+.frame:hover img { opacity: 0.82; }
+
+.frame span {
+  display: block;
+  margin-top: 0.3rem;
+  font-size: 0.66rem;
+  line-height: 1.35;
+  color: var(--soft);
+  letter-spacing: 0.01em;
+}
+.frame b { display: block; font-weight: 400; color: var(--ink); }
+
+.foot {
+  border-top: 1px solid var(--ink);
+  margin: 0 var(--gutter);
+  padding: 1rem 0 3rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+  color: var(--soft);
+}
+.foot a { border-bottom: 1px solid var(--rule); color: var(--ink); }
+.foot a:hover { border-bottom-color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}

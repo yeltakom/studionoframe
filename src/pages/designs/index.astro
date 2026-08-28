@@ -1,0 +1,111 @@
+---
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+
+const options = [
+  {
+    key: 'a',
+    name: 'Mosaik',
+    idea: 'Bütün sergi fotoğrafları kenardan kenara, boşluksuz döşeniyor. Üstüne stüdyonun adı devasa, daktilo harfleriyle uzanıyor — ve rengi yok: hangi serginin karesine gelirsen o serginin rengini alıyor.',
+    why: 'Tanja Lincke’nin sitesindeki enerji, ama rengin bir sebebi var — her renk o serginin kendi fotoğrafından örneklendi.',
+    note: 'Referansa en yakın olan. 135 fotoğraf tek ekranda.',
+  },
+  {
+    key: 'b',
+    name: 'Plakat',
+    idea: 'Her sergi tam ekran bir afiş: fotoğraf tüm ekranı kaplıyor, başlık fotoğrafın içine yazılıyor, künye siyah bir çipte altında. Kaydırdıkça afişler tek tek geçiyor.',
+    why: 'Sergi tasarımcısının işi zaten afişle duyurulur. Site de bir afiş destesi gibi çalışıyor.',
+    note: 'En gösterişli. Tarama yavaş, tek tek bakılıyor.',
+  },
+  {
+    key: 'c',
+    name: 'Kontaktbogen',
+    idea: 'Bir kurulum yüzlerce kare çekilir, önce kontakt föyünde okunur. Site de öyle: bütün kareler numaralı bir föyde, üstte menü yerine sergi adlarından bir filtre şeridi.',
+    why: 'Arşiv mantığı. Bir küratör “Pera işlerini göster” deyip tek tıkla süzebiliyor.',
+    note: 'Beyaz, Helvetica, sakin. Ama fotoğraf yoğun.',
+  },
+  {
+    key: 'd',
+    name: 'Fassade',
+    idea: 'Solda sabit bir sütun: stüdyo adı ve o an baktığın serginin künyesi. Sağda işler büyük büyük akıyor. Kaydırdıkça soldaki künye kendini yeniden yazıyor.',
+    why: 'Duvar etiketi seninle birlikte yürüyor. İsviçre ofislerinin sakinliği, ama fotoğraf önde.',
+    note: 'En sakin ve en okunaklı olan.',
+  },
+];
+---
+
+<!doctype html>
+<html lang="tr">
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <meta name="robots" content="noindex" />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <title>Studio No Frame — dört tasarım yönü</title>
+    <style is:inline>
+      *, *::before, *::after { box-sizing: border-box; }
+      body {
+        margin: 0; background: #fff; color: #111;
+        font-family: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+        font-size: 1rem; line-height: 1.6; letter-spacing: -0.006em;
+        -webkit-font-smoothing: antialiased;
+      }
+      .wrap { max-width: 70rem; margin: 0 auto; padding: clamp(2rem, 6vw, 4.5rem) clamp(1.25rem, 4vw, 3rem) 5rem; }
+      h1 { font-size: clamp(1.5rem, 3.5vw, 2.4rem); font-weight: 700; letter-spacing: -0.03em; margin: 0 0 0.75rem; }
+      .lede { max-width: 62ch; color: #6f6f6f; margin: 0 0 clamp(2rem, 5vw, 3.5rem); }
+      .opt { border-top: 1px solid #111; padding: clamp(1.5rem, 3vw, 2.25rem) 0; display: grid; grid-template-columns: 6.5rem minmax(0, 1fr) minmax(0, 13rem); gap: 1rem clamp(1rem, 3vw, 2.5rem); }
+      .key { font-size: 0.72rem; letter-spacing: 0.14em; text-transform: uppercase; color: #8d8d8d; }
+      h2 { margin: 0 0 0.5rem; font-size: 1.3rem; font-weight: 700; letter-spacing: -0.02em; }
+      p { margin: 0 0 0.75rem; }
+      .why { color: #6f6f6f; }
+      .note { font-size: 0.8rem; color: #8d8d8d; }
+      .links { display: flex; flex-direction: column; gap: 0.5rem; align-items: start; }
+      .links a { font-size: 0.76rem; letter-spacing: 0.08em; text-transform: uppercase; text-decoration: none; color: #111; border-bottom: 1px solid #d7d7d7; padding-bottom: 2px; }
+      .links a:hover { border-bottom-color: #111; }
+      .links a.primary { background: #111; color: #fff; border: 0; padding: 0.55rem 0.85rem; }
+      .foot { border-top: 1px solid #111; padding-top: 1.25rem; color: #6f6f6f; max-width: 62ch; }
+      @media (max-width: 720px) { .opt { grid-template-columns: 1fr; } }
+    </style>
+  </head>
+  <body>
+    <div class="wrap">
+      <h1>Dört yön — Tanja Lincke referansından sonra</h1>
+      <p class="lede">
+        Verdiğin örneğe ve İsviçre–Almanya’daki ofislere baktım. Dördü de senin
+        gerçek içeriğinle çalışıyor: 19 sergi, 135 fotoğraf. Yayındaki sakin
+        liste hâlâ duruyor, karşılaştırman için en altta. Beğendiğini söyle,
+        onu asıl tasarım yapayım.
+      </p>
+
+      {options.map((o) => (
+        <div class="opt">
+          <span class="key">Yön {o.key.toUpperCase()}</span>
+          <div>
+            <h2>{o.name}</h2>
+            <p>{o.idea}</p>
+            <p class="why">{o.why}</p>
+            <p class="note">{o.note}</p>
+          </div>
+          <div class="links">
+            <a class="primary" href={`${base}/designs/${o.key}`}>Aç</a>
+          </div>
+        </div>
+      ))}
+
+      <div class="opt">
+        <span class="key">Yayında</span>
+        <div>
+          <h2>Checklist</h2>
+          <p>Şu an canlı olan: tipografik sergi listesi, fotoğraf imlecin ucunda beliriyor.</p>
+          <p class="note">En sakin, en hızlı, en kolay taranan.</p>
+        </div>
+        <div class="links"><a href={`${base}/`}>Aç</a></div>
+      </div>
+
+      <p class="foot">
+        Karar verirken: A ve B fotoğrafı ve gösterişi öne alıyor, C ve D okunmayı
+        ve taramayı. Referansın enerjisi A’da, sakinliği D’de. Karıştırabiliriz de —
+        örneğin A’nın mozaiği ana sayfada, künyeler D’nin sabit sütununda.
+      </p>
+    </div>
+  </body>
+</html>

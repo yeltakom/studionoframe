@@ -1,0 +1,71 @@
+---
+import PreviewShell from '../../layouts/PreviewShell.astro';
+import { getProjects } from '../../lib/projects';
+import accents from '../../data/accents.json';
+import '../../styles/dir-a.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+
+/** Every photograph in the practice, interleaved so no exhibition owns a corner. */
+const tiles: { src: string; slug: string; title: string; accent: string }[] = [];
+const depth = Math.max(...projects.map((p) => p.data.images.length));
+for (let i = 0; i < depth; i++) {
+  for (const p of projects) {
+    const src = p.data.images[i];
+    if (!src) continue;
+    tiles.push({
+      src,
+      slug: p.id,
+      title: `${p.data.title} · ${p.data.year}`,
+      accent: (accents as Record<string, string>)[p.id] ?? '#0a78b9',
+    });
+  }
+}
+---
+
+<PreviewShell title="Studio No Frame — Mosaik" variant="a">
+  <div class="field">
+    <div class="mosaic">
+      {tiles.map((t) => (
+        <a class="tile" href={`${base}/projects/${t.slug}`} data-accent={t.accent}>
+          <img src={`${base}${t.src}`} alt={t.title} loading="lazy" decoding="async" />
+          <b>{t.title}</b>
+        </a>
+      ))}
+    </div>
+    <h1 class="nameplate">Studio No Frame</h1>
+  </div>
+
+  <div class="colophon">
+    <div>
+      <h2>Studio</h2>
+      <p style="margin:0">
+        Exhibition architecture, production and curation. Berlin.<br />
+        Led by Yelta Köm, architect and artist.
+      </p>
+    </div>
+    <div>
+      <h2>Work</h2>
+      <ul>
+        {projects.slice(0, 6).map((p) => (
+          <li><a href={`${base}/projects/${p.id}`}>{p.data.title}</a></li>
+        ))}
+        <li>… {projects.length} exhibitions, 2014–2026</li>
+      </ul>
+    </div>
+    <div>
+      <h2>Contact</h2>
+      <p style="margin:0"><a href="mailto:contact@noframe.studio">contact@noframe.studio</a></p>
+    </div>
+  </div>
+
+  <script is:inline>
+    const name = document.querySelector('.nameplate');
+    document.querySelectorAll('.tile[data-accent]').forEach((tile) => {
+      const set = () => name.style.setProperty('--accent', tile.dataset.accent);
+      tile.addEventListener('mouseenter', set);
+      tile.addEventListener('focus', set);
+    });
+  </script>
+</PreviewShell>

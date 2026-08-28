@@ -1,0 +1,111 @@
+/* Yön A — Mosaik.
+   Every installation photograph, edge to edge, with the studio name laid across
+   the whole field. The name has no colour of its own: it takes the colour of
+   whichever exhibition you are pointing at, sampled from that show's photographs. */
+
+:root {
+  --ink: #0b0b0b;
+  --accent: #0a78b9;
+  --mono: ui-monospace, 'SF Mono', SFMono-Regular, Menlo, Consolas, 'Liberation Mono', monospace;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--mono);
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: -3px; }
+
+.back-to-picker {
+  position: fixed;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 60;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.8rem;
+}
+
+/* the field */
+.mosaic {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(min(11rem, 33vw), 1fr));
+  gap: 0;
+}
+
+.tile { position: relative; display: block; aspect-ratio: 1 / 1; overflow: hidden; }
+
+.tile img {
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  display: block;
+}
+
+/* the label chip, exactly where the work is */
+.tile b {
+  position: absolute;
+  left: 0;
+  top: 0.5rem;
+  z-index: 3;
+  background: var(--ink);
+  color: #fff;
+  font-weight: 400;
+  font-size: 0.7rem;
+  letter-spacing: 0.01em;
+  padding: 0.2rem 0.5rem;
+  white-space: nowrap;
+  opacity: 0;
+  transition: opacity 120ms ease;
+}
+.tile:hover b, .tile:focus-visible b { opacity: 1; }
+
+/* the name, over everything, in the colour of the show under the cursor */
+.nameplate {
+  position: absolute;
+  inset: 0;
+  z-index: 2;
+  padding: 0.5rem 0.4rem;
+  margin: 0;
+  font-size: clamp(3rem, 13.5vw, 13rem);
+  font-weight: 400;
+  line-height: 0.92;
+  letter-spacing: -0.04em;
+  color: var(--accent);
+  pointer-events: none;
+  transition: color 220ms ease;
+  word-break: break-word;
+}
+
+.field { position: relative; }
+
+/* the studio, stated plainly, under the field */
+.colophon {
+  position: relative;
+  z-index: 4;
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.5rem 2rem;
+  padding: clamp(2rem, 6vw, 4rem) clamp(1rem, 3vw, 2.5rem) clamp(3rem, 7vw, 5rem);
+  border-top: 3px solid var(--ink);
+  font-size: 0.8rem;
+  line-height: 1.6;
+}
+.colophon h2 { margin: 0 0 0.4rem; font-size: 0.7rem; font-weight: 400; letter-spacing: 0.14em; text-transform: uppercase; color: #8a8a8a; }
+.colophon a { border-bottom: 1px solid #d5d5d5; }
+.colophon a:hover { border-bottom-color: var(--ink); }
+.colophon ul { list-style: none; margin: 0; padding: 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}

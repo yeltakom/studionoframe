@@ -1,0 +1,41 @@
+---
+import PreviewShell from '../../layouts/PreviewShell.astro';
+import { getProjects } from '../../lib/projects';
+import '../../styles/dir-b.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+---
+
+<PreviewShell title="Studio No Frame — Plakat" variant="b">
+  <div class="runner">
+    <a href={`${base}/`}>Studio No Frame</a>
+    <span>Exhibition architecture · Berlin</span>
+    <a href="mailto:contact@noframe.studio">contact@noframe.studio</a>
+  </div>
+
+  {projects.map((p, i) => (
+    <a class="poster" href={`${base}/projects/${p.id}`}>
+      <img
+        src={`${base}${p.data.cover}`}
+        alt={`${p.data.title} — ${p.data.venue}`}
+        loading={i < 2 ? 'eager' : 'lazy'}
+        decoding="async"
+      />
+      <span class="plate-no">{String(i + 1).padStart(2, '0')} / {projects.length}</span>
+      <div class="sheet">
+        <h2>{p.data.title}</h2>
+        <p>{p.data.venue} · {p.data.year}<br />{p.data.role}</p>
+      </div>
+    </a>
+  ))}
+
+  <div class="end">
+    <strong>Studio No Frame</strong>
+    <p style="margin:0">
+      Exhibition architecture, production and curation. Berlin.<br />
+      Led by Yelta Köm, architect and artist.
+    </p>
+    <p style="margin:0"><a href="mailto:contact@noframe.studio">contact@noframe.studio</a></p>
+  </div>
+</PreviewShell>
