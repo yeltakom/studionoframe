@@ -1,0 +1,106 @@
+/* Yön F — Index & Ansicht.
+   The list stays legible and the work stays large: the index of nineteen shows
+   runs down the left, and whichever line you point at fills the right-hand
+   half. Reading and looking, at the same time, without either giving way. */
+
+:root {
+  --ink: #0b0b0b;
+  --soft: #8a8a8a;
+  --rule: #e3e3e3;
+  --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --gutter: clamp(1.15rem, 3vw, 2.75rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: #fff;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.92rem;
+  line-height: 1.5;
+  letter-spacing: -0.006em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 3px; }
+
+.back-to-picker {
+  position: fixed;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 60;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.8rem;
+}
+
+.head {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem 2rem;
+  flex-wrap: wrap;
+  padding: clamp(1.25rem, 3vw, 2.25rem) var(--gutter) clamp(1rem, 2.5vw, 1.5rem);
+}
+.head h1 { margin: 0; font-size: 1.05rem; font-weight: 700; letter-spacing: -0.024em; }
+.head nav { display: flex; gap: 1.25rem; font-size: 0.72rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.head nav a:hover { text-decoration: underline; text-underline-offset: 0.25em; }
+
+.split { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 1fr); gap: clamp(1.5rem, 4vw, 4rem); padding: 0 var(--gutter) clamp(3rem, 7vw, 5rem); }
+
+.index { border-top: 1px solid var(--ink); }
+
+.entry {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr) auto;
+  gap: 0.75rem 1rem;
+  align-items: baseline;
+  padding: clamp(0.7rem, 1.5vw, 1.05rem) 0;
+  border-bottom: 1px solid var(--rule);
+  transition: padding-left 220ms cubic-bezier(0.22, 1, 0.36, 1), color 160ms ease;
+}
+.entry:hover, .entry:focus-visible { padding-left: 0.75rem; }
+.entry.is-dim { color: var(--soft); }
+
+.entry .year { font-size: 0.8rem; color: var(--soft); }
+.entry h2 { margin: 0; font-size: clamp(1rem, 1.5vw, 1.35rem); font-weight: 700; line-height: 1.15; letter-spacing: -0.024em; text-wrap: balance; }
+.entry .venue { display: block; margin-top: 0.2rem; font-size: 0.78rem; color: var(--soft); font-weight: 400; }
+.entry .no { font-size: 0.72rem; color: var(--soft); }
+
+/* the view: one work, large, held in place while you read */
+.view { position: sticky; top: clamp(1rem, 3vw, 2rem); align-self: start; height: calc(100svh - clamp(2rem, 6vw, 4rem)); }
+
+.view figure { margin: 0; height: 100%; display: flex; flex-direction: column; }
+
+.view .stack { position: relative; flex: 1; background: #f2f2f2; overflow: hidden; }
+.view img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  opacity: 0;
+  transition: opacity 260ms ease;
+}
+.view img.is-active { opacity: 1; }
+
+.view figcaption { padding-top: 0.7rem; display: flex; justify-content: space-between; gap: 1rem; font-size: 0.78rem; color: var(--soft); }
+.view figcaption b { color: var(--ink); font-weight: 400; }
+
+@media (max-width: 900px) {
+  .split { grid-template-columns: 1fr; }
+  .view { display: none; }
+  .entry { grid-template-columns: 3.25rem 1fr; }
+  .entry .no { display: none; }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}

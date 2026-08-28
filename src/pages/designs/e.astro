@@ -1,0 +1,112 @@
+---
+import PreviewShell from '../../layouts/PreviewShell.astro';
+import { getProjects } from '../../lib/projects';
+import '../../styles/dir-e.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+---
+
+<PreviewShell title="Studio No Frame — Korridor" variant="e">
+  <header class="sign">
+    <h1><a href={`${base}/`}>Studio No Frame</a></h1>
+    <p>Exhibition architecture, production and curation · Berlin</p>
+    <p><a href="mailto:contact@noframe.studio">contact@noframe.studio</a></p>
+  </header>
+
+  <div class="corridor" id="corridor">
+    {projects.map((p, i) => (
+      <a class="station" href={`${base}/projects/${p.id}`}>
+        <img
+          src={`${base}${p.data.cover}`}
+          alt={`${p.data.title} — ${p.data.venue}`}
+          loading={i < 3 ? 'eager' : 'lazy'}
+          decoding="async"
+          draggable="false"
+        />
+        <div class="label">
+          <h2>{p.data.title}</h2>
+          <span class="meta">{p.data.year}<br />{String(i + 1).padStart(2, '0')}</span>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <p class="hint">Scroll, drag or ← →</p>
+  <div class="progress"><i id="bar"></i></div>
+
+  <script is:inline>
+    const corridor = document.getElementById('corridor');
+    const bar = document.getElementById('bar');
+    const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+    let target = 0;
+    let current = 0;
+    let max = 0;
+
+    const measure = () => {
+      max = Math.max(0, corridor.scrollWidth - window.innerWidth);
+      target = Math.min(target, max);
+    };
+
+    const render = () => {
+      current += (target - current) * (reduced ? 1 : 0.12);
+      if (Math.abs(target - current) < 0.1) current = target;
+      corridor.style.transform = `translate3d(${-current}px,0,0)`;
+      bar.style.width = `${max ? (current / max) * 100 : 0}%`;
+      requestAnimationFrame(render);
+    };
+
+    const move = (delta) => {
+      target = Math.max(0, Math.min(max, target + delta));
+    };
+
+    window.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      move(Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX);
+    }, { passive: false });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight') move(window.innerWidth * 0.6);
+      if (e.key === 'ArrowLeft') move(-window.innerWidth * 0.6);
+    });
+
+    let dragging = false;
+    let startX = 0;
+    let startTarget = 0;
+    let moved = 0;
+
+    corridor.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      moved = 0;
+      startX = e.clientX;
+      startTarget = target;
+      corridor.classList.add('is-dragging');
+      corridor.setPointerCapture(e.pointerId);
+    });
+
+    corridor.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const delta = e.clientX - startX;
+      moved = Math.max(moved, Math.abs(delta));
+      target = Math.max(0, Math.min(max, startTarget - delta));
+    });
+
+    const endDrag = () => {
+      dragging = false;
+      corridor.classList.remove('is-dragging');
+    };
+    corridor.addEventListener('pointerup', endDrag);
+    corridor.addEventListener('pointercancel', endDrag);
+
+    /* a drag should not also open a project */
+    corridor.addEventListener('click', (e) => {
+      if (moved > 8) e.preventDefault();
+    }, true);
+
+    window.addEventListener('resize', measure);
+    window.addEventListener('load', measure);
+    measure();
+    render();
+  </script>
+</PreviewShell>

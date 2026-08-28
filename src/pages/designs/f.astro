@@ -1,0 +1,75 @@
+---
+import PreviewShell from '../../layouts/PreviewShell.astro';
+import { getProjects } from '../../lib/projects';
+import '../../styles/dir-f.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+---
+
+<PreviewShell title="Studio No Frame — Index & Ansicht" variant="f">
+  <header class="head">
+    <h1><a href={`${base}/`}>Studio No Frame</a></h1>
+    <nav>
+      <a href={`${base}/about`}>About</a>
+      <a href="mailto:contact@noframe.studio">Contact</a>
+    </nav>
+  </header>
+
+  <div class="split">
+    <div class="index" id="index">
+      {projects.map((p, i) => (
+        <a class="entry" href={`${base}/projects/${p.id}`} data-slug={p.id}>
+          <span class="year">{p.data.year}</span>
+          <h2>{p.data.title}<span class="venue">{p.data.venue} — {p.data.role}</span></h2>
+          <span class="no">{String(i + 1).padStart(2, '0')}</span>
+        </a>
+      ))}
+    </div>
+
+    <figure class="view">
+      <div class="stack">
+        {projects.map((p, i) => (
+          <img
+            src={`${base}${p.data.cover}`}
+            alt={`${p.data.title} — ${p.data.venue}`}
+            data-slug={p.id}
+            class={i === 0 ? 'is-active' : undefined}
+            loading={i < 3 ? 'eager' : 'lazy'}
+            decoding="async"
+          />
+        ))}
+      </div>
+      <figcaption>
+        <b data-view="title">{projects[0].data.title}</b>
+        <span data-view="meta">{projects[0].data.venue} · {projects[0].data.year}</span>
+      </figcaption>
+    </figure>
+  </div>
+
+  <script is:inline>
+    const entries = [...document.querySelectorAll('.entry')];
+    const images = [...document.querySelectorAll('.view img')];
+    const title = document.querySelector('[data-view="title"]');
+    const meta = document.querySelector('[data-view="meta"]');
+
+    const show = (slug) => {
+      images.forEach((img) => img.classList.toggle('is-active', img.dataset.slug === slug));
+      const entry = entries.find((e) => e.dataset.slug === slug);
+      if (!entry) return;
+      title.textContent = entry.querySelector('h2').childNodes[0].textContent.trim();
+      meta.textContent = entry.querySelector('.venue').textContent.split(' — ')[0] +
+        ' · ' + entry.querySelector('.year').textContent;
+      entries.forEach((e) => e.classList.toggle('is-dim', e !== entry));
+    };
+
+    entries.forEach((entry) => {
+      entry.addEventListener('mouseenter', () => show(entry.dataset.slug));
+      entry.addEventListener('focus', () => show(entry.dataset.slug));
+    });
+
+    document.getElementById('index').addEventListener('mouseleave', () => {
+      entries.forEach((e) => e.classList.remove('is-dim'));
+    });
+  </script>
+</PreviewShell>

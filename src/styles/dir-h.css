@@ -1,0 +1,100 @@
+/* Yön H — Raum (deneysel).
+   Not a page but a room: every photograph the studio has taken, laid out on one
+   open plane. Drag to walk it, scroll to zoom. Nothing is above anything else,
+   which is roughly how an install looks the week before it opens. */
+
+:root {
+  --ink: #0b0b0b;
+  --soft: #8a8a8a;
+  --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+html, body { height: 100%; }
+
+body {
+  margin: 0;
+  background: #f4f4f2;
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  letter-spacing: -0.006em;
+  -webkit-font-smoothing: antialiased;
+  overflow: hidden;
+  overscroll-behavior: none;
+}
+
+a { color: inherit; text-decoration: none; }
+:focus-visible { outline: 3px solid var(--ink); outline-offset: 3px; }
+
+.back-to-picker {
+  position: fixed;
+  right: 0.75rem;
+  bottom: 0.75rem;
+  z-index: 60;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.8rem;
+}
+
+.viewport { position: fixed; inset: 0; cursor: grab; touch-action: none; }
+.viewport.is-dragging { cursor: grabbing; }
+
+.plane { position: absolute; top: 0; left: 0; transform-origin: 0 0; will-change: transform; }
+
+.card { position: absolute; display: block; background: #e8e8e6; }
+.card img { width: 100%; height: 100%; object-fit: cover; display: block; }
+
+.card .tag {
+  position: absolute;
+  left: 0;
+  bottom: 0;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.68rem;
+  letter-spacing: 0.01em;
+  padding: 0.2rem 0.5rem;
+  opacity: 0;
+  transition: opacity 120ms ease;
+  white-space: nowrap;
+  max-width: 100%;
+  overflow: hidden;
+  text-overflow: ellipsis;
+}
+.card:hover .tag, .card:focus-visible .tag { opacity: 1; }
+
+.hud {
+  position: fixed;
+  top: 0; left: 0; right: 0;
+  z-index: 40;
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem 2rem;
+  flex-wrap: wrap;
+  padding: clamp(0.9rem, 2.5vw, 1.6rem) clamp(1rem, 3vw, 2.25rem);
+  pointer-events: none;
+}
+.hud > * { pointer-events: auto; }
+.hud h1 { margin: 0; font-size: 1.02rem; font-weight: 700; letter-spacing: -0.024em; }
+.hud p { margin: 0; font-size: 0.76rem; color: var(--soft); }
+
+.hint {
+  position: fixed;
+  left: clamp(1rem, 3vw, 2.25rem);
+  bottom: 1.1rem;
+  z-index: 40;
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--soft);
+}
+
+@media (prefers-reduced-motion: reduce) {
+  .card .tag { transition: none; }
+}

@@ -1,0 +1,201 @@
+---
+import PreviewShell from '../../layouts/PreviewShell.astro';
+import { getProjects } from '../../lib/projects';
+import '../../styles/dir-g.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+---
+
+<PreviewShell title="Studio No Frame — Fluss" variant="g">
+  <canvas class="gl" id="gl" aria-hidden="true"></canvas>
+
+  <header class="sign">
+    <h1><a href={`${base}/`}>Studio No Frame</a></h1>
+    <p>Exhibition architecture · Berlin</p>
+  </header>
+
+  <div class="stream">
+    {projects.map((p, i) => (
+      <a class="slide" href={`${base}/projects/${p.id}`}>
+        <div class="plane">
+          <img
+            src={`${base}${p.data.cover}`}
+            alt={`${p.data.title} — ${p.data.venue}`}
+            loading={i < 3 ? 'eager' : 'lazy'}
+            decoding="async"
+            crossorigin="anonymous"
+          />
+        </div>
+        <div class="label">
+          <h2>{p.data.title}</h2>
+          <span class="meta">{p.data.venue}<br />{p.data.year}</span>
+        </div>
+      </a>
+    ))}
+  </div>
+
+  <div class="foot">
+    <span>Led by Yelta Köm, architect and artist · Berlin</span>
+    <a href="mailto:contact@noframe.studio">contact@noframe.studio</a>
+  </div>
+
+  <script is:inline>
+    (() => {
+      const canvas = document.getElementById('gl');
+      const gl = canvas.getContext('webgl', { alpha: true, premultipliedAlpha: false });
+      const reduced = matchMedia('(prefers-reduced-motion: reduce)').matches;
+      /* No WebGL, or the visitor asked for less motion: the plain page is the page. */
+      if (!gl || reduced) return;
+
+      const VERT = `
+        attribute vec2 aPos;
+        uniform vec2 uRes;
+        uniform vec4 uRect;      // x, y, w, h in css pixels
+        uniform float uBend;
+        varying vec2 vUv;
+        void main() {
+          vUv = aPos;
+          vec2 px = uRect.xy + aPos * uRect.zw;
+          px.y += sin(aPos.x * 3.14159) * uBend;
+          vec2 clip = vec2(px.x / uRes.x * 2.0 - 1.0, 1.0 - px.y / uRes.y * 2.0);
+          gl_Position = vec4(clip, 0.0, 1.0);
+        }`;
+
+      const FRAG = `
+        precision mediump float;
+        uniform sampler2D uTex;
+        uniform vec2 uScale;
+        uniform vec2 uOffset;
+        varying vec2 vUv;
+        void main() {
+          vec2 uv = vUv * uScale + uOffset;
+          gl_FragColor = texture2D(uTex, uv);
+        }`;
+
+      const compile = (type, src) => {
+        const s = gl.createShader(type);
+        gl.shaderSource(s, src);
+        gl.compileShader(s);
+        return gl.getShaderParameter(s, gl.COMPILE_STATUS) ? s : null;
+      };
+
+      const vs = compile(gl.VERTEX_SHADER, VERT);
+      const fs = compile(gl.FRAGMENT_SHADER, FRAG);
+      if (!vs || !fs) return;
+
+      const prog = gl.createProgram();
+      gl.attachShader(prog, vs);
+      gl.attachShader(prog, fs);
+      gl.linkProgram(prog);
+      if (!gl.getProgramParameter(prog, gl.LINK_STATUS)) return;
+      gl.useProgram(prog);
+
+      const buffer = gl.createBuffer();
+      gl.bindBuffer(gl.ARRAY_BUFFER, buffer);
+      gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0,0, 1,0, 0,1, 0,1, 1,0, 1,1]), gl.STATIC_DRAW);
+      const aPos = gl.getAttribLocation(prog, 'aPos');
+      gl.enableVertexAttribArray(aPos);
+      gl.vertexAttribPointer(aPos, 2, gl.FLOAT, false, 0, 0);
+
+      const u = (name) => gl.getUniformLocation(prog, name);
+      const uRes = u('uRes'), uRect = u('uRect'), uBend = u('uBend');
+      const uScale = u('uScale'), uOffset = u('uOffset');
+
+      gl.enable(gl.BLEND);
+      gl.blendFunc(gl.SRC_ALPHA, gl.ONE_MINUS_SRC_ALPHA);
+
+      const planes = [...document.querySelectorAll('.slide')].map((slide) => ({
+        el: slide.querySelector('.plane'),
+        img: slide.querySelector('img'),
+        tex: null,
+        ratio: 1,
+      }));
+
+      const upload = (plane) => {
+        const img = plane.img;
+        if (!img.complete || !img.naturalWidth) return;
+        const tex = gl.createTexture();
+        gl.bindTexture(gl.TEXTURE_2D, tex);
+        gl.pixelStorei(gl.UNPACK_FLIP_Y_WEBGL, false);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_S, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_WRAP_T, gl.CLAMP_TO_EDGE);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR);
+        gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+        try {
+          gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, img);
+        } catch (e) {
+          return;
+        }
+        plane.tex = tex;
+        plane.ratio = img.naturalWidth / img.naturalHeight;
+      };
+
+      planes.forEach((plane) => {
+        if (plane.img.complete) upload(plane);
+        else plane.img.addEventListener('load', () => upload(plane), { once: true });
+      });
+
+      let width = 0, height = 0, dpr = 1;
+      const resize = () => {
+        dpr = Math.min(window.devicePixelRatio || 1, 2);
+        width = window.innerWidth;
+        height = window.innerHeight;
+        canvas.width = Math.round(width * dpr);
+        canvas.height = Math.round(height * dpr);
+        canvas.style.width = width + 'px';
+        canvas.style.height = height + 'px';
+        gl.viewport(0, 0, canvas.width, canvas.height);
+      };
+
+      let last = window.scrollY;
+      let velocity = 0;
+      let drawn = false;
+
+      const frame = () => {
+        const now = window.scrollY;
+        velocity += ((now - last) - velocity) * 0.16;
+        last = now;
+        if (Math.abs(velocity) < 0.02) velocity = 0;
+
+        gl.clearColor(0, 0, 0, 0);
+        gl.clear(gl.COLOR_BUFFER_BIT);
+        gl.uniform2f(uRes, width, height);
+
+        for (const plane of planes) {
+          if (!plane.tex) continue;
+          const r = plane.el.getBoundingClientRect();
+          if (r.bottom < -200 || r.top > height + 200) continue;
+
+          /* object-fit: cover, done in the shader */
+          const boxRatio = r.width / r.height;
+          let sx = 1, sy = 1, ox = 0, oy = 0;
+          if (plane.ratio > boxRatio) {
+            sx = boxRatio / plane.ratio;
+            ox = (1 - sx) / 2;
+          } else {
+            sy = plane.ratio / boxRatio;
+            oy = (1 - sy) / 2;
+          }
+
+          gl.bindTexture(gl.TEXTURE_2D, plane.tex);
+          gl.uniform4f(uRect, r.left, r.top, r.width, r.height);
+          gl.uniform2f(uScale, sx, sy);
+          gl.uniform2f(uOffset, ox, oy);
+          gl.uniform1f(uBend, Math.max(-120, Math.min(120, velocity * 2.2)));
+          gl.drawArrays(gl.TRIANGLES, 0, 6);
+
+          if (!drawn) {
+            drawn = true;
+            document.body.classList.add('gl-on');
+          }
+        }
+        requestAnimationFrame(frame);
+      };
+
+      window.addEventListener('resize', resize);
+      resize();
+      frame();
+    })();
+  </script>
+</PreviewShell>

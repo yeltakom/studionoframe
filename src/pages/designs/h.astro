@@ -1,0 +1,131 @@
+---
+import PreviewShell from '../../layouts/PreviewShell.astro';
+import { getProjects } from '../../lib/projects';
+import '../../styles/dir-h.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+
+/** A deterministic scatter: an even grid, nudged off the grid so the plane
+ *  reads as a room being hung rather than a spreadsheet. */
+const frames = projects.flatMap((p) =>
+  p.data.images.map((src: string, i: number) => ({ src, slug: p.id, title: p.data.title, year: p.data.year, i }))
+);
+
+const COLS = 12;
+const CELL_X = 460;
+const CELL_Y = 380;
+
+const cards = frames.map((f, n) => {
+  const col = n % COLS;
+  const row = Math.floor(n / COLS);
+  const jitterX = (((n * 73) % 41) - 20) * 4;
+  const jitterY = (((n * 137) % 37) - 18) * 4;
+  const wide = (n * 31) % 5 === 0;
+  return {
+    ...f,
+    x: col * CELL_X + jitterX + (row % 2 ? CELL_X / 2 : 0),
+    y: row * CELL_Y + jitterY,
+    w: wide ? 400 : 300,
+    h: wide ? 267 : 200,
+  };
+});
+---
+
+<PreviewShell title="Studio No Frame — Raum" variant="h">
+  <div class="hud">
+    <h1><a href={`${base}/`}>Studio No Frame</a></h1>
+    <p>{frames.length} photographs · {projects.length} exhibitions</p>
+    <p><a href="mailto:contact@noframe.studio">contact@noframe.studio</a></p>
+  </div>
+
+  <div class="viewport" id="viewport">
+    <div class="plane" id="plane">
+      {cards.map((c) => (
+        <a
+          class="card"
+          href={`${base}/projects/${c.slug}`}
+          style={`left:${c.x}px; top:${c.y}px; width:${c.w}px; height:${c.h}px`}
+        >
+          <img src={`${base}${c.src}`} alt={`${c.title} — ${c.year}`} loading="lazy" decoding="async" draggable="false" />
+          <span class="tag">{c.title}</span>
+        </a>
+      ))}
+    </div>
+  </div>
+
+  <p class="hint">Drag to move · scroll to zoom</p>
+
+  <script is:inline>
+    const viewport = document.getElementById('viewport');
+    const plane = document.getElementById('plane');
+
+    let x = -200, y = -120, scale = 0.7;
+    let moved = 0;
+
+    const apply = () => {
+      plane.style.transform = `translate3d(${x}px, ${y}px, 0) scale(${scale})`;
+    };
+
+    viewport.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      if (e.ctrlKey) {
+        const next = Math.min(2.2, Math.max(0.25, scale * (1 - e.deltaY * 0.01)));
+        const rect = viewport.getBoundingClientRect();
+        const px = e.clientX - rect.left;
+        const py = e.clientY - rect.top;
+        x = px - ((px - x) * next) / scale;
+        y = py - ((py - y) * next) / scale;
+        scale = next;
+      } else {
+        x -= e.deltaX;
+        y -= e.deltaY;
+      }
+      apply();
+    }, { passive: false });
+
+    let dragging = false;
+    let lastX = 0, lastY = 0;
+
+    viewport.addEventListener('pointerdown', (e) => {
+      dragging = true;
+      moved = 0;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      viewport.classList.add('is-dragging');
+      viewport.setPointerCapture(e.pointerId);
+    });
+
+    viewport.addEventListener('pointermove', (e) => {
+      if (!dragging) return;
+      const dx = e.clientX - lastX;
+      const dy = e.clientY - lastY;
+      moved += Math.abs(dx) + Math.abs(dy);
+      x += dx;
+      y += dy;
+      lastX = e.clientX;
+      lastY = e.clientY;
+      apply();
+    });
+
+    const end = () => { dragging = false; viewport.classList.remove('is-dragging'); };
+    viewport.addEventListener('pointerup', end);
+    viewport.addEventListener('pointercancel', end);
+
+    /* dragging the room should not open a project */
+    viewport.addEventListener('click', (e) => { if (moved > 10) e.preventDefault(); }, true);
+
+    window.addEventListener('keydown', (e) => {
+      const step = 120;
+      if (e.key === 'ArrowRight') x -= step;
+      else if (e.key === 'ArrowLeft') x += step;
+      else if (e.key === 'ArrowDown') y -= step;
+      else if (e.key === 'ArrowUp') y += step;
+      else return;
+      e.preventDefault();
+      apply();
+    });
+
+    apply();
+  </script>
+</PreviewShell>

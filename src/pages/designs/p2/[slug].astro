@@ -1,0 +1,46 @@
+---
+import { render } from 'astro:content';
+import PreviewShell from '../../../layouts/PreviewShell.astro';
+import InnerSwitcher from '../../../components/InnerSwitcher.astro';
+import { getProjects } from '../../../lib/projects';
+import '../../../styles/inner.css';
+
+export async function getStaticPaths() {
+  const projects = await getProjects('en');
+  return projects.map((project, i) => ({
+    params: { slug: project.id },
+    props: { project, next: projects[i + 1] ?? projects[0] },
+  }));
+}
+
+const { project, next } = Astro.props;
+const { Content } = await render(project.entry);
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const { title, venue, year, role, images } = project.data;
+---
+
+<PreviewShell title={`${title} — Dossier`} variant="p2">
+  <InnerSwitcher slug={project.id} current="p2" />
+
+  <div class="p2">
+    <div class="layout">
+      <aside class="file">
+        <h1>{title}</h1>
+        <dl>
+          <dt class="label">Venue</dt><dd>{venue}</dd>
+          <dt class="label">Year</dt><dd>{year}</dd>
+          <dt class="label">Role</dt><dd>{role}</dd>
+          <dt class="label">Plates</dt><dd>{images.length}</dd>
+        </dl>
+        <div class="text"><Content /></div>
+        <a class="back" href={`${base}/designs/p2/${next.id}`}>Next — {next.data.title}</a>
+      </aside>
+
+      <div class="plates">
+        {images.map((src: string, i: number) => (
+          <img src={`${base}${src}`} alt={`${title} — ${venue}, ${i + 1}`} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+        ))}
+      </div>
+    </div>
+  </div>
+</PreviewShell>

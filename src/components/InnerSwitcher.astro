@@ -1,0 +1,20 @@
+---
+interface Props { slug: string; current: 'p1' | 'p2' | 'p3' }
+const { slug, current } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const options = [
+  { key: 'p1', label: 'P1 Sequenz' },
+  { key: 'p2', label: 'P2 Dossier' },
+  { key: 'p3', label: 'P3 Galerie' },
+] as const;
+---
+
+<nav class="switcher" aria-label="İç sayfa alternatifleri">
+  {options.map((o) => (
+    <a href={`${base}/designs/${o.key}/${slug}`} aria-current={o.key === current ? 'page' : undefined}>
+      {o.label}
+    </a>
+  ))}
+  <a href={`${base}/projects/${slug}`}>Yayında</a>
+  <a href={`${base}/designs/`}>← Yönler</a>
+</nav>
