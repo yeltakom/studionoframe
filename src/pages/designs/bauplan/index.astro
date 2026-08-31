@@ -1,0 +1,33 @@
+---
+import ThemeShell from '../../../layouts/ThemeShell.astro';
+import { getProjects } from '../../../lib/projects';
+import '../../../styles/t-bauplan.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+const FONTS = 'family=Big+Shoulders+Display:wght@400..700&family=Martian+Mono:wght@300;400;500';
+---
+
+<ThemeShell title="Studio No Frame — Bauplan" theme="bauplan" fonts={FONTS}>
+  <header class="sheet-head">
+    <h1>Studio<br />No <span>Frame</span></h1>
+    <div class="legend reveal">
+      <div><b>Discipline</b> Exhibition architecture</div>
+      <div><b>Scope</b> Design · production · curation</div>
+      <div><b>Base</b> Berlin</div>
+      <div><b>Lead</b> Yelta Köm</div>
+      <div><b>Contact</b> <a href="mailto:contact@noframe.studio">contact@noframe.studio</a></div>
+    </div>
+  </header>
+
+  <section class="schedule">
+    {projects.map((p, i) => (
+      <a class="row reveal" href={`${base}/designs/bauplan/${p.id}`}>
+        <span class="ref">A{String(i + 1).padStart(2, '0')}</span>
+        <h2>{p.data.title}</h2>
+        <span class="where">{p.data.venue}</span>
+        <span class="when">{p.data.year}</span>
+      </a>
+    ))}
+  </section>
+</ThemeShell>

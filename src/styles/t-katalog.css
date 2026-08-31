@@ -1,0 +1,225 @@
+/* KATALOG — the exhibition catalogue, bound in oxblood.
+   Museums print their catalogues on heavy stock in deep colour with a didone
+   on the cover; this is that object turned into a website. Bodoni Moda for the
+   plates, EB Garamond for the reading, gold hairlines for the ruling. */
+
+:root {
+  --ground: #2a0d13;
+  --ground-deep: #1c070c;
+  --bone: #f0e6d8;
+  --bone-dim: #c3ac9c;
+  --gold: #c8a253;
+  --rule: rgba(200, 162, 83, 0.32);
+
+  --display: 'Bodoni Moda', 'Didot', Georgia, serif;
+  --text: 'EB Garamond', Georgia, serif;
+  --gutter: clamp(1.25rem, 4vw, 4.5rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  color: var(--bone);
+  font-family: var(--text);
+  font-size: clamp(1.02rem, 0.4vw + 0.95rem, 1.18rem);
+  line-height: 1.62;
+  overflow-x: clip;
+  background:
+    radial-gradient(120% 90% at 50% -10%, #3d151d 0%, transparent 58%),
+    radial-gradient(90% 70% at 50% 110%, #16060a 0%, transparent 60%),
+    var(--ground);
+  background-attachment: fixed;
+}
+
+/* the tooth of the paper */
+body::before {
+  content: '';
+  position: fixed;
+  inset: 0;
+  z-index: 0;
+  pointer-events: none;
+  opacity: 0.5;
+  mix-blend-mode: overlay;
+  background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='3'/%3E%3C/filter%3E%3Crect width='140' height='140' filter='url(%23n)' opacity='0.35'/%3E%3C/svg%3E");
+}
+
+body > * { position: relative; z-index: 1; }
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+:focus-visible { outline: 2px solid var(--gold); outline-offset: 4px; }
+
+.escape {
+  position: fixed;
+  right: 1rem; bottom: 1rem;
+  z-index: 60;
+  border: 1px solid var(--rule);
+  background: rgba(28, 7, 12, 0.85);
+  color: var(--bone-dim);
+  font-family: var(--text);
+  font-size: 0.78rem;
+  letter-spacing: 0.08em;
+  padding: 0.45rem 0.8rem;
+  backdrop-filter: blur(6px);
+}
+.escape:hover { color: var(--gold); border-color: var(--gold); }
+
+/* ---------- the plate ---------- */
+
+.frontis {
+  min-height: 78svh;
+  display: grid;
+  align-content: center;
+  gap: clamp(1rem, 3vw, 2rem);
+  padding: clamp(3rem, 10vh, 8rem) var(--gutter) clamp(2rem, 6vh, 4rem);
+  text-align: center;
+}
+
+.frontis .imprint {
+  font-size: 0.74rem;
+  letter-spacing: 0.42em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.frontis h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-optical-sizing: auto;
+  font-weight: 500;
+  font-size: clamp(3rem, 12vw, 11rem);
+  line-height: 0.86;
+  letter-spacing: -0.02em;
+}
+.frontis h1 em { font-style: italic; font-weight: 400; }
+
+.frontis .sub { margin: 0 auto; max-width: 46ch; color: var(--bone-dim); font-style: italic; }
+
+.frontis .rule { width: min(28rem, 60%); height: 1px; margin: 0.5rem auto; background: linear-gradient(90deg, transparent, var(--gold), transparent); }
+
+/* ---------- the list of plates ---------- */
+
+.plates { padding: 0 var(--gutter) clamp(4rem, 12vh, 9rem); }
+
+.plates > header {
+  display: flex;
+  justify-content: space-between;
+  align-items: baseline;
+  gap: 1rem;
+  padding-bottom: 0.8rem;
+  border-bottom: 1px solid var(--rule);
+  font-size: 0.72rem;
+  letter-spacing: 0.3em;
+  text-transform: uppercase;
+  color: var(--gold);
+}
+
+.plate {
+  display: grid;
+  grid-template-columns: 3.5rem minmax(0, 1fr) minmax(0, 12rem);
+  gap: 0.4rem clamp(1rem, 3vw, 2.5rem);
+  align-items: baseline;
+  padding: clamp(1rem, 2.4vw, 1.7rem) 0;
+  border-bottom: 1px solid var(--rule);
+  transition: background 320ms ease, padding-left 320ms ease;
+}
+.plate:hover { background: rgba(200, 162, 83, 0.07); padding-left: 0.9rem; }
+
+.plate .no { font-family: var(--display); font-size: 1.05rem; color: var(--gold); }
+
+.plate h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(1.35rem, 2.8vw, 2.4rem);
+  line-height: 1.06;
+  letter-spacing: -0.012em;
+  text-wrap: balance;
+}
+.plate .venue { display: block; margin-top: 0.3rem; font-family: var(--text); font-size: 0.92rem; font-style: italic; color: var(--bone-dim); }
+.plate .year { font-family: var(--display); font-size: 1.05rem; color: var(--bone-dim); text-align: right; }
+
+.colophon {
+  padding: clamp(2rem, 5vw, 3rem) var(--gutter) clamp(4rem, 9vw, 6rem);
+  border-top: 1px solid var(--rule);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(15rem, 1fr));
+  gap: 1.5rem 3rem;
+  color: var(--bone-dim);
+  font-size: 0.95rem;
+}
+.colophon b { display: block; font-family: var(--display); font-weight: 500; color: var(--gold); font-size: 0.78rem; letter-spacing: 0.24em; text-transform: uppercase; margin-bottom: 0.4rem; }
+.colophon a { border-bottom: 1px solid var(--rule); }
+.colophon a:hover { border-bottom-color: var(--gold); color: var(--bone); }
+
+/* ---------- the entry ---------- */
+
+.entry-head { padding: clamp(3rem, 9vh, 7rem) var(--gutter) clamp(1.5rem, 4vh, 2.5rem); text-align: center; }
+.entry-head .imprint { font-size: 0.72rem; letter-spacing: 0.34em; text-transform: uppercase; color: var(--gold); }
+.entry-head h1 {
+  margin: 0.7rem auto 0;
+  max-width: 20ch;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(2rem, 6.5vw, 5rem);
+  line-height: 0.95;
+  letter-spacing: -0.018em;
+  text-wrap: balance;
+}
+.entry-head .credits { margin: 1.2rem auto 0; max-width: 44ch; font-style: italic; color: var(--bone-dim); }
+
+.entry-lead { padding: 0 var(--gutter); }
+.entry-lead img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+
+.entry-text { max-width: 34rem; margin: 0 auto; padding: clamp(2rem, 6vh, 4rem) var(--gutter); font-size: 1.12rem; }
+.entry-text p { margin: 0 0 1.1em; }
+.entry-text p:first-child::first-letter {
+  float: left;
+  font-family: var(--display);
+  font-size: 3.9em;
+  line-height: 0.78;
+  padding: 0.06em 0.1em 0 0;
+  color: var(--gold);
+}
+
+.entry-plates { display: grid; gap: clamp(1.5rem, 4vw, 3rem); padding: 0 var(--gutter) clamp(3rem, 8vh, 5rem); }
+.entry-plates figure { margin: 0; }
+.entry-plates figcaption { margin-top: 0.5rem; font-size: 0.8rem; font-style: italic; color: var(--bone-dim); }
+.entry-plates figure:nth-child(odd) { max-width: 100%; }
+.entry-plates figure:nth-child(even) { max-width: min(72%, 44rem); margin-left: auto; }
+
+.entry-next {
+  display: block;
+  margin: 0 var(--gutter);
+  padding: 1.4rem 0 clamp(4rem, 9vh, 6rem);
+  border-top: 1px solid var(--rule);
+  text-align: center;
+}
+.entry-next span { display: block; font-size: 0.72rem; letter-spacing: 0.3em; text-transform: uppercase; color: var(--gold); margin-bottom: 0.5rem; }
+.entry-next strong { font-family: var(--display); font-weight: 500; font-size: clamp(1.3rem, 3vw, 2.2rem); }
+
+/* ---------- one orchestrated opening ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; transform: translateY(1.1rem); animation: rise 900ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+  .frontis .imprint { animation-delay: 80ms; }
+  .frontis h1 { animation-delay: 200ms; }
+  .frontis .rule { animation-delay: 420ms; }
+  .frontis .sub { animation-delay: 540ms; }
+  .plates > header { animation-delay: 680ms; }
+  .plate:nth-child(1) { animation-delay: 740ms; }
+  .plate:nth-child(2) { animation-delay: 790ms; }
+  .plate:nth-child(3) { animation-delay: 840ms; }
+  .plate:nth-child(4) { animation-delay: 890ms; }
+  .plate:nth-child(5) { animation-delay: 940ms; }
+  .plate:nth-child(n + 6) { animation-delay: 990ms; }
+}
+
+@keyframes rise { to { opacity: 1; transform: none; } }
+
+@media (max-width: 720px) {
+  .plate { grid-template-columns: 2.5rem 1fr; }
+  .plate .year { grid-column: 2; text-align: left; }
+  .entry-plates figure:nth-child(even) { max-width: 100%; margin-left: 0; }
+}

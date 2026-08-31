@@ -1,0 +1,205 @@
+/* SAAL — the room itself: plaster wall, one cobalt line.
+   Museum walls are not white, they are a cool grey-green plaster that makes
+   colour behave. The whole site sits on that wall, with a single saturated
+   cobalt doing all the signalling. Bricolage Grotesque has a slight wobble in
+   its curves, which keeps it from reading as corporate; Newsreader carries
+   the reading. */
+
+:root {
+  --plaster: #dcded7;
+  --plaster-deep: #cdd0c8;
+  --ink: #14171a;
+  --ink-soft: #5f6560;
+  --cobalt: #1b39d8;
+  --rule: rgba(20, 23, 26, 0.16);
+
+  --display: 'Bricolage Grotesque', 'Helvetica Neue', sans-serif;
+  --text: 'Newsreader', Georgia, serif;
+  --gutter: clamp(1.15rem, 3.5vw, 4rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  color: var(--ink);
+  font-family: var(--text);
+  font-size: clamp(1rem, 0.4vw + 0.92rem, 1.14rem);
+  line-height: 1.6;
+  overflow-x: clip;
+  background:
+    radial-gradient(140% 100% at 78% -10%, rgba(255, 255, 255, 0.65), transparent 55%),
+    radial-gradient(120% 90% at 10% 105%, var(--plaster-deep), transparent 60%),
+    var(--plaster);
+  background-attachment: fixed;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+:focus-visible { outline: 2px solid var(--cobalt); outline-offset: 4px; }
+
+.escape {
+  position: fixed;
+  right: 1rem; bottom: 1rem;
+  z-index: 60;
+  background: var(--cobalt);
+  color: #fff;
+  font-family: var(--display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.5rem 0.85rem;
+}
+
+/* ---------- the wall ---------- */
+
+.wall {
+  min-height: 62svh;
+  display: grid;
+  align-content: end;
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+  padding: clamp(3rem, 12vh, 8rem) var(--gutter) clamp(2rem, 5vh, 3.5rem);
+}
+
+.wall .tag {
+  display: inline-block;
+  justify-self: start;
+  background: var(--cobalt);
+  color: #fff;
+  font-family: var(--display);
+  font-size: 0.74rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  padding: 0.3rem 0.6rem;
+}
+
+.wall h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(2.6rem, 10vw, 9rem);
+  line-height: 0.9;
+  letter-spacing: -0.035em;
+  max-width: 14ch;
+}
+.wall h1 i { font-style: normal; color: var(--cobalt); }
+
+.wall .say { max-width: 40ch; font-size: clamp(1.05rem, 1.4vw, 1.3rem); color: var(--ink-soft); }
+
+/* ---------- the hang ---------- */
+
+.hang { padding: 0 var(--gutter) clamp(4rem, 10vh, 7rem); }
+
+.hang > .caption {
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem;
+  padding-bottom: 0.7rem;
+  border-bottom: 2px solid var(--ink);
+  font-family: var(--display);
+  font-size: 0.72rem;
+  font-weight: 600;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+}
+
+.piece {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.15fr);
+  gap: clamp(0.75rem, 2.5vw, 2.5rem);
+  align-items: center;
+  padding: clamp(1.1rem, 2.5vw, 1.9rem) 0;
+  border-bottom: 1px solid var(--rule);
+  transition: background 260ms ease;
+}
+.piece:hover { background: rgba(27, 57, 216, 0.06); }
+
+.piece h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 700;
+  font-size: clamp(1.3rem, 3vw, 2.6rem);
+  line-height: 1.02;
+  letter-spacing: -0.028em;
+  text-wrap: balance;
+}
+.piece .meta { display: block; margin-top: 0.35rem; font-family: var(--text); font-size: 0.92rem; color: var(--ink-soft); }
+.piece .meta b { font-weight: 400; color: var(--cobalt); }
+
+.piece figure { margin: 0; overflow: hidden; }
+.piece img {
+  width: 100%;
+  aspect-ratio: 16 / 9;
+  object-fit: cover;
+  transform: scale(1.001);
+  transition: transform 620ms cubic-bezier(0.16, 1, 0.3, 1);
+}
+.piece:hover img { transform: scale(1.045); }
+
+.footer {
+  padding: clamp(2rem, 5vw, 3rem) var(--gutter) clamp(4rem, 9vw, 6rem);
+  border-top: 2px solid var(--ink);
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(14rem, 1fr));
+  gap: 1.25rem 2.5rem;
+  color: var(--ink-soft);
+  font-size: 0.95rem;
+}
+.footer b { display: block; font-family: var(--display); font-weight: 600; font-size: 0.7rem; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink); margin-bottom: 0.35rem; }
+.footer a { color: var(--cobalt); border-bottom: 1px solid rgba(27, 57, 216, 0.3); }
+.footer a:hover { border-bottom-color: var(--cobalt); }
+
+/* ---------- the label (project page) ---------- */
+
+.label-head { padding: clamp(2.5rem, 8vh, 5rem) var(--gutter) clamp(1.25rem, 3vh, 2rem); }
+.label-head .tag { display: inline-block; background: var(--cobalt); color: #fff; font-family: var(--display); font-size: 0.72rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; padding: 0.3rem 0.6rem; }
+.label-head h1 {
+  margin: 0.9rem 0 0;
+  max-width: 17ch;
+  font-family: var(--display);
+  font-weight: 800;
+  font-size: clamp(2rem, 6.5vw, 5.4rem);
+  line-height: 0.92;
+  letter-spacing: -0.035em;
+  text-wrap: balance;
+}
+.label-head dl { display: flex; flex-wrap: wrap; gap: 0.6rem 2.5rem; margin: 1.5rem 0 0; padding-top: 0.9rem; border-top: 2px solid var(--ink); }
+.label-head dt { font-family: var(--display); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); }
+.label-head dd { margin: 0.1rem 0 0; }
+
+.label-text { max-width: 38rem; padding: clamp(1.5rem, 4vh, 2.5rem) var(--gutter) clamp(2rem, 5vh, 3rem); font-size: 1.1rem; }
+.label-text p { margin: 0 0 1.1em; }
+
+.label-views { display: grid; gap: clamp(1rem, 3vw, 2rem); padding: 0 var(--gutter) clamp(3rem, 8vh, 5rem); }
+.label-views img { width: 100%; }
+.label-views figure { margin: 0; }
+.label-views figure:nth-child(3n + 2) { max-width: min(66%, 40rem); }
+.label-views figure:nth-child(3n) { max-width: min(80%, 52rem); margin-left: auto; }
+
+.label-next { display: block; margin: 0 var(--gutter); padding: 1.2rem 0 clamp(4rem, 9vh, 6rem); border-top: 2px solid var(--ink); }
+.label-next span { font-family: var(--display); font-size: 0.68rem; font-weight: 600; letter-spacing: 0.14em; text-transform: uppercase; color: var(--ink-soft); }
+.label-next strong { display: block; margin-top: 0.25rem; font-family: var(--display); font-weight: 700; font-size: clamp(1.3rem, 3vw, 2.2rem); letter-spacing: -0.028em; }
+.label-next:hover strong { color: var(--cobalt); }
+
+/* ---------- opening ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; transform: translateY(0.9rem); animation: lift 780ms cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .wall .tag { animation-delay: 60ms; }
+  .wall h1 { animation-delay: 180ms; }
+  .wall .say { animation-delay: 380ms; }
+  .hang > .caption { animation-delay: 520ms; }
+  .piece:nth-child(2) { animation-delay: 580ms; }
+  .piece:nth-child(3) { animation-delay: 640ms; }
+  .piece:nth-child(4) { animation-delay: 700ms; }
+  .piece:nth-child(n + 5) { animation-delay: 760ms; }
+}
+
+@keyframes lift { to { opacity: 1; transform: none; } }
+
+@media (max-width: 760px) {
+  .piece { grid-template-columns: 1fr; }
+  .label-views figure:nth-child(n) { max-width: 100%; margin-left: 0; }
+}

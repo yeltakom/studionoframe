@@ -1,0 +1,52 @@
+---
+import { render } from 'astro:content';
+import ThemeShell from '../../../layouts/ThemeShell.astro';
+import { getProjects } from '../../../lib/projects';
+import '../../../styles/t-nacht.css';
+
+export async function getStaticPaths() {
+  const projects = await getProjects('en');
+  return projects.map((project, i) => ({
+    params: { slug: project.id },
+    props: { project, index: i, next: projects[i + 1] ?? projects[0] },
+  }));
+}
+
+const { project, index, next } = Astro.props;
+const { Content } = await render(project.entry);
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const { title, venue, year, role, images } = project.data;
+const FONTS = 'family=Unbounded:wght@400;600;800&family=Kode+Mono:wght@400;500;700';
+const ticker = `${title} · ${venue} · ${year} ·`;
+---
+
+<ThemeShell title={`${title} — Nacht`} theme="nacht" fonts={FONTS}>
+  <div class="band">
+    <div><span>{ticker}</span><span>{ticker}</span><span>{ticker}</span><span>{ticker}</span></div>
+  </div>
+
+  <header class="sheet-head">
+    <h1 class="reveal">{title}</h1>
+    <div class="facts reveal">
+      <span>{String(index + 1).padStart(2, '0')}</span>
+      <span>{venue}</span>
+      <span>{year}</span>
+      <span>{role}</span>
+    </div>
+  </header>
+
+  <div class="sheet-text reveal"><Content /></div>
+
+  <div class="sheet-shots">
+    {images.map((src: string, i: number) => (
+      <figure>
+        <img src={`${base}${src}`} alt={`${title} — ${venue}`} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+      </figure>
+    ))}
+  </div>
+
+  <a class="sheet-next" href={`${base}/designs/nacht/${next.id}`}>
+    <span>Next</span>
+    <strong>{next.data.title}</strong>
+  </a>
+</ThemeShell>

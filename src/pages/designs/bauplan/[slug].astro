@@ -1,0 +1,51 @@
+---
+import { render } from 'astro:content';
+import ThemeShell from '../../../layouts/ThemeShell.astro';
+import { getProjects } from '../../../lib/projects';
+import '../../../styles/t-bauplan.css';
+
+export async function getStaticPaths() {
+  const projects = await getProjects('en');
+  return projects.map((project, i) => ({
+    params: { slug: project.id },
+    props: { project, index: i, next: projects[i + 1] ?? projects[0] },
+  }));
+}
+
+const { project, index, next } = Astro.props;
+const { Content } = await render(project.entry);
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const { title, venue, year, role, images } = project.data;
+const FONTS = 'family=Big+Shoulders+Display:wght@400..700&family=Martian+Mono:wght@300;400;500';
+---
+
+<ThemeShell title={`${title} — Bauplan`} theme="bauplan" fonts={FONTS}>
+  <header class="elevation">
+    <h1>{title}</h1>
+    <div class="dims reveal">
+      <div><b>Ref</b> A{String(index + 1).padStart(2, '0')}</div>
+      <div><b>Venue</b> {venue}</div>
+      <div><b>Year</b> {year}</div>
+      <div><b>Role</b> {role}</div>
+      <div><b>Views</b> {String(images.length).padStart(2, '0')}</div>
+    </div>
+  </header>
+
+  <div class="notes reveal"><Content /></div>
+
+  <div class="views">
+    {images.map((src: string, i: number) => (
+      <figure>
+        <img src={`${base}${src}`} alt={`${title} — ${venue}`} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+        <figcaption>V{String(i + 1).padStart(2, '0')}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <div class="titleblock">
+    <div><b>Project</b> {title}</div>
+    <div><b>Client</b> {venue}</div>
+    <div><b>Studio</b> Studio No Frame, Berlin</div>
+    <div><b>Next</b> <a href={`${base}/designs/bauplan/${next.id}`}>{next.data.title} →</a></div>
+  </div>
+</ThemeShell>

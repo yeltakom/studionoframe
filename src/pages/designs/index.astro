@@ -5,6 +5,13 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const projects = await getProjects('en');
 const sample = projects[12]; // Vardiya — orta uzunlukta metin, 8 fotoğraf
 
+const themes = [
+  { key: 'katalog', name: 'Katalog', pitch: 'Oxblood zemin, altın çizgiler, kağıt dokusu. Bodoni Moda + EB Garamond — bir müze kataloğunun kapağı. Metin sayfasında ilk harf altın drop-cap.', tone: 'Koyu · serif · sakin lüks' },
+  { key: 'bauplan', name: 'Bauplan', pitch: 'Prusya mavisi zemin, altında milimetrik çizim ızgarası, camgöbeği çizgiler ve turuncu işaretler. Big Shoulders + Martian Mono. Açılışta başlık soldan sağa çiziliyor.', tone: 'Koyu · teknik · mühendislik' },
+  { key: 'saal', name: 'Saal', pitch: 'Beyaz değil: müze duvarının soğuk sıva grisi. Tek doygun kobalt her şeyi işaretliyor. Bricolage Grotesque + Newsreader.', tone: 'Açık · editoryal · kobalt' },
+  { key: 'nacht', name: 'Nacht', pitch: 'Siyah zemin, magenta ve limon yeşili, halftone nokta dokusu, üstte kayan şerit. Unbounded + Kode Mono — Berlin afişi. Satıra gelince fotokopi gibi bir kare beliriyor.', tone: 'Siyah · yüksek sesli · afiş' },
+];
+
 const groups = [
   {
     heading: 'Sakin — okunaklılık önde',
@@ -73,10 +80,24 @@ const inners = [
     <div class="wrap">
       <h1>Tasarım yönleri</h1>
       <p class="lede">
-        Hepsi senin gerçek içeriğinle çalışıyor: 19 sergi, 135 fotoğraf. Üstte ana
-        sayfa yönleri, altta iç sayfa alternatifleri — ikisini ayrı ayrı
-        seçebilirsin. Yayındaki tasarım duruyor, hiçbiri ona dokunmadı.
+        Hepsi senin gerçek içeriğinle çalışıyor: 19 sergi, 135 fotoğraf. En üstte
+        dört tam kimlik — her birinin kendi yazı tipi, rengi, dokusu ve açılış
+        animasyonu var, ana sayfası ve proje sayfası birlikte geliyor. Altta
+        önceki yapısal denemeler duruyor. Yayındaki tasarıma hiçbiri dokunmadı.
       </p>
+
+      <h2 class="group">Tam kimlikler — kendi yazı tipi, rengi, dokusu ve açılışı</h2>
+      {themes.map((o) => (
+        <div class="opt">
+          <span class="key">{o.name}</span>
+          <div>
+            <h3>{o.name}</h3>
+            <p>{o.pitch}</p>
+            <p class="note">{o.tone} · ana sayfa + proje sayfası birlikte</p>
+          </div>
+          <a class="go" href={`${base}/designs/${o.key}/`}>Aç</a>
+        </div>
+      ))}
 
       {groups.map((group) => (
         <>

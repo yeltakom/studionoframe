@@ -1,0 +1,45 @@
+---
+import ThemeShell from '../../../layouts/ThemeShell.astro';
+import { getProjects } from '../../../lib/projects';
+import '../../../styles/t-saal.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+const FONTS = 'family=Bricolage+Grotesque:opsz,wght@12..96,400..800&family=Newsreader:ital,opsz,wght@0,6..72,300..600;1,6..72,300..500';
+---
+
+<ThemeShell title="Studio No Frame — Saal" theme="saal" fonts={FONTS}>
+  <header class="wall">
+    <span class="tag reveal">Berlin · since 2014</span>
+    <h1 class="reveal">We build the rooms <i>exhibitions</i> happen in.</h1>
+    <p class="say reveal">
+      Exhibition architecture, production and curation for museums, biennials
+      and artists — from the first sightline to the last crate.
+    </p>
+  </header>
+
+  <section class="hang">
+    <div class="caption reveal">
+      <span>Selected work</span>
+      <span>{projects.length} exhibitions</span>
+    </div>
+
+    {projects.map((p) => (
+      <a class="piece reveal" href={`${base}/designs/saal/${p.id}`}>
+        <div>
+          <h2>{p.data.title}</h2>
+          <span class="meta"><b>{p.data.venue}</b> · {p.data.year} — {p.data.role}</span>
+        </div>
+        <figure>
+          <img src={`${base}${p.data.cover}`} alt={`${p.data.title} — ${p.data.venue}`} loading="lazy" decoding="async" />
+        </figure>
+      </a>
+    ))}
+  </section>
+
+  <footer class="footer">
+    <div><b>Studio</b> Led by Yelta Köm, architect and artist. Berlin.</div>
+    <div><b>Write</b> <a href="mailto:contact@noframe.studio">contact@noframe.studio</a></div>
+    <div><b>With</b> HKW · Pera Museum · SALT · Museum Ludwig · Venice · Istanbul</div>
+  </footer>
+</ThemeShell>

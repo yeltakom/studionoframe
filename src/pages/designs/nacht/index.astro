@@ -1,0 +1,49 @@
+---
+import ThemeShell from '../../../layouts/ThemeShell.astro';
+import { getProjects } from '../../../lib/projects';
+import '../../../styles/t-nacht.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+const FONTS = 'family=Unbounded:wght@400;600;800&family=Kode+Mono:wght@400;500;700';
+const ticker = 'Exhibition architecture · Production · Curation · Berlin · Istanbul · Venice · Cologne · Chicago ·';
+---
+
+<ThemeShell title="Studio No Frame — Nacht" theme="nacht" fonts={FONTS}>
+  <div class="band">
+    <div>
+      <span>{ticker}</span><span>{ticker}</span><span>{ticker}</span><span>{ticker}</span>
+    </div>
+  </div>
+
+  <header class="flyer">
+    <h1 class="reveal">Studio <em>No</em> <i>Frame</i></h1>
+    <p class="strap reveal">
+      <b>We build the rooms exhibitions happen in.</b> Nineteen shows with
+      museums, biennials and artists since 2014 — sightlines, walls, budgets,
+      crews, and the archive that stays after everything is taken down again.
+    </p>
+  </header>
+
+  <section class="bill">
+    <div class="head reveal">
+      <span>The bill</span>
+      <span>{projects.length} shows · 2014—2026</span>
+    </div>
+
+    {projects.map((p, i) => (
+      <a class="act reveal" href={`${base}/designs/nacht/${p.id}`}>
+        <span class="no">{String(i + 1).padStart(2, '0')}</span>
+        <h2>{p.data.title}</h2>
+        <span class="where">{p.data.venue} · {p.data.year}</span>
+        <span class="shot"><img src={`${base}${p.data.cover}`} alt="" loading="lazy" decoding="async" /></span>
+      </a>
+    ))}
+  </section>
+
+  <footer class="stamp">
+    <div><b>Studio</b> Led by Yelta Köm, architect and artist. Berlin.</div>
+    <div><b>Booking</b> <a href="mailto:contact@noframe.studio">contact@noframe.studio</a></div>
+    <div><b>Seen at</b> HKW · SALT · Pera · Museum Ludwig · Venice · Istanbul · MAXXI</div>
+  </footer>
+</ThemeShell>

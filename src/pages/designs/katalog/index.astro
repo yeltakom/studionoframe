@@ -1,0 +1,56 @@
+---
+import ThemeShell from '../../../layouts/ThemeShell.astro';
+import { getProjects } from '../../../lib/projects';
+import '../../../styles/t-katalog.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+const FONTS = 'family=Bodoni+Moda:ital,opsz,wght@0,6..96,400..700;1,6..96,400..600&family=EB+Garamond:ital,wght@0,400..600;1,400..500';
+---
+
+<ThemeShell title="Studio No Frame — Katalog" theme="katalog" fonts={FONTS}>
+  <header class="frontis">
+    <p class="imprint reveal">Berlin · Ausstellungsarchitektur</p>
+    <h1 class="reveal">Studio<br /><em>No Frame</em></h1>
+    <div class="rule reveal"></div>
+    <p class="sub reveal">
+      Nineteen exhibitions built with museums, biennials and artists —
+      a working catalogue of rooms made for other people's work.
+    </p>
+  </header>
+
+  <section class="plates">
+    <header class="reveal">
+      <span>Verzeichnis der Ausstellungen</span>
+      <span>{projects.length} · 2014—2026</span>
+    </header>
+
+    {projects.map((p, i) => (
+      <a class="plate reveal" href={`${base}/designs/katalog/${p.id}`}>
+        <span class="no">{String(i + 1).padStart(2, '0')}</span>
+        <h2>
+          {p.data.title}
+          <span class="venue">{p.data.venue} — {p.data.role}</span>
+        </h2>
+        <span class="year">{p.data.year}</span>
+      </a>
+    ))}
+  </section>
+
+  <footer class="colophon">
+    <div>
+      <b>Studio</b>
+      Exhibition architecture, production and curation. Led by Yelta Köm,
+      architect and artist, Berlin.
+    </div>
+    <div>
+      <b>Correspondence</b>
+      <a href="mailto:contact@noframe.studio">contact@noframe.studio</a>
+    </div>
+    <div>
+      <b>Partners</b>
+      HKW · Pera Museum · SALT · Museum Ludwig · La Biennale di Venezia ·
+      Istanbul Biennial · MAXXI
+    </div>
+  </footer>
+</ThemeShell>

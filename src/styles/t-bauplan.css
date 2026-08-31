@@ -1,0 +1,188 @@
+/* BAUPLAN — the drawing before the room.
+   Prussian ground, cyan lines, a millimetre grid running under everything, and
+   dimensions called out in mono. Big Shoulders for the sheet titles: a
+   condensed engineering face with none of the softness of a corporate sans. */
+
+:root {
+  --ground: #08172b;
+  --ground-lift: #0d2340;
+  --line: #7fd4ff;
+  --line-dim: rgba(127, 212, 255, 0.28);
+  --paper: #e8f4fb;
+  --chalk: #a9c7dd;
+  --mark: #ff5c39;
+
+  --display: 'Big Shoulders Display', 'Haettenschweiler', Impact, sans-serif;
+  --mono: 'Martian Mono', ui-monospace, Menlo, monospace;
+  --gutter: clamp(1rem, 3vw, 3rem);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  color: var(--paper);
+  font-family: var(--mono);
+  font-size: 0.82rem;
+  line-height: 1.65;
+  letter-spacing: -0.02em;
+  overflow-x: clip;
+  background:
+    linear-gradient(var(--line-dim) 1px, transparent 1px) 0 0 / 100% 6rem,
+    linear-gradient(90deg, var(--line-dim) 1px, transparent 1px) 0 0 / 6rem 100%,
+    linear-gradient(rgba(127, 212, 255, 0.08) 1px, transparent 1px) 0 0 / 100% 1.2rem,
+    linear-gradient(90deg, rgba(127, 212, 255, 0.08) 1px, transparent 1px) 0 0 / 1.2rem 100%,
+    radial-gradient(120% 80% at 20% 0%, var(--ground-lift), transparent 60%),
+    var(--ground);
+  background-attachment: fixed;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; max-width: 100%; }
+:focus-visible { outline: 2px solid var(--mark); outline-offset: 3px; }
+
+.escape {
+  position: fixed;
+  right: 1rem; bottom: 1rem;
+  z-index: 60;
+  border: 1px solid var(--line-dim);
+  background: rgba(8, 23, 43, 0.9);
+  color: var(--chalk);
+  font-size: 0.66rem;
+  letter-spacing: 0.06em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.75rem;
+}
+.escape:hover { color: var(--line); border-color: var(--line); }
+
+/* ---------- sheet head ---------- */
+
+.sheet-head {
+  display: grid;
+  gap: clamp(1rem, 3vw, 2rem);
+  padding: clamp(2rem, 7vh, 5rem) var(--gutter) clamp(1.5rem, 4vh, 2.5rem);
+}
+
+.sheet-head h1 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(3.2rem, 15vw, 14rem);
+  line-height: 0.8;
+  letter-spacing: 0.005em;
+  text-transform: uppercase;
+  color: var(--paper);
+}
+.sheet-head h1 span { color: var(--line); }
+
+.legend {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 0.75rem 2rem;
+  border-top: 1px solid var(--line-dim);
+  border-bottom: 1px solid var(--line-dim);
+  padding: 0.9rem 0;
+  font-size: 0.7rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.legend b { display: block; color: var(--line); font-weight: 400; }
+.legend a { color: var(--paper); border-bottom: 1px solid var(--line-dim); }
+.legend a:hover { border-bottom-color: var(--mark); color: var(--mark); }
+
+/* ---------- schedule of works ---------- */
+
+.schedule { padding: 0 var(--gutter) clamp(3rem, 9vh, 6rem); }
+
+.row {
+  display: grid;
+  grid-template-columns: 3rem minmax(0, 2fr) minmax(0, 1.2fr) 5rem;
+  gap: 0.5rem clamp(0.75rem, 2vw, 1.75rem);
+  align-items: center;
+  padding: 0.75rem 0;
+  border-bottom: 1px dashed var(--line-dim);
+  position: relative;
+}
+.row::before {
+  content: '';
+  position: absolute;
+  left: -0.6rem; top: 50%;
+  width: 0; height: 1px;
+  background: var(--mark);
+  transition: width 260ms ease;
+}
+.row:hover::before { width: 0.45rem; }
+.row:hover { background: rgba(127, 212, 255, 0.06); }
+
+.row .ref { color: var(--line); font-size: 0.72rem; }
+.row h2 {
+  margin: 0;
+  font-family: var(--display);
+  font-weight: 500;
+  font-size: clamp(1.15rem, 2.4vw, 1.9rem);
+  line-height: 1.05;
+  letter-spacing: 0.01em;
+  text-transform: uppercase;
+}
+.row .where { font-size: 0.7rem; color: var(--chalk); text-transform: uppercase; letter-spacing: 0.03em; }
+.row .when { font-size: 0.72rem; color: var(--chalk); text-align: right; }
+
+/* ---------- elevation (project page) ---------- */
+
+.elevation { padding: clamp(1.5rem, 5vh, 3rem) var(--gutter) 0; }
+.elevation h1 {
+  margin: 0 0 1rem;
+  font-family: var(--display);
+  font-weight: 600;
+  font-size: clamp(2.2rem, 9vw, 7rem);
+  line-height: 0.85;
+  text-transform: uppercase;
+  max-width: 18ch;
+}
+
+.dims { display: grid; grid-template-columns: repeat(auto-fit, minmax(9rem, 1fr)); gap: 0.75rem 2rem; border-top: 1px solid var(--line); border-bottom: 1px solid var(--line-dim); padding: 0.8rem 0; font-size: 0.7rem; text-transform: uppercase; letter-spacing: 0.04em; }
+.dims b { display: block; color: var(--line); font-weight: 400; }
+
+.notes { max-width: 46rem; padding: clamp(1.5rem, 4vh, 2.5rem) var(--gutter); font-size: 0.84rem; }
+.notes p { margin: 0 0 1em; }
+
+.views { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(24rem, 100%), 1fr)); gap: 1px; background: var(--line-dim); border: 1px solid var(--line-dim); margin: 0 var(--gutter) clamp(2.5rem, 6vh, 4rem); }
+.views figure { margin: 0; position: relative; background: var(--ground); }
+.views img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; filter: saturate(1.06); }
+.views figcaption { position: absolute; left: 0; bottom: 0; background: var(--ground); color: var(--line); font-size: 0.62rem; letter-spacing: 0.08em; padding: 0.25rem 0.5rem; text-transform: uppercase; }
+
+.titleblock {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(10rem, 1fr));
+  border: 1px solid var(--line);
+  margin: 0 var(--gutter) clamp(3.5rem, 8vh, 5rem);
+  font-size: 0.68rem;
+  text-transform: uppercase;
+  letter-spacing: 0.04em;
+}
+.titleblock div { padding: 0.7rem 0.8rem; border-right: 1px solid var(--line-dim); }
+.titleblock div:last-child { border-right: 0; }
+.titleblock b { display: block; color: var(--line); font-weight: 400; margin-bottom: 0.2rem; }
+.titleblock a:hover { color: var(--mark); }
+
+/* ---------- opening: the sheet is drawn ---------- */
+
+@media (prefers-reduced-motion: no-preference) {
+  .reveal { opacity: 0; animation: draw 700ms cubic-bezier(0.2, 0.8, 0.2, 1) forwards; }
+  .sheet-head h1 { animation: sweep 1000ms cubic-bezier(0.16, 1, 0.3, 1) forwards; }
+  .legend { animation-delay: 520ms; }
+  .row:nth-child(1) { animation-delay: 600ms; }
+  .row:nth-child(2) { animation-delay: 645ms; }
+  .row:nth-child(3) { animation-delay: 690ms; }
+  .row:nth-child(4) { animation-delay: 735ms; }
+  .row:nth-child(5) { animation-delay: 780ms; }
+  .row:nth-child(n + 6) { animation-delay: 820ms; }
+}
+
+@keyframes draw { from { opacity: 0; transform: translateY(0.6rem); } to { opacity: 1; transform: none; } }
+@keyframes sweep { from { opacity: 0; clip-path: inset(0 100% 0 0); } to { opacity: 1; clip-path: inset(0 0 0 0); } }
+
+@media (max-width: 760px) {
+  .row { grid-template-columns: 2.5rem 1fr; }
+  .row .where, .row .when { grid-column: 2; text-align: left; }
+}
