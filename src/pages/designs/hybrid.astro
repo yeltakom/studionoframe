@@ -1,0 +1,131 @@
+---
+import PreviewShell from '../../layouts/PreviewShell.astro';
+import { getProjects } from '../../lib/projects';
+import '../../styles/t-plakat.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+const frames = projects.flatMap((p, order) =>
+  p.data.images.map((src: string, i: number) => ({ src, slug: p.id, title: p.data.title, order, no: String(i + 1).padStart(2, '0') }))
+);
+---
+
+<PreviewShell title="Plakat × Kontaktbogen" variant="hybrid">
+  <header class="topbar">
+    <a class="wordmark" href={`${base}/`}>Studio No Frame</a>
+    <nav>
+      <a href={`${base}/about`}>About</a>
+      <a href="mailto:contact@noframe.studio">Contact</a>
+    </nav>
+    <span class="spacer"></span>
+    <span class="count"><span id="now">01</span> / {projects.length} — <span id="title">{projects[0].data.title}</span></span>
+  </header>
+
+  <!-- the poster: one frame, held large -->
+  <div class="stage" id="stage">
+    {frames.map((f, i) => (
+      <a
+        class={`big ${i === 0 ? 'is-active' : ''}`}
+        href={`${base}/projects/${f.slug}`}
+        data-i={i}
+      >
+        <img src={`${base}${f.src}`} alt={f.title} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
+        <span class="sheet"><h2>{f.title}</h2><p>{projects[f.order].data.venue} · {projects[f.order].data.year}<br />frame {f.no}</p></span>
+      </a>
+    ))}
+  </div>
+
+  <!-- the contact strip: every frame, sliding under the poster -->
+  <div class="strip" id="strip" tabindex="0" aria-label="All frames">
+    {frames.map((f, i) => (
+      <button type="button" data-i={i} data-order={f.order} aria-current={i === 0 ? 'true' : 'false'} aria-label={`${f.title}, frame ${f.no}`}>
+        <img src={`${base}${f.src}`} alt="" loading="lazy" decoding="async" />
+      </button>
+    ))}
+  </div>
+
+  <style>
+    html { scroll-snap-type: none; }
+    body { overflow: hidden; }
+
+    .stage { position: fixed; inset: var(--bar) 0 8.5rem; background: #111; }
+    .big { position: absolute; inset: 0; display: block; opacity: 0; transition: opacity 260ms ease; }
+    .big.is-active { opacity: 1; }
+    .big img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .big .sheet { position: absolute; left: 0; bottom: 1rem; }
+
+    .strip {
+      position: fixed;
+      left: 0; right: 0; bottom: 0;
+      height: 8.5rem;
+      display: flex;
+      align-items: center;
+      gap: 3px;
+      padding: 0 1rem;
+      overflow-x: auto;
+      background: var(--ink);
+      border-top: 1px solid rgba(255, 255, 255, 0.22);
+      scrollbar-width: none;
+      /* the strip is read like film: dark until it is the one you are on */
+    }
+    .strip::-webkit-scrollbar { display: none; }
+    .strip button { appearance: none; border: 0; padding: 0; background: none; flex: 0 0 auto; cursor: pointer; }
+    .strip img { width: 6.4rem; height: 4.3rem; object-fit: cover; display: block; opacity: 0.38; transition: opacity 160ms ease, transform 200ms ease; }
+    .strip button:hover img { opacity: 0.8; }
+    .strip button[aria-current='true'] img { opacity: 1; transform: translateY(-4px); outline: 2px solid #fff; outline-offset: -2px; }
+
+    /* a thin break between exhibitions on the strip */
+    .strip button.is-first { margin-left: 0.9rem; }
+    .strip button.is-first::before { content: ''; position: absolute; }
+
+    @media (max-width: 640px) {
+      .stage { inset: var(--bar) 0 6rem; }
+      .strip { height: 6rem; }
+      .strip img { width: 4.6rem; height: 3.1rem; }
+    }
+  </style>
+
+  <script is:inline>
+    const bigs = [...document.querySelectorAll('.big')];
+    const thumbs = [...document.querySelectorAll('.strip button')];
+    const strip = document.getElementById('strip');
+    const now = document.getElementById('now');
+    const title = document.getElementById('title');
+    const total = bigs.length;
+    let index = 0;
+
+    thumbs.forEach((t, i) => {
+      if (i === 0 || t.dataset.order !== thumbs[i - 1].dataset.order) t.classList.add('is-first');
+    });
+
+    const show = (next) => {
+      index = (next + total) % total;
+      bigs.forEach((b, i) => b.classList.toggle('is-active', i === index));
+      thumbs.forEach((t, i) => t.setAttribute('aria-current', String(i === index)));
+      const t = thumbs[index];
+      strip.scrollTo({ left: t.offsetLeft - strip.clientWidth / 2 + t.clientWidth / 2, behavior: 'smooth' });
+      now.textContent = String(Number(t.dataset.order) + 1).padStart(2, '0');
+      title.textContent = t.getAttribute('aria-label').split(', frame')[0];
+    };
+
+    thumbs.forEach((t) => t.addEventListener('click', () => show(Number(t.dataset.i))));
+
+    /* the wheel walks the strip; the strip drives the poster */
+    let acc = 0;
+    window.addEventListener('wheel', (e) => {
+      e.preventDefault();
+      acc += Math.abs(e.deltaY) > Math.abs(e.deltaX) ? e.deltaY : e.deltaX;
+      if (Math.abs(acc) > 70) { show(index + (acc > 0 ? 1 : -1)); acc = 0; }
+    }, { passive: false });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'ArrowRight' || e.key === 'ArrowDown') { e.preventDefault(); show(index + 1); }
+      if (e.key === 'ArrowLeft' || e.key === 'ArrowUp') { e.preventDefault(); show(index - 1); }
+    });
+
+    document.getElementById('stage').addEventListener('click', (e) => {
+      /* clicking the poster advances; the title link inside still opens the project */
+      if (!e.target.closest('h2, p')) { e.preventDefault(); show(index + 1); }
+    });
+  </script>
+</PreviewShell>
