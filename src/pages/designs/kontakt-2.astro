@@ -1,0 +1,121 @@
+---
+import PreviewShell from '../../layouts/PreviewShell.astro';
+import { getProjects } from '../../lib/projects';
+import '../../styles/t-kontakt.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+const total = projects.reduce((n, p) => n + p.data.images.length, 0);
+---
+
+<PreviewShell title="Kontaktbogen · Rollen" variant="kontakt-2">
+  <header class="topbar">
+    <a class="wordmark" href={`${base}/`}>Studio No Frame</a>
+    <nav>
+      <a href={`${base}/about`}>About</a>
+      <a href="mailto:contact@noframe.studio">Contact</a>
+    </nav>
+    <span class="spacer"></span>
+    <span class="tally">{total} frames · {projects.length} rolls</span>
+  </header>
+
+  <div class="layout">
+    <aside class="rail" aria-label="Jump to exhibition">
+      {projects.map((p, i) => (
+        <a href={`#roll-${p.id}`} data-roll={p.id}>
+          <b>{String(i + 1).padStart(2, '0')}</b> {p.data.title}
+        </a>
+      ))}
+    </aside>
+
+    <div class="rolls">
+      {projects.map((p, i) => (
+        <section id={`roll-${p.id}`}>
+          <h2 class="roll-head">
+            <span class="no">{String(i + 1).padStart(2, '0')}</span>
+            <a href={`${base}/projects/${p.id}`}>{p.data.title}</a>
+            <span class="where">{p.data.venue} · {p.data.year} — {p.data.images.length} frames</span>
+          </h2>
+          <div class="sheet">
+            {p.data.images.map((src: string, n: number) => (
+              <a class="frame" href={`${base}/projects/${p.id}`}>
+                <img src={`${base}${src}`} alt={`${p.data.title} — ${p.data.venue}`} loading="lazy" decoding="async" />
+                <span>{String(n + 1).padStart(2, '0')}</span>
+              </a>
+            ))}
+          </div>
+        </section>
+      ))}
+    </div>
+  </div>
+
+  <div class="foot">
+    <span>Led by Yelta Köm, architect and artist · Berlin</span>
+    <a href="mailto:contact@noframe.studio">contact@noframe.studio</a>
+  </div>
+
+  <style>
+    .layout { display: grid; grid-template-columns: minmax(11rem, 15rem) minmax(0, 1fr); }
+
+    /* the rail is the roll index; it marks where you are */
+    .rail {
+      position: sticky;
+      top: var(--bar);
+      align-self: start;
+      max-height: calc(100svh - var(--bar));
+      overflow: auto;
+      display: flex;
+      flex-direction: column;
+      gap: 0.15rem;
+      padding: 0.85rem var(--gutter) 2rem;
+      border-right: 1px solid var(--rule);
+      font-size: 0.72rem;
+      scrollbar-width: thin;
+    }
+    .rail a { color: var(--soft); padding: 0.15rem 0; border-bottom: 1px solid transparent; }
+    .rail a b { font-weight: 400; opacity: 0.6; }
+    .rail a:hover { color: var(--ink); }
+    .rail a.is-current { color: var(--ink); border-bottom-color: var(--ink); }
+
+    .rolls > section { scroll-margin-top: var(--bar); }
+
+    .roll-head {
+      position: sticky;
+      top: var(--bar);
+      z-index: 40;
+      margin: 0;
+      display: flex;
+      align-items: baseline;
+      gap: 0.75rem;
+      flex-wrap: wrap;
+      background: var(--paper);
+      border-bottom: 1px solid var(--ink);
+      padding: 0.5rem var(--gutter);
+      font-size: 0.95rem;
+      font-weight: 700;
+      letter-spacing: -0.022em;
+    }
+    .roll-head .no { font-weight: 400; font-size: 0.72rem; color: var(--soft); }
+    .roll-head .where { font-weight: 400; font-size: 0.72rem; color: var(--soft); letter-spacing: 0; }
+
+    .rolls .sheet { --frame: 7.5rem; padding-bottom: clamp(1.5rem, 3vw, 2.5rem); }
+    .rolls .frame span { color: var(--soft); }
+
+    @media (max-width: 780px) {
+      .layout { grid-template-columns: 1fr; }
+      .rail { position: static; max-height: none; flex-direction: row; flex-wrap: wrap; gap: 0.3rem 0.75rem; border-right: 0; border-bottom: 1px solid var(--rule); }
+    }
+  </style>
+
+  <script is:inline>
+    const links = [...document.querySelectorAll('.rail a')];
+    const sections = [...document.querySelectorAll('.rolls > section')];
+    const observer = new IntersectionObserver((entries) => {
+      const top = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!top) return;
+      const id = top.target.id.replace('roll-', '');
+      links.forEach((l) => l.classList.toggle('is-current', l.dataset.roll === id));
+    }, { rootMargin: '-20% 0px -70% 0px', threshold: [0, 0.1, 0.5] });
+    sections.forEach((s) => observer.observe(s));
+  </script>
+</PreviewShell>

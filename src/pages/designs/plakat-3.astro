@@ -1,0 +1,147 @@
+---
+import PreviewShell from '../../layouts/PreviewShell.astro';
+import { getProjects } from '../../lib/projects';
+import '../../styles/t-plakat.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+---
+
+<PreviewShell title="Plakat · Tafel" variant="plakat-3">
+  <header class="topbar">
+    <a class="wordmark" href={`${base}/`}>Studio No Frame</a>
+    <span class="spacer"></span>
+    <span class="count"><span id="now">01</span> / {projects.length}</span>
+    <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="tafel">
+      <span>Index</span>
+    </button>
+  </header>
+
+  <div class="tafel" id="tafel" hidden>
+    <ol>
+      {projects.map((p, i) => (
+        <li>
+          <button type="button" data-go={i}>
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <span class="t">{p.data.title}</span>
+            <span class="v">{p.data.venue} · {p.data.year}</span>
+          </button>
+        </li>
+      ))}
+    </ol>
+    <p class="tafel-foot"><a href="mailto:contact@noframe.studio">contact@noframe.studio</a> · Berlin</p>
+  </div>
+
+  <div class="deck">
+    {projects.map((p, i) => (
+      <a class="poster" href={`${base}/projects/${p.id}`} data-index={i}>
+        <img src={`${base}${p.data.cover}`} alt={`${p.data.title} — ${p.data.venue}`} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
+        <div class="sheet">
+          <h2>{p.data.title}</h2>
+          <p>{p.data.venue} · {p.data.year}<br />{p.data.role}</p>
+        </div>
+      </a>
+    ))}
+
+    <div class="end">
+      <strong>Studio No Frame</strong>
+      <p style="margin:0">Exhibition architecture, production and curation. Berlin.</p>
+      <p style="margin:0"><a href="mailto:contact@noframe.studio">contact@noframe.studio</a></p>
+    </div>
+  </div>
+
+  <style>
+    .menu-btn {
+      appearance: none;
+      border: 1px solid rgba(255, 255, 255, 0.5);
+      background: none;
+      color: inherit;
+      font: inherit;
+      font-size: 0.68rem;
+      letter-spacing: 0.12em;
+      text-transform: uppercase;
+      padding: 0.3rem 0.7rem;
+      cursor: pointer;
+    }
+    .menu-btn[aria-expanded='true'] { background: #fff; color: var(--ink); border-color: #fff; }
+
+    /* the index drops over the poster like a title panel */
+    .tafel {
+      position: fixed;
+      top: var(--bar); left: 0; right: 0; bottom: 0;
+      z-index: 55;
+      background: var(--ink);
+      overflow: auto;
+      padding: clamp(1rem, 4vh, 3rem) clamp(0.75rem, 3vw, 3rem) 3rem;
+    }
+    .tafel[hidden] { display: none; }
+    .tafel ol { list-style: none; margin: 0; padding: 0; }
+    .tafel li { border-bottom: 1px solid rgba(255, 255, 255, 0.16); }
+    .tafel button {
+      appearance: none;
+      width: 100%;
+      border: 0;
+      background: none;
+      color: inherit;
+      font: inherit;
+      text-align: left;
+      cursor: pointer;
+      display: grid;
+      grid-template-columns: 3rem minmax(0, 1fr) auto;
+      gap: 0.4rem 1.25rem;
+      align-items: baseline;
+      padding: clamp(0.7rem, 1.8vh, 1.1rem) 0;
+      transition: padding-left 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .tafel button:hover { padding-left: 0.7rem; }
+    .tafel .n { font-size: 0.72rem; opacity: 0.5; }
+    .tafel .t { font-size: clamp(1.1rem, 2.6vw, 2rem); letter-spacing: -0.03em; line-height: 1.05; }
+    .tafel .v { font-size: 0.7rem; opacity: 0.55; text-align: right; }
+    .tafel-foot { margin: 2rem 0 0; font-size: 0.72rem; opacity: 0.6; }
+    .tafel-foot a { border-bottom: 1px solid rgba(255,255,255,0.3); }
+
+    @media (prefers-reduced-motion: no-preference) {
+      .tafel:not([hidden]) li { opacity: 0; animation: drop 420ms cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+      .tafel li:nth-child(1) { animation-delay: 20ms; }
+      .tafel li:nth-child(2) { animation-delay: 45ms; }
+      .tafel li:nth-child(3) { animation-delay: 70ms; }
+      .tafel li:nth-child(4) { animation-delay: 95ms; }
+      .tafel li:nth-child(5) { animation-delay: 120ms; }
+      .tafel li:nth-child(n + 6) { animation-delay: 145ms; }
+    }
+    @keyframes drop { from { opacity: 0; transform: translateY(0.5rem); } to { opacity: 1; transform: none; } }
+
+    @media (max-width: 640px) { .tafel .v { display: none; } }
+  </style>
+
+  <script is:inline>
+    const btn = document.getElementById('menuBtn');
+    const tafel = document.getElementById('tafel');
+    const posters = [...document.querySelectorAll('.poster')];
+    const now = document.getElementById('now');
+
+    const setOpen = (open) => {
+      tafel.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+      btn.querySelector('span').textContent = open ? 'Close' : 'Index';
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    };
+
+    btn.addEventListener('click', () => setOpen(tafel.hidden));
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !tafel.hidden) setOpen(false); });
+
+    tafel.querySelectorAll('button[data-go]').forEach((b) => {
+      b.addEventListener('click', () => {
+        setOpen(false);
+        posters[Number(b.dataset.go)].scrollIntoView({ block: 'start' });
+      });
+    });
+
+    const observer = new IntersectionObserver((entries) => {
+      const top = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (top) now.textContent = String(Number(top.target.dataset.index) + 1).padStart(2, '0');
+    }, { threshold: [0.3, 0.6, 0.9] });
+
+    posters.forEach((p) => observer.observe(p));
+  </script>
+</PreviewShell>

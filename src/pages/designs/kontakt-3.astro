@@ -1,0 +1,120 @@
+---
+import PreviewShell from '../../layouts/PreviewShell.astro';
+import { getProjects } from '../../lib/projects';
+import '../../styles/t-kontakt.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+
+const frames = projects.flatMap((p, order) =>
+  p.data.images.map((src: string, i: number) => ({
+    src,
+    slug: p.id,
+    title: p.data.title,
+    venue: p.data.venue,
+    year: (p.data.year.match(/\d{4}/) ?? ['0'])[0],
+    order,
+    no: String(i + 1).padStart(2, '0'),
+  }))
+);
+---
+
+<PreviewShell title="Kontaktbogen · Dicht" variant="kontakt-3">
+  <header class="topbar">
+    <a class="wordmark" href={`${base}/`}>Studio No Frame</a>
+    <nav>
+      <a href={`${base}/about`}>About</a>
+      <a href="mailto:contact@noframe.studio">Contact</a>
+    </nav>
+    <span class="spacer"></span>
+    <div class="tools">
+      <div class="sort" role="group" aria-label="Sort">
+        <button type="button" data-sort="order" aria-pressed="true">Portfolio</button>
+        <button type="button" data-sort="year" aria-pressed="false">Year</button>
+        <button type="button" data-sort="venue" aria-pressed="false">Venue</button>
+      </div>
+      <label class="zoom">
+        <span>Size</span>
+        <input type="range" id="zoom" min="4.5" max="16" step="0.5" value="7" />
+      </label>
+    </div>
+  </header>
+
+  <div class="sheet dense" id="sheet">
+    {frames.map((f) => (
+      <a
+        class="frame"
+        href={`${base}/projects/${f.slug}`}
+        data-order={f.order}
+        data-year={f.year}
+        data-venue={f.venue}
+        data-title={f.title}
+      >
+        <img src={`${base}${f.src}`} alt={`${f.title} — ${f.venue}`} loading="lazy" decoding="async" />
+        <em>{f.title} · {f.year} · {f.no}</em>
+      </a>
+    ))}
+  </div>
+
+  <div class="foot">
+    <span>{frames.length} frames · {projects.length} exhibitions · Berlin</span>
+    <a href="mailto:contact@noframe.studio">contact@noframe.studio</a>
+  </div>
+
+  <style>
+    .tools { display: flex; align-items: center; gap: clamp(0.75rem, 2vw, 1.5rem); }
+    .sort { display: flex; gap: 0.5rem; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; }
+    .sort button { appearance: none; border: 0; background: none; padding: 0.15rem 0; font: inherit; color: var(--soft); cursor: pointer; border-bottom: 2px solid transparent; }
+    .sort button:hover { color: var(--ink); }
+    .sort button[aria-pressed='true'] { color: var(--ink); border-bottom-color: var(--ink); }
+
+    .zoom { display: flex; align-items: center; gap: 0.5rem; font-size: 0.7rem; letter-spacing: 0.06em; text-transform: uppercase; color: var(--soft); }
+    .zoom input { width: clamp(5rem, 12vw, 9rem); accent-color: var(--ink); }
+
+    /* dense: captions stay out of the way until you look at one */
+    .dense { --frame: 7rem; gap: 2px; }
+    .dense .frame img { aspect-ratio: 1 / 1; }
+    .dense .frame em {
+      position: absolute;
+      left: 0; right: 0; bottom: 0;
+      background: var(--ink);
+      color: #fff;
+      font-style: normal;
+      font-size: 0.62rem;
+      letter-spacing: 0.01em;
+      padding: 0.2rem 0.35rem;
+      opacity: 0;
+      transition: opacity 120ms ease;
+      white-space: nowrap;
+      overflow: hidden;
+      text-overflow: ellipsis;
+    }
+    .dense .frame:hover em, .dense .frame:focus-visible em { opacity: 1; }
+
+    @media (max-width: 700px) { .tools .zoom { display: none; } }
+  </style>
+
+  <script is:inline>
+    const sheet = document.getElementById('sheet');
+    const zoom = document.getElementById('zoom');
+    const buttons = [...document.querySelectorAll('.sort button')];
+    const frames = [...sheet.children];
+
+    zoom.addEventListener('input', () => {
+      sheet.style.setProperty('--frame', `${zoom.value}rem`);
+    });
+
+    const compare = {
+      order: (a, b) => Number(a.dataset.order) - Number(b.dataset.order),
+      year: (a, b) => Number(b.dataset.year) - Number(a.dataset.year) || a.dataset.title.localeCompare(b.dataset.title),
+      venue: (a, b) => a.dataset.venue.localeCompare(b.dataset.venue) || Number(a.dataset.order) - Number(b.dataset.order),
+    };
+
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+        [...frames].sort(compare[button.dataset.sort]).forEach((f) => sheet.appendChild(f));
+      });
+    });
+  </script>
+</PreviewShell>

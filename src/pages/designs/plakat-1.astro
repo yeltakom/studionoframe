@@ -1,0 +1,66 @@
+---
+import PreviewShell from '../../layouts/PreviewShell.astro';
+import { getProjects } from '../../lib/projects';
+import '../../styles/t-plakat.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+---
+
+<PreviewShell title="Plakat · Leiste" variant="plakat-1">
+  <header class="topbar">
+    <a class="wordmark" href={`${base}/`}>Studio No Frame</a>
+    <nav>
+      <a href={`${base}/`}>Work</a>
+      <a href={`${base}/about`}>About</a>
+      <a href="mailto:contact@noframe.studio">Contact</a>
+    </nav>
+    <span class="spacer"></span>
+    <span class="count"><b id="now">01</b> / {projects.length} — <span id="title">{projects[0].data.title}</span></span>
+    <i class="tick" id="tick" aria-hidden="true"></i>
+  </header>
+
+  <div class="deck">
+    {projects.map((p, i) => (
+      <a class="poster" href={`${base}/projects/${p.id}`} data-no={String(i + 1).padStart(2, '0')} data-title={p.data.title}>
+        <img src={`${base}${p.data.cover}`} alt={`${p.data.title} — ${p.data.venue}`} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
+        <span class="plate-no">{String(i + 1).padStart(2, '0')}</span>
+        <div class="sheet">
+          <h2>{p.data.title}</h2>
+          <p>{p.data.venue} · {p.data.year}<br />{p.data.role}</p>
+        </div>
+      </a>
+    ))}
+
+    <div class="end">
+      <strong>Studio No Frame</strong>
+      <p style="margin:0">Exhibition architecture, production and curation. Berlin.</p>
+      <p style="margin:0"><a href="mailto:contact@noframe.studio">contact@noframe.studio</a></p>
+    </div>
+  </div>
+
+  <style>
+    /* a hairline under the bar showing how far through the deck you are */
+    .tick { position: absolute; left: 0; bottom: -1px; height: 1px; background: #fff; width: 0; transition: width 180ms linear; }
+    .count b { font-weight: 400; }
+    .count #title { opacity: 0.7; }
+    @media (max-width: 720px) { .count #title { display: none; } }
+  </style>
+
+  <script is:inline>
+    const posters = [...document.querySelectorAll('.poster')];
+    const now = document.getElementById('now');
+    const title = document.getElementById('title');
+    const tick = document.getElementById('tick');
+
+    const observer = new IntersectionObserver((entries) => {
+      const top = entries.filter((e) => e.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (!top) return;
+      now.textContent = top.target.dataset.no;
+      title.textContent = top.target.dataset.title;
+      tick.style.width = `${(Number(top.target.dataset.no) / posters.length) * 100}%`;
+    }, { threshold: [0.3, 0.6, 0.9] });
+
+    posters.forEach((p) => observer.observe(p));
+  </script>
+</PreviewShell>

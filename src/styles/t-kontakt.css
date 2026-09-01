@@ -1,0 +1,100 @@
+/* KONTAKTBOGEN — ortak temel.
+   Every frame the studio has, read the way a photographer reads a contact
+   sheet. The variants differ in how the sheet is ordered and navigated:
+   a plain header with filters, rolls with sticky headers, or a dense sheet
+   you can zoom and re-sort. */
+
+:root {
+  --ink: #0b0b0b;
+  --soft: #8a8a8a;
+  --rule: #e0e0e0;
+  --paper: #fff;
+  --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --gutter: clamp(0.75rem, 2.5vw, 2rem);
+  --bar: 3rem;
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--paper);
+  color: var(--ink);
+  font-family: var(--sans);
+  font-size: 0.9rem;
+  line-height: 1.5;
+  letter-spacing: -0.006em;
+  -webkit-font-smoothing: antialiased;
+  overflow-x: clip;
+}
+
+a { color: inherit; text-decoration: none; }
+img { display: block; }
+:focus-visible { outline: 2px solid var(--ink); outline-offset: 2px; }
+
+.escape {
+  position: fixed;
+  right: 0.75rem; bottom: 0.75rem;
+  z-index: 80;
+  background: var(--ink);
+  color: #fff;
+  font-size: 0.64rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  padding: 0.45rem 0.75rem;
+}
+
+/* ---------- the bar every variant shares ---------- */
+
+.topbar {
+  position: sticky;
+  top: 0;
+  z-index: 60;
+  height: var(--bar);
+  display: flex;
+  align-items: center;
+  gap: 1rem clamp(1rem, 3vw, 2.5rem);
+  padding: 0 var(--gutter);
+  background: var(--paper);
+  border-bottom: 1px solid var(--ink);
+}
+.topbar .wordmark { font-size: 0.95rem; font-weight: 700; letter-spacing: -0.024em; white-space: nowrap; }
+.topbar nav { display: flex; gap: clamp(0.75rem, 2vw, 1.5rem); font-size: 0.7rem; letter-spacing: 0.1em; text-transform: uppercase; }
+.topbar nav a { color: var(--soft); }
+.topbar nav a:hover { color: var(--ink); }
+.topbar .spacer { flex: 1; }
+.topbar .tally { font-size: 0.72rem; color: var(--soft); white-space: nowrap; }
+
+/* ---------- the sheet ---------- */
+
+.sheet {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(var(--frame, 8.5rem), 1fr));
+  gap: clamp(0.4rem, 1vw, 0.9rem);
+  padding: clamp(0.75rem, 2vw, 1.25rem) var(--gutter) clamp(3rem, 7vw, 5rem);
+}
+
+.frame { display: block; position: relative; }
+.frame.is-hidden { display: none; }
+.frame img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; background: #f0f0f0; transition: opacity 160ms ease; }
+.frame:hover img { opacity: 0.84; }
+.frame span { display: block; margin-top: 0.3rem; font-size: 0.66rem; line-height: 1.35; color: var(--soft); }
+.frame b { display: block; font-weight: 400; color: var(--ink); }
+
+.foot {
+  border-top: 1px solid var(--ink);
+  margin: 0 var(--gutter);
+  padding: 1rem 0 3rem;
+  display: flex;
+  justify-content: space-between;
+  gap: 1rem 2rem;
+  flex-wrap: wrap;
+  font-size: 0.78rem;
+  color: var(--soft);
+}
+.foot a { color: var(--ink); border-bottom: 1px solid var(--rule); }
+.foot a:hover { border-bottom-color: var(--ink); }
+
+@media (prefers-reduced-motion: reduce) {
+  *, *::before, *::after { transition-duration: 0.01ms !important; }
+}

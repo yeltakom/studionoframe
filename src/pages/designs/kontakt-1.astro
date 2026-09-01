@@ -1,0 +1,88 @@
+---
+import PreviewShell from '../../layouts/PreviewShell.astro';
+import { getProjects } from '../../lib/projects';
+import '../../styles/t-kontakt.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const projects = await getProjects('en');
+const frames = projects.flatMap((p) =>
+  p.data.images.map((src: string, i: number) => ({ src, slug: p.id, title: p.data.title, venue: p.data.venue, year: p.data.year, no: String(i + 1).padStart(2, '0') }))
+);
+---
+
+<PreviewShell title="Kontaktbogen · Kopf" variant="kontakt-1">
+  <header class="topbar">
+    <a class="wordmark" href={`${base}/`}>Studio No Frame</a>
+    <nav>
+      <a href={`${base}/`}>Work</a>
+      <a href={`${base}/about`}>About</a>
+      <a href="mailto:contact@noframe.studio">Contact</a>
+    </nav>
+    <span class="spacer"></span>
+    <span class="tally"><span id="shown">{frames.length}</span> frames · {projects.length} exhibitions</span>
+  </header>
+
+  <nav class="filters" aria-label="Filter by exhibition">
+    <button type="button" data-filter="all" aria-pressed="true">All</button>
+    {projects.map((p) => (
+      <button type="button" data-filter={p.id} aria-pressed="false">{p.data.title}</button>
+    ))}
+  </nav>
+
+  <div class="sheet">
+    {frames.map((f) => (
+      <a class="frame" href={`${base}/projects/${f.slug}`} data-project={f.slug}>
+        <img src={`${base}${f.src}`} alt={`${f.title} — ${f.venue}`} loading="lazy" decoding="async" />
+        <span><b>{f.title}</b>{f.venue} · {f.year} · {f.no}</span>
+      </a>
+    ))}
+  </div>
+
+  <div class="foot">
+    <span>Led by Yelta Köm, architect and artist · Berlin</span>
+    <a href="mailto:contact@noframe.studio">contact@noframe.studio</a>
+  </div>
+
+  <style>
+    /* the filter strip rides just under the bar */
+    .filters {
+      position: sticky;
+      top: var(--bar);
+      z-index: 55;
+      background: var(--paper);
+      border-bottom: 1px solid var(--rule);
+      padding: 0.5rem var(--gutter);
+      display: flex;
+      flex-wrap: wrap;
+      gap: 0.3rem 0.75rem;
+      font-size: 0.72rem;
+    }
+    .filters button {
+      appearance: none; border: 0; background: none; padding: 0.15rem 0;
+      font: inherit; color: var(--soft); cursor: pointer;
+      border-bottom: 2px solid transparent;
+    }
+    .filters button:hover { color: var(--ink); }
+    .filters button[aria-pressed='true'] { color: var(--ink); border-bottom-color: var(--ink); }
+  </style>
+
+  <script is:inline>
+    const buttons = document.querySelectorAll('.filters button');
+    const frames = [...document.querySelectorAll('.frame')];
+    const shown = document.getElementById('shown');
+    buttons.forEach((button) => {
+      button.addEventListener('click', () => {
+        const wanted = button.dataset.filter;
+        buttons.forEach((b) => b.setAttribute('aria-pressed', String(b === button)));
+        let count = 0;
+        frames.forEach((frame) => {
+          const hide = wanted !== 'all' && frame.dataset.project !== wanted;
+          frame.classList.toggle('is-hidden', hide);
+          if (!hide) count++;
+        });
+        shown.textContent = count;
+        window.scrollTo({ top: 0 });
+      });
+    });
+  </script>
+</PreviewShell>
