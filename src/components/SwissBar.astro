@@ -1,0 +1,33 @@
+---
+interface Props { here?: 'werk' | 'practice'; right?: 'views' | 'nr'; nr?: string }
+const { here, right = 'views', nr } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+---
+
+<header class="bar">
+  <a class="studio" href={`${base}/designs/werkindex/`}>Studio No Frame</a>
+
+  {right === 'views' ? (
+    <nav aria-label="View">
+      <button type="button" data-view="werk" aria-pressed="true">Werk</button>
+      <button type="button" data-view="index" aria-pressed="false">Index</button>
+    </nav>
+  ) : (
+    <nav><a href={`${base}/designs/werkindex/`}>Werk</a></nav>
+  )}
+
+  <span class="spacer"></span>
+
+  {right === 'views' && (
+    <label class="find">
+      <input id="q" type="search" placeholder="Search" autocomplete="off" spellcheck="false" aria-label="Search the register" />
+    </label>
+  )}
+  {right === 'views' && <span class="tally"><span id="count">19</span> / 19</span>}
+  {right === 'nr' && <span class="tally">{nr}</span>}
+
+  <nav>
+    <a href={`${base}/designs/werkindex/practice`} aria-current={here === 'practice' ? 'page' : undefined}>Practice</a>
+    <a href="mailto:contact@noframe.studio">Contact</a>
+  </nav>
+</header>

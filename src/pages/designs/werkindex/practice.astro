@@ -1,77 +1,69 @@
 ---
-import ThemeShell from '../../../layouts/ThemeShell.astro';
-import { getRegister, facets } from '../../../lib/register';
+import SwissShell from '../../../layouts/SwissShell.astro';
+import SwissBar from '../../../components/SwissBar.astro';
+import { getRegister } from '../../../lib/register';
+import accents from '../../../data/accents.json';
 import '../../../styles/t-werkindex.css';
 
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const entries = await getRegister();
-const { types, cities } = facets(entries);
-const years = entries.map((e) => e.year);
-const plates = entries.reduce((n, e) => n + e.data.images.length, 0);
-const FONTS = 'family=Familjen+Grotesk:ital,wght@0,400..700;1,400..600&family=Fragment+Mono:ital@0;1';
+const colour = (id: string) => (accents as Record<string, string>)[id] ?? '#111';
 ---
 
-<ThemeShell title="Practice — Studio No Frame" theme="werkindex" fonts={FONTS}>
-  <header class="masthead">
-    <a class="studio" href={`${base}/designs/werkindex/`}>Studio No Frame<i>.</i></a>
-    <nav>
-      <a href={`${base}/designs/werkindex/`}>Index</a>
-      <a href={`${base}/designs/werkindex/practice`} aria-current="page">Practice</a>
-      <a href="mailto:contact@noframe.studio">Contact</a>
-    </nav>
-    <span class="spacer"></span>
-    <span class="mono" style="color: var(--soft)">Berlin</span>
-  </header>
+<SwissShell title="Practice — Studio No Frame">
+  <SwissBar here="practice" right="nr" nr="Berlin" />
+  <nav class="spectrum" aria-label="All exhibitions">
+    {entries.map((e) => (
+      <a href={`${base}/designs/werkindex/${e.id}`} style={`--seg:${colour(e.id)}`} aria-label={`${e.nr} ${e.data.title}`}></a>
+    ))}
+  </nav>
 
   <section class="page">
-    <h1 class="reveal">Nothing we build outlasts the show. The register does.</h1>
+    <h1>We build the rooms exhibitions happen in.</h1>
 
-    <div class="body reveal">
+    <div class="body">
       <p>
         Studio No Frame works across exhibition architecture, art production,
-        project management and curation. We work with artists, museums,
-        biennials, NGOs, project spaces and universities — from the first
-        sightline to the last crate.
+        project management and curation, with artists, museums, biennials,
+        project spaces and universities. Each project starts from its own
+        material: the works, the building, and the people who will move
+        through it.
       </p>
       <p>
-        Every exhibition we build is entered in the register with a permanent
-        number, counted from the first one in {Math.min(...years)}. The number
-        never changes and never gets reused, so a show can be cited years later
-        by its number alone.
-      </p>
-
-      <h2>Team</h2>
-      <p>
-        The studio is led by <strong>Yelta Köm</strong>, an Istanbul-born
-        architect and artist who has lived and worked in Berlin for over a
-        decade. We work with a rotating group of designers, researchers and
-        production managers, and bring in collaborators to suit each
+        We plan production so that material and budget are spent where visitors
+        actually feel them, and we bring in collaborators to suit each
         exhibition rather than fitting every show to a fixed team.
       </p>
 
       <h2>Register</h2>
       <p>
-        {entries.length} exhibitions, {plates} plates, {Math.min(...years)}—{Math.max(...years)}.
-        By kind: {types.map(([n, c]) => `${n} ${c}`).join(' · ')}.
-        By city: {cities.map(([n, c]) => `${n} ${c}`).join(' · ')}.
+        Nothing we build outlasts the run of the show, so every exhibition is
+        entered in the register with a permanent number, counted from the first
+        one in 2014. The number never changes and never gets reused — a show can
+        be cited years later by its number alone.
+      </p>
+
+      <h2>Led by</h2>
+      <p>
+        Yelta Köm, an Istanbul-born architect and artist who has lived and
+        worked in Berlin for over a decade.
       </p>
 
       <h2>Worked with</h2>
       <p>
-        Haus der Kulturen der Welt · Pera Museum · SALT · Istanbul Modern ·
-        Museum Ludwig · MAXXI · La Biennale di Venezia · Istanbul Biennial ·
-        Istanbul Design Biennial · Chicago Architecture Biennial · İKSV.
+        Haus der Kulturen der Welt, Pera Museum, SALT, Istanbul Modern, Museum
+        Ludwig, MAXXI, La Biennale di Venezia, the Istanbul Biennial and İKSV.
         Artists include Ahmet Öğüt, Ayşe Erkmen, Füsun Onur, Gülsün
-        Karamustafa, Marcel Dzama, Monira Al Qadiri, Åsa Jungnelius and
-        Tomás Saraceno.
+        Karamustafa, Marcel Dzama, Monira Al Qadiri, Åsa Jungnelius and Tomás
+        Saraceno.
       </p>
 
       <h2>Contact</h2>
       <p>
-        <a href="mailto:contact@noframe.studio">contact@noframe.studio</a> ·
-        Berlin. For internships, see the
+        <a href="mailto:contact@noframe.studio">contact@noframe.studio</a>, Berlin.
+        Looking for an internship? The details are on the
         <a href={`${base}/internships`}>internships page</a>.
       </p>
     </div>
   </section>
-</ThemeShell>
+</SwissShell>

@@ -1,95 +1,70 @@
 ---
-import ThemeShell from '../../../layouts/ThemeShell.astro';
+import SwissShell from '../../../layouts/SwissShell.astro';
+import SwissBar from '../../../components/SwissBar.astro';
 import { getRegister, facets } from '../../../lib/register';
+import accents from '../../../data/accents.json';
 import '../../../styles/t-werkindex.css';
 
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const entries = await getRegister();
 const { types, cities } = facets(entries);
-const FONTS = 'family=Familjen+Grotesk:ital,wght@0,400..700;1,400..600&family=Fragment+Mono:ital@0;1';
+const colour = (id: string) => (accents as Record<string, string>)[id] ?? '#111';
 ---
 
-<ThemeShell title="Studio No Frame — Werkindex" theme="werkindex" fonts={FONTS}>
-  <header class="masthead">
-    <a class="studio" href={`${base}/designs/werkindex/`}>Studio No Frame<i>.</i></a>
-    <nav>
-      <a href={`${base}/designs/werkindex/`} aria-current="page">Index</a>
-      <a href={`${base}/designs/werkindex/practice`}>Practice</a>
-      <a href="mailto:contact@noframe.studio">Contact</a>
-    </nav>
-    <span class="spacer"></span>
-    <span class="mono" style="color: var(--soft)">Berlin</span>
-  </header>
+<SwissShell title="Studio No Frame">
+  <SwissBar />
 
-  <div class="console reveal">
-    <div class="search">
-      <label for="q">Find</label>
-      <input id="q" type="search" placeholder="title, venue, city, year, role…" autocomplete="off" spellcheck="false" />
-      <kbd>/</kbd>
-    </div>
+  <nav class="spectrum" aria-label="All exhibitions">
+    {entries.map((e) => (
+      <a href={`${base}/designs/werkindex/${e.id}`} style={`--seg:${colour(e.id)}`} aria-label={`${e.nr} ${e.data.title}`}></a>
+    ))}
+  </nav>
 
-    <div class="chips" data-facet="type" aria-label="Filter by kind">
-      <button type="button" data-value="" aria-pressed="true">All</button>
-      {types.map(([name, n]) => (
-        <button type="button" data-value={name} aria-pressed="false">{name}<sup>{n}</sup></button>
-      ))}
-    </div>
-
-    <div class="chips" data-facet="city" aria-label="Filter by city">
-      {cities.map(([name, n]) => (
-        <button type="button" data-value={name} aria-pressed="false">{name}<sup>{n}</sup></button>
-      ))}
-    </div>
-
-    <div class="modes" role="group" aria-label="View">
-      <button type="button" data-mode="list" aria-pressed="true">List</button>
-      <button type="button" data-mode="grid" aria-pressed="false">Plates</button>
-    </div>
-
-    <span class="tally"><b id="count">{entries.length}</b> / {entries.length}</span>
+  <div class="facets">
+    <button type="button" data-facet="type" data-value="" aria-pressed="true">All</button>
+    {types.map(([name, n]) => (
+      <button type="button" data-facet="type" data-value={name} aria-pressed="false">{name} <span>{n}</span></button>
+    ))}
+    <i class="sep"></i>
+    {cities.map(([name, n]) => (
+      <button type="button" data-facet="city" data-value={name} aria-pressed="false">{name} <span>{n}</span></button>
+    ))}
   </div>
 
-  <div class="register" id="register" data-mode="list">
-    <div class="colhead reveal" role="row">
-      <button type="button" data-sort="nr" aria-sort="ascending">Nr.</button>
-      <button type="button" data-sort="title">Exhibition</button>
-      <button type="button" data-sort="venue">Venue</button>
-      <button type="button" data-sort="city">City</button>
-      <button type="button" data-sort="year">Year</button>
-      <button type="button" data-sort="type">Kind</button>
+  <div class="register" id="register" data-view="werk">
+    <div class="colhead">
+      <button type="button" data-sort="nr" aria-sort="ascending">Nr</button>
+      <button type="button" data-sort="ttl">Exhibition</button>
+      <button type="button" data-sort="ven">Venue</button>
+      <button type="button" data-sort="cty">City</button>
+      <button type="button" data-sort="yr">Year</button>
+      <button type="button" data-sort="knd">Kind</button>
     </div>
 
     {entries.map((e, i) => (
       <a
-        class="entry reveal"
+        class="entry"
         href={`${base}/designs/werkindex/${e.id}`}
-        style={`--i:${i}`}
         data-nr={e.nr}
-        data-title={e.data.title}
-        data-venue={e.data.venue}
-        data-city={e.city}
-        data-year={e.year}
-        data-type={e.type}
+        data-ttl={e.data.title}
+        data-ven={e.data.venue}
+        data-cty={e.city}
+        data-yr={e.year}
+        data-knd={e.type}
         data-role={e.data.role}
-        data-shot={`${base}${e.data.cover}`}
       >
-        <img class="shot" src={`${base}${e.data.cover}`} alt="" loading="lazy" decoding="async" />
+        <img class="img" src={`${base}${e.data.cover}`} alt={`${e.data.title} — ${e.data.venue}`} loading={i < 3 ? 'eager' : 'lazy'} decoding="async" />
         <span class="nr">{e.nr}</span>
-        <span class="title">{e.data.title}</span>
-        <span class="venue">{e.data.venue}</span>
-        <span class="city">{e.city}</span>
-        <span class="year">{e.data.year}</span>
-        <span class="type">{e.type}</span>
+        <span class="ttl">{e.data.title}</span>
+        <span class="ven">{e.data.venue}</span>
+        <span class="cty">{e.city}</span>
+        <span class="yr">{e.data.year}</span>
+        <span class="knd">{e.type}</span>
       </a>
     ))}
 
-    <p class="empty" id="empty" hidden>Nothing in the register matches that.</p>
+    <p class="empty" id="empty" hidden>Nothing matches that. Clear the search to see all nineteen.</p>
   </div>
-
-  <figure class="plate" id="plate" aria-hidden="true">
-    <img alt="" />
-    <figcaption></figcaption>
-  </figure>
 
   <script is:inline>
     const register = document.getElementById('register');
@@ -97,39 +72,25 @@ const FONTS = 'family=Familjen+Grotesk:ital,wght@0,400..700;1,400..600&family=Fr
     const input = document.getElementById('q');
     const count = document.getElementById('count');
     const empty = document.getElementById('empty');
-    const plate = document.getElementById('plate');
-    const plateImg = plate.querySelector('img');
-    const plateCap = plate.querySelector('figcaption');
-
     const state = { q: '', type: '', city: '', sort: 'nr', dir: 1 };
 
-    const fields = (el) =>
-      [el.dataset.nr, el.dataset.title, el.dataset.venue, el.dataset.city, el.dataset.year, el.dataset.type, el.dataset.role]
-        .join(' ')
-        .toLowerCase();
+    const hay = (el) => [el.dataset.nr, el.dataset.ttl, el.dataset.ven, el.dataset.cty, el.dataset.yr, el.dataset.knd, el.dataset.role].join(' ').toLowerCase();
 
-    /* highlight the matched run inside the title, the way a finding aid does */
     const mark = (el) => {
-      const title = el.querySelector('.title');
-      const raw = el.dataset.title;
-      if (!state.q) { title.textContent = raw; return; }
-      const at = raw.toLowerCase().indexOf(state.q);
-      if (at < 0) { title.textContent = raw; return; }
-      title.textContent = '';
-      title.append(
-        raw.slice(0, at),
-        Object.assign(document.createElement('mark'), { textContent: raw.slice(at, at + state.q.length) }),
-        raw.slice(at + state.q.length)
-      );
+      const node = el.querySelector('.ttl');
+      const raw = el.dataset.ttl;
+      const at = state.q ? raw.toLowerCase().indexOf(state.q) : -1;
+      if (at < 0) { node.textContent = raw; return; }
+      node.textContent = '';
+      node.append(raw.slice(0, at), Object.assign(document.createElement('mark'), { textContent: raw.slice(at, at + state.q.length) }), raw.slice(at + state.q.length));
     };
 
     const apply = () => {
       let shown = 0;
       for (const el of entries) {
-        const hit =
-          (!state.q || fields(el).includes(state.q)) &&
-          (!state.type || el.dataset.type === state.type) &&
-          (!state.city || el.dataset.city === state.city);
+        const hit = (!state.q || hay(el).includes(state.q)) &&
+          (!state.type || el.dataset.knd === state.type) &&
+          (!state.city || el.dataset.cty === state.city);
         el.classList.toggle('is-hidden', !hit);
         if (hit) { shown++; mark(el); }
       }
@@ -137,81 +98,52 @@ const FONTS = 'family=Familjen+Grotesk:ital,wght@0,400..700;1,400..600&family=Fr
       empty.hidden = shown > 0;
     };
 
-    const sortBy = (key) => {
-      state.dir = state.sort === key ? -state.dir : 1;
-      state.sort = key;
-      const value = (el) => (key === 'year' || key === 'nr' ? Number(el.dataset[key]) : el.dataset[key].toLowerCase());
-      [...entries]
-        .sort((a, b) => {
-          const x = value(a), y = value(b);
-          return (x < y ? -1 : x > y ? 1 : 0) * state.dir;
-        })
-        .forEach((el) => register.appendChild(el));
-      register.appendChild(empty);
-      document.querySelectorAll('.colhead button').forEach((b) => {
-        if (b.dataset.sort === key) b.setAttribute('aria-sort', state.dir === 1 ? 'ascending' : 'descending');
-        else b.removeAttribute('aria-sort');
-      });
-    };
-
     input.addEventListener('input', () => { state.q = input.value.trim().toLowerCase(); apply(); });
 
-    document.querySelectorAll('.chips').forEach((group) => {
-      const facet = group.dataset.facet;
-      group.querySelectorAll('button').forEach((button) => {
-        button.addEventListener('click', () => {
-          const value = button.dataset.value;
-          const off = state[facet] === value;
-          state[facet] = off ? '' : value;
-          /* one value per facet, and "All" clears the kind filter */
-          document.querySelectorAll('.chips').forEach((g) => {
-            g.querySelectorAll('button').forEach((b) => {
-              const isAll = b.dataset.value === '' && g.dataset.facet === 'type';
-              const on = isAll ? !state.type : b.dataset.value === state[g.dataset.facet];
-              b.setAttribute('aria-pressed', String(on));
-            });
-          });
-          apply();
+    document.querySelectorAll('.facets button').forEach((b) => {
+      b.addEventListener('click', () => {
+        const facet = b.dataset.facet;
+        state[facet] = state[facet] === b.dataset.value ? '' : b.dataset.value;
+        document.querySelectorAll('.facets button').forEach((x) => {
+          const isAll = x.dataset.facet === 'type' && x.dataset.value === '';
+          x.setAttribute('aria-pressed', String(isAll ? !state.type : x.dataset.value === state[x.dataset.facet]));
         });
+        apply();
       });
     });
 
     document.querySelectorAll('.colhead button').forEach((b) => {
-      b.addEventListener('click', () => sortBy(b.dataset.sort));
-    });
-
-    document.querySelectorAll('.modes button').forEach((b) => {
       b.addEventListener('click', () => {
-        register.dataset.mode = b.dataset.mode;
-        document.querySelectorAll('.modes button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        const key = b.dataset.sort;
+        state.dir = state.sort === key ? -state.dir : 1;
+        state.sort = key;
+        const val = (el) => (key === 'yr' || key === 'nr' ? Number(el.dataset[key]) : el.dataset[key].toLowerCase());
+        [...entries].sort((x, y) => (val(x) < val(y) ? -1 : val(x) > val(y) ? 1 : 0) * state.dir).forEach((el) => register.appendChild(el));
+        register.appendChild(empty);
+        document.querySelectorAll('.colhead button').forEach((h) => {
+          if (h.dataset.sort === key) h.setAttribute('aria-sort', state.dir === 1 ? 'ascending' : 'descending');
+          else h.removeAttribute('aria-sort');
+        });
       });
     });
 
-    /* the plate follows the row you are reading */
-    entries.forEach((el) => {
-      const show = () => {
-        if (register.dataset.mode !== 'list') return;
-        plateImg.src = el.dataset.shot;
-        plateCap.textContent = `${el.dataset.nr} — ${el.dataset.year}`;
-        plate.classList.add('is-on');
-      };
-      el.addEventListener('mouseenter', show);
-      el.addEventListener('focus', show);
-      el.addEventListener('mouseleave', () => plate.classList.remove('is-on'));
-      el.addEventListener('blur', () => plate.classList.remove('is-on'));
+    document.querySelectorAll('.bar nav button[data-view]').forEach((b) => {
+      b.addEventListener('click', () => {
+        register.dataset.view = b.dataset.view;
+        document.querySelectorAll('.bar nav button[data-view]').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        window.scrollTo({ top: 0 });
+      });
     });
 
-    /* the keyboard a register deserves */
+    /* plates arrive as they load rather than snapping in */
+    const seen = new IntersectionObserver((rows) => {
+      rows.forEach((r) => { if (r.isIntersecting) { r.target.classList.add('is-in'); seen.unobserve(r.target); } });
+    }, { rootMargin: '200px' });
+    register.querySelectorAll('.img').forEach((img) => seen.observe(img));
+
     window.addEventListener('keydown', (e) => {
       if (e.key === '/' && document.activeElement !== input) { e.preventDefault(); input.focus(); input.select(); }
       if (e.key === 'Escape' && document.activeElement === input) { input.value = ''; state.q = ''; apply(); input.blur(); }
-      if (e.key === 'ArrowDown' || e.key === 'ArrowUp') {
-        const live = entries.filter((el) => !el.classList.contains('is-hidden'));
-        if (!live.length) return;
-        const at = live.indexOf(document.activeElement);
-        e.preventDefault();
-        live[Math.max(0, Math.min(live.length - 1, at + (e.key === 'ArrowDown' ? 1 : -1)))].focus();
-      }
     });
   </script>
-</ThemeShell>
+</SwissShell>
