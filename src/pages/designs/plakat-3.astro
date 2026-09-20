@@ -34,7 +34,7 @@ const projects = await getProjects('en');
 
   <div class="deck">
     {projects.map((p, i) => (
-      <a class="poster" href={`${base}/projects/${p.id}`} data-index={i}>
+      <a class="poster" href={`${base}/designs/plakat-3/${p.id}`} data-index={i}>
         <img src={`${base}${p.data.cover}`} alt={`${p.data.title} — ${p.data.venue}`} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
         <div class="sheet">
           <h2>{p.data.title}</h2>

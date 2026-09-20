@@ -1,0 +1,146 @@
+---
+import { render } from 'astro:content';
+import PreviewShell from '../../../layouts/PreviewShell.astro';
+import { getProjects } from '../../../lib/projects';
+import '../../../styles/t-plakat.css';
+
+export async function getStaticPaths() {
+  const projects = await getProjects('en');
+  return projects.map((project, i) => ({
+    params: { slug: project.id },
+    props: { project, index: i, projects, next: projects[i + 1] ?? projects[0] },
+  }));
+}
+
+const { project, index, projects, next } = Astro.props;
+const { Content } = await render(project.entry);
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const { title, venue, year, role, images } = project.data;
+const [lead, ...rest] = images;
+---
+
+<PreviewShell title={`${title} — Plakat`} variant="plakat-3">
+  <header class="topbar">
+    <a class="wordmark" href={`${base}/designs/plakat-3`}>Studio No Frame</a>
+    <span class="spacer"></span>
+    <span class="count">{String(index + 1).padStart(2, '0')} / {projects.length}</span>
+    <button type="button" class="menu-btn" id="menuBtn" aria-expanded="false" aria-controls="tafel">
+      <span>Index</span>
+    </button>
+  </header>
+
+  <div class="tafel" id="tafel" hidden>
+    <ol>
+      {projects.map((p, i) => (
+        <li>
+          <a href={`${base}/designs/plakat-3/${p.id}`} aria-current={p.id === project.id ? 'page' : undefined}>
+            <span class="n">{String(i + 1).padStart(2, '0')}</span>
+            <span class="t">{p.data.title}</span>
+            <span class="v">{p.data.venue} · {p.data.year}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+    <p class="tafel-foot"><a href="mailto:contact@noframe.studio">contact@noframe.studio</a> · Berlin</p>
+  </div>
+
+  {lead && (
+    <section class="hero">
+      <img src={`${base}${lead}`} alt={`${title} — ${venue}`} fetchpriority="high" decoding="async" />
+      <div class="sheet">
+        <h1>{title}</h1>
+        <p>{venue} · {year}<br />{role}</p>
+      </div>
+    </section>
+  )}
+
+  <div class="body">
+    <div class="text"><Content /></div>
+  </div>
+
+  <div class="plates">
+    {rest.map((src: string, i: number) => (
+      <figure>
+        <img src={`${base}${src}`} alt={`${title} — ${venue}`} loading="lazy" decoding="async" />
+        <figcaption>{String(i + 2).padStart(2, '0')}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <a class="nextsheet" href={`${base}/designs/plakat-3/${next.id}`}>
+    <span>Next</span>
+    <strong>{next.data.title}</strong>
+  </a>
+
+  <style>
+    html { scroll-snap-type: none; }
+
+    .menu-btn {
+      appearance: none; border: 1px solid rgba(255, 255, 255, 0.5); background: none;
+      color: inherit; font: inherit; font-size: 0.68rem; letter-spacing: 0.12em;
+      text-transform: uppercase; padding: 0.3rem 0.7rem; cursor: pointer;
+    }
+    .menu-btn[aria-expanded='true'] { background: #fff; color: var(--ink); border-color: #fff; }
+
+    .tafel {
+      position: fixed; top: var(--bar); left: 0; right: 0; bottom: 0; z-index: 55;
+      background: var(--ink); overflow: auto;
+      padding: clamp(1rem, 4vh, 3rem) clamp(0.75rem, 3vw, 3rem) 3rem;
+    }
+    .tafel[hidden] { display: none; }
+    .tafel ol { list-style: none; margin: 0; padding: 0; }
+    .tafel li { border-bottom: 1px solid rgba(255, 255, 255, 0.16); }
+    .tafel a {
+      display: grid; grid-template-columns: 3rem minmax(0, 1fr) auto; gap: 0.4rem 1.25rem;
+      align-items: baseline; padding: clamp(0.7rem, 1.8vh, 1.1rem) 0;
+      transition: padding-left 220ms cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    .tafel a:hover { padding-left: 0.7rem; }
+    .tafel a[aria-current='page'] .t { color: #fff; }
+    .tafel a[aria-current='page'] .n { color: #fff; opacity: 1; }
+    .tafel .n { font-size: 0.72rem; opacity: 0.5; }
+    .tafel .t { font-size: clamp(1.1rem, 2.6vw, 2rem); letter-spacing: -0.03em; line-height: 1.05; }
+    .tafel .v { font-size: 0.7rem; opacity: 0.55; text-align: right; }
+    .tafel-foot { margin: 2rem 0 0; font-size: 0.72rem; opacity: 0.6; }
+    .tafel-foot a { border-bottom: 1px solid rgba(255,255,255,0.3); }
+
+    /* the sheet that opened the poster, now holding the title */
+    .hero { position: relative; margin-top: var(--bar); height: calc(100svh - var(--bar)); overflow: hidden; }
+    .hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; }
+    .hero .sheet { position: absolute; left: 0; bottom: clamp(1rem, 4vh, 2.5rem); max-width: min(92%, 62rem); }
+    .hero h1 {
+      margin: 0; padding: 0 0.35rem;
+      font-size: clamp(1.7rem, 5.6vw, 4.6rem); font-weight: 400; line-height: 1.0;
+      letter-spacing: -0.04em; color: #fff; mix-blend-mode: difference; text-wrap: balance;
+    }
+
+    .body { padding: clamp(2rem, 6vh, 3.5rem) clamp(0.75rem, 2.5vw, 1.5rem); }
+    .text { max-width: 44rem; font-size: 0.9rem; line-height: 1.65; }
+    .text p { margin: 0 0 1em; }
+
+    .plates { display: grid; grid-template-columns: repeat(auto-fit, minmax(min(22rem, 100%), 1fr)); gap: 1px; background: rgba(255,255,255,0.18); border-top: 1px solid rgba(255,255,255,0.18); border-bottom: 1px solid rgba(255,255,255,0.18); }
+    .plates figure { margin: 0; position: relative; background: var(--ink); }
+    .plates img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; }
+    .plates figcaption { position: absolute; left: 0; bottom: 0; background: var(--ink); color: var(--paper); font-size: 0.64rem; padding: 0.2rem 0.45rem; }
+
+    .nextsheet { display: block; padding: 1.25rem clamp(0.75rem, 2.5vw, 1.5rem) clamp(4rem, 9vh, 6rem); }
+    .nextsheet span { font-size: 0.68rem; letter-spacing: 0.14em; text-transform: uppercase; opacity: 0.6; }
+    .nextsheet strong { display: block; margin-top: 0.25rem; font-weight: 400; font-size: clamp(1.3rem, 3.5vw, 2.4rem); letter-spacing: -0.035em; }
+    .nextsheet:hover strong { text-decoration: underline; text-underline-offset: 0.16em; }
+
+    @media (max-width: 640px) { .tafel .v { display: none; } }
+  </style>
+
+  <script is:inline>
+    const btn = document.getElementById('menuBtn');
+    const tafel = document.getElementById('tafel');
+    const setOpen = (open) => {
+      tafel.hidden = !open;
+      btn.setAttribute('aria-expanded', String(open));
+      btn.querySelector('span').textContent = open ? 'Close' : 'Index';
+      document.documentElement.style.overflow = open ? 'hidden' : '';
+    };
+    btn.addEventListener('click', () => setOpen(tafel.hidden));
+    window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !tafel.hidden) setOpen(false); });
+  </script>
+</PreviewShell>

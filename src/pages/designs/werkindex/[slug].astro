@@ -1,0 +1,98 @@
+---
+import { render } from 'astro:content';
+import ThemeShell from '../../../layouts/ThemeShell.astro';
+import { getRegister } from '../../../lib/register';
+import '../../../styles/t-werkindex.css';
+
+export async function getStaticPaths() {
+  const entries = await getRegister();
+  return entries.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: {
+      entry,
+      prev: entries[i - 1] ?? entries[entries.length - 1],
+      next: entries[i + 1] ?? entries[0],
+      /* the register's own cross-reference: same house, or same kind */
+      related: entries
+        .filter((o) => o.id !== entry.id && (o.data.venue === entry.data.venue || o.type === entry.type))
+        .sort((a, b) => {
+          const sameVenue = (x: typeof a) => (x.data.venue === entry.data.venue ? 0 : 1);
+          return sameVenue(a) - sameVenue(b) || Number(a.nr) - Number(b.nr);
+        })
+        .slice(0, 5),
+    },
+  }));
+}
+
+const { entry, prev, next, related } = Astro.props;
+const { Content } = await render(entry.entry);
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const { title, venue, year, role, images } = entry.data;
+const FONTS = 'family=Familjen+Grotesk:ital,wght@0,400..700;1,400..600&family=Fragment+Mono:ital@0;1';
+---
+
+<ThemeShell title={`${entry.nr} ${title}`} theme="werkindex" fonts={FONTS}>
+  <header class="masthead">
+    <a class="studio" href={`${base}/designs/werkindex/`}>Studio No Frame<i>.</i></a>
+    <nav>
+      <a href={`${base}/designs/werkindex/`}>Index</a>
+      <a href={`${base}/designs/werkindex/practice`}>Practice</a>
+      <a href="mailto:contact@noframe.studio">Contact</a>
+    </nav>
+    <span class="spacer"></span>
+    <span class="mono" style="color: var(--red)">{entry.nr}</span>
+  </header>
+
+  <div class="record">
+    <span class="nr reveal">{entry.nr}</span>
+    <h1 class="reveal">{title}</h1>
+
+    <dl class="facts reveal">
+      <div><dt>Venue</dt><dd>{venue}</dd></div>
+      <div><dt>City</dt><dd>{entry.city}</dd></div>
+      <div><dt>Year</dt><dd>{year}</dd></div>
+      <div><dt>Kind</dt><dd><a href={`${base}/designs/werkindex/?kind=${encodeURIComponent(entry.type)}`}>{entry.type}</a></dd></div>
+      <div><dt>Role</dt><dd>{role}</dd></div>
+      <div><dt>Plates</dt><dd>{String(images.length).padStart(2, '0')}</dd></div>
+    </dl>
+  </div>
+
+  <div class="record-text reveal"><Content /></div>
+
+  <div class="record-plates">
+    {images.map((src: string, i: number) => (
+      <figure>
+        <img src={`${base}${src}`} alt={`${title} — ${venue}`} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+        <figcaption>{entry.nr}.{String(i + 1).padStart(2, '0')}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  {related.length > 0 && (
+    <section class="related">
+      <h2>Cross-references</h2>
+      <ul>
+        {related.map((o) => (
+          <li>
+            <a href={`${base}/designs/werkindex/${o.id}`}>
+              <span class="nr">{o.nr}</span>
+              <span>{o.data.title}</span>
+              <span class="venue">{o.data.venue === venue ? 'Same venue' : o.type}</span>
+            </a>
+          </li>
+        ))}
+      </ul>
+    </section>
+  )}
+
+  <nav class="pager">
+    <a href={`${base}/designs/werkindex/${prev.id}`}>
+      <span class="dir">← {prev.nr}</span>
+      <strong>{prev.data.title}</strong>
+    </a>
+    <a class="next" href={`${base}/designs/werkindex/${next.id}`}>
+      <span class="dir">{next.nr} →</span>
+      <strong>{next.data.title}</strong>
+    </a>
+  </nav>
+</ThemeShell>

@@ -12,6 +12,12 @@ const themes = [
   { key: 'nacht', name: 'Nacht', pitch: 'Siyah zemin, magenta ve limon yeşili, halftone nokta dokusu, üstte kayan şerit. Unbounded + Kode Mono — Berlin afişi. Satıra gelince fotokopi gibi bir kare beliriyor.', tone: 'Siyah · yüksek sesli · afiş' },
 ];
 
+const full = [
+  { key: 'werkindex/', name: 'Werkindex', pitch: 'Herzog & de Meuron mantığı: her serginin kalıcı bir numarası var — 001 Disobedience Archive (2014) → 019 Tirailleurs (2026) — ve site aslında o kütük. Canlı arama (“/” tuşu), sütun başlıklarından sıralama, tür ve şehir filtreleri, liste ⇄ plaka görünümü, satıra gelince köşede beliren kare. Proje sayfasında çapraz referanslar: aynı mekândaki ya da aynı türdeki diğer işler.', note: 'Tam site: indeks + proje sayfaları + Practice. Familjen Grotesk + Fragment Mono, arşiv kırmızısı.' },
+  { key: 'plakat-3', name: 'Plakat · Tafel', pitch: 'Tam ekran afiş destesi, sağ üstte “Index” düğmesi; basınca 19 sergi kademeli açılıyor. Proje sayfası da aynı dünyada: tam ekran açılış karesi, üstünde başlık, altında plakalar.', note: 'Tam site: afiş destesi + proje sayfaları.' },
+  { key: 'hybrid', name: 'Plakat × Kontaktbogen', pitch: 'Üstte tek kare afiş boyunda, altında 135 karenin kayan kontakt şeridi; şeritte gezindikçe afiş değişiyor. Kareye tıklayınca Tafel proje sayfası açılıyor.', note: 'Tam site: hibrit indeks + proje sayfaları.' },
+];
+
 const shortlist = [
   { key: 'plakat-1', name: 'Plakat · Leiste', idea: 'Üstte sabit ince bir çubuk: stüdyo adı, menü ve sağda “03 / 19 — Vardiya” sayacı. Çubuğun altındaki saç teli çizgi destenin neresinde olduğunu gösteriyor.', note: 'En sade menü. Afişler bozulmuyor.' },
   { key: 'plakat-2', name: 'Plakat · Register', idea: 'Menünün kendisi sergi listesi: 19 başlık üst çubukta yatay bir şerit hâlinde. Kaydırdıkça o anki başlık beyazlaşıp şerit kendini ortalıyor; tıklayınca o afişe gidiyor.', note: 'Menü + içindekiler tek şeritte.' },
@@ -95,6 +101,19 @@ const inners = [
         animasyonu var, ana sayfası ve proje sayfası birlikte geliyor. Altta
         önceki yapısal denemeler duruyor. Yayındaki tasarıma hiçbiri dokunmadı.
       </p>
+
+      <h2 class="group">Tam siteler — indeks + proje sayfaları birlikte</h2>
+      {full.map((o) => (
+        <div class="opt">
+          <span class="key">{o.name.split(' · ')[0]}</span>
+          <div>
+            <h3>{o.name}</h3>
+            <p>{o.pitch}</p>
+            <p class="note">{o.note}</p>
+          </div>
+          <a class="go" href={`${base}/designs/${o.key}`}>Aç</a>
+        </div>
+      ))}
 
       <h2 class="group">Yeni — Plakat ve Kontaktbogen’in üst menülü varyasyonları</h2>
       {shortlist.map((o) => (

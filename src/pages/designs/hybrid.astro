@@ -26,7 +26,7 @@ const frames = projects.flatMap((p, order) =>
     {frames.map((f, i) => (
       <a
         class={`big ${i === 0 ? 'is-active' : ''}`}
-        href={`${base}/projects/${f.slug}`}
+        href={`${base}/designs/plakat-3/${f.slug}`}
         data-i={i}
       >
         <img src={`${base}${f.src}`} alt={f.title} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
