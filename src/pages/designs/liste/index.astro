@@ -1,0 +1,126 @@
+---
+import SwissShell from '../../../layouts/SwissShell.astro';
+import { getRegister } from '../../../lib/register';
+import '../../../styles/t-liste.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const entries = await getRegister();
+const shown = [...entries].reverse();   // newest first, as the list always read
+const first = shown[0];
+---
+
+<SwissShell title="Studio No Frame — Exhibition architecture, Berlin">
+  <header class="head">
+    <a class="studio" href={`${base}/designs/liste/`}>Studio No Frame</a>
+    <span class="spacer"></span>
+    <label class="find">
+      <input id="q" type="search" placeholder="Search" autocomplete="off" spellcheck="false" aria-label="Search the list" />
+    </label>
+    <nav>
+      <a href={`${base}/designs/liste/`} aria-current="page">Work</a>
+      <a href={`${base}/about`}>About</a>
+      <a href="mailto:contact@noframe.studio">Contact</a>
+    </nav>
+  </header>
+
+  <h1 class="standfirst">
+    Exhibition architecture, production and curation, from Berlin.{' '}
+    <span>Nineteen shows built with museums, biennials and artists since 2014.</span>
+  </h1>
+
+  <div class="sheet">
+    <div class="colhead">
+      <span class="label">Nr</span>
+      <span class="label">Year</span>
+      <span class="label">Exhibition</span>
+    </div>
+
+    <ol class="list" id="list">
+      {shown.map((e) => (
+        <li
+          data-hay={`${e.nr} ${e.data.title} ${e.data.venue} ${e.city} ${e.data.year} ${e.type} ${e.data.role}`.toLowerCase()}
+          data-ttl={e.data.title}
+          data-shot={`${base}${e.data.cover}`}
+          data-cap={`${e.data.venue} · ${e.data.year}`}
+        >
+          <a class="row" href={`${base}/designs/liste/${e.id}`}>
+            <span class="nr">{e.nr}</span>
+            <span class="yr">{e.data.year}</span>
+            <span class="ttl">
+              {e.data.title}
+              <span class="meta">{e.data.venue} — {e.data.role}</span>
+            </span>
+            <img class="thumb" src={`${base}${e.data.cover}`} alt="" loading="lazy" decoding="async" />
+          </a>
+        </li>
+      ))}
+    </ol>
+    <p class="empty" id="empty" hidden>Nothing matches that.</p>
+  </div>
+
+  <figure class="plate" aria-hidden="true">
+    <div class="stack">
+      {shown.map((e, i) => (
+        <img
+          src={`${base}${e.data.cover}`}
+          alt=""
+          data-for={e.nr}
+          class={i === 0 ? 'is-on' : undefined}
+          loading={i < 3 ? 'eager' : 'lazy'}
+          decoding="async"
+        />
+      ))}
+    </div>
+    <figcaption>
+      <b id="capT">{first.data.title}</b>
+      <span id="capM">{first.data.venue} · {first.data.year}</span>
+    </figcaption>
+  </figure>
+
+  <script is:inline>
+    const items = [...document.querySelectorAll('#list li')];
+    const shots = [...document.querySelectorAll('.plate .stack img')];
+    const capT = document.getElementById('capT');
+    const capM = document.getElementById('capM');
+    const input = document.getElementById('q');
+    const empty = document.getElementById('empty');
+
+    const show = (li) => {
+      const nr = li.dataset.hay.slice(0, 3);
+      shots.forEach((img) => img.classList.toggle('is-on', img.dataset.for === nr));
+      capT.textContent = li.dataset.ttl;
+      capM.textContent = li.dataset.cap;
+    };
+
+    items.forEach((li) => {
+      li.addEventListener('mouseenter', () => show(li));
+      li.addEventListener('focusin', () => show(li));
+    });
+
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      let n = 0;
+      items.forEach((li) => {
+        const hit = !q || li.dataset.hay.includes(q);
+        li.classList.toggle('is-hidden', !hit);
+        if (hit) {
+          n++;
+          const t = li.querySelector('.ttl');
+          const raw = li.dataset.ttl;
+          const at = q ? raw.toLowerCase().indexOf(q) : -1;
+          const meta = t.querySelector('.meta');
+          t.textContent = '';
+          if (at < 0) t.append(raw);
+          else t.append(raw.slice(0, at), Object.assign(document.createElement('mark'), { textContent: raw.slice(at, at + q.length) }), raw.slice(at + q.length));
+          t.append(meta);
+        }
+      });
+      empty.hidden = n > 0;
+    });
+
+    window.addEventListener('keydown', (e) => {
+      if (e.key === '/' && document.activeElement !== input) { e.preventDefault(); input.focus(); input.select(); }
+      if (e.key === 'Escape' && document.activeElement === input) { input.value = ''; input.dispatchEvent(new Event('input')); input.blur(); }
+    });
+  </script>
+</SwissShell>
