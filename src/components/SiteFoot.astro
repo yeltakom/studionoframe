@@ -1,0 +1,18 @@
+---
+import { SITE } from '../site';
+import { UI, type Lang } from '../i18n';
+interface Props { lang?: Lang }
+const { lang = 'en' } = Astro.props;
+const t = UI[lang];
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const home = lang === 'de' ? `${base}/de` : base;
+---
+<footer class="site-footer">
+  <p>© {new Date().getFullYear()} Studio No Frame · Berlin</p>
+  <nav>
+    <a href={`mailto:${SITE.email}`}>{SITE.email}</a>
+    <a href={`${home}/internships`}>{t.footer.internships}</a>
+    <a href={`${base}/impressum`}>{t.footer.imprint}</a>
+    <a href={`${base}/datenschutz`}>{t.footer.privacy}</a>
+  </nav>
+</footer>

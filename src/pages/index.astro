@@ -1,37 +1,83 @@
 ---
 import Base from '../layouts/Base.astro';
 import Chrome from '../components/Chrome.astro';
+import SiteFoot from '../components/SiteFoot.astro';
+import { getProjects } from '../lib/projects';
 import { getRegister } from '../lib/register';
 import { studioSchema } from '../lib/schema';
 
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const site = (Astro.site ?? new URL(Astro.url.origin)).href.replace(/\/+$/, '');
-const entries = (await getRegister()).slice().reverse();
+const nrOf = new Map((await getRegister()).map((e) => [e.id, e.nr]));
+const entries = (await getProjects('en')).slice().sort((a, b) => Number(nrOf.get(b.id)) - Number(nrOf.get(a.id)));
+const first = entries[0];
 ---
 
 <Base lang="en" image={`${base}/images/og/default.jpg`} schema={studioSchema('en', site, base, entries)}>
-  <Chrome lang="en" here="work" count="01 / 19" />
+  <Chrome lang="en" here="work" />
 
-  <main class="deck">
-    {entries.map((e, i) => (
-      <a class="poster" href={`${base}/projects/${e.id}`} data-no={String(i + 1).padStart(2, '0')}>
-        <img src={`${base}${e.data.cover}`} alt={`${e.data.title} — ${e.data.venue}`} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
-        <span class="plate-no">{e.nr}</span>
-        <div class="set">
-          <h2>{e.data.title}</h2>
-          <p class="chip">{e.data.venue} · {e.data.year}<br /><b>{e.data.role}</b></p>
-        </div>
-      </a>
+  <h1 class="standfirst">
+    Exhibition architecture, production and curation, from Berlin.{' '}
+    <span>Nineteen shows built with museums, biennials and artists since 2014.</span>
+  </h1>
+
+  <section class="showcase">
+    <div class="frame">
+      {entries.map((e, i) => (
+        <img
+          src={`${base}${e.data.cover}`}
+          alt={`${e.data.title} — ${e.data.venue}`}
+          data-for={e.id}
+          class={i === 0 ? 'is-on' : undefined}
+          loading={i < 2 ? 'eager' : 'lazy'}
+          decoding="async"
+        />
+      ))}
+    </div>
+    <div class="caption">
+      <span class="nr" id="capNr">{nrOf.get(first.id)}</span>
+      <span class="ttl" id="capT">{first.data.title}</span>
+      <span class="meta" id="capM">{first.data.venue} · {first.data.year}</span>
+    </div>
+  </section>
+
+  <div class="colhead">
+    <span class="label">Nr</span>
+    <span class="label">Year</span>
+    <span class="label">Exhibition</span>
+  </div>
+
+  <ol class="list" id="list">
+    {entries.map((e) => (
+      <li data-id={e.id} data-nr={nrOf.get(e.id)} data-ttl={e.data.title} data-meta={`${e.data.venue} · ${e.data.year}`}>
+        <a class="row" href={`${base}/projects/${e.id}`}>
+          <span class="nr">{nrOf.get(e.id)}</span>
+          <span class="yr">{e.data.year}</span>
+          <span class="ttl">
+            {e.data.title}
+            <span class="meta">{e.data.venue} — {e.data.role}</span>
+          </span>
+        </a>
+      </li>
     ))}
-  </main>
+  </ol>
+
+  <SiteFoot lang="en" />
 
   <script is:inline>
-    const posters = [...document.querySelectorAll('.poster')];
-    const count = document.querySelector('.bar .count');
-    const io = new IntersectionObserver((rows) => {
-      const top = rows.filter((r) => r.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
-      if (top) count.textContent = `${top.target.dataset.no} / ${posters.length}`;
-    }, { threshold: [0.3, 0.6, 0.9] });
-    posters.forEach((p) => io.observe(p));
+    const shots = [...document.querySelectorAll('.frame img')];
+    const capNr = document.getElementById('capNr');
+    const capT = document.getElementById('capT');
+    const capM = document.getElementById('capM');
+    document.querySelectorAll('#list li').forEach((li) => {
+      const show = () => {
+        shots.forEach((img) => img.classList.toggle('is-on', img.dataset.for === li.dataset.id));
+        capNr.textContent = li.dataset.nr;
+        capT.textContent = li.dataset.ttl;
+        capM.textContent = li.dataset.meta;
+      };
+      li.addEventListener('mouseenter', show);
+      li.addEventListener('focusin', show);
+    });
   </script>
 </Base>

@@ -2,6 +2,7 @@
 import { render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import Chrome from '../../../components/Chrome.astro';
+import SiteFoot from '../../../components/SiteFoot.astro';
 import { getProjects } from '../../../lib/projects';
 import { getRegister } from '../../../lib/register';
 import { projectSchema } from '../../../lib/schema';
@@ -11,11 +12,16 @@ export async function getStaticPaths() {
   const order = (await getProjects('de')).slice().sort((a, b) => Number(nrOf.get(b.id)) - Number(nrOf.get(a.id)));
   return order.map((project, i) => ({
     params: { slug: project.id },
-    props: { project, nr: nrOf.get(project.id) ?? '', next: order[i + 1] ?? order[0] },
+    props: {
+      project,
+      nr: nrOf.get(project.id) ?? '',
+      prev: order[i - 1] ?? order[order.length - 1],
+      next: order[i + 1] ?? order[0],
+    },
   }));
 }
 
-const { project, nr, next } = Astro.props;
+const { project, nr, prev, next } = Astro.props;
 const { Content } = await render(project.entry);
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const site = (Astro.site ?? new URL(Astro.url.origin)).href.replace(/\/+$/, '');
@@ -30,37 +36,48 @@ const [lead, ...rest] = images;
   image={`${base}/images/og/${project.id}.jpg`}
   schema={projectSchema('de', site, base, project.id, project.data)}
 >
-  <Chrome lang="de" count={nr} />
+  <Chrome lang="de" />
 
-  <header class="entry-head">
-    <span class="nr">{nr}</span>
+  <header class="plate-head">
     <h1>{title}</h1>
-    <dl>
-      <div><dt>Ort</dt><dd>{venue}</dd></div>
-      <div><dt>Jahr</dt><dd>{year}</dd></div>
-      <div><dt>Rolle</dt><dd>{role}</dd></div>
+    <dl class="plate-credits">
+      <div><dt class="label">Ort</dt><dd>{venue}</dd></div>
+      <div><dt class="label">Jahr</dt><dd>{year}</dd></div>
+      <div><dt class="label">Rolle</dt><dd>{role}</dd></div>
+      <div><dt class="label">Nr</dt><dd>{nr}</dd></div>
     </dl>
   </header>
 
   {lead && (
-    <div class="lead">
+    <div class="plate-lead">
       <img src={`${base}${lead}`} alt={`${title} — ${venue}`} fetchpriority="high" decoding="async" />
     </div>
   )}
 
-  <div class="read"><Content /></div>
-
-  <div class="plates">
-    {rest.map((src: string, i: number) => (
-      <figure>
-        <img src={`${base}${src}`} alt={`${title} — ${venue}`} loading="lazy" decoding="async" />
-        <figcaption>{nr}.{String(i + 2).padStart(2, '0')}</figcaption>
-      </figure>
-    ))}
+  <div class="plate-text">
+    <div class="prose"><Content /></div>
   </div>
 
-  <a class="tail" href={`${base}/de/projects/${next.id}`}>
-    <span>Weiter</span>
-    <strong>{next.data.title}</strong>
-  </a>
+  {rest.length > 0 && (
+    <div class="plate-figures">
+      {rest.map((image: string, i: number) => (
+        <figure>
+          <img src={`${base}${image}`} alt={`${title} — ${venue}`} loading="lazy" decoding="async" />
+        </figure>
+      ))}
+    </div>
+  )}
+
+  <nav class="plate-nav">
+    <a href={`${base}/de/projects/${prev.id}`}>
+      <span class="label">Zurück</span>
+      <strong>{prev.data.title}</strong>
+    </a>
+    <a href={`${base}/de/projects/${next.id}`} style="text-align: right; margin-left: auto">
+      <span class="label">Weiter</span>
+      <strong>{next.data.title}</strong>
+    </a>
+  </nav>
+
+  <SiteFoot lang="de" />
 </Base>
