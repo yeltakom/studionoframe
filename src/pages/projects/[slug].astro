@@ -30,14 +30,20 @@ const [lead, ...rest] = images;
 >
   <Chrome lang="en" count={entry.nr} />
 
+  <header class="entry-head">
+    <span class="nr">{entry.nr}</span>
+    <h1>{title}</h1>
+    <dl>
+      <div><dt>Venue</dt><dd>{venue}</dd></div>
+      <div><dt>Year</dt><dd>{year}</dd></div>
+      <div><dt>Role</dt><dd>{role}</dd></div>
+    </dl>
+  </header>
+
   {lead && (
-    <section class="hero">
+    <div class="lead">
       <img src={`${base}${lead}`} alt={`${title} — ${venue}`} fetchpriority="high" decoding="async" />
-      <div class="set">
-        <h1>{title}</h1>
-        <p class="chip">{venue} · {year}<br /><b>{role}</b></p>
-      </div>
-    </section>
+    </div>
   )}
 
   <div class="read"><Content /></div>
