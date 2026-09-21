@@ -1,105 +1,37 @@
 ---
-import { getCollection } from 'astro:content';
-import BaseLayout from '../layouts/BaseLayout.astro';
-import { SITE } from '../site';
+import Base from '../layouts/Base.astro';
+import Chrome from '../components/Chrome.astro';
+import { getRegister } from '../lib/register';
+import { studioSchema } from '../lib/schema';
 
-const projects = (await getCollection('projects')).sort((a, b) => a.data.order - b.data.order);
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
-const years = projects.flatMap((p) => (p.data.year.match(/\d{4}/g) ?? []).map(Number));
 const site = (Astro.site ?? new URL(Astro.url.origin)).href.replace(/\/+$/, '');
-
-const schema = [
-  {
-    '@context': 'https://schema.org',
-    '@type': 'Organization',
-    '@id': `${site}${base}/#studio`,
-    name: SITE.name,
-    url: `${site}${base}/`,
-    description: SITE.description,
-    email: SITE.email,
-    founder: { '@type': 'Person', name: SITE.founder, jobTitle: 'Architect and artist' },
-    address: { '@type': 'PostalAddress', addressLocality: SITE.city, addressCountry: SITE.country },
-    knowsAbout: [
-      'Exhibition architecture',
-      'Exhibition design',
-      'Art production',
-      'Curation',
-      'Scenography',
-    ],
-  },
-  {
-    '@context': 'https://schema.org',
-    '@type': 'CollectionPage',
-    name: `${SITE.name} — selected exhibitions`,
-    url: `${site}${base}/`,
-    hasPart: projects.map((p) => ({
-      '@type': 'CreativeWork',
-      name: p.data.title,
-      url: `${site}${base}/projects/${p.id}`,
-      dateCreated: (p.data.year.match(/\d{4}/) ?? [''])[0],
-      locationCreated: { '@type': 'Place', name: p.data.venue },
-    })),
-  },
-];
+const entries = (await getRegister()).slice().reverse();
 ---
 
-<BaseLayout
-  description={SITE.description}
-  image={`${base}/images/og/default.jpg`}
-  schema={schema}
->
-  <h1 class="standfirst">
-    Exhibition architecture, production and curation, from Berlin.{' '}
-    <span>
-      {projects.length} shows built with museums, biennials and artists since
-      {' '}{Math.min(...years)}. Hover a line to see the room it became.
-    </span>
-  </h1>
+<Base lang="en" image={`${base}/images/og/default.jpg`} schema={studioSchema('en', site, base, entries)}>
+  <Chrome lang="en" here="work" count="01 / 19" />
 
-  <div class="checklist-head">
-    <span class="label">Year</span>
-    <span class="label">Exhibition</span>
-    <span class="label">Venue</span>
-    <span class="label">Role</span>
-  </div>
-
-  <ol class="checklist">
-    {projects.map((p) => (
-      <li>
-        <a class="row" href={`${base}/projects/${p.id}`} data-peek={`${base}${p.data.cover}`}>
-          <span class="year">{p.data.year}</span>
-          <span class="title">{p.data.title}</span>
-          <span class="venue">{p.data.venue}</span>
-          <span class="role">{p.data.role}</span>
-          <img class="thumb-inline" src={`${base}${p.data.cover}`} alt="" loading="lazy" />
-        </a>
-      </li>
+  <main class="deck">
+    {entries.map((e, i) => (
+      <a class="poster" href={`${base}/projects/${e.id}`} data-no={String(i + 1).padStart(2, '0')}>
+        <img src={`${base}${e.data.cover}`} alt={`${e.data.title} — ${e.data.venue}`} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
+        <span class="plate-no">{e.nr}</span>
+        <div class="set">
+          <h2>{e.data.title}</h2>
+          <p class="chip">{e.data.venue} · {e.data.year}<br /><b>{e.data.role}</b></p>
+        </div>
+      </a>
     ))}
-  </ol>
-
-  <img class="peek" alt="" aria-hidden="true" />
+  </main>
 
   <script is:inline>
-    const peek = document.querySelector('.peek');
-    const rows = document.querySelectorAll('.row[data-peek]');
-    let frame = 0;
-    const follow = (event) => {
-      cancelAnimationFrame(frame);
-      frame = requestAnimationFrame(() => {
-        peek.style.left = event.clientX + 'px';
-        peek.style.top = event.clientY + 'px';
-      });
-    };
-    rows.forEach((row) => {
-      row.addEventListener('mouseenter', () => {
-        peek.src = row.dataset.peek;
-        peek.classList.add('is-visible');
-        window.addEventListener('mousemove', follow);
-      });
-      row.addEventListener('mouseleave', () => {
-        peek.classList.remove('is-visible');
-        window.removeEventListener('mousemove', follow);
-      });
-    });
+    const posters = [...document.querySelectorAll('.poster')];
+    const count = document.querySelector('.bar .count');
+    const io = new IntersectionObserver((rows) => {
+      const top = rows.filter((r) => r.isIntersecting).sort((a, b) => b.intersectionRatio - a.intersectionRatio)[0];
+      if (top) count.textContent = `${top.target.dataset.no} / ${posters.length}`;
+    }, { threshold: [0.3, 0.6, 0.9] });
+    posters.forEach((p) => io.observe(p));
   </script>
-</BaseLayout>
+</Base>

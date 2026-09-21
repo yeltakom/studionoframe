@@ -1,18 +1,18 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import Base from '../../layouts/Base.astro';
+import Chrome from '../../components/Chrome.astro';
 import { SITE } from '../../site';
 ---
 
-<BaseLayout
-  lang="de"
+<Base lang="de"
   title="Praktika"
   description="Bezahlte, strukturierte Remote-Praktika bei Studio No Frame in Berlin für Studierende der Gestaltung, Architektur, Kunst und Kulturwissenschaften. Pflicht- und Studienpraktika willkommen."
 >
+  <Chrome lang="de" />
   <section class="page">
-    <span class="label">Praktika</span>
     <h1>Bezahlte Praktika, aufgebaut um echte Projekte.</h1>
 
-    <div class="prose">
+    <div class="body">
       <p>
         Wir bieten strukturierte Remote-Praktika für Studierende der Gestaltung,
         Architektur, Kunst, Kulturwissenschaften und verwandter Fächer. Besonders
@@ -40,4 +40,4 @@ import { SITE } from '../../site';
       </p>
     </div>
   </section>
-</BaseLayout>
+</Base>

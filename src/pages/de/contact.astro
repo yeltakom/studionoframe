@@ -1,28 +1,27 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import Base from '../../layouts/Base.astro';
+import Chrome from '../../components/Chrome.astro';
 import { SITE } from '../../site';
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 ---
 
-<BaseLayout
-  lang="de"
+<Base lang="de"
   title="Kontakt"
   description="Studio No Frame für Ausstellungsarchitektur, Produktion oder Kuratierung beauftragen. Schreiben Sie an contact@noframe.studio mit Ausstellung, Ort und Zeitraum."
 >
+  <Chrome lang="de" here="contact" />
   <section class="page">
-    <span class="label">Kontakt</span>
     <h1>Erzählen Sie uns, was Sie bauen.</h1>
 
-    <div class="prose">
+    <div class="body">
       <p>
         Schreiben Sie uns mit der Ausstellung, dem Ort und dem Zeitraum, auf den
         Sie hinarbeiten — wir schicken das vollständige Portfolio und eine erste
         Einschätzung, was das Projekt braucht.
       </p>
       <p style="margin: 2rem 0 2.5rem">
-        <a class="contact-line" href={`mailto:${SITE.email}`}>{SITE.email}</a>
+        <a class="mail" href={`mailto:${SITE.email}`}>{SITE.email}</a>
       </p>
-      <p class="credit">Studio No Frame · Berlin</p>
       <p>
         Sie suchen ein Praktikum? Lesen Sie zuerst die
         <a href={`${base}/de/internships`}>Praktikumsseite</a> — dort steht, was
@@ -30,4 +29,4 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
       </p>
     </div>
   </section>
-</BaseLayout>
+</Base>

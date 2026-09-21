@@ -1,14 +1,15 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import Base from '../layouts/Base.astro';
+import Chrome from '../components/Chrome.astro';
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 ---
 
-<BaseLayout title="About the studio" description="Studio No Frame is a Berlin studio for exhibition architecture, art production, project management and curation, led by Yelta Köm. Partners include HKW, Pera Museum, SALT, Museum Ludwig and the Venice and Istanbul biennials.">
+<Base title="About the studio" description="Studio No Frame is a Berlin studio for exhibition architecture, art production, project management and curation, led by Yelta Köm. Partners include HKW, Pera Museum, SALT, Museum Ludwig and the Venice and Istanbul biennials.">
+  <Chrome here="about" />
   <section class="page">
-    <span class="label">About</span>
     <h1>A studio that takes the shape of the work it houses.</h1>
 
-    <div class="prose">
+    <div class="body">
       <p>
         Studio No Frame is a Berlin-based studio working across art direction,
         exhibition design, art production, project management, curation and
@@ -57,4 +58,4 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
       </p>
     </div>
   </section>
-</BaseLayout>
+</Base>

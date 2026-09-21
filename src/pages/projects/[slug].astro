@@ -1,44 +1,58 @@
 ---
 import { render } from 'astro:content';
-import BaseLayout from '../../layouts/BaseLayout.astro';
-import ProjectPlate from '../../components/ProjectPlate.astro';
-import { getProjects } from '../../lib/projects';
+import Base from '../../layouts/Base.astro';
+import Chrome from '../../components/Chrome.astro';
+import { getRegister } from '../../lib/register';
 import { projectSchema } from '../../lib/schema';
 
 export async function getStaticPaths() {
-  const projects = await getProjects('en');
-  return projects.map((project, i) => ({
-    params: { slug: project.id },
-    props: {
-      project,
-      prev: projects[i - 1] ?? projects[projects.length - 1],
-      next: projects[i + 1] ?? projects[0],
-    },
+  const order = (await getRegister()).slice().reverse();
+  return order.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: { entry, next: order[i + 1] ?? order[0] },
   }));
 }
 
-const { project, prev, next } = Astro.props;
-const { Content } = await render(project.entry);
+const { entry, next } = Astro.props;
+const { Content } = await render(entry.entry);
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const site = (Astro.site ?? new URL(Astro.url.origin)).href.replace(/\/+$/, '');
-const { data } = project;
+const { title, venue, year, role, summary, images } = entry.data;
+const [lead, ...rest] = images;
 ---
 
-<BaseLayout
+<Base
   lang="en"
-  title={`${data.title} — ${data.venue}`}
-  description={data.summary}
-  image={`${base}/images/og/${project.id}.jpg`}
-  schema={projectSchema('en', site, base, project.id, data)}
+  title={`${title} — ${venue}`}
+  description={summary}
+  image={`${base}/images/og/${entry.id}.jpg`}
+  schema={projectSchema('en', site, base, entry.id, entry.data)}
 >
-  <ProjectPlate
-    lang="en"
-    home={base}
-    base={base}
-    data={data}
-    prev={{ id: prev.id, title: prev.data.title }}
-    next={{ id: next.id, title: next.data.title }}
-  >
-    <Content />
-  </ProjectPlate>
-</BaseLayout>
+  <Chrome lang="en" count={entry.nr} />
+
+  {lead && (
+    <section class="hero">
+      <img src={`${base}${lead}`} alt={`${title} — ${venue}`} fetchpriority="high" decoding="async" />
+      <div class="set">
+        <h1>{title}</h1>
+        <p class="chip">{venue} · {year}<br /><b>{role}</b></p>
+      </div>
+    </section>
+  )}
+
+  <div class="read"><Content /></div>
+
+  <div class="plates">
+    {rest.map((src: string, i: number) => (
+      <figure>
+        <img src={`${base}${src}`} alt={`${title} — ${venue}`} loading="lazy" decoding="async" />
+        <figcaption>{entry.nr}.{String(i + 2).padStart(2, '0')}</figcaption>
+      </figure>
+    ))}
+  </div>
+
+  <a class="tail" href={`${base}/projects/${next.id}`}>
+    <span>Next</span>
+    <strong>{next.data.title}</strong>
+  </a>
+</Base>

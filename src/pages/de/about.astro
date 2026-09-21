@@ -1,18 +1,18 @@
 ---
-import BaseLayout from '../../layouts/BaseLayout.astro';
+import Base from '../../layouts/Base.astro';
+import Chrome from '../../components/Chrome.astro';
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 ---
 
-<BaseLayout
-  lang="de"
+<Base lang="de"
   title="Über das Studio"
   description="Studio No Frame ist ein Berliner Studio für Ausstellungsarchitektur, Kunstproduktion, Projektmanagement und Kuratierung, geleitet von Yelta Köm. Partner sind unter anderem HKW, Pera Museum, SALT, Museum Ludwig sowie die Biennalen von Venedig und Istanbul."
 >
+  <Chrome lang="de" here="about" />
   <section class="page">
-    <span class="label">Studio</span>
     <h1>Ein Studio, das die Form der Arbeit annimmt, die es beherbergt.</h1>
 
-    <div class="prose">
+    <div class="body">
       <p>
         Studio No Frame ist ein Berliner Studio für Art Direction,
         Ausstellungsgestaltung, Kunstproduktion, Projektmanagement, Kuratierung
@@ -63,4 +63,4 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
       </p>
     </div>
   </section>
-</BaseLayout>
+</Base>

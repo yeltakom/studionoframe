@@ -1,0 +1,53 @@
+---
+import { SITE } from '../site';
+import { UI, type Lang } from '../i18n';
+import '../styles/global.css';
+
+interface Props { title?: string; description?: string; image?: string; lang?: Lang; schema?: any }
+const { title, description, image, lang = 'en', schema } = Astro.props;
+const t = UI[lang];
+const pageTitle = title ? `${title} — ${SITE.name}` : t.siteTitle;
+const pageDescription = description ?? t.description;
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const absolute = (p: string) => new URL(p, Astro.site ?? Astro.url.origin).href;
+const canonical = absolute(Astro.url.pathname);
+const share = absolute(image ?? `${base}/images/og/default.jpg`);
+const ga = SITE.GA_MEASUREMENT_ID;
+---
+
+<!doctype html>
+<html lang={t.htmlLang}>
+  <head>
+    <meta charset="utf-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1" />
+    <title>{pageTitle}</title>
+    <meta name="description" content={pageDescription} />
+    <link rel="canonical" href={canonical} />
+    <meta property="og:type" content="website" />
+    <meta property="og:site_name" content={SITE.name} />
+    <meta property="og:locale" content={lang === 'de' ? 'de_DE' : 'en_GB'} />
+    <meta property="og:title" content={pageTitle} />
+    <meta property="og:description" content={pageDescription} />
+    <meta property="og:url" content={canonical} />
+    <meta property="og:image" content={share} />
+    <meta name="twitter:card" content="summary_large_image" />
+    <meta name="twitter:image" content={share} />
+    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="sitemap" href={`${base}/sitemap.xml`} />
+    {schema && <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />}
+    {ga && (
+      <>
+        <script async src={`https://www.googletagmanager.com/gtag/js?id=${ga}`}></script>
+        <script is:inline define:vars={{ ga }}>
+          window.dataLayer = window.dataLayer || [];
+          function gtag() { dataLayer.push(arguments); }
+          gtag('js', new Date());
+          gtag('config', ga, { anonymize_ip: true });
+        </script>
+      </>
+    )}
+  </head>
+  <body>
+    <slot />
+  </body>
+</html>

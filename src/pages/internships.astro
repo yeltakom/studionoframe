@@ -1,14 +1,15 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import Base from '../layouts/Base.astro';
+import Chrome from '../components/Chrome.astro';
 import { SITE } from '../site';
 ---
 
-<BaseLayout title="Internships" description="Paid, structured, remote internships at Studio No Frame in Berlin for students of design, architecture, art and cultural studies. Mandatory and curricular internships welcome.">
+<Base title="Internships" description="Paid, structured, remote internships at Studio No Frame in Berlin for students of design, architecture, art and cultural studies. Mandatory and curricular internships welcome.">
+  <Chrome />
   <section class="page">
-    <span class="label">Internships</span>
     <h1>Paid internships, structured around real projects.</h1>
 
-    <div class="prose">
+    <div class="body">
       <p>
         We offer remote, well-structured internships for students in design,
         architecture, art, cultural studies and related fields. We especially
@@ -35,4 +36,4 @@ import { SITE } from '../site';
       </p>
     </div>
   </section>
-</BaseLayout>
+</Base>

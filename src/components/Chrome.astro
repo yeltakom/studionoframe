@@ -1,0 +1,89 @@
+---
+import { getRegister } from '../lib/register';
+import { UI, altPath, type Lang } from '../i18n';
+
+interface Props { lang?: Lang; here?: 'work' | 'about' | 'contact'; count?: string }
+const { lang = 'en', here, count } = Astro.props;
+const t = UI[lang];
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const home = lang === 'de' ? `${base}/de` : base;
+const entries = (await getRegister()).slice().reverse();
+const other = altPath(Astro.url.pathname, base);
+---
+
+<header class="bar">
+  <a class="studio" href={`${home}/`}>Studio No Frame</a>
+  <nav>
+    <a href={`${home}/about`} aria-current={here === 'about' ? 'page' : undefined}>{t.nav.about}</a>
+    <a href={`${home}/contact`} aria-current={here === 'contact' ? 'page' : undefined}>{t.nav.contact}</a>
+    <a href={other} lang={lang === 'de' ? 'en' : 'de'}>{t.switchTo}</a>
+  </nav>
+  <span class="spacer"></span>
+  {count && <span class="count">{count}</span>}
+  <button type="button" class="index-btn" id="indexBtn" aria-expanded="false" aria-controls="index">Index</button>
+</header>
+
+<div class="index" id="index" hidden>
+  <div class="roll">
+    <div class="find">
+      <input id="q" type="search" placeholder={lang === 'de' ? 'Suchen' : 'Search'} autocomplete="off" spellcheck="false" aria-label="Search" />
+    </div>
+    {entries.map((e) => (
+      <a
+        class="row"
+        href={`${home}/projects/${e.id}`}
+        data-nr={e.nr}
+        data-hay={`${e.nr} ${e.data.title} ${e.data.venue} ${e.city} ${e.data.year} ${e.type}`.toLowerCase()}
+      >
+        <span class="nr">{e.nr}</span>
+        <span class="ttl">{e.data.title}<span class="ven">{e.data.venue}</span></span>
+        <span class="yr">{e.data.year}</span>
+      </a>
+    ))}
+  </div>
+
+  <figure class="view" aria-hidden="true">
+    {entries.map((e, i) => (
+      <img src={`${base}${e.data.cover}`} alt="" data-for={e.nr} class={i === 0 ? 'is-on' : undefined} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
+    ))}
+    <figcaption id="viewCap">{entries[0].data.title} · {entries[0].data.year}</figcaption>
+  </figure>
+</div>
+
+<script is:inline>
+  (() => {
+    const btn = document.getElementById('indexBtn');
+    const panel = document.getElementById('index');
+    const rows = [...panel.querySelectorAll('.row')];
+    const shots = [...panel.querySelectorAll('.view img')];
+    const cap = document.getElementById('viewCap');
+    const input = document.getElementById('q');
+
+    const open = (on) => {
+      panel.hidden = !on;
+      btn.setAttribute('aria-expanded', String(on));
+      document.documentElement.style.overflow = on ? 'hidden' : '';
+      if (on) input.focus();
+    };
+
+    btn.addEventListener('click', () => open(panel.hidden));
+    window.addEventListener('keydown', (e) => {
+      if (e.key === 'Escape' && !panel.hidden) open(false);
+      if (e.key === '/' && panel.hidden) { e.preventDefault(); open(true); }
+    });
+
+    rows.forEach((row) => {
+      const show = () => {
+        shots.forEach((img) => img.classList.toggle('is-on', img.dataset.for === row.dataset.nr));
+        cap.textContent = `${row.querySelector('.ttl').childNodes[0].textContent.trim()} · ${row.querySelector('.yr').textContent}`;
+      };
+      row.addEventListener('mouseenter', show);
+      row.addEventListener('focus', show);
+    });
+
+    input.addEventListener('input', () => {
+      const q = input.value.trim().toLowerCase();
+      rows.forEach((r) => r.classList.toggle('is-hidden', !!q && !r.dataset.hay.includes(q)));
+    });
+  })();
+</script>

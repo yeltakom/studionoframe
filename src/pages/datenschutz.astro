@@ -1,14 +1,15 @@
 ---
-import BaseLayout from '../layouts/BaseLayout.astro';
+import Base from '../layouts/Base.astro';
+import Chrome from '../components/Chrome.astro';
 import { SITE } from '../site';
 ---
 
-<BaseLayout title="Datenschutz" description="Datenschutzerklärung.">
+<Base title="Datenschutz" description="Datenschutzerklärung.">
+  <Chrome />
   <section class="page">
-    <span class="label">Rechtliches</span>
     <h1>Datenschutzerklärung</h1>
 
-    <div class="prose">
+    <div class="body">
       <h2>Verantwortlicher</h2>
       <p>
         Studio No Frame, Yelta Köm<br />
@@ -47,4 +48,4 @@ import { SITE } from '../site';
       </p>
     </div>
   </section>
-</BaseLayout>
+</Base>
