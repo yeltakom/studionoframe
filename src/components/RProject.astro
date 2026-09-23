@@ -1,0 +1,46 @@
+---
+/* The project page all three directions share: title, credits, the room,
+   the narrative, then the plates — every plate carrying its catalogue number. */
+interface Props { p: any; prev: any; next: any; root: string; threadHref?: string }
+const { p, prev, next, root, threadHref } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const { title, venue, year, role, images } = p.data;
+const [lead, ...rest] = images;
+---
+<header class="pj-head">
+  <span class="no">№ {p.no}</span>
+  <h1>{title}</h1>
+  <dl>
+    <div><dt class="label">Venue</dt><dd>{venue}</dd></div>
+    <div><dt class="label">Year</dt><dd>{year}</dd></div>
+    <div><dt class="label">Role</dt><dd>{role}</dd></div>
+    <div><dt class="label">Thread</dt><dd>{threadHref ? <a href={threadHref}>{p.thread.title}</a> : p.thread.title}</dd></div>
+  </dl>
+</header>
+
+{lead && (
+  <div class="pj-lead">
+    <figure>
+      <img src={`${base}${lead}`} alt={`${title} — ${venue}`} fetchpriority="high" decoding="async" />
+      <figcaption>№ {p.no}.1 — Installation view, {venue}</figcaption>
+    </figure>
+  </div>
+)}
+
+<div class="pj-text"><div class="prose"><slot /></div></div>
+
+{rest.length > 0 && (
+  <div class="pj-figs">
+    {rest.map((src: string, i: number) => (
+      <figure>
+        <img src={`${base}${src}`} alt={`${title} — ${venue}`} loading="lazy" decoding="async" />
+        <figcaption>№ {p.no}.{i + 2} — Installation view</figcaption>
+      </figure>
+    ))}
+  </div>
+)}
+
+<nav class="pj-nav">
+  <a href={`${root}/${prev.id}`}><span class="label">Previous · {prev.no}</span><strong>{prev.data.title}</strong></a>
+  <a href={`${root}/${next.id}`} style="text-align:right;margin-left:auto"><span class="label">Next · {next.no}</span><strong>{next.data.title}</strong></a>
+</nav>

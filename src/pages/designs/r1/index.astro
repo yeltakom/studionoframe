@@ -1,0 +1,66 @@
+---
+import Base from '../../../layouts/Base.astro';
+import RHead from '../../../components/RHead.astro';
+import RFoot from '../../../components/RFoot.astro';
+import { getThreaded, THREADS } from '../../../lib/threads';
+import '../../../styles/r-base.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const root = `${base}/designs/r1`;
+const works = await getThreaded('en');
+const opener = works.find((w) => w.id === 'tirailleurs') ?? works[0];
+---
+
+<Base title="Katalog" image={`${base}/images/og/default.jpg`}>
+  <a class="escape" href={`${base}/designs/`}>Yönler</a>
+  <RHead root={root} over current="works" />
+
+  <section class="opening">
+    <img src={`${base}${opener.data.cover}`} alt={`${opener.data.title} — ${opener.data.venue}`} fetchpriority="high" />
+    <h1 class="say">Exhibitions as research.</h1>
+    <a class="cue" href="#works">Works</a>
+  </section>
+
+  <section class="statement">
+    <p>
+      Studio No Frame builds exhibitions for museums, biennials and artists.
+      <span>Each one starts as a question — about displacement, about what an
+      archive can hold, about how a collection is read — and ends as a room
+      people walk through. The catalogue below is arranged by those questions.</span>
+    </p>
+  </section>
+
+  <div id="works" class="filters" role="group" aria-label="Filter by thread">
+    <button type="button" data-t="" aria-pressed="true">All</button>
+    {THREADS.map((t, i) => <button type="button" data-t={t.key} aria-pressed="false">{i + 1}&nbsp; {t.title}</button>)}
+  </div>
+
+  <ol class="cat" id="cat">
+    <li class="h">
+      <span class="label">№</span><span class="label">Exhibition</span><span class="label">Venue</span><span class="label">Thread</span><span class="label" style="text-align:right">Year</span>
+    </li>
+    {works.map((w) => (
+      <li data-t={w.thread.key}>
+        <a class="r" href={`${root}/${w.id}`}>
+          <span class="no">{w.no}</span>
+          <span class="ttl">{w.data.title}</span>
+          <span class="ven">{w.data.venue}</span>
+          <span class="th">{w.thread.title}</span>
+          <span class="yr">{w.data.year}</span>
+        </a>
+      </li>
+    ))}
+  </ol>
+
+  <RFoot />
+
+  <script is:inline>
+    const rows = [...document.querySelectorAll('#cat li[data-t]')];
+    document.querySelectorAll('.filters button').forEach((b) => {
+      b.addEventListener('click', () => {
+        document.querySelectorAll('.filters button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+        rows.forEach((li) => li.classList.toggle('is-hidden', !!b.dataset.t && li.dataset.t !== b.dataset.t));
+      });
+    });
+  </script>
+</Base>

@@ -1,0 +1,63 @@
+---
+import Base from '../../../layouts/Base.astro';
+import RHead from '../../../components/RHead.astro';
+import RFoot from '../../../components/RFoot.astro';
+import { getThreaded, THREADS } from '../../../lib/threads';
+import '../../../styles/r-base.css';
+import '../../../styles/r3.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const root = `${base}/designs/r3`;
+const works = await getThreaded('en');
+const opener = works.find((w) => w.id === 'gelecek-hatiralari') ?? works[0];
+const chapters = THREADS.map((t) => {
+  const ws = works.filter((w) => w.thread.key === t.key);
+  return { t, ws, room: ws.find((w) => w.id === t.face) ?? ws[0] };
+});
+---
+
+<Base title="Deneme" image={`${base}/images/og/default.jpg`}>
+  <a class="escape" href={`${base}/designs/`}>Yönler</a>
+  <RHead root={root} over current="works" />
+
+  <section class="opening">
+    <img src={`${base}${opener.data.cover}`} alt={`${opener.data.title} — ${opener.data.venue}`} fetchpriority="high" />
+    <h1 class="say">Studio No Frame</h1>
+    <a class="cue" href="#essay">Read</a>
+  </section>
+
+  <section class="statement" id="essay">
+    <p>
+      We build the rooms exhibitions happen in.
+      <span>Nineteen of them since 2014, for museums, biennials and artists.
+      Read together they follow five questions — this page is arranged by them.</span>
+    </p>
+  </section>
+
+  {chapters.map(({ t, ws, room }, i) => (
+    <section class="chapter" id={t.key}>
+      <div class="ch-head">
+        <span class="no">{i + 1}</span>
+        <h2>{t.title}</h2>
+        <p>{t.line}</p>
+      </div>
+      <figure class="room">
+        <a href={`${root}/${room.id}`}><img src={`${base}${room.data.cover}`} alt={`${room.data.title} — ${room.data.venue}`} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" /></a>
+        <figcaption>№ {room.no} — {room.data.title}, {room.data.venue}, {room.data.year}</figcaption>
+      </figure>
+      <ul>
+        {ws.map((w) => (
+          <li><a href={`${root}/${w.id}`}><span class="wno">{w.no}</span><span class="wtt">{w.data.title}<span class="wven">{w.data.venue} — {w.data.role}</span></span><span class="wyr">{w.data.year}</span></a></li>
+        ))}
+      </ul>
+    </section>
+  ))}
+
+  <section class="colophon">
+    <span class="label">Studio</span>
+    <p>Led by Yelta Köm, an Istanbul-born architect and artist based in Berlin. Partners include Haus der Kulturen der Welt, Pera Museum, SALT, Museum Ludwig, La Biennale di Venezia and the Istanbul Biennial.</p>
+    <p><a href="mailto:contact@noframe.studio" style="border-bottom:1px solid var(--rule)">contact@noframe.studio</a></p>
+  </section>
+
+  <RFoot />
+</Base>

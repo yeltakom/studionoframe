@@ -1,0 +1,29 @@
+/* R2 — Hatlar. You enter through the questions, not the list. */
+.threads { position: relative; height: 100svh; overflow: hidden; background: #111; }
+.threads .bg { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 320ms ease; }
+.threads .bg.is-on { opacity: 1; }
+.threads ol { position: absolute; left: var(--gutter); right: var(--gutter); bottom: clamp(1.5rem, 6vh, 4rem); margin: 0; padding: 0; list-style: none; }
+.threads li { border-top: 1px solid rgba(255,255,255,0.35); }
+.threads a { display: grid; grid-template-columns: 2.2rem minmax(0,1fr) auto; gap: 0.5rem clamp(0.6rem, 1.5vw, 1.25rem); align-items: baseline; padding: clamp(0.35rem, 1.2vh, 0.7rem) 0; color: #fff; }
+.threads .n { font-size: 0.78rem; opacity: 0.7; }
+.threads .t { font-size: clamp(1.6rem, 5.2vw, 4.6rem); font-weight: 700; line-height: 1; letter-spacing: -0.045em; }
+.threads .c { font-size: 0.74rem; letter-spacing: 0.08em; text-transform: uppercase; opacity: 0.7; }
+.threads a:hover .t { text-decoration: underline; text-underline-offset: 0.12em; text-decoration-thickness: 2px; }
+.threads .kicker { position: absolute; left: var(--gutter); top: calc(var(--bar) + clamp(1rem, 4vh, 3rem)); color: #fff; max-width: 34ch; font-size: clamp(1rem, 1.5vw, 1.3rem); line-height: 1.35; letter-spacing: -0.015em; }
+
+/* a thread page */
+.th-head { padding: calc(var(--bar) + clamp(2rem, 6vh, 4rem)) var(--gutter) clamp(1.5rem, 4vh, 2.5rem); }
+.th-head .no { font-size: 0.78rem; color: var(--grey); }
+.th-head h1 { margin: 0.35rem 0 0.9rem; font-size: clamp(2rem, 6vw, 5rem); font-weight: 700; line-height: 0.96; letter-spacing: -0.045em; }
+.th-head p { margin: 0; max-width: 40ch; font-size: clamp(1.05rem, 1.6vw, 1.4rem); line-height: 1.35; letter-spacing: -0.018em; color: var(--grey); }
+.th-works { display: grid; gap: clamp(2rem, 5vw, 3.5rem); padding: 0 var(--gutter) clamp(3rem, 7vw, 5rem); }
+.th-works a { display: block; }
+.th-works img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--wash); }
+.th-works .cap { display: grid; grid-template-columns: 3rem minmax(0,1fr) auto; gap: 0.3rem 1rem; align-items: baseline; padding-top: 0.6rem; border-top: 1px solid var(--ink); margin-top: 0.7rem; }
+.th-works .cap .no { font-size: 0.76rem; color: var(--grey); }
+.th-works .cap .ttl { font-weight: 700; font-size: clamp(1.05rem, 1.8vw, 1.5rem); letter-spacing: -0.028em; line-height: 1.15; }
+.th-works .cap .ven { display: block; margin-top: 0.15rem; font-size: 0.82rem; font-weight: 400; color: var(--grey); }
+.th-works .cap .yr { font-size: 0.8rem; color: var(--grey); }
+.th-more { margin: 0 var(--gutter); padding: 0.9rem 0 3rem; border-top: 1px solid var(--ink); display: flex; flex-wrap: wrap; gap: 0.5rem 1.5rem; font-size: 0.8rem; }
+.th-more a { color: var(--grey); } .th-more a:hover { color: var(--ink); }
+.all-link { display: block; padding: 1rem var(--gutter) 0; font-size: 0.8rem; color: var(--grey); }

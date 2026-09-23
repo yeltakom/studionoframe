@@ -1,0 +1,53 @@
+---
+import Base from '../../../layouts/Base.astro';
+import RHead from '../../../components/RHead.astro';
+import RFoot from '../../../components/RFoot.astro';
+import { getThreaded, THREADS } from '../../../lib/threads';
+import '../../../styles/r-base.css';
+import '../../../styles/r2.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const root = `${base}/designs/r2`;
+const works = await getThreaded('en');
+/* one photograph per thread, chosen by hand in threads.ts */
+const face = THREADS.map((t) => works.find((w) => w.id === t.face) ?? works.find((w) => w.thread.key === t.key)!);
+---
+
+<Base title="Hatlar" image={`${base}/images/og/default.jpg`}>
+  <a class="escape" href={`${base}/designs/`}>Yönler</a>
+  <RHead root={root} over current="works" />
+
+  <section class="threads opening" id="threads">
+    {face.map((w, i) => <img class={`bg${i === 0 ? ' is-on' : ''}`} data-i={i} src={`${base}${w.data.cover}`} alt="" loading="eager" decoding="async" />)}
+    <p class="kicker">Nineteen exhibitions since 2014, built around five questions. Enter through one.</p>
+    <ol>
+      {THREADS.map((t, i) => (
+        <li>
+          <a href={`${root}/t/${t.key}`} data-i={i}>
+            <span class="n">{i + 1}</span>
+            <span class="t">{t.title}</span>
+            <span class="c">{t.ids.length} works</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+
+  <a class="all-link" href="#all">All nineteen, as a list ↓</a>
+  <ol class="cat" id="all" style="margin-top:1rem">
+    <li class="h"><span class="label">№</span><span class="label">Exhibition</span><span class="label">Venue</span><span class="label">Thread</span><span class="label" style="text-align:right">Year</span></li>
+    {works.map((w) => (
+      <li><a class="r" href={`${root}/${w.id}`}><span class="no">{w.no}</span><span class="ttl">{w.data.title}</span><span class="ven">{w.data.venue}</span><span class="th">{w.thread.title}</span><span class="yr">{w.data.year}</span></a></li>
+    ))}
+  </ol>
+
+  <RFoot />
+
+  <script is:inline>
+    const bgs = [...document.querySelectorAll('.threads .bg')];
+    document.querySelectorAll('.threads a[data-i]').forEach((a) => {
+      const on = () => bgs.forEach((b) => b.classList.toggle('is-on', b.dataset.i === a.dataset.i));
+      a.addEventListener('mouseenter', on); a.addEventListener('focus', on);
+    });
+  </script>
+</Base>

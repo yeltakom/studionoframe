@@ -1,0 +1,42 @@
+---
+import Base from '../../../../layouts/Base.astro';
+import RHead from '../../../../components/RHead.astro';
+import RFoot from '../../../../components/RFoot.astro';
+import { getThread, THREADS } from '../../../../lib/threads';
+import '../../../../styles/r-base.css';
+import '../../../../styles/r2.css';
+
+export async function getStaticPaths() {
+  return THREADS.map((t, i) => ({ params: { key: t.key }, props: { t, i } }));
+}
+const { t, i } = Astro.props;
+const works = await getThread(t.key, 'en');
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const root = `${base}/designs/r2`;
+---
+<Base title={t.title} description={t.line}>
+  <a class="escape" href={`${base}/designs/`}>Yönler</a>
+  <RHead root={root} current="works" />
+  <header class="th-head">
+    <span class="no">Thread {i + 1}</span>
+    <h1>{t.title}</h1>
+    <p>{t.line}</p>
+  </header>
+  <div class="th-works">
+    {works.map((w, n) => (
+      <a href={`${root}/${w.id}`}>
+        <img src={`${base}${w.data.cover}`} alt={`${w.data.title} — ${w.data.venue}`} loading={n === 0 ? 'eager' : 'lazy'} decoding="async" />
+        <div class="cap">
+          <span class="no">{w.no}</span>
+          <span class="ttl">{w.data.title}<span class="ven">{w.data.venue} — {w.data.role}</span></span>
+          <span class="yr">{w.data.year}</span>
+        </div>
+      </a>
+    ))}
+  </div>
+  <nav class="th-more">
+    <span class="label">Other threads</span>
+    {THREADS.filter((o) => o.key !== t.key).map((o) => <a href={`${root}/t/${o.key}`}>{o.title}</a>)}
+  </nav>
+  <RFoot />
+</Base>

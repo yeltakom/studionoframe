@@ -1,0 +1,21 @@
+/* R3 — Deneme. The home page is the studio's own essay: five chapters, one
+   per question, each with a room and the works that belong to it. */
+.chapter { padding: clamp(3rem, 8vh, 6rem) 0 0; border-top: 1px solid var(--ink); margin: 0 var(--gutter); }
+.chapter:first-of-type { border-top: 0; }
+.chapter .ch-head { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 0.5rem clamp(0.8rem, 2vw, 1.5rem); align-items: baseline; }
+.chapter .ch-head .no { font-size: 0.78rem; color: var(--grey); }
+.chapter h2 { margin: 0; font-size: clamp(1.8rem, 4.8vw, 4rem); font-weight: 700; line-height: 0.98; letter-spacing: -0.042em; }
+.chapter .ch-head p { grid-column: 2; margin: 0.75rem 0 0; max-width: 42ch; font-size: clamp(1.02rem, 1.5vw, 1.3rem); line-height: 1.38; letter-spacing: -0.016em; color: var(--grey); }
+.chapter .room { margin-top: clamp(1.5rem, 4vh, 2.5rem); }
+.chapter .room img { width: 100%; aspect-ratio: 16 / 8; object-fit: cover; background: var(--wash); }
+.chapter .room figcaption { margin-top: 0.45rem; font-size: 0.74rem; color: var(--grey); }
+.chapter ul { list-style: none; margin: clamp(1.25rem, 3vh, 2rem) 0 0; padding: 0; }
+.chapter li { border-top: 1px solid var(--rule); }
+.chapter li a { display: grid; grid-template-columns: 3rem minmax(0, 1fr) auto; gap: 0.3rem 1rem; align-items: baseline; padding: 0.6rem 0; }
+.chapter li a:hover { background: var(--wash); }
+.chapter .wno { font-size: 0.76rem; color: var(--grey); }
+.chapter .wtt { font-weight: 700; letter-spacing: -0.024em; }
+.chapter .wven { display: block; font-size: 0.8rem; color: var(--grey); font-weight: 400; margin-top: 0.1rem; }
+.chapter .wyr { font-size: 0.8rem; color: var(--grey); }
+.colophon { margin: clamp(3rem, 8vh, 6rem) var(--gutter) 0; padding-top: clamp(1.5rem, 4vh, 2.5rem); border-top: 1px solid var(--ink); display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 0.5rem clamp(0.8rem, 2vw, 1.5rem); }
+.colophon p { grid-column: 2; margin: 0 0 1em; max-width: 60ch; }

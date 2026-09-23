@@ -1,0 +1,24 @@
+---
+import { render } from 'astro:content';
+import Base from '../../../layouts/Base.astro';
+import RHead from '../../../components/RHead.astro';
+import RFoot from '../../../components/RFoot.astro';
+import RProject from '../../../components/RProject.astro';
+import { getThreaded } from '../../../lib/threads';
+import '../../../styles/r-base.css';
+
+export async function getStaticPaths() {
+  const works = await getThreaded('en');
+  return works.map((p, i) => ({ params: { slug: p.id }, props: { p, prev: works[i - 1] ?? works[works.length - 1], next: works[i + 1] ?? works[0] } }));
+}
+const { p, prev, next } = Astro.props;
+const { Content } = await render(p.entry);
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const root = `${base}/designs/r1`;
+---
+<Base title={`${p.no} ${p.data.title}`} description={p.data.summary} image={`${base}/images/og/${p.id}.jpg`}>
+  <a class="escape" href={`${base}/designs/`}>Yönler</a>
+  <RHead root={root} />
+  <RProject p={p} prev={prev} next={next} root={root}><Content /></RProject>
+  <RFoot />
+</Base>

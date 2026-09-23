@@ -1,0 +1,25 @@
+---
+interface Props { root: string; over?: boolean; current?: string; extra?: { href: string; label: string }[] }
+const { root, over = false, current, extra = [] } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const links = [{ href: `${root}/`, label: 'Works', key: 'works' }, ...extra.map((e) => ({ ...e, key: e.label.toLowerCase() })), { href: `${base}/about`, label: 'Studio', key: 'studio' }, { href: 'mailto:contact@noframe.studio', label: 'Contact', key: 'contact' }];
+---
+<header class={`rhead${over ? ' over' : ''}`} id="rhead">
+  <a class="studio" href={`${root}/`}>Studio No Frame</a>
+  <span class="spacer"></span>
+  <nav>
+    {links.map((l) => <a href={l.href} aria-current={l.key === current ? 'page' : undefined}>{l.label}</a>)}
+  </nav>
+</header>
+{over && (
+  <script is:inline>
+    /* the opening is rendered after the header, so wait for the document */
+    window.addEventListener('DOMContentLoaded', () => {
+      const h = document.getElementById('rhead');
+      const o = document.querySelector('.opening');
+      if (!h || !o) return;
+      const io = new IntersectionObserver(([e]) => h.classList.toggle('over', e.isIntersecting && e.intersectionRatio > 0.15), { threshold: [0, 0.15, 0.3] });
+      io.observe(o);
+    });
+  </script>
+)}
