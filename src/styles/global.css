@@ -79,36 +79,18 @@ button { font: inherit; }
 .opening .steps { display: inline-flex; gap: 0.6rem; }
 .opening .steps button { appearance: none; border: 0; background: none; padding: 0 0.15rem; margin: 0; color: #fff; font-size: 0.95rem; line-height: 1; cursor: pointer; opacity: 0.7; }
 .opening .steps button:hover { opacity: 1; }
-.opening .cue { position: absolute; right: var(--gutter); bottom: clamp(1.5rem, 6vh, 4rem); z-index: 2; color: #fff; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; }
-.opening .cue::after { content: ''; display: block; width: 1px; height: 2.4rem; margin: 0.5rem auto 0; background: #fff; }
-.opening .hint { position: absolute; left: var(--gutter); bottom: clamp(1.5rem, 6vh, 4rem); z-index: 2; color: #fff; font-size: 0.7rem; letter-spacing: 0.12em; text-transform: uppercase; opacity: 0.7; }
-
-/* ---------- the statement ---------- */
-.statement { padding: clamp(3rem, 9vh, 7rem) var(--gutter) clamp(2.5rem, 7vh, 5rem); }
-.statement h1, .statement p {
-  margin: 0; max-width: 30ch;
-  font-size: clamp(1.4rem, 3.2vw, 2.9rem);
-  font-weight: 500; line-height: 1.14; letter-spacing: -0.035em;
-  text-wrap: balance;
+.opening .thesis {
+  position: absolute; left: var(--gutter); bottom: clamp(1.4rem, 5vh, 3rem); z-index: 2;
+  margin: 0; max-width: 30ch; color: #fff;
+  font-size: clamp(1.05rem, 1.7vw, 1.4rem); font-weight: 700; line-height: 1.25; letter-spacing: -0.024em;
+  text-shadow: 0 1px 24px rgba(0,0,0,0.35);
 }
-.statement span { color: var(--grey); }
-
-/* ---------- the five threads on the home page ---------- */
-.threads-index { padding: 0 var(--gutter) clamp(3rem, 7vw, 5rem); }
-.threads-index h2 { margin: 0 0 0.6rem; }
-.threads-index ol { list-style: none; margin: 0; padding: 0; border-top: 1px solid var(--ink); }
-.threads-index li { border-bottom: 1px solid var(--rule); }
-.threads-index li a {
-  display: grid; grid-template-columns: 3rem minmax(0, 1.1fr) minmax(0, 1.6fr) auto;
-  gap: 0.4rem clamp(0.8rem, 2vw, 1.5rem); align-items: baseline;
-  padding: clamp(0.8rem, 1.6vw, 1.15rem) 0;
-}
-.threads-index li a:hover { background: var(--wash); }
-.threads-index .no { font-size: 0.76rem; color: var(--grey); }
-.threads-index .ttl { font-size: clamp(1.15rem, 2.2vw, 1.85rem); font-weight: 700; line-height: 1.05; letter-spacing: -0.032em; }
-.threads-index .line { font-size: 0.9rem; color: var(--grey); line-height: 1.4; max-width: 46ch; }
-.threads-index .cnt { font-size: 0.76rem; color: var(--grey); white-space: nowrap; }
-.threads-index .all { display: inline-block; margin-top: 1.25rem; font-size: 0.9rem; border-bottom: 1px solid var(--ink); }
+.opening .thesis span { display: block; margin-top: 0.3rem; font-size: 0.78rem; font-weight: 400; letter-spacing: -0.005em; opacity: 0.8; max-width: 40ch; }
+.opening .foot { position: absolute; right: var(--gutter); bottom: clamp(1.4rem, 5vh, 3rem); z-index: 2; display: flex; flex-direction: column; align-items: flex-end; gap: 0.6rem; color: #fff; }
+.opening .cue { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.5); padding-bottom: 2px; }
+.opening .cue:hover { border-bottom-color: #fff; }
+.opening .legal { display: flex; gap: 0.9rem; font-size: 0.66rem; opacity: 0.6; }
+.opening .legal a:hover { text-decoration: underline; }
 
 /* ---------- the catalogue ---------- */
 .works-head { padding: 0 0 clamp(1rem, 3vh, 1.75rem); }
@@ -188,8 +170,6 @@ button { font: inherit; }
   .cat .th { display: none; }
 }
 @media (max-width: 820px) {
-  .threads-index li a { grid-template-columns: 2.6rem minmax(0, 1fr) auto; }
-  .threads-index .line { grid-column: 2 / -1; }
   .pj-figs { grid-template-columns: 1fr; }
   .pj-figs figure:nth-child(3n) img, .pj-figs figure:last-child:nth-child(3n + 1) img { aspect-ratio: 4 / 3; }
   .rhead nav { gap: 0.8rem; }
@@ -201,7 +181,9 @@ button { font: inherit; }
   .cat .r { grid-template-columns: 2.8rem 1fr 3.2rem; grid-template-areas: 'no ttl yr' '. ven ven'; }
   .cat .no { grid-area: no; } .cat .ttl { grid-area: ttl; } .cat .yr { grid-area: yr; } .cat .ven { grid-area: ven; }
   .opening .now { max-width: 30ch; }
-  .opening .hint { display: none; }
+  .opening .thesis { max-width: 22ch; bottom: 4.6rem; }
+  .opening .foot { flex-direction: row; align-items: baseline; gap: 1rem; left: var(--gutter); right: var(--gutter); justify-content: space-between; }
+  .opening .legal { opacity: 0.7; }
 }
 @media (max-width: 480px) {
   .rhead nav { gap: 0.7rem; font-size: 0.64rem; letter-spacing: 0.06em; }

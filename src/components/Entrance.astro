@@ -34,8 +34,11 @@ const NAMES = works.map((w, i) => ({
     <a id="reel-cap" href={`${root}/${ordered[0].id}`}>{caption(ordered[0])}</a>
     <span class="steps"><button type="button" id="reel-prev" aria-label={t.prev}>←</button><button type="button" id="reel-next" aria-label={t.next}>→</button></span>
   </div>
-  <span class="hint">{t.hint}</span>
-  <a class="cue" href={worksHref}>{t.cue}</a>
+  <h1 class="thesis">{t.thesis} <span>{t.thesisMore}</span></h1>
+  <div class="foot">
+    <a class="cue" href={worksHref}>{t.cue} →</a>
+    <span class="legal"><a href={`${base}/impressum`}>{t.footer.imprint}</a><a href={`${base}/datenschutz`}>{t.footer.privacy}</a></span>
+  </div>
 </section>
 
 <script is:inline define:vars={{ NAMES: NAMES, FACES: faceIds.length }}>

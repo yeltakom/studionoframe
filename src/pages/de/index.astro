@@ -1,46 +1,18 @@
 ---
 import Base from '../../layouts/Base.astro';
 import Chrome from '../../components/Chrome.astro';
-import SiteFoot from '../../components/SiteFoot.astro';
 import Entrance from '../../components/Entrance.astro';
-import { getThreaded, THREADS } from '../../lib/threads';
+import { getThreaded } from '../../lib/threads';
 import { studioSchema } from '../../lib/schema';
-import { UI } from '../../i18n';
 
 const lang = 'de' as const;
-const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const home = `${base}/de`;
 const site = (Astro.site ?? new URL(Astro.url.origin)).href.replace(/\/+$/, '');
 const works = await getThreaded(lang);
-const tt = (x: (typeof THREADS)[number]) => (lang === 'de' ? x.de : x.title);
-const tl = (x: (typeof THREADS)[number]) => (lang === 'de' ? x.lineDe : x.line);
 ---
 
 <Base lang={lang} image={`${base}/images/og/default.jpg`} schema={studioSchema(lang, site, base, works)}>
   <Chrome lang={lang} here="home" over />
   <Entrance works={works} lang={lang} root={`${home}/projects`} worksHref={`${home}/works`} />
-
-  <section class="statement" id="studio">
-    <h1>{t.statement} <span>{t.statementMore}</span></h1>
-  </section>
-
-  <section class="threads-index">
-    <h2 class="label">{t.threads}</h2>
-    <ol>
-      {THREADS.map((x, i) => (
-        <li>
-          <a href={`${home}/works#${x.key}`}>
-            <span class="no">{i + 1}</span>
-            <span class="ttl">{tt(x)}</span>
-            <span class="line">{tl(x)}</span>
-            <span class="cnt">{t.worksCount(x.ids.length)}</span>
-          </a>
-        </li>
-      ))}
-    </ol>
-    <a class="all" href={`${home}/works`}>{t.allWorks} →</a>
-  </section>
-
-  <SiteFoot lang={lang} />
 </Base>
