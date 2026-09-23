@@ -62,42 +62,32 @@ button { font: inherit; }
 .rfoot nav { display: flex; gap: 1.25rem; flex-wrap: wrap; }
 .rfoot a:hover { color: var(--ink); }
 
-/* ---------- the entrance ---------- */
-.opening { position: relative; height: 100svh; min-height: 480px; overflow: hidden; background: #111; }
-.opening .reel img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 1100ms ease; }
-.opening .reel img.is-on { opacity: 1; }
-.opening .reel::after { content: ''; position: absolute; inset: 0; pointer-events: none; background: linear-gradient(180deg, rgba(0,0,0,0.52) 0%, rgba(0,0,0,0.3) 30%, rgba(0,0,0,0.3) 62%, rgba(0,0,0,0.45) 100%); }
-/* the names drift in front of the rooms */
-.opening .names { position: absolute; inset: 0; width: 100%; height: 100%; display: block; z-index: 1; touch-action: pan-y; }
-.opening .now {
-  position: absolute; left: var(--gutter); top: calc(var(--bar) + clamp(0.8rem, 3vh, 1.6rem)); z-index: 2;
-  display: flex; gap: 0.3rem 1.25rem; flex-wrap: wrap; align-items: baseline;
-  max-width: 44ch; color: #fff; font-size: 0.74rem; line-height: 1.35;
+/* ---------- the head of a page: one scale everywhere ---------- */
+.head, .works-head, .pj-head, .page > h1 { padding-top: clamp(1.5rem, 5vh, 3rem); }
+.head { padding: clamp(1.5rem, 5vh, 3rem) var(--gutter) clamp(1.5rem, 4vh, 2.5rem); }
+.head h1, .works-head h1, .pj-head h1, .page h1 {
+  margin: 0; max-width: 22ch;
+  font-size: clamp(1.7rem, 4vw, 3.4rem); font-weight: 700; line-height: 1.02; letter-spacing: -0.038em;
+  text-wrap: balance;
 }
-.opening .now a { opacity: 0.92; }
-.opening .now a:hover { text-decoration: underline; text-underline-offset: 0.16em; }
-.opening .steps { display: inline-flex; gap: 0.6rem; }
-.opening .steps button { appearance: none; border: 0; background: none; padding: 0 0.15rem; margin: 0; color: #fff; font-size: 0.95rem; line-height: 1; cursor: pointer; opacity: 0.7; }
-.opening .steps button:hover { opacity: 1; }
-.opening .thesis {
-  position: absolute; left: var(--gutter); bottom: clamp(1.4rem, 5vh, 3rem); z-index: 2;
-  margin: 0; max-width: 30ch; color: #fff;
-  font-size: clamp(1.05rem, 1.7vw, 1.4rem); font-weight: 700; line-height: 1.25; letter-spacing: -0.024em;
-  text-shadow: 0 1px 24px rgba(0,0,0,0.35);
-}
-.opening .thesis span { display: block; margin-top: 0.3rem; font-size: 0.78rem; font-weight: 400; letter-spacing: -0.005em; opacity: 0.8; max-width: 40ch; }
-.opening .foot { position: absolute; right: var(--gutter); bottom: clamp(1.4rem, 5vh, 3rem); z-index: 2; display: flex; flex-direction: column; align-items: flex-end; gap: 0.6rem; color: #fff; }
-.opening .cue { font-size: 0.72rem; font-weight: 500; letter-spacing: 0.12em; text-transform: uppercase; border-bottom: 1px solid rgba(255,255,255,0.5); padding-bottom: 2px; }
-.opening .cue:hover { border-bottom-color: #fff; }
-.opening .legal { display: flex; gap: 0.9rem; font-size: 0.66rem; opacity: 0.6; }
-.opening .legal a:hover { text-decoration: underline; }
+.head p, .works-head p { margin: 0.9rem 0 0; max-width: 56ch; font-size: clamp(0.98rem, 1.25vw, 1.15rem); line-height: 1.42; color: var(--grey); }
+
+/* ---------- the photograph on the home page ---------- */
+.reel { padding: 0 var(--gutter) clamp(3rem, 7vw, 5rem); }
+.reel .frame { position: relative; aspect-ratio: 16 / 9; background: var(--wash); overflow: hidden; }
+.reel .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 900ms ease; }
+.reel .frame img.is-on { opacity: 1; }
+.reel .cap { display: flex; justify-content: space-between; align-items: baseline; gap: 1rem; margin: 0.6rem 0 0; font-size: 0.78rem; color: var(--grey); }
+.reel .cap a:hover { color: var(--ink); }
+.reel .steps { display: inline-flex; gap: 0.7rem; }
+.reel .steps button { appearance: none; border: 0; background: none; padding: 0 0.1rem; margin: 0; color: var(--grey); font-size: 0.95rem; line-height: 1; cursor: pointer; }
+.reel .steps button:hover { color: var(--ink); }
 
 /* ---------- the catalogue ---------- */
 .works-head { padding: 0 0 clamp(1rem, 3vh, 1.75rem); }
-.works-head h1 { margin: 0; font-size: clamp(1.6rem, 3.6vw, 2.6rem); font-weight: 700; letter-spacing: -0.038em; line-height: 1; }
-.works-head h1 span { display: block; margin-top: 0.45rem; font-size: 0.82rem; font-weight: 400; letter-spacing: 0; color: var(--grey); }
+.works-head h1 span { display: block; margin-top: 0.6rem; font-size: clamp(0.98rem, 1.25vw, 1.15rem); font-weight: 400; letter-spacing: -0.008em; line-height: 1.42; color: var(--grey); }
 
-.catalogue { display: grid; grid-template-columns: minmax(0, 1fr) 38%; gap: 0 clamp(1.25rem, 3vw, 3rem); padding: clamp(1.5rem, 4vh, 2.5rem) var(--gutter) 0; align-items: start; }
+.catalogue { display: grid; grid-template-columns: minmax(0, 1fr) 38%; gap: 0 clamp(1.25rem, 3vw, 3rem); padding: 0 var(--gutter) 0; align-items: start; }
 .filters { display: flex; flex-wrap: wrap; gap: 0.3rem 1.1rem; padding: 0 0 0.8rem; font-size: 0.78rem; }
 .filters button { appearance: none; border: 0; background: none; padding: 0.1rem 0; color: var(--grey); cursor: pointer; border-bottom: 1px solid transparent; }
 .filters button:hover { color: var(--ink); }
@@ -120,7 +110,7 @@ button { font: inherit; }
 .cat .ven, .cat .th { font-size: 0.82rem; color: var(--grey); line-height: 1.3; }
 .cat .yr { font-size: 0.8rem; color: var(--grey); text-align: right; }
 
-.peek { position: sticky; top: calc(var(--bar) + 1.25rem); }
+.peek { position: sticky; top: calc(var(--bar) + 1.25rem); padding-top: clamp(1.5rem, 5vh, 3rem); }
 .peek .frame { position: relative; aspect-ratio: 4 / 3; background: var(--wash); overflow: hidden; }
 .peek .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 220ms ease; }
 .peek .frame img.is-on { opacity: 1; }
@@ -131,7 +121,7 @@ button { font: inherit; }
 /* ---------- a project ---------- */
 .pj-head { padding: clamp(1.5rem, 5vh, 3rem) var(--gutter) clamp(1.5rem, 3.5vw, 2.5rem); }
 .pj-head .no { font-size: 0.78rem; color: var(--grey); }
-.pj-head h1 { margin: 0.35rem 0 clamp(1rem, 2.5vw, 1.75rem); max-width: 20ch; font-size: clamp(1.85rem, 5.2vw, 4.2rem); font-weight: 700; line-height: 1.0; letter-spacing: -0.04em; text-wrap: balance; }
+.pj-head h1 { margin: 0.35rem 0 clamp(1rem, 2.5vw, 1.75rem); }
 .pj-head dl { display: flex; flex-wrap: wrap; gap: 0.75rem clamp(1.5rem, 4vw, 3.5rem); margin: 0; padding-top: 0.85rem; border-top: 1px solid var(--ink); }
 .pj-head dt { margin-bottom: 0.15rem; }
 .pj-head dd { margin: 0; font-size: 0.92rem; }
@@ -155,8 +145,8 @@ button { font: inherit; }
 .pj-nav a:hover strong { text-decoration: underline; text-underline-offset: 0.16em; }
 
 /* ---------- text pages ---------- */
-.page { padding: calc(var(--bar) + clamp(1.5rem, 5vh, 3rem)) var(--gutter) clamp(4rem, 9vw, 7rem); }
-.page h1 { margin: 0 0 clamp(1.5rem, 4vw, 2.75rem); max-width: 24ch; font-size: clamp(1.6rem, 3.6vw, 3rem); font-weight: 700; line-height: 1.04; letter-spacing: -0.036em; text-wrap: balance; }
+.page { padding: var(--bar) var(--gutter) clamp(4rem, 9vw, 7rem); }
+.page h1 { margin: 0 0 clamp(1.5rem, 4vw, 2.75rem); }
 .page .body, .page .prose { max-width: 60ch; }
 .page .body p, .page .prose p { margin: 0 0 1.15em; }
 .page .body h2, .page .prose h2 { margin: 2.4rem 0 0.7rem; font-size: 1.02rem; font-weight: 700; letter-spacing: -0.012em; }
@@ -180,10 +170,7 @@ button { font: inherit; }
   .cat .h { display: none; }
   .cat .r { grid-template-columns: 2.8rem 1fr 3.2rem; grid-template-areas: 'no ttl yr' '. ven ven'; }
   .cat .no { grid-area: no; } .cat .ttl { grid-area: ttl; } .cat .yr { grid-area: yr; } .cat .ven { grid-area: ven; }
-  .opening .now { max-width: 30ch; }
-  .opening .thesis { max-width: 22ch; bottom: 4.6rem; }
-  .opening .foot { flex-direction: row; align-items: baseline; gap: 1rem; left: var(--gutter); right: var(--gutter); justify-content: space-between; }
-  .opening .legal { opacity: 0.7; }
+  .reel .frame { aspect-ratio: 4 / 3; }
 }
 @media (max-width: 480px) {
   .rhead nav { gap: 0.7rem; font-size: 0.64rem; letter-spacing: 0.06em; }
