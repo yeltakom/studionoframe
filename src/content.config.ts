@@ -7,6 +7,8 @@ const shared = {
   year: z.string(),
   role: z.string(),
   order: z.number(),
+  thread: z.string().default(''),
+  home: z.boolean().default(false),
   summary: z.string(),
   cover: z.string(),
   images: z.array(z.string()).default([]),

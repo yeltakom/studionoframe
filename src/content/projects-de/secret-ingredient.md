@@ -3,7 +3,9 @@ title: "Secret Ingredient"
 venue: "3rd Chicago Architecture Biennial"
 year: "2019"
 role: "Mit Architecture for All (Herkes İçin Mimarlık)"
-order: 8
+order: 14
+thread: "commons"
+home: false
 summary: "Ein Projekt für die 3."
 cover: "/images/projects/secret-ingredient/secret-ingredient-01.jpg"
 images:

@@ -4,6 +4,8 @@ venue: "HKW, Berlin"
 year: "2026"
 role: "Ausstellungsarchitektur"
 order: 1
+thread: "archives"
+home: true
 summary: "Ausstellungsarchitektur für Tirailleurs: Trials and Tribulations im Haus der Kulturen der Welt (HKW), Berlin, kuratiert von Paz Guevara und Bonaventure Soh Bejeng Ndikung."
 cover: "/images/projects/tirailleurs/tirailleurs-01.jpg"
 images:

@@ -3,7 +3,9 @@ title: "Aerocene with Tomás Saraceno"
 venue: "Studio Tomás Saraceno — Art Basel Miami, Palais de Tokyo, Tanya Bonakdar Gallery"
 year: "2018–2019"
 role: "Projektleitung, Architekt, Gestalter & visuelle Recherche"
-order: 19
+order: 15
+thread: "commons"
+home: true
 summary: "Projekte mit dem Studio Tomás Saraceno und der Aerocene Foundation, darunter Aerocene Albedo auf der Art Basel Miami (2018), ON AIR — Carte Blanche à Tomás Saraceno im Palais de Tokyo, Paris (2018), Solar Rhythms in der Tanya Bonakdar Gallery, New York (2018) und On the Disappearance of Clouds (2019)."
 cover: "/images/projects/tomas-saraceno-aerocene/tomas-saraceno-aerocene-01.jpg"
 images:

@@ -2,15 +2,12 @@
 /* One large photograph that passes to the next room by itself. The words
    around it stay put; only the small line under it says which room this is. */
 import { UI, type Lang } from '../i18n';
-import { THREADS, type Threaded } from '../lib/threads';
-interface Props { works: Threaded[]; lang?: Lang; root: string }
-const { works, lang = 'en', root } = Astro.props;
+import type { Threaded } from '../lib/threads';
+interface Props { rooms: Threaded[]; lang?: Lang; root: string }
+const { rooms, lang = 'en', root } = Astro.props;
 const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const caption = (w: Threaded) => `№ ${w.no} — ${w.data.title}, ${w.data.venue}, ${w.data.year}`;
-/* the rooms shown, in order: one per thread, archives first */
-const faceIds = [...THREADS].sort((a, b) => (a.key === 'archives' ? -1 : b.key === 'archives' ? 1 : 0)).map((x) => x.face);
-const rooms = faceIds.map((id) => works.find((w) => w.id === id)!).filter(Boolean);
 ---
 <section class="reel" aria-label={t.nav.work}>
   <div class="frame" id="reel">

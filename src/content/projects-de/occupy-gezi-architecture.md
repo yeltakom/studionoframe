@@ -3,7 +3,9 @@ title: "#OccupyGezi Architecture"
 venue: "SALT Beyoğlu, Istanbul"
 year: "2014"
 role: "Redaktion & Koordination — mit Herkes İçin Mimarlık"
-order: 7
+order: 19
+thread: "archives"
+home: false
 summary: "Ein Archivprojekt, das die räumlichen Praktiken des Gezi-Widerstands dokumentiert."
 cover: "/images/projects/occupy-gezi-architecture/occupy-gezi-architecture-01.jpg"
 images:

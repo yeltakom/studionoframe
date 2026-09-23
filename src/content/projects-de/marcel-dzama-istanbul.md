@@ -3,7 +3,9 @@ title: "Marcel Dzama: Dancing with the Moon"
 venue: "Pera Museum, Istanbul"
 year: "2025"
 role: "Ausstellungsgestaltung & Aufbauleitung"
-order: 15
+order: 4
+thread: "monographs"
+home: false
 summary: "Gesamte Ausstellungsgestaltung und Aufbauleitung für die erste Einzelausstellung von Marcel Dzama in der Türkei im Pera Museum, mit Zeichnungen, Skulpturen und Video."
 cover: "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-01.jpg"
 images:

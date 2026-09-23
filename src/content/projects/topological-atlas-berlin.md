@@ -3,7 +3,9 @@ title: "Partial Weaves: Unfinished Stories of Displacement"
 venue: "TOP e.V., Berlin"
 year: "2022"
 role: "Exhibition Designer & Researcher"
-order: 11
+order: 13
+thread: "displacement"
+home: true
 summary: "An exhibition at TOP Project Space exploring undocumented migration along the Pakistan–Iran and Iran–Turkey borders, focusing on the socio-political narratives that emerge around displacement, labor, and border dynamics."
 cover: "/images/projects/topological-atlas-berlin/topological-atlas-berlin-01.jpg"
 images:

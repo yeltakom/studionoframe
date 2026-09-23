@@ -19,3 +19,16 @@ pnpm-debug.log*
 
 # macOS
 .DS_Store
+
+# ham fotoğraflar (siteye küçültülmüş kopyaları public/images/ altında gidiyor)
+studio/sergiler/**/*.jpg
+studio/sergiler/**/*.jpeg
+studio/sergiler/**/*.png
+studio/sergiler/**/*.tif
+studio/sergiler/**/*.tiff
+studio/sergiler/**/*.webp
+studio/sergiler/**/*.heic
+studio/sergiler/**/*.heif
+studio/sergiler/**/*.avif
+studio/sergiler/**/*.JPG
+studio/sergiler/**/*.HEIC

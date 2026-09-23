@@ -1,98 +1,119 @@
 # Sergi eklemek ve düzenlemek
 
-Sitenin içeriği iki yerden geliyor:
+Her serginin **bir klasörü** var: `studio/sergiler/<sergi>/`
+İçinde fotoğraflar ve tek bir metin dosyası: `sergi.txt`. Hepsi bu.
 
-| Ne | Nerede |
-|---|---|
-| Metinler (başlık, mekân, yıl, rol, açıklama) | `studio/projects.csv` — tablo, Numbers veya Excel'de açılır |
-| Fotoğraflar | `studio/photos/<proje-adı>/` — ham fotoğrafları buraya at |
+```
+studio/sergiler/
+  tirailleurs/
+    sergi.txt        ← başlık, mekân, yıl, rol, hat, metin
+    kapak.jpg        ← kapak (ya da alfabetik ilk fotoğraf)
+    02.jpg
+    03.jpg
+```
 
-Tabloyu doldurup fotoğrafları klasöre atıyorsun, tek komut siteyi güncelliyor.
-Fotoğrafları küçültmene, yeniden adlandırmana gerek yok — komut hallediyor.
+Klasörü doldur, `Yayınla.command` dosyasına çift tıkla; 1–2 dakika sonra site güncel.
+Fotoğrafları küçültmene, adlandırmana gerek yok — telefon HEIC dahil hepsini araç hallediyor.
 
 ---
 
-## Yeni sergi eklemek
+## Üç düğme (bu klasörde, çift tık)
 
-Terminali bu klasörde aç (`studionoframe`), sonra:
+| Dosya | Ne yapar |
+|---|---|
+| `Yeni sergi.command` | Adı sorar, klasörü ve `sergi.txt`'yi açar |
+| `Önizle.command` | Siteyi bilgisayarında açar (yayınlamadan bakmak için) |
+| `Yayınla.command` | Klasörler → site → yayın |
 
-```bash
-npm run new -- "Serginin Adı"
+İlk çift tıkta macOS "Terminal'i açmak istiyor musun" diye sorabilir; evet de.
+
+---
+
+## sergi.txt
+
+```
+Başlık: Tirailleurs: Trials and Tribulations
+Mekân: HKW, Berlin
+Yıl: 2026
+Rol: Exhibition Architecture
+Hat: archives
+Ana sayfa: evet
+Özet: Tek cümle. Google'da ve link paylaşımında görünür. Boşsa metnin ilk cümlesi kullanılır.
+
+--- Açıklama ---
+Proje sayfasındaki metin. Paragraflar boş satırla ayrılır.
+*İtalik* için yıldız.
+
+--- Almanca ---
+Rol: Ausstellungsarchitektur
+Özet:
+
+Almanca metin. Boş bırakırsan o sergi Almanca sitede İngilizce metinle görünür — kırılmaz.
 ```
 
-Bu komut tabloya boş bir satır ekler ve fotoğrafları için bir klasör açar. Sonra:
+| Satır | Ne yazılır |
+|---|---|
+| `Başlık` | Serginin adı. Uçan/kısa ad falan yok; olduğu gibi. |
+| `Mekân` | `Pera Museum, Istanbul` |
+| `Yıl` | `2025` ya da `2018–2019`. Sıralama bu yıla göre. |
+| `Rol` | `Exhibition Design & Installation Management` |
+| `Hat` | Araştırma hattı — beş taneden biri: **displacement** (yerinden edilme) · **archives** (direniş arşivleri) · **monographs** (monografiler) · **collections** (koleksiyonlar) · **commons** (müşterekler). Katalog numarası buradan çıkar: 2.3 = archives hattının 3. işi. Türkçesini yazsan da anlar. |
+| `Ana sayfa` | `evet` → bu serginin kapağı ana sayfadaki büyük fotoğraflarda döner. |
+| `Özet` | İsteğe bağlı. |
 
-1. **Fotoğrafları at** → `studio/photos/serginin-adi/`
-   Sıralama dosya adına göre: `01.jpg, 02.jpg…` ya da fotoğrafların kendi adları.
-   **İlk fotoğraf kapak olur** — listede imlecin ucunda görünen ve proje
-   sayfasını açan kare odur.
-2. **Tabloyu doldur** → `studio/projects.csv`, en üstteki satır.
-3. **Yayınla:**
+Başlık, mekân ve yıl çevrilmiyor: sergi adları özel isim, iki dilde de aynı.
 
-```bash
-npm run publish
-```
+---
 
-Site 1–2 dakika içinde güncellenir.
+## Fotoğraflar
+
+- Klasöre at, bitti. JPG, PNG, HEIC, TIFF — fark etmez; 1800 px'e küçültülüp numaralanır.
+- **Sıra dosya adına göre.** `01, 02, 03…` diye adlandırırsan istediğin sırada gelir.
+- **Kapak:** adı `kapak` ya da `cover` ile başlayan fotoğraf, yoksa alfabetik ilki.
+  Kapak = Works tablosunda yanda beliren, ana sayfada dönen, link paylaşımında çıkan kare.
+- Proje sayfasında ilk fotoğraf 3:2 büyük açılış; kalanlar ikili, her üçüncüsü tam genişlik.
+- Klasörde **hiç** fotoğraf yoksa sitedeki fotoğraflara dokunulmaz. Bir fotoğraf bile
+  varsa o serginin sitedeki fotoğraflarının **tamamı** klasördekilerle değişir.
 
 ---
 
 ## Var olan bir sergiyi düzenlemek
 
-Metni değiştireceksen: tabloyu aç, düzelt, `npm run publish`.
+Klasörünü aç, `sergi.txt`'yi ya da fotoğrafları değiştir, `Yayınla.command`.
 
-Fotoğrafları değiştireceksen: `studio/photos/<proje-adı>/` klasörünü oluştur
-(ya da varsa içini değiştir) ve istediğin fotoğrafları koy, sonra yayınla.
-**Dikkat:** o klasör varsa, o projenin sitedeki fotoğraflarının tamamı silinip
-klasördeki fotoğraflarla değiştirilir. Klasörü hiç açmazsan sitedeki
-fotoğraflara dokunulmaz.
+## Sergi silmek
 
----
+Klasörü sil, yayınla. Araç "klasörü olmayan proje sitede duruyor" derse
+`src/content/projects/<sergi>.md` dosyasını da kaldır (ya da bana söyle).
 
-## Tablodaki sütunlar
+## Klasör adı = adres
 
-| Sütun | Ne yazılır |
-|---|---|
-| `order` | Ana sayfadaki sıra. 1 en üstte. |
-| `slug` | Adresi belirler: `noframe.studio/projects/vardiya`. Bir kez belirlensin, sonra değiştirme — eski link kırılır. |
-| `title` | Serginin adı. |
-| `venue` | Mekân: `Pera Museum, Istanbul` |
-| `year` | `2025` ya da `2018–2019` |
-| `role` | `Exhibition Design & Installation Management` |
-| `summary` | Tek cümle. Google'da ve link paylaşımlarında görünür. Boş bırakırsan açıklamanın ilk cümlesi kullanılır. |
-| `description` | Proje sayfasındaki metin. Uzun olabilir. `*italik*` yazabilirsin. |
-| `role_de` | Rolün Almancası: `Ausstellungsgestaltung & Aufbauleitung` |
-| `description_de` | Açıklamanın Almancası. **Boş bırakırsan** o sergi Almanca sitede İngilizce metinle görünür — kırılmaz. |
-
-Başlık, mekân ve yıl çevrilmiyor: sergi adları özel isim, iki dilde de aynı kalıyor.
-Almanca özet (`summary_de`) boşsa Almanca açıklamanın ilk cümlesi kullanılır.
+`studio/sergiler/vardiya/` → `noframe.studio/projects/vardiya`.
+Klasör adını sonradan değiştirme; eski link kırılır. Türkçe karakter ve boşluk kullanabilirsin,
+adres kendiliğinden `a-z` ve tire olur.
 
 ---
 
-## Komutlar
+## Terminalden (aynı şeyler)
 
 | Komut | Ne yapar |
 |---|---|
-| `npm run new -- "Ad"` | Yeni sergi satırı + fotoğraf klasörü açar |
-| `npm run publish` | Tablo + fotoğraflar → site → yayına gönderir |
-| `npm run sync` | Aynısını yapar ama yayına göndermez (önce yerelde görmek için) |
-| `npm run dev` | Siteyi kendi bilgisayarında açar: http://localhost:4321 |
-| `npm run export` | Siteyi tabloya geri yazar (İngilizce + Almanca) |
-
-`npm run export` şu durumda gerekli: siteyi tarayıcıdaki panelden
-(`/admin/`) veya doğrudan dosyadan düzenlediysen. Tabloya dokunmadan önce
-bunu çalıştır, yoksa tablo eski halini geri basar.
+| `npm run new -- "Ad"` | Yeni sergi klasörü + sergi.txt |
+| `npm run publish` | Klasörler → site → yayın |
+| `npm run sync` | Aynısı ama yayınlamaz (önce yerelde bakmak için) |
+| `npm run dev` | Siteyi bilgisayarında açar: http://localhost:4321 |
+| `npm run export` | Siteyi klasörlere geri yazar — yalnızca `/admin/` panelinden düzenlediysen gerekir |
 
 ---
 
 ## Bir şey ters giderse
 
-`npm run publish` bir sorun görürse durur ve nedenini yazar — yarım iş
-yayınlanmaz. En sık çıkanlar:
+Yayınlama bir sorun görürse durur ve nedenini yazar — yarım iş yayınlanmaz:
 
-- **"venue boş bırakılamaz"** → tabloda o satırın eksik sütununu doldur.
-- **"Aynı slug iki kez var"** → iki satıra aynı `slug` yazılmış, birini değiştir.
-- **"hiç fotoğraf yok"** → `studio/photos/<slug>/` klasörünü aç ve fotoğraf koy.
+- **"sergi.txt içinde eksik: venue"** → o satırı doldur.
+- **"Hat tanınmadı"** → beş addan birini yaz.
+- **"hiç fotoğraf yok"** → klasöre fotoğraf koy.
+- **"Değişen bir şey yok"** → zaten güncel.
 
-Yayınlanan her şey geri alınabilir: her yayın GitHub'da bir kayıt olarak
-duruyor. Bir şeyi bozduğunu düşünürsen söyle, geri alırım.
+Yayınlanan her şey geri alınabilir; her yayın GitHub'da bir kayıt. Bir şeyi
+bozduğunu düşünürsen söyle, geri alırım.

@@ -3,7 +3,9 @@ title: "Disobedience Archive: Park"
 venue: "SALT Beyoğlu, Istanbul"
 year: "2014"
 role: "Teilnehmer & Ausstellungsgestalter — mit Herkes İçin Mimarlık"
-order: 5
+order: 18
+thread: "archives"
+home: false
 summary: "Kuratiert von Marco Scotini und Andris Brinkmanis, mit der räumlichen Einrichtung von Herkes İçin Mimarlık."
 cover: "/images/projects/disobedience-archive/disobedience-archive-01.jpg"
 images:

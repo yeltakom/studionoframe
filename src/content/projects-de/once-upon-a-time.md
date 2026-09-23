@@ -3,7 +3,9 @@ title: "Füsun Onur: Once Upon a Time…"
 venue: "Pavilion of Turkey, 59th Venice Biennale"
 year: "2022"
 role: "Ausstellungsgestaltung"
-order: 6
+order: 11
+thread: "monographs"
+home: false
 summary: "Gestaltung und Aufbau des Pavillons der Türkei auf der 59."
 cover: "/images/projects/once-upon-a-time/once-upon-a-time-01.jpg"
 images:

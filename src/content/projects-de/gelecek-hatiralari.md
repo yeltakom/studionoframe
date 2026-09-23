@@ -3,7 +3,9 @@ title: "Souvenirs of the Future"
 venue: "Pera Museum, Istanbul"
 year: "2023"
 role: "Ausstellungsgestaltung & Aufbauleitung"
-order: 4
+order: 9
+thread: "collections"
+home: true
 summary: "Gesamte Ausstellungsgestaltung und Aufbauleitung für Souvenirs of the Future im Pera Museum."
 cover: "/images/projects/gelecek-hatiralari/gelecek-hatiralari-01.jpg"
 images:

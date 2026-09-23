@@ -4,6 +4,8 @@ venue: "Pera Museum, Istanbul"
 year: "2025"
 role: "Ausstellungsgestaltung & Aufbauleitung"
 order: 2
+thread: "monographs"
+home: false
 summary: "Ausstellungsarchitektur und Raumkonzept für die erste Einzelausstellung der schwedischen Künstlerin Åsa Jungnelius in der Türkei, kuratiert von Elif Kamışlı."
 cover: "/images/projects/a-verse/a-verse-01.jpg"
 images:
