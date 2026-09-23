@@ -4,19 +4,25 @@ import RHead from '../../../components/RHead.astro';
 import RFoot from '../../../components/RFoot.astro';
 import { getThreaded, THREADS } from '../../../lib/threads';
 import '../../../styles/r-base.css';
+import '../../../styles/r1.css';
 
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const root = `${base}/designs/r1`;
 const works = await getThreaded('en');
-const opener = works.find((w) => w.id === 'tirailleurs') ?? works[0];
+/* the opening drifts through one room per thread — the faces chosen in threads.ts */
+const reel = [...THREADS].sort((a, b) => (a.key === 'archives' ? -1 : b.key === 'archives' ? 1 : 0)).map((t) => works.find((w) => w.id === t.face)!).filter(Boolean);
+const caption = (w: (typeof works)[number]) => `№ ${w.no} — ${w.data.title}, ${w.data.venue}, ${w.data.year}`;
 ---
 
 <Base title="Katalog" image={`${base}/images/og/default.jpg`}>
   <a class="escape" href={`${base}/designs/`}>Yönler</a>
   <RHead root={root} over current="works" />
 
-  <section class="opening">
-    <img src={`${base}${opener.data.cover}`} alt={`${opener.data.title} — ${opener.data.venue}`} fetchpriority="high" />
+  <section class="opening" id="opening">
+    {reel.map((w, i) => (
+      <img class={i === 0 ? 'is-on' : ''} src={`${base}${w.data.cover}`} alt={`${w.data.title} — ${w.data.venue}`} data-cap={caption(w)} data-href={`${root}/${w.id}`} fetchpriority={i === 0 ? 'high' : undefined} loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
+    ))}
+    <a class="now" id="reel-cap" href={`${root}/${reel[0].id}`}>{caption(reel[0])}</a>
     <h1 class="say">Exhibitions as research.</h1>
     <a class="cue" href="#works">Works</a>
   </section>
@@ -30,36 +36,75 @@ const opener = works.find((w) => w.id === 'tirailleurs') ?? works[0];
     </p>
   </section>
 
-  <div id="works" class="filters" role="group" aria-label="Filter by thread">
-    <button type="button" data-t="" aria-pressed="true">All</button>
-    {THREADS.map((t, i) => <button type="button" data-t={t.key} aria-pressed="false">{i + 1}&nbsp; {t.title}</button>)}
-  </div>
+  <div class="catalogue" id="works">
+    <div class="list">
+      <div class="filters" role="group" aria-label="Filter by thread">
+        <button type="button" data-t="" aria-pressed="true">All</button>
+        {THREADS.map((t, i) => <button type="button" data-t={t.key} aria-pressed="false">{i + 1}&nbsp; {t.title}</button>)}
+      </div>
 
-  <ol class="cat" id="cat">
-    <li class="h">
-      <span class="label">№</span><span class="label">Exhibition</span><span class="label">Venue</span><span class="label">Thread</span><span class="label" style="text-align:right">Year</span>
-    </li>
-    {works.map((w) => (
-      <li data-t={w.thread.key}>
-        <a class="r" href={`${root}/${w.id}`}>
-          <span class="no">{w.no}</span>
-          <span class="ttl">{w.data.title}</span>
-          <span class="ven">{w.data.venue}</span>
-          <span class="th">{w.thread.title}</span>
-          <span class="yr">{w.data.year}</span>
-        </a>
-      </li>
-    ))}
-  </ol>
+      <ol class="cat" id="cat">
+        <li class="h">
+          <span class="label">№</span><span class="label">Exhibition</span><span class="label">Venue</span><span class="label">Thread</span><span class="label" style="text-align:right">Year</span>
+        </li>
+        {works.map((w) => (
+          <li data-t={w.thread.key}>
+            <a class="r" href={`${root}/${w.id}`} data-id={w.id} data-no={w.no} data-ttl={w.data.title} data-ven={w.data.venue}>
+              <span class="no">{w.no}</span>
+              <span class="ttl">{w.data.title}</span>
+              <span class="ven">{w.data.venue}</span>
+              <span class="th">{w.thread.title}</span>
+              <span class="yr">{w.data.year}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <aside class="peek" aria-hidden="true">
+      <div class="frame">
+        {works.map((w, i) => (
+          <img class={i === 0 ? 'is-on' : ''} data-id={w.id} src={`${base}${w.data.cover}`} alt="" loading="lazy" decoding="async" />
+        ))}
+      </div>
+      <p class="cap"><span id="peek-no">{works[0].no}</span><span><b id="peek-ttl">{works[0].data.title}</b><span id="peek-ven">{works[0].data.venue}</span></span></p>
+    </aside>
+  </div>
 
   <RFoot />
 
   <script is:inline>
+    /* the reel: one room after another, only while the opening is on screen */
+    (() => {
+      const imgs = [...document.querySelectorAll('#opening img')];
+      const cap = document.getElementById('reel-cap');
+      if (imgs.length < 2 || matchMedia('(prefers-reduced-motion: reduce)').matches) return;
+      let i = 0;
+      setInterval(() => {
+        if (document.hidden || window.scrollY > window.innerHeight) return;
+        i = (i + 1) % imgs.length;
+        imgs.forEach((im, k) => im.classList.toggle('is-on', k === i));
+        cap.textContent = imgs[i].dataset.cap;
+        cap.href = imgs[i].dataset.href;
+      }, 4500);
+    })();
+
+    /* the picture beside the table follows the row under the cursor */
+    const peek = [...document.querySelectorAll('.peek img')];
+    const pno = document.getElementById('peek-no'), pttl = document.getElementById('peek-ttl'), pven = document.getElementById('peek-ven');
+    const show = (a) => {
+      peek.forEach((im) => im.classList.toggle('is-on', im.dataset.id === a.dataset.id));
+      pno.textContent = a.dataset.no; pttl.textContent = a.dataset.ttl; pven.textContent = a.dataset.ven;
+    };
+    document.querySelectorAll('#cat .r').forEach((a) => { a.addEventListener('mouseenter', () => show(a)); a.addEventListener('focus', () => show(a)); });
+
     const rows = [...document.querySelectorAll('#cat li[data-t]')];
     document.querySelectorAll('.filters button').forEach((b) => {
       b.addEventListener('click', () => {
         document.querySelectorAll('.filters button').forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
         rows.forEach((li) => li.classList.toggle('is-hidden', !!b.dataset.t && li.dataset.t !== b.dataset.t));
+        const first = rows.find((li) => !li.classList.contains('is-hidden'));
+        if (first) show(first.querySelector('.r'));
       });
     });
   </script>

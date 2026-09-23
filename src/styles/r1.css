@@ -1,0 +1,29 @@
+/* R1 — Katalog. The opening drifts through the studio's rooms; the table
+   below keeps one large photograph at its side, changing with the cursor. */
+
+/* the reel */
+.opening img { opacity: 0; transition: opacity 1100ms ease; }
+.opening img.is-on { opacity: 1; }
+.opening .now {
+  position: absolute; left: var(--gutter); top: calc(var(--bar) + clamp(0.8rem, 3vh, 1.6rem)); z-index: 1;
+  max-width: 34ch; color: #fff; font-size: 0.74rem; line-height: 1.35; opacity: 0.9;
+}
+.opening .now:hover { text-decoration: underline; text-underline-offset: 0.16em; }
+
+/* the catalogue with its picture */
+.catalogue { display: grid; grid-template-columns: minmax(0, 1fr) 38%; gap: 0 clamp(1.25rem, 3vw, 3rem); padding-right: var(--gutter); align-items: start; }
+.catalogue .filters, .catalogue .cat .h, .catalogue .cat .r { padding-right: 0; }
+.peek { position: sticky; top: calc(var(--bar) + 1.25rem); padding-top: 2.15rem; }
+.peek .frame { position: relative; aspect-ratio: 4 / 3; background: var(--wash); overflow: hidden; }
+.peek .frame img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; opacity: 0; transition: opacity 220ms ease; }
+.peek .frame img.is-on { opacity: 1; }
+.peek .cap { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 0.4rem 0.75rem; align-items: baseline; margin: 0.6rem 0 0; font-size: 0.78rem; color: var(--grey); }
+.peek .cap b { color: var(--ink); font-weight: 700; letter-spacing: -0.015em; }
+.peek .cap span { display: block; }
+
+@media (max-width: 1000px) {
+  .catalogue { grid-template-columns: 1fr; padding-right: 0; }
+  .catalogue .filters, .catalogue .cat .h, .catalogue .cat .r { padding-right: var(--gutter); }
+  .peek { display: none; }
+}
+@media (max-width: 600px) { .opening .now { display: none; } }
