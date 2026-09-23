@@ -4,11 +4,19 @@
 /* the reel */
 .opening img { opacity: 0; transition: opacity 1100ms ease; }
 .opening img.is-on { opacity: 1; }
+.opening img { cursor: e-resize; }
 .opening .now {
   position: absolute; left: var(--gutter); top: calc(var(--bar) + clamp(0.8rem, 3vh, 1.6rem)); z-index: 1;
-  max-width: 34ch; color: #fff; font-size: 0.74rem; line-height: 1.35; opacity: 0.9;
+  display: flex; gap: 0.3rem 1.25rem; flex-wrap: wrap; align-items: baseline;
+  max-width: 44ch; color: #fff; font-size: 0.74rem; line-height: 1.35;
 }
-.opening .now:hover { text-decoration: underline; text-underline-offset: 0.16em; }
+.opening .now a { opacity: 0.92; }
+.opening .now a:hover { text-decoration: underline; text-underline-offset: 0.16em; }
+.opening .now .count { opacity: 0.6; font-variant-numeric: tabular-nums; }
+.opening .now .count b { font-weight: 400; color: #fff; }
+.opening .steps { display: inline-flex; gap: 0.6rem; }
+.opening .steps button { appearance: none; border: 0; background: none; padding: 0 0.15rem; margin: 0; color: #fff; font: inherit; font-size: 0.95rem; line-height: 1; cursor: pointer; opacity: 0.7; }
+.opening .steps button:hover { opacity: 1; }
 
 /* the catalogue with its picture */
 .catalogue { display: grid; grid-template-columns: minmax(0, 1fr) 38%; gap: 0 clamp(1.25rem, 3vw, 3rem); padding-right: var(--gutter); align-items: start; }
@@ -21,7 +29,11 @@
 .peek .cap b { color: var(--ink); font-weight: 700; letter-spacing: -0.015em; }
 .peek .cap span { display: block; }
 
-@media (max-width: 1000px) {
+@media (max-width: 1180px) {
+  .catalogue .cat .h, .catalogue .cat .r { grid-template-columns: 3rem minmax(0, 2fr) minmax(0, 1.4fr) 3.4rem; }
+  .catalogue .cat .th { display: none; }
+}
+@media (max-width: 760px) {
   .catalogue { grid-template-columns: 1fr; padding-right: 0; }
   .catalogue .filters, .catalogue .cat .h, .catalogue .cat .r { padding-right: var(--gutter); }
   .peek { display: none; }
