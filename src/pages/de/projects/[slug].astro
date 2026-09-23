@@ -3,81 +3,24 @@ import { render } from 'astro:content';
 import Base from '../../../layouts/Base.astro';
 import Chrome from '../../../components/Chrome.astro';
 import SiteFoot from '../../../components/SiteFoot.astro';
-import { getProjects } from '../../../lib/projects';
-import { getRegister } from '../../../lib/register';
+import RProject from '../../../components/RProject.astro';
+import { getThreaded } from '../../../lib/threads';
 import { projectSchema } from '../../../lib/schema';
 
 export async function getStaticPaths() {
-  const nrOf = new Map((await getRegister()).map((e) => [e.id, e.nr]));
-  const order = (await getProjects('de')).slice().sort((a, b) => Number(nrOf.get(b.id)) - Number(nrOf.get(a.id)));
-  return order.map((project, i) => ({
-    params: { slug: project.id },
-    props: {
-      project,
-      nr: nrOf.get(project.id) ?? '',
-      prev: order[i - 1] ?? order[order.length - 1],
-      next: order[i + 1] ?? order[0],
-    },
-  }));
+  const works = await getThreaded('de');
+  return works.map((p, i) => ({ params: { slug: p.id }, props: { p, prev: works[i - 1] ?? works[works.length - 1], next: works[i + 1] ?? works[0] } }));
 }
-
-const { project, nr, prev, next } = Astro.props;
-const { Content } = await render(project.entry);
+const lang = 'de' as const;
+const { p, prev, next } = Astro.props;
+const { Content } = await render(p.entry);
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const home = `${base}/de`;
 const site = (Astro.site ?? new URL(Astro.url.origin)).href.replace(/\/+$/, '');
-const { title, venue, year, role, summary, images } = project.data;
-const [lead, ...rest] = images;
 ---
-
-<Base
-  lang="de"
-  title={`${title} — ${venue}`}
-  description={summary}
-  image={`${base}/images/og/${project.id}.jpg`}
-  schema={projectSchema('de', site, base, project.id, project.data)}
->
-  <Chrome lang="de" />
-
-  <header class="plate-head">
-    <h1>{title}</h1>
-    <dl class="plate-credits">
-      <div><dt class="label">Ort</dt><dd>{venue}</dd></div>
-      <div><dt class="label">Jahr</dt><dd>{year}</dd></div>
-      <div><dt class="label">Rolle</dt><dd>{role}</dd></div>
-      <div><dt class="label">Nr</dt><dd>{nr}</dd></div>
-    </dl>
-  </header>
-
-  {lead && (
-    <div class="plate-lead">
-      <img src={`${base}${lead}`} alt={`${title} — ${venue}`} fetchpriority="high" decoding="async" />
-    </div>
-  )}
-
-  <div class="plate-text">
-    <div class="prose"><Content /></div>
-  </div>
-
-  {rest.length > 0 && (
-    <div class="plate-figures">
-      {rest.map((image: string, i: number) => (
-        <figure>
-          <img src={`${base}${image}`} alt={`${title} — ${venue}`} loading="lazy" decoding="async" />
-        </figure>
-      ))}
-    </div>
-  )}
-
-  <nav class="plate-nav">
-    <a href={`${base}/de/projects/${prev.id}`}>
-      <span class="label">Zurück</span>
-      <strong>{prev.data.title}</strong>
-    </a>
-    <a href={`${base}/de/projects/${next.id}`} style="text-align: right; margin-left: auto">
-      <span class="label">Weiter</span>
-      <strong>{next.data.title}</strong>
-    </a>
-  </nav>
-
-  <SiteFoot lang="de" />
+<Base lang={lang} title={`${p.data.title} — ${p.data.venue}`} description={p.data.summary} image={`${base}/images/og/${p.id}.jpg`} schema={projectSchema(lang, site, base, p.id, p.data)}>
+  <Chrome lang={lang} />
+  <div class="below"></div>
+  <RProject p={p} prev={prev} next={next} root={`${home}/projects`} threadHref={`${home}/works#${p.thread.key}`} lang={lang}><Content /></RProject>
+  <SiteFoot lang={lang} />
 </Base>

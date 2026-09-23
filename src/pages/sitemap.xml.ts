@@ -8,6 +8,7 @@ export const GET: APIRoute = async ({ site, url }) => {
 
   const paths: { path: string; priority: string }[] = [
     { path: '/', priority: '1.0' },
+    { path: '/works', priority: '0.9' },
     { path: '/about', priority: '0.8' },
     { path: '/contact', priority: '0.7' },
     { path: '/internships', priority: '0.5' },

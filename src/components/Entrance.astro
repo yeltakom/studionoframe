@@ -1,0 +1,188 @@
+---
+/* The entrance. The rooms turn by themselves behind; the names of the
+   nineteen works drift in front of them in three dimensions (WebGL). Touch a
+   name and its room comes forward; click and you are in it. */
+import { UI, type Lang } from '../i18n';
+import { THREADS, type Threaded } from '../lib/threads';
+interface Props { works: Threaded[]; lang?: Lang; root: string; worksHref: string }
+const { works, lang = 'en', root, worksHref } = Astro.props;
+const t = UI[lang];
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const caption = (w: Threaded) => `№ ${w.no} — ${w.data.title}, ${w.data.venue}, ${w.data.year}`;
+/* the rooms the reel turns through: one per thread, archives first */
+const faceIds = [...THREADS].sort((a, b) => (a.key === 'archives' ? -1 : b.key === 'archives' ? 1 : 0)).map((x) => x.face);
+const ordered = [...faceIds.map((id) => works.find((w) => w.id === id)!), ...works.filter((w) => !faceIds.includes(w.id))];
+/* the name that flies is the short one — before the colon — unless two works share it */
+const shortOf = (title: string) => title.split(/:| — | \/ /)[0].trim();
+const shorts = works.map((w) => shortOf(w.data.title));
+const NAMES = works.map((w, i) => ({
+  id: w.id,
+  title: shorts.filter((x) => x === shorts[i]).length > 1 ? w.data.title : shorts[i],
+  cap: caption(w), href: `${root}/${w.id}`, face: faceIds.includes(w.id),
+}));
+---
+<section class="opening" id="opening">
+  <div class="reel" id="reel">
+    {ordered.map((w, i) => (
+      <img class={i === 0 ? 'is-on' : ''} data-id={w.id} data-cap={caption(w)} data-href={`${root}/${w.id}`}
+        src={i < 2 ? `${base}${w.data.cover}` : undefined} data-src={i < 2 ? undefined : `${base}${w.data.cover}`}
+        alt={`${w.data.title} — ${w.data.venue}`} fetchpriority={i === 0 ? 'high' : undefined} decoding="async" />
+    ))}
+  </div>
+  <canvas class="names" id="names" aria-hidden="true"></canvas>
+  <div class="now">
+    <a id="reel-cap" href={`${root}/${ordered[0].id}`}>{caption(ordered[0])}</a>
+    <span class="steps"><button type="button" id="reel-prev" aria-label={t.prev}>←</button><button type="button" id="reel-next" aria-label={t.next}>→</button></span>
+  </div>
+  <span class="hint">{t.hint}</span>
+  <a class="cue" href={worksHref}>{t.cue}</a>
+</section>
+
+<script is:inline define:vars={{ NAMES: NAMES, FACES: faceIds.length }}>
+(() => {
+  const reduce = matchMedia('(prefers-reduced-motion: reduce)').matches;
+
+  /* ---- the reel ---- */
+  const imgs = [...document.querySelectorAll('#reel img')];
+  const byId = Object.fromEntries(imgs.map((im) => [im.dataset.id, im]));
+  const cap = document.getElementById('reel-cap');
+  let cur = 0, timer, held = null; /* held: a name under the cursor keeps its room up */
+  const load = (im) => { if (!im.getAttribute('src')) im.src = im.dataset.src; };
+  const show = (im) => {
+    load(im);
+    const apply = () => { imgs.forEach((x) => x.classList.toggle('is-on', x === im)); cap.textContent = im.dataset.cap; cap.href = im.dataset.href; };
+    im.complete && im.naturalWidth ? apply() : im.addEventListener('load', apply, { once: true });
+  };
+  const go = (n) => { cur = (n + FACES) % FACES; show(imgs[cur]); load(imgs[(cur + 1) % FACES]); };
+  const auto = () => { clearInterval(timer); if (reduce) return; timer = setInterval(() => { if (!held && !document.hidden && scrollY < innerHeight) go(cur + 1); }, 5000); };
+  document.getElementById('reel-next').addEventListener('click', () => { go(cur + 1); auto(); });
+  document.getElementById('reel-prev').addEventListener('click', () => { go(cur - 1); auto(); });
+  window.addEventListener('keydown', (e) => { if (scrollY > innerHeight * 0.6) return; if (e.key === 'ArrowRight') { go(cur + 1); auto(); } if (e.key === 'ArrowLeft') { go(cur - 1); auto(); } });
+  auto();
+
+  /* ---- the names ---- */
+  const canvas = document.getElementById('names');
+  const gl = canvas.getContext('webgl', { alpha: true, antialias: true, premultipliedAlpha: true });
+  if (!gl) { canvas.remove(); return; }
+  const DPR = Math.min(devicePixelRatio || 1, 2);
+
+  /* draw every title once, in Helvetica, into one texture */
+  const A = 2048, MAXW = 1000, FONT = 64, LINE = 74, PAD = 16;
+  const ac = document.createElement('canvas'); ac.width = A; ac.height = A;
+  const c2 = ac.getContext('2d');
+  c2.font = `700 ${FONT}px "Helvetica Neue", Helvetica, Arial, sans-serif`;
+  c2.textBaseline = 'top'; c2.fillStyle = '#fff';
+  c2.shadowColor = 'rgba(0,0,0,0.75)'; c2.shadowBlur = 22;
+  const wrap = (s) => { const out = []; let line = ''; for (const w of s.split(' ')) { const test = line ? line + ' ' + w : w; if (line && c2.measureText(test).width > MAXW - 2 * PAD) { out.push(line); line = w; } else line = test; } if (line) out.push(line); return out.slice(0, 3); };
+  let x = 0, y = 0, rowH = 0;
+  /* on a phone only the five rooms' names fly, smaller, in two columns */
+  const few = canvas.clientWidth < 640;
+  const pool = NAMES.filter((n) => !few || n.face);
+  const S = few ? 0.55 : 1.0, cols = few ? 2 : 5, rows = Math.ceil(pool.length / cols);
+  const names = pool.map((n, i) => {
+    const lines = wrap(n.title);
+    const w = Math.ceil(Math.max(...lines.map((l) => c2.measureText(l).width)) + 2 * PAD);
+    const h = lines.length * LINE + 2 * PAD;
+    if (x + w > A) { x = 0; y += rowH; rowH = 0; }
+    lines.forEach((l, k) => { c2.fillText(l, x + PAD, y + PAD + k * LINE); c2.fillText(l, x + PAD, y + PAD + k * LINE); });
+    const cell = { u0: x / A, v0: y / A, u1: (x + w) / A, v1: (y + h) / A, w, h };
+    x += w; rowH = Math.max(rowH, h);
+    /* a jittered grid so nothing starts on top of anything else */
+    const col = i % cols, row = Math.floor(i / cols);
+    const r = (k) => (Math.sin(i * 12.9898 + k * 78.233) * 43758.5453) % 1; /* deterministic */
+    return { ...n, cell, sw: (w / 1000) * S, sh: (h / 1000) * S,
+      px: (col - (cols - 1) / 2) * (few ? 0.5 : 0.95) + r(1) * 0.3, py: ((rows - 1) / 2 - row) * (few ? 0.5 : 0.62) + r(2) * 0.2, z0: -2.0 - Math.abs(r(3)) * 2.6,
+      vx: reduce ? 0 : (r(4) - 0.5) * 0.05, vy: reduce ? 0 : (r(5) - 0.5) * 0.035, ph: r(6) * 6.283, a: 0, at: 0 };
+  });
+
+  const vs = `attribute vec2 a; uniform vec3 uC; uniform vec2 uS; uniform vec4 uUV; uniform mat4 uP; varying vec2 v;
+    void main(){ vec3 p = uC + vec3((a.x-0.5)*uS.x, (0.5-a.y)*uS.y, 0.0); gl_Position = uP * vec4(p,1.0); v = vec2(mix(uUV.x,uUV.z,a.x), mix(uUV.y,uUV.w,a.y)); }`;
+  const fs = `precision mediump float; uniform sampler2D uT; uniform float uA; varying vec2 v; void main(){ gl_FragColor = texture2D(uT, v) * uA; }`;
+  const sh = (type, src) => { const s = gl.createShader(type); gl.shaderSource(s, src); gl.compileShader(s); return s; };
+  const prog = gl.createProgram(); gl.attachShader(prog, sh(gl.VERTEX_SHADER, vs)); gl.attachShader(prog, sh(gl.FRAGMENT_SHADER, fs)); gl.linkProgram(prog); gl.useProgram(prog);
+  const buf = gl.createBuffer(); gl.bindBuffer(gl.ARRAY_BUFFER, buf); gl.bufferData(gl.ARRAY_BUFFER, new Float32Array([0,0, 1,0, 0,1, 1,1]), gl.STATIC_DRAW);
+  const aLoc = gl.getAttribLocation(prog, 'a'); gl.enableVertexAttribArray(aLoc); gl.vertexAttribPointer(aLoc, 2, gl.FLOAT, false, 0, 0);
+  const U = (n) => gl.getUniformLocation(prog, n);
+  const uC = U('uC'), uS = U('uS'), uUV = U('uUV'), uP = U('uP'), uA = U('uA');
+  const tex = gl.createTexture(); gl.bindTexture(gl.TEXTURE_2D, tex);
+  gl.pixelStorei(gl.UNPACK_PREMULTIPLY_ALPHA_WEBGL, true);
+  gl.texImage2D(gl.TEXTURE_2D, 0, gl.RGBA, gl.RGBA, gl.UNSIGNED_BYTE, ac);
+  gl.generateMipmap(gl.TEXTURE_2D);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MIN_FILTER, gl.LINEAR_MIPMAP_LINEAR);
+  gl.texParameteri(gl.TEXTURE_2D, gl.TEXTURE_MAG_FILTER, gl.LINEAR);
+  gl.enable(gl.BLEND); gl.blendFunc(gl.ONE, gl.ONE_MINUS_SRC_ALPHA);
+
+  const FOV = 0.8, NEAR = 0.1, FAR = 20, f = 1 / Math.tan(FOV / 2);
+  let W = 1, H = 1, aspect = 1;
+  const P = new Float32Array(16);
+  const resize = () => {
+    W = canvas.clientWidth; H = canvas.clientHeight; aspect = W / H;
+    canvas.width = Math.round(W * DPR); canvas.height = Math.round(H * DPR);
+    gl.viewport(0, 0, canvas.width, canvas.height);
+    P.set([f / aspect, 0, 0, 0, 0, f, 0, 0, 0, 0, (FAR + NEAR) / (NEAR - FAR), -1, 0, 0, (2 * FAR * NEAR) / (NEAR - FAR), 0]);
+    gl.uniformMatrix4fv(uP, false, P);
+  };
+  resize(); addEventListener('resize', resize);
+
+  /* pointer */
+  let mx = 0, my = 0, tx = 0, ty = 0, px = -1, py = -1, hover = null;
+  canvas.addEventListener('pointermove', (e) => { const r = canvas.getBoundingClientRect(); px = e.clientX - r.left; py = e.clientY - r.top; tx = (px / W) * 2 - 1; ty = (py / H) * 2 - 1; });
+  canvas.addEventListener('pointerleave', () => { px = py = -1; });
+  canvas.addEventListener('click', (e) => { const r = canvas.getBoundingClientRect(); const h = hit(e.clientX - r.left, e.clientY - r.top); if (h) location.href = h.href; });
+
+  /* where each name sits on screen this frame */
+  const rects = new Map();
+  const project = (n, X, Y, Z) => {
+    const sx = ((f / aspect) * X) / -Z, sy = (f * Y) / -Z, hx = ((f / aspect) * (n.sw / 2)) / -Z, hy = (f * (n.sh / 2)) / -Z;
+    rects.set(n, { l: ((sx - hx + 1) / 2) * W, r: ((sx + hx + 1) / 2) * W, t: ((1 - (sy + hy)) / 2) * H, b: ((1 - (sy - hy)) / 2) * H });
+  };
+  /* names that overlap on screen ease apart — world units per screen pixel at their depth */
+  const wpp = (z) => (-z * 2 * Math.tan(FOV / 2) * aspect) / W;
+  const separate = (k) => {
+    for (let i = 0; i < names.length; i++) for (let j = i + 1; j < names.length; j++) {
+      const a = names[i], b = names[j], A = rects.get(a), B = rects.get(b);
+      if (!A || !B) continue;
+      const ox = Math.min(A.r, B.r) - Math.max(A.l, B.l), oy = Math.min(A.b, B.b) - Math.max(A.t, B.t);
+      if (ox <= 0 || oy <= 0) continue;
+      if (ox < oy) { const d = Math.sign((A.l + A.r) - (B.l + B.r)) || 1; a.px += d * ox * wpp(a.z) * k; b.px -= d * ox * wpp(b.z) * k; }
+      else { const d = Math.sign((B.t + B.b) - (A.t + A.b)) || 1; a.py += d * oy * wpp(a.z) * k; b.py -= d * oy * wpp(b.z) * k; }
+    }
+  };
+  const hit = (sx, sy) => { let best = null; for (const n of names) { const q = rects.get(n); if (q && sx >= q.l && sx <= q.r && sy >= q.t && sy <= q.b && (!best || n.z > best.z)) best = n; } return best; };
+
+  let last = performance.now();
+  const frame = (now) => {
+    requestAnimationFrame(frame);
+    const dt = Math.min((now - last) / 1000, 0.05); last = now;
+    if (document.hidden || scrollY > innerHeight) return;
+    if (!reduce) { mx += (tx - mx) * 0.06; my += (ty - my) * 0.06; }
+    const cx = mx * 0.22, cy = -my * 0.14; /* the camera leans with the cursor */
+    gl.clear(gl.COLOR_BUFFER_BIT);
+    const h = hit(px, py);
+    if (h !== hover) { hover = h; canvas.style.cursor = h ? 'pointer' : ''; held = h ? h.id : null; if (h && byId[h.id]) show(byId[h.id]); }
+    for (const n of names) {
+      n.z = n.z0 + (reduce ? 0 : Math.sin(now * 0.00025 + n.ph) * 0.22);
+      const hw = -n.z * Math.tan(FOV / 2) * aspect * 0.9, hh = -n.z * Math.tan(FOV / 2) * 0.7;
+      n.px += n.vx * dt; n.py += n.vy * dt;
+      if (n.px < -hw + n.sw / 2 || n.px > hw - n.sw / 2) { n.vx *= -1; n.px = Math.max(-hw + n.sw / 2, Math.min(hw - n.sw / 2, n.px)); }
+      if (n.py < -hh + n.sh / 2 || n.py > hh - n.sh / 2) { n.vy *= -1; n.py = Math.max(-hh + n.sh / 2, Math.min(hh - n.sh / 2, n.py)); }
+      const depth = (n.z + 4.6) / 2.6; /* 0 far … 1 near */
+      n.at = hover ? (hover === n ? 1 : 0.28) : 0.7 + 0.3 * depth;
+      n.a += (n.at - n.a) * 0.12;
+      const X = n.px - cx, Y = n.py - cy, Z = n.z;
+      const scale = hover === n ? 1.05 : 1;
+      gl.uniform3f(uC, X, Y, Z); gl.uniform2f(uS, n.sw * scale, n.sh * scale);
+      gl.uniform4f(uUV, n.cell.u0, n.cell.v0, n.cell.u1, n.cell.v1); gl.uniform1f(uA, n.a);
+      gl.drawArrays(gl.TRIANGLE_STRIP, 0, 4);
+      project(n, X, Y, Z);
+    }
+    separate(0.6 * dt);
+  };
+  /* far names draw first so near ones sit on top */
+  names.sort((a, b) => a.z0 - b.z0);
+  window.__names = names;
+  /* settle the field before the first frame */
+  for (let i = 0; i < 160; i++) { for (const n of names) { n.z = n.z0; project(n, n.px, n.py, n.z); } separate(0.08); }
+  requestAnimationFrame(frame);
+})();
+</script>

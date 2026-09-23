@@ -1,21 +1,32 @@
 ---
 import { UI, altPath, type Lang } from '../i18n';
-import { SITE } from '../site';
 
-interface Props { lang?: Lang; here?: 'work' | 'about' | 'contact' }
-const { lang = 'en', here } = Astro.props;
+interface Props { lang?: Lang; here?: 'home' | 'work' | 'about' | 'contact'; over?: boolean }
+const { lang = 'en', here, over = false } = Astro.props;
 const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const home = lang === 'de' ? `${base}/de` : base;
 const other = altPath(Astro.url.pathname, base);
 ---
 
-<header class="site-header">
-  <a class="site-title" href={`${home}/`}>Studio No Frame</a>
-  <nav class="site-nav">
-    <a href={`${home}/`} aria-current={here === 'work' ? 'page' : undefined}>{t.nav.work}</a>
+<header class={`rhead${over ? ' over' : ''}`} id="rhead">
+  <a class="studio" href={`${home}/`}>Studio No Frame</a>
+  <span class="spacer"></span>
+  <nav>
+    <a href={`${home}/works`} aria-current={here === 'work' ? 'page' : undefined}>{t.nav.work}</a>
     <a href={`${home}/about`} aria-current={here === 'about' ? 'page' : undefined}>{t.nav.about}</a>
     <a href={`${home}/contact`} aria-current={here === 'contact' ? 'page' : undefined}>{t.nav.contact}</a>
-    <a href={other} lang={lang === 'de' ? 'en' : 'de'}>{t.switchTo}</a>
+    <a class="lang" href={other} lang={lang === 'de' ? 'en' : 'de'} aria-label={t.switchTo}>{lang === 'de' ? 'EN' : 'DE'}</a>
   </nav>
 </header>
+{over && (
+  <script is:inline>
+    /* transparent over the opening photograph, white once it has scrolled by */
+    window.addEventListener('DOMContentLoaded', () => {
+      const h = document.getElementById('rhead');
+      const o = document.querySelector('.opening');
+      if (!h || !o) return;
+      new IntersectionObserver(([e]) => h.classList.toggle('over', e.isIntersecting && e.intersectionRatio > 0.15), { threshold: [0, 0.15, 0.3] }).observe(o);
+    });
+  </script>
+)}

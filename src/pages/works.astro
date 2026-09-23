@@ -1,0 +1,83 @@
+---
+import Base from '../layouts/Base.astro';
+import Chrome from '../components/Chrome.astro';
+import SiteFoot from '../components/SiteFoot.astro';
+import { getThreaded, THREADS } from '../lib/threads';
+import { UI } from '../i18n';
+
+const lang = 'en' as const;
+const t = UI[lang];
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const home = base;
+const works = await getThreaded(lang);
+const years = works.map((w) => w.year);
+const tt = (x: (typeof THREADS)[number]) => (lang === 'de' ? x.de : x.title);
+---
+
+<Base lang={lang} title={t.worksTitle} image={`${base}/images/og/default.jpg`}>
+  <Chrome lang={lang} here="work" />
+  <div class="below"></div>
+
+  <div class="catalogue" id="works">
+    <div class="list">
+      <header class="works-head">
+        <h1>{t.worksTitle} <span>{t.worksSub(works.length, Math.min(...years), Math.max(...years))}</span></h1>
+      </header>
+      <div class="filters" role="group" aria-label={t.filterLabel}>
+        <button type="button" data-t="" aria-pressed="true">{t.filterAll}</button>
+        {THREADS.map((x, i) => <button type="button" data-t={x.key} aria-pressed="false">{i + 1}&nbsp; {tt(x)}</button>)}
+      </div>
+      <ol class="cat" id="cat">
+        <li class="h">
+          <span class="label">{t.columns.no}</span><span class="label">{t.columns.exhibition}</span><span class="label">{t.columns.venue}</span><span class="label th">{t.columns.thread}</span><span class="label" style="text-align:right">{t.columns.year}</span>
+        </li>
+        {works.map((w) => (
+          <li data-t={w.thread.key}>
+            <a class="r" href={`${home}/projects/${w.id}`} data-id={w.id} data-no={w.no} data-ttl={w.data.title} data-ven={w.data.venue}>
+              <span class="no">{w.no}</span>
+              <span class="ttl">{w.data.title}</span>
+              <span class="ven">{w.data.venue}</span>
+              <span class="th">{tt(w.thread)}</span>
+              <span class="yr">{w.data.year}</span>
+            </a>
+          </li>
+        ))}
+      </ol>
+    </div>
+
+    <aside class="peek" aria-hidden="true">
+      <div class="frame">
+        {works.map((w, i) => (
+          <img class={i === 0 ? 'is-on' : ''} data-id={w.id} src={`${base}${w.data.cover}`} alt="" loading="lazy" decoding="async" />
+        ))}
+      </div>
+      <p class="cap"><span id="peek-no">{works[0].no}</span><span><b id="peek-ttl">{works[0].data.title}</b><span id="peek-ven">{works[0].data.venue}</span></span></p>
+    </aside>
+  </div>
+
+  <SiteFoot lang={lang} />
+
+  <script is:inline>
+    /* the picture beside the table follows the row under the cursor */
+    const peek = [...document.querySelectorAll('.peek img')];
+    const pno = document.getElementById('peek-no'), pttl = document.getElementById('peek-ttl'), pven = document.getElementById('peek-ven');
+    const show = (a) => {
+      peek.forEach((im) => im.classList.toggle('is-on', im.dataset.id === a.dataset.id));
+      pno.textContent = a.dataset.no; pttl.textContent = a.dataset.ttl; pven.textContent = a.dataset.ven;
+    };
+    document.querySelectorAll('#cat .r').forEach((a) => { a.addEventListener('mouseenter', () => show(a)); a.addEventListener('focus', () => show(a)); });
+
+    /* thread filters; a #thread in the address preselects one */
+    const rows = [...document.querySelectorAll('#cat li[data-t]')];
+    const buttons = [...document.querySelectorAll('.filters button')];
+    const pick = (key) => {
+      buttons.forEach((x) => x.setAttribute('aria-pressed', String(x.dataset.t === key)));
+      rows.forEach((li) => li.classList.toggle('is-hidden', !!key && li.dataset.t !== key));
+      const first = rows.find((li) => !li.classList.contains('is-hidden'));
+      if (first) show(first.querySelector('.r'));
+    };
+    buttons.forEach((b) => b.addEventListener('click', () => { pick(b.dataset.t); history.replaceState(null, '', b.dataset.t ? '#' + b.dataset.t : location.pathname); }));
+    const fromHash = () => { const k = location.hash.slice(1); if (buttons.some((b) => b.dataset.t === k)) pick(k); };
+    fromHash(); addEventListener('hashchange', fromHash);
+  </script>
+</Base>

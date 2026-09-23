@@ -1,20 +1,23 @@
 ---
-/* The project page all three directions share: title, credits, the room,
-   the narrative, then the plates — every plate carrying its catalogue number. */
-interface Props { p: any; prev: any; next: any; root: string; threadHref?: string }
-const { p, prev, next, root, threadHref } = Astro.props;
+/* A project: title, credits, the room, the narrative, then the plates —
+   every plate carrying its catalogue number. */
+import { UI, type Lang } from '../i18n';
+interface Props { p: any; prev: any; next: any; root: string; threadHref?: string; lang?: Lang }
+const { p, prev, next, root, threadHref, lang = 'en' } = Astro.props;
+const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const { title, venue, year, role, images } = p.data;
 const [lead, ...rest] = images;
+const threadTitle = lang === 'de' ? p.thread.de : p.thread.title;
 ---
 <header class="pj-head">
   <span class="no">№ {p.no}</span>
   <h1>{title}</h1>
   <dl>
-    <div><dt class="label">Venue</dt><dd>{venue}</dd></div>
-    <div><dt class="label">Year</dt><dd>{year}</dd></div>
-    <div><dt class="label">Role</dt><dd>{role}</dd></div>
-    <div><dt class="label">Thread</dt><dd>{threadHref ? <a href={threadHref}>{p.thread.title}</a> : p.thread.title}</dd></div>
+    <div><dt class="label">{t.columns.venue}</dt><dd>{venue}</dd></div>
+    <div><dt class="label">{t.columns.year}</dt><dd>{year}</dd></div>
+    <div><dt class="label">{t.columns.role}</dt><dd>{role}</dd></div>
+    <div><dt class="label">{t.columns.thread}</dt><dd>{threadHref ? <a href={threadHref}>{threadTitle}</a> : threadTitle}</dd></div>
   </dl>
 </header>
 
@@ -22,7 +25,7 @@ const [lead, ...rest] = images;
   <div class="pj-lead">
     <figure>
       <img src={`${base}${lead}`} alt={`${title} — ${venue}`} fetchpriority="high" decoding="async" />
-      <figcaption>№ {p.no}.1 — Installation view, {venue}</figcaption>
+      <figcaption>№ {p.no}.1 — {t.view}, {venue}</figcaption>
     </figure>
   </div>
 )}
@@ -34,13 +37,13 @@ const [lead, ...rest] = images;
     {rest.map((src: string, i: number) => (
       <figure>
         <img src={`${base}${src}`} alt={`${title} — ${venue}`} loading="lazy" decoding="async" />
-        <figcaption>№ {p.no}.{i + 2} — Installation view</figcaption>
+        <figcaption>№ {p.no}.{i + 2} — {t.view}</figcaption>
       </figure>
     ))}
   </div>
 )}
 
 <nav class="pj-nav">
-  <a href={`${root}/${prev.id}`}><span class="label">Previous · {prev.no}</span><strong>{prev.data.title}</strong></a>
-  <a href={`${root}/${next.id}`} style="text-align:right;margin-left:auto"><span class="label">Next · {next.no}</span><strong>{next.data.title}</strong></a>
+  <a href={`${root}/${prev.id}`}><span class="label">{t.prev} · {prev.no}</span><strong>{prev.data.title}</strong></a>
+  <a href={`${root}/${next.id}`} style="text-align:right;margin-left:auto"><span class="label">{t.next} · {next.no}</span><strong>{next.data.title}</strong></a>
 </nav>
