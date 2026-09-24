@@ -7,7 +7,6 @@ order: 2
 thread: "monographs"
 home: false
 summary: "Exhibition architecture and spatial concept for the first solo exhibition of Swedish artist Åsa Jungnelius in Turkey, curated by Elif Kamışlı."
-cover: "/images/projects/a-verse/a-verse-01.jpg"
 images:
   - "/images/projects/a-verse/a-verse-01.jpg"
   - "/images/projects/a-verse/a-verse-02.jpg"

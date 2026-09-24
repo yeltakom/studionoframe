@@ -7,7 +7,6 @@ order: 7
 thread: "monographs"
 home: false
 summary: "Ausstellungsgestaltung und Aufbau für In Search of Vera Molnár im Pera Museum, eine Hommage an die Pionierin der Computerkunst."
-cover: "/images/projects/vera-molnar-tribute/vera-molnar-tribute-01.jpg"
 images:
   - "/images/projects/vera-molnar-tribute/vera-molnar-tribute-01.jpg"
   - "/images/projects/vera-molnar-tribute/vera-molnar-tribute-02.jpg"

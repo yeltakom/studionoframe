@@ -7,7 +7,6 @@ order: 15
 thread: "commons"
 home: true
 summary: "Projects with Studio Tomás Saraceno and the Aerocene Foundation, including Aerocene Albedo at Art Basel Miami (2018), ON AIR — Carte Blanche à Tomás Saraceno at Palais de Tokyo, Paris (2018), Solar Rhythms at Tanya Bonakdar Gallery, New York (2018), and On the Disappearance of Clouds (2019)."
-cover: "/images/projects/tomas-saraceno-aerocene/tomas-saraceno-aerocene-01.jpg"
 images:
   - "/images/projects/tomas-saraceno-aerocene/tomas-saraceno-aerocene-01.jpg"
   - "/images/projects/tomas-saraceno-aerocene/tomas-saraceno-aerocene-02.jpg"

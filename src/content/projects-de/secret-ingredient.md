@@ -7,7 +7,6 @@ order: 14
 thread: "commons"
 home: false
 summary: "Ein Projekt für die 3."
-cover: "/images/projects/secret-ingredient/secret-ingredient-01.jpg"
 images:
   - "/images/projects/secret-ingredient/secret-ingredient-01.jpg"
   - "/images/projects/secret-ingredient/secret-ingredient-02.jpg"

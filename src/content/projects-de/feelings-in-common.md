@@ -7,7 +7,6 @@ order: 3
 thread: "collections"
 home: false
 summary: "Ausstellungsarchitektur für Feelings in Common: Works from the British Council Collection, kuratiert von Ulya Soley, entlang der drei Kapitel der Schau — „Preserving Care“, „Familiar Faces“ und „Future Perfect“."
-cover: "/images/projects/feelings-in-common/feelings-in-common-01.jpg"
 images:
   - "/images/projects/feelings-in-common/feelings-in-common-01.jpg"
   - "/images/projects/feelings-in-common/feelings-in-common-02.jpg"

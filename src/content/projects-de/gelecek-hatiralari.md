@@ -7,7 +7,6 @@ order: 9
 thread: "collections"
 home: true
 summary: "Gesamte Ausstellungsgestaltung und Aufbauleitung für Souvenirs of the Future im Pera Museum."
-cover: "/images/projects/gelecek-hatiralari/gelecek-hatiralari-01.jpg"
 images:
   - "/images/projects/gelecek-hatiralari/gelecek-hatiralari-01.jpg"
   - "/images/projects/gelecek-hatiralari/gelecek-hatiralari-02.jpg"

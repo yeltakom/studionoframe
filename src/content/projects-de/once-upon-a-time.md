@@ -7,7 +7,6 @@ order: 11
 thread: "monographs"
 home: false
 summary: "Gestaltung und Aufbau des Pavillons der Türkei auf der 59."
-cover: "/images/projects/once-upon-a-time/once-upon-a-time-01.jpg"
 images:
   - "/images/projects/once-upon-a-time/once-upon-a-time-01.jpg"
   - "/images/projects/once-upon-a-time/once-upon-a-time-02.jpg"

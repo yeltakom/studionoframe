@@ -7,7 +7,6 @@ order: 18
 thread: "archives"
 home: false
 summary: "Kuratiert von Marco Scotini und Andris Brinkmanis, mit der räumlichen Einrichtung von Herkes İçin Mimarlık."
-cover: "/images/projects/disobedience-archive/disobedience-archive-01.jpg"
 images:
   - "/images/projects/disobedience-archive/disobedience-archive-01.jpg"
   - "/images/projects/disobedience-archive/disobedience-archive-02.jpg"

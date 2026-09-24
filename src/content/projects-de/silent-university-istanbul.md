@@ -7,7 +7,6 @@ order: 12
 thread: "displacement"
 home: false
 summary: "Koordination, Aufbau und Produktionsdesign für The Silent University Orientation Program, initiiert von Ahmet Öğüt auf der 17."
-cover: "/images/projects/silent-university-istanbul/silent-university-istanbul-01.jpg"
 images:
   - "/images/projects/silent-university-istanbul/silent-university-istanbul-01.jpg"
   - "/images/projects/silent-university-istanbul/silent-university-istanbul-02.jpg"

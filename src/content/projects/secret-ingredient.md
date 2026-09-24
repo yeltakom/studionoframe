@@ -7,7 +7,6 @@ order: 14
 thread: "commons"
 home: false
 summary: "A project for the 3rd Chicago Architecture Biennial at Anthony Overton Elementary School in Bronzeville, aiming to reconnect the closed school with the local community through participatory design and food culture."
-cover: "/images/projects/secret-ingredient/secret-ingredient-01.jpg"
 images:
   - "/images/projects/secret-ingredient/secret-ingredient-01.jpg"
   - "/images/projects/secret-ingredient/secret-ingredient-02.jpg"

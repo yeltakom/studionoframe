@@ -7,7 +7,6 @@ order: 19
 thread: "archives"
 home: false
 summary: "Ein Archivprojekt, das die räumlichen Praktiken des Gezi-Widerstands dokumentiert."
-cover: "/images/projects/occupy-gezi-architecture/occupy-gezi-architecture-01.jpg"
 images:
   - "/images/projects/occupy-gezi-architecture/occupy-gezi-architecture-01.jpg"
   - "/images/projects/occupy-gezi-architecture/occupy-gezi-architecture-02.jpg"

@@ -7,7 +7,6 @@ order: 5
 thread: "monographs"
 home: false
 summary: "Beitrag zur Ausstellungsgestaltung und räumlichen Disposition des Pavillons der Türkei auf der 60."
-cover: "/images/projects/gulsun-karamustafa/gulsun-karamustafa-01.jpg"
 images:
   - "/images/projects/gulsun-karamustafa/gulsun-karamustafa-01.jpg"
   - "/images/projects/gulsun-karamustafa/gulsun-karamustafa-02.jpg"

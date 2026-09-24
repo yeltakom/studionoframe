@@ -7,7 +7,6 @@ order: 17
 thread: "commons"
 home: false
 summary: "Die VitrA Contemporary Architecture Series zeigt eine Ausstellung über Architekturkultur, koordiniert von Pelin Derviş, mit einer Ausstellungsgestaltung von KOTUstudio (Erdem Tüzün, Yelta Köm)."
-cover: "/images/projects/istanbul-modern-culture/istanbul-modern-culture-01.jpg"
 images:
   - "/images/projects/istanbul-modern-culture/istanbul-modern-culture-01.jpg"
   - "/images/projects/istanbul-modern-culture/istanbul-modern-culture-02.jpg"

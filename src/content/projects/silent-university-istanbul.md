@@ -7,7 +7,6 @@ order: 12
 thread: "displacement"
 home: false
 summary: "Coordination, installation and production design for The Silent University Orientation Program, initiated by Ahmet Öğüt at the 17th Istanbul Biennial."
-cover: "/images/projects/silent-university-istanbul/silent-university-istanbul-01.jpg"
 images:
   - "/images/projects/silent-university-istanbul/silent-university-istanbul-01.jpg"
   - "/images/projects/silent-university-istanbul/silent-university-istanbul-02.jpg"

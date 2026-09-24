@@ -7,7 +7,6 @@ order: 10
 thread: "displacement"
 home: false
 summary: "Organisiert von Arazi Assembly und Topological Atlas auf der 17."
-cover: "/images/projects/arazi-x-topological-istanbul/arazi-x-topological-istanbul-01.jpg"
 images:
   - "/images/projects/arazi-x-topological-istanbul/arazi-x-topological-istanbul-01.jpg"
   - "/images/projects/arazi-x-topological-istanbul/arazi-x-topological-istanbul-02.jpg"

@@ -7,7 +7,6 @@ order: 18
 thread: "archives"
 home: false
 summary: "Curated by Marco Scotini and Andris Brinkmanis, with architectural setting by Herkes İçin Mimarlık."
-cover: "/images/projects/disobedience-archive/disobedience-archive-01.jpg"
 images:
   - "/images/projects/disobedience-archive/disobedience-archive-01.jpg"
   - "/images/projects/disobedience-archive/disobedience-archive-02.jpg"
