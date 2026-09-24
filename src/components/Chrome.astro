@@ -1,5 +1,6 @@
 ---
 import { UI, altPath, type Lang } from '../i18n';
+import IndexOverlay from './IndexOverlay.astro';
 
 interface Props { lang?: Lang; here?: 'home' | 'work' | 'about' | 'contact'; over?: boolean }
 const { lang = 'en', here, over = false } = Astro.props;
@@ -13,12 +14,13 @@ const other = altPath(Astro.url.pathname, base);
   <a class="studio" href={`${home}/`}>Studio No Frame</a>
   <span class="spacer"></span>
   <nav>
-    <a href={`${home}/works`} aria-current={here === 'work' ? 'page' : undefined}>{t.nav.work}</a>
+    <a href={`${home}/works`} aria-current={here === 'work' ? 'page' : undefined} data-index={here === 'work' ? undefined : ''}>{t.nav.work}</a>
     <a href={`${home}/about`} aria-current={here === 'about' ? 'page' : undefined}>{t.nav.about}</a>
     <a href={`${home}/contact`} aria-current={here === 'contact' ? 'page' : undefined}>{t.nav.contact}</a>
     <a class="lang" href={other} lang={lang === 'de' ? 'en' : 'de'} aria-label={t.switchTo}>{lang === 'de' ? 'EN' : 'DE'}</a>
   </nav>
 </header>
+{here !== 'work' && <IndexOverlay lang={lang} root={`${home}/projects`} worksHref={`${home}/works`} />}
 {over && (
   <script is:inline>
     /* transparent over the opening photograph, white once it has scrolled by */

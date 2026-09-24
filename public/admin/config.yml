@@ -1,58 +1,95 @@
+# Studio No Frame — content panel (Sveltia CMS)
+# Sign in with a GitHub personal access token: repository "studionoframe",
+# permissions Contents: read & write, Metadata: read.
+
 backend:
   name: github
   repo: yeltakom/studionoframe
   branch: main
 
-media_folder: public/images
-public_folder: /images
+media_folder: public/images/projects
+public_folder: /images/projects
+
+media_libraries:
+  default:
+    config:
+      max_file_size: 40000000
+      slugify_filename: true
+      transformations:
+        raster_image:
+          format: jpeg
+          quality: 82
+          width: 1800
+          height: 1800
 
 collections:
   - name: projects
-    label: Projects
-    label_singular: Project
+    label: Exhibitions
+    label_singular: Exhibition
     folder: src/content/projects
     extension: md
     format: frontmatter
     create: true
     slug: '{{slug}}'
-    sortable_fields: [order, year, title]
-    summary: '{{order}} · {{title}} — {{venue}}'
+    media_folder: '/public/images/projects/{{slug}}'
+    public_folder: '/images/projects/{{slug}}'
+    sortable_fields: [year, title, thread]
+    summary: '{{title}} — {{venue}}, {{year}}'
+    view_groups:
+      - { label: Thread, field: thread }
     fields:
       - { label: Title, name: title, widget: string }
       - { label: Venue, name: venue, widget: string, hint: 'e.g. Pera Museum, Istanbul' }
-      - { label: Year, name: year, widget: string, hint: '2025, or 2018–2019 for a run' }
-      - { label: Role, name: role, widget: string, hint: 'e.g. Exhibition Design & Installation Management' }
-      - { label: Order, name: order, widget: number, value_type: int, hint: 'Position on the work grid — 1 comes first' }
-      - { label: Summary, name: summary, widget: text, hint: 'One sentence, used for search results and link previews' }
-      - { label: Cover, name: cover, widget: image }
-      - label: Images
+      - { label: Year, name: year, widget: string, hint: '2025, or 2018–2019 for a run. Ordering within a thread follows this.' }
+      - { label: Role, name: role, widget: string, hint: 'e.g. Exhibition Architecture' }
+      - label: Thread
+        name: thread
+        widget: select
+        hint: 'The research thread. The catalogue number (2.3) comes from this.'
+        options:
+          - { label: '1 Displacement', value: displacement }
+          - { label: '2 Archives of resistance', value: archives }
+          - { label: '3 Monographs', value: monographs }
+          - { label: '4 Collections', value: collections }
+          - { label: '5 Commons', value: commons }
+      - { label: Show on home page, name: home, widget: boolean, default: false, hint: 'Its cover opens the home page and joins the rotation' }
+      - label: Photographs
         name: images
-        widget: list
-        required: false
-        field: { label: Image, name: image, widget: image }
-      - { label: Description, name: body, widget: markdown, required: false }
+        widget: image
+        multiple: true
+        hint: 'Select all at once. The first one is the cover — drag to reorder. Large files are resized to 1800 px on upload.'
+      - { label: Summary, name: summary, widget: text, required: false, hint: 'One sentence for search results and link previews. Empty = first sentence of the text.' }
+      - { label: Text, name: body, widget: markdown, required: false }
+      - { label: Order, name: order, widget: number, value_type: int, default: 99, required: false, hint: 'Not used on the site any more; leave it.' }
 
   - name: projects_de
-    label: Projekte (Deutsch)
-    label_singular: Projekt
+    label: Ausstellungen (Deutsch)
+    label_singular: Ausstellung
     folder: src/content/projects-de
     extension: md
     format: frontmatter
     create: true
     slug: '{{slug}}'
-    sortable_fields: [order, year, title]
-    summary: '{{order}} · {{title}} — {{venue}}'
+    media_folder: '/public/images/projects/{{slug}}'
+    public_folder: '/images/projects/{{slug}}'
+    sortable_fields: [year, title]
+    summary: '{{title}} — {{venue}}, {{year}}'
     fields:
-      - { label: Titel, name: title, widget: string, hint: 'Same as the English page — exhibition titles are not translated' }
+      - { label: Titel, name: title, widget: string, hint: 'Same as the English entry — the file name must match too' }
       - { label: Ort, name: venue, widget: string }
       - { label: Jahr, name: year, widget: string }
-      - { label: Rolle, name: role, widget: string, hint: 'e.g. Ausstellungsgestaltung & Aufbauleitung' }
-      - { label: Reihenfolge, name: order, widget: number, value_type: int }
-      - { label: Kurzfassung, name: summary, widget: text }
-      - { label: Cover, name: cover, widget: image }
-      - label: Bilder
-        name: images
-        widget: list
-        required: false
-        field: { label: Bild, name: image, widget: image }
-      - { label: Beschreibung, name: body, widget: markdown, required: false }
+      - { label: Rolle, name: role, widget: string, hint: 'e.g. Ausstellungsarchitektur' }
+      - label: Linie
+        name: thread
+        widget: select
+        options:
+          - { label: '1 Vertreibung', value: displacement }
+          - { label: '2 Archive des Widerstands', value: archives }
+          - { label: '3 Monografien', value: monographs }
+          - { label: '4 Sammlungen', value: collections }
+          - { label: '5 Gemeingüter', value: commons }
+      - { label: Auf der Startseite, name: home, widget: boolean, default: false }
+      - { label: Fotos, name: images, widget: image, multiple: true, hint: 'Same photographs as the English entry' }
+      - { label: Kurzfassung, name: summary, widget: text, required: false }
+      - { label: Text, name: body, widget: markdown, required: false }
+      - { label: Reihenfolge, name: order, widget: number, value_type: int, default: 99, required: false }

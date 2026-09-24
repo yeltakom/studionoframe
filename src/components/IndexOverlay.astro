@@ -1,0 +1,58 @@
+---
+/* The index: the whole catalogue on one white sheet, over whatever page you
+   are on. It opens from "Works" in the header; a row under the cursor shows
+   its room at the side; Escape or × closes it. */
+import { UI, type Lang } from '../i18n';
+import { getThreaded, THREADS } from '../lib/threads';
+interface Props { lang?: Lang; root: string; worksHref: string }
+const { lang = 'en', root, worksHref } = Astro.props;
+const t = UI[lang];
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const works = await getThreaded(lang);
+const tt = (x: (typeof THREADS)[number]) => (lang === 'de' ? x.de : x.title);
+---
+<div class="index" id="index" hidden role="dialog" aria-modal="true" aria-label={t.worksTitle}>
+  <div class="index-bar">
+    <a class="studio" href={worksHref}>{t.worksTitle}</a>
+    <span class="spacer"></span>
+    <button type="button" class="close" id="index-close" aria-label="Close">×</button>
+  </div>
+  <div class="catalogue">
+    <div class="list">
+      <ol class="cat">
+        <li class="h"><span class="label">{t.columns.no}</span><span class="label">{t.columns.exhibition}</span><span class="label">{t.columns.venue}</span><span class="label th">{t.columns.thread}</span><span class="label" style="text-align:right">{t.columns.year}</span></li>
+        {works.map((w) => (
+          <li><a class="r" href={`${root}/${w.id}`} data-id={w.id} data-no={w.no} data-ttl={w.data.title} data-ven={w.data.venue}>
+            <span class="no">{w.no}</span><span class="ttl">{w.data.title}</span><span class="ven">{w.data.venue}</span><span class="th">{tt(w.thread)}</span><span class="yr">{w.data.year}</span>
+          </a></li>
+        ))}
+      </ol>
+    </div>
+    <aside class="peek" aria-hidden="true">
+      <div class="frame">
+        {works.map((w, i) => <img class={i === 0 ? 'is-on' : ''} data-id={w.id} data-src={`${base}${w.data.cover}`} alt="" decoding="async" />)}
+      </div>
+      <p class="cap"><span id="ix-no">{works[0].no}</span><span><b id="ix-ttl">{works[0].data.title}</b><span id="ix-ven">{works[0].data.venue}</span></span></p>
+    </aside>
+  </div>
+</div>
+
+<script is:inline>
+(() => {
+  const box = document.getElementById('index');
+  const link = document.querySelector('.rhead nav a[data-index]');
+  if (!box || !link) return;
+  const imgs = [...box.querySelectorAll('.peek img')];
+  const no = document.getElementById('ix-no'), ttl = document.getElementById('ix-ttl'), ven = document.getElementById('ix-ven');
+  let last = null;
+  const open = () => { imgs.forEach((im) => { if (!im.getAttribute('src')) im.src = im.dataset.src; }); box.hidden = false; document.body.style.overflow = 'hidden'; last = document.activeElement; box.querySelector('.r').focus({ preventScroll: true }); };
+  const close = () => { box.hidden = true; document.body.style.overflow = ''; last && last.focus(); };
+  link.addEventListener('click', (e) => { e.preventDefault(); box.hidden ? open() : close(); });
+  document.getElementById('index-close').addEventListener('click', close);
+  window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !box.hidden) close(); });
+  box.querySelectorAll('.r').forEach((a) => {
+    const show = () => { imgs.forEach((im) => im.classList.toggle('is-on', im.dataset.id === a.dataset.id)); no.textContent = a.dataset.no; ttl.textContent = a.dataset.ttl; ven.textContent = a.dataset.ven; };
+    a.addEventListener('mouseenter', show); a.addEventListener('focus', show);
+  });
+})();
+</script>
