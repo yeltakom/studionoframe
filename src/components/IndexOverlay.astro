@@ -40,14 +40,13 @@ const tt = (x: (typeof THREADS)[number]) => (lang === 'de' ? x.de : x.title);
 <script is:inline>
 (() => {
   const box = document.getElementById('index');
-  const link = document.querySelector('.rhead nav a[data-index]');
-  if (!box || !link) return;
+  if (!box) return;
   const imgs = [...box.querySelectorAll('.peek img')];
   const no = document.getElementById('ix-no'), ttl = document.getElementById('ix-ttl'), ven = document.getElementById('ix-ven');
   let last = null;
   const open = () => { imgs.forEach((im) => { if (!im.getAttribute('src')) im.src = im.dataset.src; }); box.hidden = false; document.body.style.overflow = 'hidden'; last = document.activeElement; box.querySelector('.r').focus({ preventScroll: true }); };
   const close = () => { box.hidden = true; document.body.style.overflow = ''; last && last.focus(); };
-  link.addEventListener('click', (e) => { e.preventDefault(); box.hidden ? open() : close(); });
+  window.__openIndex = open;
   document.getElementById('index-close').addEventListener('click', close);
   window.addEventListener('keydown', (e) => { if (e.key === 'Escape' && !box.hidden) close(); });
   box.querySelectorAll('.r').forEach((a) => {

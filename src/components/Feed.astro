@@ -1,0 +1,25 @@
+---
+/* The feed: one exhibition after another, newest first — the cover held
+   large, then its number and thread, the title, the facts. Nothing moves. */
+import { UI, type Lang } from '../i18n';
+import type { Threaded } from '../lib/threads';
+interface Props { works: Threaded[]; lang?: Lang; root: string }
+const { works, lang = 'en', root } = Astro.props;
+const t = UI[lang];
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const list = works.slice().sort((a, b) => b.year - a.year || a.no.localeCompare(b.no, undefined, { numeric: true }));
+---
+<section class="feed" aria-label={t.nav.work}>
+  {list.map((w, i) => (
+    <article class="feed-item">
+      <a class="pic" href={`${root}/${w.id}`} tabindex="-1" aria-hidden="true">
+        <img src={`${base}${w.data.cover}`} alt="" loading={i < 2 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} decoding="async" />
+      </a>
+      <div class="text">
+        <span class="label">№ {w.no} · {lang === 'de' ? w.thread.de : w.thread.title}</span>
+        <h2><a href={`${root}/${w.id}`}>{w.data.title}</a></h2>
+        <p class="meta">{w.data.venue}, {w.data.year} · {w.data.role}</p>
+      </div>
+    </article>
+  ))}
+</section>

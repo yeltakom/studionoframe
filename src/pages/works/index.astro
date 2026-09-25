@@ -5,10 +5,10 @@ import SiteFoot from '../../components/SiteFoot.astro';
 import { getThreaded, THREADS } from '../../lib/threads';
 import { UI } from '../../i18n';
 
-const lang = 'de' as const;
+const lang = 'en' as const;
 const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
-const home = `${base}/de`;
+const home = base;
 const works = await getThreaded(lang);
 const years = works.map((w) => w.year);
 const tt = (x: (typeof THREADS)[number]) => (lang === 'de' ? x.de : x.title);

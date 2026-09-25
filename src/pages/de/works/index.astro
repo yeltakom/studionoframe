@@ -1,14 +1,14 @@
 ---
-import Base from '../layouts/Base.astro';
-import Chrome from '../components/Chrome.astro';
-import SiteFoot from '../components/SiteFoot.astro';
-import { getThreaded, THREADS } from '../lib/threads';
-import { UI } from '../i18n';
+import Base from '../../../layouts/Base.astro';
+import Chrome from '../../../components/Chrome.astro';
+import SiteFoot from '../../../components/SiteFoot.astro';
+import { getThreaded, THREADS } from '../../../lib/threads';
+import { UI } from '../../../i18n';
 
-const lang = 'en' as const;
+const lang = 'de' as const;
 const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
-const home = base;
+const home = `${base}/de`;
 const works = await getThreaded(lang);
 const years = works.map((w) => w.year);
 const tt = (x: (typeof THREADS)[number]) => (lang === 'de' ? x.de : x.title);

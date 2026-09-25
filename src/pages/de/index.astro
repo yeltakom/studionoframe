@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Chrome from '../../components/Chrome.astro';
 import SiteFoot from '../../components/SiteFoot.astro';
-import Strip from '../../components/Strip.astro';
+import Feed from '../../components/Feed.astro';
 import { getThreaded } from '../../lib/threads';
 import { studioSchema } from '../../lib/schema';
 import { UI } from '../../i18n';
@@ -24,7 +24,7 @@ const works = await getThreaded(lang);
     <p>{t.statement} {t.statementMore}</p>
   </header>
 
-  <Strip works={works} lang={lang} root={`${home}/projects`} />
+  <Feed works={works} lang={lang} root={`${home}/projects`} />
 
   <SiteFoot lang={lang} />
 </Base>
