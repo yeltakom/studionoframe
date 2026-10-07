@@ -6,7 +6,14 @@ role: "Exhibition Coordination, Installation & Production Design"
 order: 12
 thread: "displacement"
 home: false
+current: false
+dates: ""
+curator: ""
+client: ""
+team: ""
+photo: ""
 summary: "Coordination, installation and production design for The Silent University Orientation Program, initiated by Ahmet Öğüt at the 17th Istanbul Biennial."
+cover: "/images/projects/silent-university-istanbul/silent-university-istanbul-01.jpg"
 images:
   - "/images/projects/silent-university-istanbul/silent-university-istanbul-01.jpg"
   - "/images/projects/silent-university-istanbul/silent-university-istanbul-02.jpg"
@@ -18,6 +25,7 @@ images:
   - "/images/projects/silent-university-istanbul/silent-university-istanbul-08.jpg"
   - "/images/projects/silent-university-istanbul/silent-university-istanbul-09.jpg"
   - "/images/projects/silent-university-istanbul/silent-university-istanbul-10.jpg"
+captions: []
 ---
 
 Coordination, installation and production design for <em>The Silent University Orientation Program</em>, initiated by Ahmet Öğüt at the 17th Istanbul Biennial. The program brought together online lectures and on-site events addressing the right to education for displaced people and forced migrants.

@@ -6,12 +6,20 @@ role: "Exhibition Layout & Design Consultancy"
 order: 8
 thread: "monographs"
 home: true
+current: false
+dates: ""
+curator: ""
+client: ""
+team: ""
+photo: ""
 summary: "Exhibition layout and design consultancy for the spatial arrangement of the installation Once upon a time… within the Füsun Onur retrospective at Museum Ludwig, Cologne, developed in collaboration with the curatorial team and the museum's architectural context."
+cover: "/images/projects/fusun-onur-ludwig/fusun-onur-ludwig-01.jpg"
 images:
   - "/images/projects/fusun-onur-ludwig/fusun-onur-ludwig-01.jpg"
   - "/images/projects/fusun-onur-ludwig/fusun-onur-ludwig-02.jpg"
   - "/images/projects/fusun-onur-ludwig/fusun-onur-ludwig-03.jpg"
   - "/images/projects/fusun-onur-ludwig/fusun-onur-ludwig-04.jpg"
+captions: []
 ---
 
 Exhibition layout and design consultancy for the spatial arrangement of the installation <em>Once upon a time…</em> within the Füsun Onur retrospective at Museum Ludwig, Cologne, developed in collaboration with the curatorial team and the museum's architectural context.

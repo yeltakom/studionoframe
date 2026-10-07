@@ -6,7 +6,14 @@ role: "Participant & Exhibition Designer — with Herkes İçin Mimarlık"
 order: 18
 thread: "archives"
 home: false
+current: false
+dates: ""
+curator: ""
+client: ""
+team: ""
+photo: ""
 summary: "Curated by Marco Scotini and Andris Brinkmanis, with architectural setting by Herkes İçin Mimarlık."
+cover: "/images/projects/disobedience-archive/disobedience-archive-01.jpg"
 images:
   - "/images/projects/disobedience-archive/disobedience-archive-01.jpg"
   - "/images/projects/disobedience-archive/disobedience-archive-02.jpg"
@@ -17,6 +24,7 @@ images:
   - "/images/projects/disobedience-archive/disobedience-archive-07.jpg"
   - "/images/projects/disobedience-archive/disobedience-archive-08.jpg"
   - "/images/projects/disobedience-archive/disobedience-archive-09.jpg"
+captions: []
 ---
 
 Curated by Marco Scotini and Andris Brinkmanis, with architectural setting by Herkes İçin Mimarlık. <em>Disobedience Archive</em> brings a comprehensive map of social conflict and a network of contemporary activism to town, shortly after the Gezi Park protests reshaped the struggle for the right to the city.

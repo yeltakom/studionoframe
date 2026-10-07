@@ -6,7 +6,14 @@ role: "Assoziierter Kurator"
 order: 16
 thread: "commons"
 home: false
+current: false
+dates: ""
+curator: ""
+client: ""
+team: ""
+photo: ""
 summary: "Als Antwort auf das Thema Freespace der Biennale Architettura 2018 verwandelte Vardiya / The Shift den Pavillon der Türkei in einen Ort für Begegnung, gemeinsames Arbeiten und kulturellen Austausch: 122 Architekturstudierende aus aller Welt arbeiteten dort in wechselnden Schichten."
+cover: "/images/projects/vardiya/vardiya-01.jpg"
 images:
   - "/images/projects/vardiya/vardiya-01.jpg"
   - "/images/projects/vardiya/vardiya-02.jpg"
@@ -16,6 +23,7 @@ images:
   - "/images/projects/vardiya/vardiya-06.jpg"
   - "/images/projects/vardiya/vardiya-07.jpg"
   - "/images/projects/vardiya/vardiya-08.jpg"
+captions: []
 ---
 
 Als Antwort auf das Thema Freespace der Biennale Architettura 2018 verwandelte <em>Vardiya / The Shift</em> den Pavillon der Türkei in einen Ort für Begegnung, gemeinsames Arbeiten und kulturellen Austausch: 122 Architekturstudierende aus aller Welt arbeiteten dort in wechselnden Schichten. Kuratorisches Team: Kerem Piker, Erdem Tüzün, Cansu Cürgen, Yelta Köm, Nizam Onur Sönmez, Yağız Söylev; beauftragt von IKSV.

@@ -4,6 +4,12 @@ Yıl: 2022
 Rol: Exhibition Designer & Researcher
 Hat: displacement
 Ana sayfa: evet
+Şimdi: hayır
+Tarihler: 
+Küratör: 
+Kurum: 
+Ekip: 
+Fotoğraf: 
 Özet: An exhibition at TOP Project Space exploring undocumented migration along the Pakistan–Iran and Iran–Turkey borders, focusing on the socio-political narratives that emerge around displacement, labor, and border dynamics.
 
 --- Açıklama ---
@@ -14,3 +20,6 @@ Rol: Ausstellungsgestaltung & Recherche
 Özet: Eine Ausstellung im TOP Project Space über undokumentierte Migration entlang der Grenzen Pakistan–Iran und Iran–Türkei, mit Blick auf die gesellschaftspolitischen Erzählungen, die sich um Vertreibung, Arbeit und Grenzregime bilden.
 
 Eine Ausstellung im TOP Project Space über undokumentierte Migration entlang der Grenzen Pakistan–Iran und Iran–Türkei, mit Blick auf die gesellschaftspolitischen Erzählungen, die sich um Vertreibung, Arbeit und Grenzregime bilden. Aus vier Jahren Forschung im Projekt Topological Atlas entwickelt, betont das Raumkonzept den geschichteten, archivarischen Charakter dieser Geschichten.
+
+--- Altyazılar ---
+(fotoğraf numarası: ne görünüyor | fotoğrafçı — örnek  03: Giriş holü | Hanna Wiedemann)

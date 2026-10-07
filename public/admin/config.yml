@@ -60,6 +60,24 @@ collections:
         hint: 'Select all at once. The first one is the cover — drag to reorder. Large files are resized to 1800 px on upload.'
       - { label: Summary, name: summary, widget: text, required: false, hint: 'One sentence for search results and link previews. Empty = first sentence of the text.' }
       - { label: Text, name: body, widget: markdown, required: false }
+      - { label: Dates, name: dates, widget: string, required: false, hint: 'e.g. 14 March – 2 August 2026. Shown instead of the year when filled.' }
+      - { label: On view now, name: current, widget: boolean, default: false, hint: 'Lists it under "Now" on the home page' }
+      - { label: Curated by, name: curator, widget: string, required: false }
+      - { label: Commissioned by, name: client, widget: string, required: false, hint: 'Institution or commissioner' }
+      - { label: Team, name: team, widget: string, required: false }
+      - { label: Photography, name: photo, widget: string, required: false, hint: 'Credit for all photographs, e.g. Hanna Wiedemann / HKW' }
+      - label: Captions
+        name: captions
+        widget: list
+        required: false
+        collapsed: true
+        summary: '{{fields.text}}'
+        hint: 'Optional: a line for any photograph that deserves one. Pick the photograph you already uploaded.'
+        fields:
+          - { label: Photograph, name: image, widget: image, choose_url: false }
+          - { label: Caption, name: text, widget: string, required: false, hint: 'What is in the picture — the work, the room, the moment' }
+          - { label: Credit, name: credit, widget: string, required: false, hint: 'Only if different from the photography credit above' }
+
       - { label: Order, name: order, widget: number, value_type: int, default: 99, required: false, hint: 'Not used on the site any more; leave it.' }
 
   - name: projects_de
@@ -92,4 +110,21 @@ collections:
       - { label: Fotos, name: images, widget: image, multiple: true, hint: 'Same photographs as the English entry' }
       - { label: Kurzfassung, name: summary, widget: text, required: false }
       - { label: Text, name: body, widget: markdown, required: false }
+      - { label: Laufzeit, name: dates, widget: string, required: false }
+      - { label: Aktuell zu sehen, name: current, widget: boolean, default: false }
+      - { label: Kuratiert von, name: curator, widget: string, required: false }
+      - { label: Im Auftrag von, name: client, widget: string, required: false }
+      - { label: Team, name: team, widget: string, required: false }
+      - { label: Fotografie, name: photo, widget: string, required: false }
+      - label: Bildunterschriften
+        name: captions
+        widget: list
+        required: false
+        collapsed: true
+        summary: '{{fields.text}}'
+        fields:
+          - { label: Foto, name: image, widget: image, choose_url: false }
+          - { label: Bildunterschrift, name: text, widget: string, required: false }
+          - { label: Credit, name: credit, widget: string, required: false }
+
       - { label: Reihenfolge, name: order, widget: number, value_type: int, default: 99, required: false }

@@ -11,6 +11,10 @@ export const UI = {
     switchTo: 'Deutsch',
     nav: { work: 'Works', about: 'Studio', contact: 'Contact' },
     columns: { no: '№', year: 'Year', exhibition: 'Exhibition', venue: 'Venue', role: 'Role', thread: 'Thread' },
+    facts: { venue: 'Venue', dates: 'Dates', year: 'Year', role: 'Role', curator: 'Curated by', client: 'Commissioned by', team: 'Team', photo: 'Photography', thread: 'Thread', catalogue: 'Catalogue' },
+    related: 'Also in this thread',
+    now: 'Now',
+    worksIn: (n: number) => `${n} ${n === 1 ? 'work' : 'works'}`,
     statement: 'Studio No Frame builds exhibitions for museums, biennials and artists.',
     statementMore:
       'Each one starts as a question — about displacement, about what an archive can hold, about how a collection is read — and ends as a room people walk through. The work is arranged by those questions.',
@@ -44,6 +48,10 @@ export const UI = {
     switchTo: 'English',
     nav: { work: 'Arbeiten', about: 'Studio', contact: 'Kontakt' },
     columns: { no: '№', year: 'Jahr', exhibition: 'Ausstellung', venue: 'Ort', role: 'Rolle', thread: 'Linie' },
+    facts: { venue: 'Ort', dates: 'Laufzeit', year: 'Jahr', role: 'Rolle', curator: 'Kuratiert von', client: 'Im Auftrag von', team: 'Team', photo: 'Fotografie', thread: 'Linie', catalogue: 'Katalog' },
+    related: 'Ebenfalls in dieser Linie',
+    now: 'Jetzt',
+    worksIn: (n: number) => `${n} ${n === 1 ? 'Arbeit' : 'Arbeiten'}`,
     statement: 'Studio No Frame baut Ausstellungen für Museen, Biennalen und Künstler:innen.',
     statementMore:
       'Jede beginnt mit einer Frage — nach Vertreibung, nach dem, was ein Archiv fassen kann, nach der Lesart einer Sammlung — und endet als Raum, durch den Menschen gehen. Die Arbeiten sind nach diesen Fragen geordnet.',

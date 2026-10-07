@@ -8,6 +8,7 @@ export const SITE = {
   description:
     'Studio No Frame is a Berlin studio for exhibition architecture, art production and curation, working with museums, biennials and artists. Led by Yelta Köm.',
   email: 'contact@noframe.studio',
+  instagram: 'https://www.instagram.com/noframe.studio/',
   founder: 'Yelta Köm',
   city: 'Berlin',
   country: 'DE',

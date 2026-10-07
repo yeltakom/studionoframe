@@ -4,6 +4,12 @@ Yıl: 2022
 Rol: Artist, Installation & Production Design
 Hat: displacement
 Ana sayfa: hayır
+Şimdi: hayır
+Tarihler: 
+Küratör: 
+Kurum: 
+Ekip: 
+Fotoğraf: 
 Özet: Organized by Arazi Assembly and Topological Atlas at the 17th Istanbul Biennial, the exhibition explored the displacement of communities in the Tigris basin — forced displacements, dispossessed female farmers, undocumented migrants, and urban/rural resistance practices.
 
 --- Açıklama ---
@@ -14,3 +20,6 @@ Rol: Künstler, Aufbau & Produktionsdesign
 Özet: Organisiert von Arazi Assembly und Topological Atlas auf der 17.
 
 Organisiert von Arazi Assembly und Topological Atlas auf der 17. Istanbul Biennale, untersuchte die Ausstellung die Vertreibung von Gemeinschaften im Tigris-Becken — Zwangsumsiedlungen, enteignete Bäuerinnen, Migrant:innen ohne Papiere sowie städtische und ländliche Formen des Widerstands.
+
+--- Altyazılar ---
+(fotoğraf numarası: ne görünüyor | fotoğrafçı — örnek  03: Giriş holü | Hanna Wiedemann)

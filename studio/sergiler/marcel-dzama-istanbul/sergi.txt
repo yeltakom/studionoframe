@@ -4,6 +4,12 @@ Yıl: 2025
 Rol: Exhibition Design & Installation Management
 Hat: monographs
 Ana sayfa: hayır
+Şimdi: hayır
+Tarihler: 
+Küratör: 
+Kurum: 
+Ekip: 
+Fotoğraf: 
 Özet: Complete exhibition design and installation management for the first solo exhibition of Marcel Dzama in Turkey at Pera Museum, featuring drawings, sculptures, and video.
 
 --- Açıklama ---
@@ -14,3 +20,6 @@ Rol: Ausstellungsgestaltung & Aufbauleitung
 Özet: Gesamte Ausstellungsgestaltung und Aufbauleitung für die erste Einzelausstellung von Marcel Dzama in der Türkei im Pera Museum, mit Zeichnungen, Skulpturen und Video.
 
 Gesamte Ausstellungsgestaltung und Aufbauleitung für die erste Einzelausstellung von Marcel Dzama in der Türkei im Pera Museum, mit Zeichnungen, Skulpturen und Video. Das Raumkonzept stärkt den erzählerischen Fluss zwischen Dzamas unterschiedlichen Arbeiten und hält die Atmosphäre mit einfachen Materialien zusammen.
+
+--- Altyazılar ---
+(fotoğraf numarası: ne görünüyor | fotoğrafçı — örnek  03: Giriş holü | Hanna Wiedemann)

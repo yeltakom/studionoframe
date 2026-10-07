@@ -4,6 +4,7 @@ import Chrome from '../../components/Chrome.astro';
 import SiteFoot from '../../components/SiteFoot.astro';
 import { getThreaded, THREADS } from '../../lib/threads';
 import { UI } from '../../i18n';
+import { srcset, SIZES } from '../../lib/img';
 
 const lang = 'en' as const;
 const t = UI[lang];
@@ -48,7 +49,7 @@ const tt = (x: (typeof THREADS)[number]) => (lang === 'de' ? x.de : x.title);
     <aside class="peek" aria-hidden="true">
       <div class="frame">
         {works.map((w, i) => (
-          <img class={i === 0 ? 'is-on' : ''} data-id={w.id} src={`${base}${w.data.cover}`} alt="" loading="lazy" decoding="async" />
+          <img class={i === 0 ? 'is-on' : ''} data-id={w.id} src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes={SIZES.side} alt="" loading="lazy" decoding="async" />
         ))}
       </div>
       <p class="cap"><span id="peek-no">{works[0].no}</span><span><b id="peek-ttl">{works[0].data.title}</b><span id="peek-ven">{works[0].data.venue}</span></span></p>

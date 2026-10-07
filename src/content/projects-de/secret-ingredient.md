@@ -6,12 +6,20 @@ role: "Mit Architecture for All (Herkes İçin Mimarlık)"
 order: 14
 thread: "commons"
 home: false
+current: false
+dates: ""
+curator: ""
+client: ""
+team: ""
+photo: ""
 summary: "Ein Projekt für die 3."
+cover: "/images/projects/secret-ingredient/secret-ingredient-01.jpg"
 images:
   - "/images/projects/secret-ingredient/secret-ingredient-01.jpg"
   - "/images/projects/secret-ingredient/secret-ingredient-02.jpg"
   - "/images/projects/secret-ingredient/secret-ingredient-03.jpg"
   - "/images/projects/secret-ingredient/secret-ingredient-04.jpg"
+captions: []
 ---
 
 Ein Projekt für die 3. Chicago Architecture Biennial in der stillgelegten Anthony Overton Elementary School in Bronzeville, das die Schule über partizipatives Entwerfen und Esskultur wieder mit der Nachbarschaft verbindet. Große Picknicktische, angelehnt an die gemeinschaftlichen Esspraktiken des Viertels, schufen einen offenen Ort zum Zusammenkommen und Erzählen — Schauplatz des <em>Community Potluck</em>.

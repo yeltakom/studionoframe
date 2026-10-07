@@ -32,3 +32,8 @@ studio/sergiler/**/*.heif
 studio/sergiler/**/*.avif
 studio/sergiler/**/*.JPG
 studio/sergiler/**/*.HEIC
+
+# küçültülmüş kopyalar build sırasında üretilir
+public/images/**/*-800w.*
+public/images/**/*-1200w.*
+public/images/sizes.json

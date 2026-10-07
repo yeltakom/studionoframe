@@ -4,6 +4,12 @@ Yıl: 2024
 Rol: Exhibition Design & Installation Management
 Hat: monographs
 Ana sayfa: hayır
+Şimdi: hayır
+Tarihler: 
+Küratör: 
+Kurum: 
+Ekip: 
+Fotoğraf: 
 Özet: Exhibition design and installation for In Search of Vera Molnár at Pera Museum, a tribute to the pioneering artist of computer art.
 
 --- Açıklama ---
@@ -14,3 +20,6 @@ Rol: Ausstellungsgestaltung & Aufbauleitung
 Özet: Ausstellungsgestaltung und Aufbau für In Search of Vera Molnár im Pera Museum, eine Hommage an die Pionierin der Computerkunst.
 
 Ausstellungsgestaltung und Aufbau für <em>In Search of Vera Molnár</em> im Pera Museum, eine Hommage an die Pionierin der Computerkunst. Die räumliche Anordnung bringt Molnárs historische Arbeiten mit Werken zeitgenössischer Künstler:innen zusammen, die ihr algorithmisches Denken weiterführen.
+
+--- Altyazılar ---
+(fotoğraf numarası: ne görünüyor | fotoğrafçı — örnek  03: Giriş holü | Hanna Wiedemann)

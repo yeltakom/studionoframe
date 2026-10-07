@@ -6,7 +6,14 @@ role: "Ausstellungsgestaltung"
 order: 11
 thread: "monographs"
 home: false
+current: false
+dates: ""
+curator: ""
+client: ""
+team: ""
+photo: ""
 summary: "Gestaltung und Aufbau des Pavillons der Türkei auf der 59."
+cover: "/images/projects/once-upon-a-time/once-upon-a-time-01.jpg"
 images:
   - "/images/projects/once-upon-a-time/once-upon-a-time-01.jpg"
   - "/images/projects/once-upon-a-time/once-upon-a-time-02.jpg"
@@ -18,6 +25,7 @@ images:
   - "/images/projects/once-upon-a-time/once-upon-a-time-08.jpg"
   - "/images/projects/once-upon-a-time/once-upon-a-time-09.jpg"
   - "/images/projects/once-upon-a-time/once-upon-a-time-10.jpg"
+captions: []
 ---
 
 Gestaltung und Aufbau des Pavillons der Türkei auf der 59. Internationalen Kunstausstellung — La Biennale di Venezia, mit Füsun Onurs Mixed-Media-Installation <em>Once upon a time…</em> Die Anordnung aus Drahtskulpturen, Alltagsgegenständen und fragilen Materialien schuf eine poetische Raumerfahrung; die Aufgabe umfasste die räumliche Disposition und die Leitung des Aufbaus.

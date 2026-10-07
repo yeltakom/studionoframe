@@ -6,7 +6,14 @@ role: "Kuratierung & Ausstellungsgestaltung — KOTUstudio"
 order: 17
 thread: "commons"
 home: false
+current: false
+dates: ""
+curator: ""
+client: ""
+team: ""
+photo: ""
 summary: "Die VitrA Contemporary Architecture Series zeigt eine Ausstellung über Architekturkultur, koordiniert von Pelin Derviş, mit einer Ausstellungsgestaltung von KOTUstudio (Erdem Tüzün, Yelta Köm)."
+cover: "/images/projects/istanbul-modern-culture/istanbul-modern-culture-01.jpg"
 images:
   - "/images/projects/istanbul-modern-culture/istanbul-modern-culture-01.jpg"
   - "/images/projects/istanbul-modern-culture/istanbul-modern-culture-02.jpg"
@@ -14,6 +21,7 @@ images:
   - "/images/projects/istanbul-modern-culture/istanbul-modern-culture-04.jpg"
   - "/images/projects/istanbul-modern-culture/istanbul-modern-culture-05.jpg"
   - "/images/projects/istanbul-modern-culture/istanbul-modern-culture-06.jpg"
+captions: []
 ---
 
 Die VitrA Contemporary Architecture Series zeigt eine Ausstellung über Architekturkultur, koordiniert von Pelin Derviş, mit einer Ausstellungsgestaltung von KOTUstudio (Erdem Tüzün, Yelta Köm). Statt einer einzigen These folgt die Ausstellung einer fragmentierten Struktur aus Stationen, die über das gesamte Haus verteilt sind.

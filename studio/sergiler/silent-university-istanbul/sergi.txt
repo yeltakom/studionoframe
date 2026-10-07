@@ -4,6 +4,12 @@ Yıl: 2022
 Rol: Exhibition Coordination, Installation & Production Design
 Hat: displacement
 Ana sayfa: hayır
+Şimdi: hayır
+Tarihler: 
+Küratör: 
+Kurum: 
+Ekip: 
+Fotoğraf: 
 Özet: Coordination, installation and production design for The Silent University Orientation Program, initiated by Ahmet Öğüt at the 17th Istanbul Biennial.
 
 --- Açıklama ---
@@ -14,3 +20,6 @@ Rol: Ausstellungskoordination, Aufbau & Produktionsdesign
 Özet: Koordination, Aufbau und Produktionsdesign für The Silent University Orientation Program, initiiert von Ahmet Öğüt auf der 17.
 
 Koordination, Aufbau und Produktionsdesign für <em>The Silent University Orientation Program</em>, initiiert von Ahmet Öğüt auf der 17. Istanbul Biennale. Das Programm verband Online-Vorlesungen mit Veranstaltungen vor Ort und verhandelte das Recht auf Bildung für Geflüchtete und Vertriebene.
+
+--- Altyazılar ---
+(fotoğraf numarası: ne görünüyor | fotoğrafçı — örnek  03: Giriş holü | Hanna Wiedemann)

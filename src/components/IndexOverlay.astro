@@ -4,6 +4,7 @@
    its room at the side; Escape or × closes it. */
 import { UI, type Lang } from '../i18n';
 import { getThreaded, THREADS } from '../lib/threads';
+import { srcset, SIZES } from '../lib/img';
 interface Props { lang?: Lang; root: string; worksHref: string }
 const { lang = 'en', root, worksHref } = Astro.props;
 const t = UI[lang];
@@ -30,7 +31,7 @@ const tt = (x: (typeof THREADS)[number]) => (lang === 'de' ? x.de : x.title);
     </div>
     <aside class="peek" aria-hidden="true">
       <div class="frame">
-        {works.map((w, i) => <img class={i === 0 ? 'is-on' : ''} data-id={w.id} data-src={`${base}${w.data.cover}`} alt="" decoding="async" />)}
+        {works.map((w, i) => <img class={i === 0 ? 'is-on' : ''} data-id={w.id} data-src={`${base}${w.data.cover}`} data-srcset={srcset(base, w.data.cover)} sizes={SIZES.side} alt="" decoding="async" />)}
       </div>
       <p class="cap"><span id="ix-no">{works[0].no}</span><span><b id="ix-ttl">{works[0].data.title}</b><span id="ix-ven">{works[0].data.venue}</span></span></p>
     </aside>
@@ -44,7 +45,7 @@ const tt = (x: (typeof THREADS)[number]) => (lang === 'de' ? x.de : x.title);
   const imgs = [...box.querySelectorAll('.peek img')];
   const no = document.getElementById('ix-no'), ttl = document.getElementById('ix-ttl'), ven = document.getElementById('ix-ven');
   let last = null;
-  const open = () => { imgs.forEach((im) => { if (!im.getAttribute('src')) im.src = im.dataset.src; }); box.hidden = false; document.body.style.overflow = 'hidden'; last = document.activeElement; box.querySelector('.r').focus({ preventScroll: true }); };
+  const open = () => { imgs.forEach((im) => { if (!im.getAttribute('src')) { if (im.dataset.srcset) im.srcset = im.dataset.srcset; im.src = im.dataset.src; } }); box.hidden = false; document.body.style.overflow = 'hidden'; last = document.activeElement; box.querySelector('.r').focus({ preventScroll: true }); };
   const close = () => { box.hidden = true; document.body.style.overflow = ''; last && last.focus(); };
   window.__openIndex = open;
   document.getElementById('index-close').addEventListener('click', close);

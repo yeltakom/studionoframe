@@ -3,6 +3,7 @@
    large, then its number and thread, the title, the facts. Nothing moves. */
 import { UI, type Lang } from '../i18n';
 import type { Threaded } from '../lib/threads';
+import { srcset, SIZES } from '../lib/img';
 interface Props { works: Threaded[]; lang?: Lang; root: string }
 const { works, lang = 'en', root } = Astro.props;
 const t = UI[lang];
@@ -13,7 +14,7 @@ const list = works.slice().sort((a, b) => b.year - a.year || a.no.localeCompare(
   {list.map((w, i) => (
     <article class="feed-item">
       <a class="pic" href={`${root}/${w.id}`} tabindex="-1" aria-hidden="true">
-        <img src={`${base}${w.data.cover}`} alt="" loading={i < 2 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} decoding="async" />
+        <img src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes={SIZES.full} alt="" loading={i < 2 ? 'eager' : 'lazy'} fetchpriority={i === 0 ? 'high' : undefined} decoding="async" />
       </a>
       <div class="text">
         <span class="label">№ {w.no} · {lang === 'de' ? w.thread.de : w.thread.title}</span>

@@ -4,6 +4,12 @@ Yıl: 2023
 Rol: Exhibition Design & Installation Management
 Hat: collections
 Ana sayfa: evet
+Şimdi: hayır
+Tarihler: 
+Küratör: 
+Kurum: 
+Ekip: 
+Fotoğraf: 
 Özet: Full exhibition design and installation management for Souvenirs of the Future at Pera Museum.
 
 --- Açıklama ---
@@ -14,3 +20,6 @@ Rol: Ausstellungsgestaltung & Aufbauleitung
 Özet: Gesamte Ausstellungsgestaltung und Aufbauleitung für Souvenirs of the Future im Pera Museum.
 
 Gesamte Ausstellungsgestaltung und Aufbauleitung für <em>Souvenirs of the Future</em> im Pera Museum. Die Ausstellung untersuchte die Verbindungen zwischen Erinnerung, Vorstellungskraft und Objekt ausgehend von der Kütahya-Fliesen- und Keramiksammlung der Suna und İnan Kıraç Stiftung und verband zeitgenössische Arbeiten mit historischen Artefakten zu einer durchlässigen Erzählung.
+
+--- Altyazılar ---
+(fotoğraf numarası: ne görünüyor | fotoğrafçı — örnek  03: Giriş holü | Hanna Wiedemann)

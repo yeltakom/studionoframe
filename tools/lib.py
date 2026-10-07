@@ -32,13 +32,20 @@ KEYS = {
     'hat': 'thread', 'thread': 'thread', 'linie': 'thread',
     'ana sayfa': 'home', 'anasayfa': 'home', 'home': 'home',
     'özet': 'summary', 'ozet': 'summary', 'summary': 'summary',
+    'küratör': 'curator', 'kurator': 'curator', 'curator': 'curator', 'kuratiert von': 'curator',
+    'kurum': 'client', 'client': 'client', 'commissioned by': 'client', 'auftraggeber': 'client',
+    'ekip': 'team', 'team': 'team',
+    'fotoğraf': 'photo', 'fotograf': 'photo', 'photo': 'photo', 'photography': 'photo', 'fotografie': 'photo',
+    'tarihler': 'dates', 'tarih': 'dates', 'dates': 'dates', 'laufzeit': 'dates',
+    'şimdi': 'current', 'simdi': 'current', 'now': 'current', 'current': 'current', 'güncel': 'current',
 }
 SECTION = re.compile(r'^\s*-{3,}\s*(.+?)\s*-{3,}\s*$')
 SECTIONS = {
+    'altyazılar': 'cap', 'altyazilar': 'cap', 'captions': 'cap', 'bildunterschriften': 'cap',
     'açıklama': 'en', 'aciklama': 'en', 'metin': 'en', 'description': 'en', 'english': 'en', 'ingilizce': 'en', 'i̇ngilizce': 'en',
     'almanca': 'de', 'deutsch': 'de', 'german': 'de', 'beschreibung': 'de',
 }
-FIELDS = ['title', 'venue', 'year', 'role', 'thread', 'home', 'summary', 'description', 'role_de', 'summary_de', 'description_de']
+FIELDS = ['title', 'venue', 'year', 'role', 'thread', 'home', 'summary', 'curator', 'client', 'team', 'photo', 'dates', 'current', 'captions', 'description', 'role_de', 'summary_de', 'description_de']
 
 TR = str.maketrans('çğıöşüÇĞİÖŞÜåÅäÄéÉèÈüÜñÑ', 'cgiosucgiosuaAaAeEeEuUnN')
 
@@ -62,6 +69,8 @@ def run(cmd: list[str]) -> subprocess.CompletedProcess:
 def empty_info() -> dict:
     info = {k: '' for k in FIELDS}
     info['home'] = False
+    info['current'] = False
+    info['captions'] = {}      # photo number (1, 2, …) → (text, credit)
     return info
 
 
@@ -78,6 +87,13 @@ def parse_info(text: str) -> dict:
         if m:
             section = SECTIONS.get(m.group(1).strip().lower(), section)
             continue
+        if section == 'cap':
+            # `03: what the photograph shows | who took it`
+            c = re.match(r'^\s*(\d{1,2})\s*[:.)-]\s*(.*)$', line)
+            if c:
+                txt, _, credit = c.group(2).partition('|')
+                info['captions'][int(c.group(1))] = (txt.strip(), credit.strip())
+            continue
         meta_zone = section == 'head' or (section == 'de' and not any(l.strip() for l in de))
         if meta_zone and ':' in line:
             key, _, value = line.partition(':')
@@ -86,8 +102,8 @@ def parse_info(text: str) -> dict:
                 value = value.strip()
                 if section == 'de' and k in ('role', 'summary'):
                     info[k + '_de'] = value
-                elif k == 'home':
-                    info['home'] = value.lower() in ('evet', 'x', 'yes', 'ja', 'true', '1')
+                elif k in ('home', 'current'):
+                    info[k] = value.lower() in ('evet', 'x', 'yes', 'ja', 'true', '1')
                 elif k == 'thread':
                     v = value.strip().lower()
                     info['thread'] = THREAD_ALIASES.get(v, v)
@@ -113,6 +129,12 @@ def render_info(info: dict) -> str:
         f'Rol: {info.get("role", "")}',
         f'Hat: {info.get("thread", "")}',
         f'Ana sayfa: {"evet" if info.get("home") else "hayır"}',
+        f'Şimdi: {"evet" if info.get("current") else "hayır"}',
+        f'Tarihler: {info.get("dates", "")}',
+        f'Küratör: {info.get("curator", "")}',
+        f'Kurum: {info.get("client", "")}',
+        f'Ekip: {info.get("team", "")}',
+        f'Fotoğraf: {info.get("photo", "")}',
         f'Özet: {info.get("summary", "")}',
         '',
         '--- Açıklama ---',
@@ -123,6 +145,10 @@ def render_info(info: dict) -> str:
         f'Özet: {info.get("summary_de", "")}',
         '',
         info.get('description_de', ''),
+        '',
+        '--- Altyazılar ---',
+        '(fotoğraf numarası: ne görünüyor | fotoğrafçı — örnek  03: Giriş holü | Hanna Wiedemann)',
+        *[f'{n:02d}: {txt}' + (f' | {credit}' if credit else '') for n, (txt, credit) in sorted((info.get('captions') or {}).items())],
         '',
     ]
     return '\n'.join(head)

@@ -6,13 +6,21 @@ role: "Editor & Coordinator — with Herkes İçin Mimarlık"
 order: 19
 thread: "archives"
 home: false
+current: false
+dates: ""
+curator: ""
+client: ""
+team: ""
+photo: ""
 summary: "An archive project documenting the spatial practices of the Gezi resistance."
+cover: "/images/projects/occupy-gezi-architecture/occupy-gezi-architecture-01.jpg"
 images:
   - "/images/projects/occupy-gezi-architecture/occupy-gezi-architecture-01.jpg"
   - "/images/projects/occupy-gezi-architecture/occupy-gezi-architecture-02.jpg"
   - "/images/projects/occupy-gezi-architecture/occupy-gezi-architecture-03.jpg"
   - "/images/projects/occupy-gezi-architecture/occupy-gezi-architecture-04.jpg"
   - "/images/projects/occupy-gezi-architecture/occupy-gezi-architecture-05.jpg"
+captions: []
 ---
 
 An archive project documenting the spatial practices of the Gezi resistance. Exhibited at SALT Istanbul, V&amp;A Museum London (<em>Disobedient Objects</em>), nGbK Berlin, MAXXI Rome, the 2nd Istanbul Design Biennial, Hidden Playground Cologne, Adhocracy Athens, and the Art Institute of Chicago.

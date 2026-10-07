@@ -4,6 +4,12 @@ Yıl: 2025
 Rol: Exhibition Design & Installation Management
 Hat: monographs
 Ana sayfa: hayır
+Şimdi: hayır
+Tarihler: 
+Küratör: 
+Kurum: 
+Ekip: 
+Fotoğraf: 
 Özet: Exhibition architecture and spatial concept for the first solo exhibition of Swedish artist Åsa Jungnelius in Turkey, curated by Elif Kamışlı.
 
 --- Açıklama ---
@@ -14,3 +20,6 @@ Rol: Ausstellungsgestaltung & Aufbauleitung
 Özet: Ausstellungsarchitektur und Raumkonzept für die erste Einzelausstellung der schwedischen Künstlerin Åsa Jungnelius in der Türkei, kuratiert von Elif Kamışlı.
 
 Ausstellungsarchitektur und Raumkonzept für die erste Einzelausstellung der schwedischen Künstlerin Åsa Jungnelius in der Türkei, kuratiert von Elif Kamışlı. Die Ausstellung führt Jungnelius’ Glas- und Marmorskulpturen — darunter vier neue Arbeiten, die mit Glasbläser:innen in Denizli entstanden — mit historischen Glasobjekten, handgewebten Schnüren und Peo Olssons Fotografien der Obsidianfelder Ostanatoliens zusammen. Das Raumkonzept ist als Landschaft zwischen Stille und Dichte angelegt: Ein in den Saal eingebautes Gerüst dient zugleich als Display und als gedankliches Gerüst der Ausstellung.
+
+--- Altyazılar ---
+(fotoğraf numarası: ne görünüyor | fotoğrafçı — örnek  03: Giriş holü | Hanna Wiedemann)

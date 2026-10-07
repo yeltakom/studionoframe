@@ -6,7 +6,14 @@ role: "Ausstellungskoordination, Aufbau & Produktionsdesign"
 order: 12
 thread: "displacement"
 home: false
+current: false
+dates: ""
+curator: ""
+client: ""
+team: ""
+photo: ""
 summary: "Koordination, Aufbau und Produktionsdesign für The Silent University Orientation Program, initiiert von Ahmet Öğüt auf der 17."
+cover: "/images/projects/silent-university-istanbul/silent-university-istanbul-01.jpg"
 images:
   - "/images/projects/silent-university-istanbul/silent-university-istanbul-01.jpg"
   - "/images/projects/silent-university-istanbul/silent-university-istanbul-02.jpg"
@@ -18,6 +25,7 @@ images:
   - "/images/projects/silent-university-istanbul/silent-university-istanbul-08.jpg"
   - "/images/projects/silent-university-istanbul/silent-university-istanbul-09.jpg"
   - "/images/projects/silent-university-istanbul/silent-university-istanbul-10.jpg"
+captions: []
 ---
 
 Koordination, Aufbau und Produktionsdesign für <em>The Silent University Orientation Program</em>, initiiert von Ahmet Öğüt auf der 17. Istanbul Biennale. Das Programm verband Online-Vorlesungen mit Veranstaltungen vor Ort und verhandelte das Recht auf Bildung für Geflüchtete und Vertriebene.

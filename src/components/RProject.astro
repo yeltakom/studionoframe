@@ -1,46 +1,75 @@
 ---
-/* A project: title, credits, the room, the narrative, then the plates —
-   every plate carrying its catalogue number. */
+/* A project, read like an archive entry: number and thread, title, the room,
+   then the text beside the facts, the plates with their captions, the other
+   works of the thread, and the way on. */
 import { UI, type Lang } from '../i18n';
-interface Props { p: any; prev: any; next: any; root: string; threadHref?: string; lang?: Lang }
-const { p, prev, next, root, threadHref, lang = 'en' } = Astro.props;
+import { srcset, SIZES } from '../lib/img';
+interface Props { p: any; prev: any; next: any; related: any[]; root: string; threadHref: string; lang?: Lang }
+const { p, prev, next, related = [], root, threadHref, lang = 'en' } = Astro.props;
 const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
-const { title, venue, year, role, images } = p.data;
-const [lead, ...rest] = images;
+const d = p.data;
+const [lead, ...rest] = d.images as string[];
 const threadTitle = lang === 'de' ? p.thread.de : p.thread.title;
+const capOf = (src: string) => (d.captions as { image: string; text: string; credit: string }[]).find((c) => c.image === src || src.endsWith(c.image) || c.image.endsWith(src.split('/').pop() ?? '#'));
+const caption = (src: string, n: number) => {
+  const c = capOf(src);
+  const text = c?.text || `${t.view}${n === 1 ? `, ${d.venue}` : ''}`;
+  const credit = c?.credit || d.photo;
+  return { text, credit };
+};
+const facts: [string, string | undefined][] = [
+  [t.facts.venue, d.venue],
+  [d.dates ? t.facts.dates : t.facts.year, d.dates || d.year],
+  [t.facts.role, d.role],
+  [t.facts.curator, d.curator],
+  [t.facts.client, d.client],
+  [t.facts.team, d.team],
+  [t.facts.photo, d.photo],
+];
 ---
 <header class="pj-head">
-  <span class="no">№ {p.no}</span>
-  <h1>{title}</h1>
-  <dl>
-    <div><dt class="label">{t.columns.venue}</dt><dd>{venue}</dd></div>
-    <div><dt class="label">{t.columns.year}</dt><dd>{year}</dd></div>
-    <div><dt class="label">{t.columns.role}</dt><dd>{role}</dd></div>
-    <div><dt class="label">{t.columns.thread}</dt><dd>{threadHref ? <a href={threadHref}>{threadTitle}</a> : threadTitle}</dd></div>
-  </dl>
+  <span class="no">№ {p.no} · <a href={threadHref}>{threadTitle}</a></span>
+  <h1>{d.title}</h1>
 </header>
 
 {lead && (
   <div class="pj-lead">
     <figure>
-      <img src={`${base}${lead}`} alt={`${title} — ${venue}`} fetchpriority="high" decoding="async" />
-      <figcaption>№ {p.no}.1 — {t.view}, {venue}</figcaption>
+      <img src={`${base}${lead}`} srcset={srcset(base, lead)} sizes={SIZES.full} alt={`${d.title} — ${d.venue}`} fetchpriority="high" decoding="async" />
+      <figcaption><b>{p.no}.1</b> {caption(lead, 1).text}{caption(lead, 1).credit && <span class="credit"> · {caption(lead, 1).credit}</span>}</figcaption>
     </figure>
   </div>
 )}
 
-<div class="pj-text"><div class="prose"><slot /></div></div>
+<div class="pj-body">
+  <div class="pj-text"><div class="prose"><slot /></div></div>
+  <dl class="pj-facts">
+    {facts.filter(([, v]) => v).map(([k, v]) => <div><dt class="label">{k}</dt><dd>{v}</dd></div>)}
+    <div><dt class="label">{t.facts.catalogue}</dt><dd>№ {p.no} · <a href={threadHref}>{threadTitle}</a></dd></div>
+  </dl>
+</div>
 
 {rest.length > 0 && (
   <div class="pj-figs">
     {rest.map((src: string, i: number) => (
       <figure>
-        <img src={`${base}${src}`} alt={`${title} — ${venue}`} loading="lazy" decoding="async" />
-        <figcaption>№ {p.no}.{i + 2} — {t.view}</figcaption>
+        <img src={`${base}${src}`} srcset={srcset(base, src)} sizes={SIZES.half} alt={capOf(src)?.text || `${d.title} — ${d.venue}`} loading="lazy" decoding="async" />
+        <figcaption><b>{p.no}.{i + 2}</b> {caption(src, i + 2).text}{caption(src, i + 2).credit && <span class="credit"> · {caption(src, i + 2).credit}</span>}</figcaption>
       </figure>
     ))}
   </div>
+)}
+
+{related.length > 0 && (
+  <section class="pj-related">
+    <h2 class="label">{t.related} — <a href={threadHref}>{threadTitle}</a></h2>
+    <ol class="cat">
+      {related.map((w: any) => (
+        <li><a class="r" href={`${root}/${w.id}`}><span class="no">{w.no}</span><span class="ttl">{w.data.title}</span><span class="ven">{w.data.venue}</span><span class="th"></span><span class="yr">{w.data.year}</span></a></li>
+      ))}
+    </ol>
+  </section>
 )}
 
 <nav class="pj-nav">

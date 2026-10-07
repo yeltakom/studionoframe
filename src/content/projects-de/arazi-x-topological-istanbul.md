@@ -6,7 +6,14 @@ role: "Künstler, Aufbau & Produktionsdesign"
 order: 10
 thread: "displacement"
 home: false
+current: false
+dates: ""
+curator: ""
+client: ""
+team: ""
+photo: ""
 summary: "Organisiert von Arazi Assembly und Topological Atlas auf der 17."
+cover: "/images/projects/arazi-x-topological-istanbul/arazi-x-topological-istanbul-01.jpg"
 images:
   - "/images/projects/arazi-x-topological-istanbul/arazi-x-topological-istanbul-01.jpg"
   - "/images/projects/arazi-x-topological-istanbul/arazi-x-topological-istanbul-02.jpg"
@@ -18,6 +25,7 @@ images:
   - "/images/projects/arazi-x-topological-istanbul/arazi-x-topological-istanbul-08.jpg"
   - "/images/projects/arazi-x-topological-istanbul/arazi-x-topological-istanbul-09.jpg"
   - "/images/projects/arazi-x-topological-istanbul/arazi-x-topological-istanbul-10.jpg"
+captions: []
 ---
 
 Organisiert von Arazi Assembly und Topological Atlas auf der 17. Istanbul Biennale, untersuchte die Ausstellung die Vertreibung von Gemeinschaften im Tigris-Becken — Zwangsumsiedlungen, enteignete Bäuerinnen, Migrant:innen ohne Papiere sowie städtische und ländliche Formen des Widerstands.

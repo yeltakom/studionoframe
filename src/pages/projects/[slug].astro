@@ -9,10 +9,10 @@ import { projectSchema } from '../../lib/schema';
 
 export async function getStaticPaths() {
   const works = await getThreaded('en');
-  return works.map((p, i) => ({ params: { slug: p.id }, props: { p, prev: works[i - 1] ?? works[works.length - 1], next: works[i + 1] ?? works[0] } }));
+  return works.map((p, i) => ({ params: { slug: p.id }, props: { p, prev: works[i - 1] ?? works[works.length - 1], next: works[i + 1] ?? works[0], related: works.filter((w) => w.thread === p.thread && w.id !== p.id) } }));
 }
 const lang = 'en' as const;
-const { p, prev, next } = Astro.props;
+const { p, prev, next, related } = Astro.props;
 const { Content } = await render(p.entry);
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const home = base;
@@ -21,6 +21,6 @@ const site = (Astro.site ?? new URL(Astro.url.origin)).href.replace(/\/+$/, '');
 <Base lang={lang} title={`${p.data.title} — ${p.data.venue}`} description={p.data.summary} image={`${base}${p.data.cover}`} schema={projectSchema(lang, site, base, p.id, p.data)}>
   <Chrome lang={lang} />
   <div class="below"></div>
-  <RProject p={p} prev={prev} next={next} root={`${home}/projects`} threadHref={`${home}/works#${p.thread.key}`} lang={lang}><Content /></RProject>
+  <RProject p={p} prev={prev} next={next} related={related} root={`${home}/projects`} threadHref={`${home}/works#${p.thread.key}`} lang={lang}><Content /></RProject>
   <SiteFoot lang={lang} />
 </Base>

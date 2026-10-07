@@ -117,3 +117,28 @@ Yayınlama bir sorun görürse durur ve nedenini yazar — yarım iş yayınlanm
 
 Yayınlanan her şey geri alınabilir; her yayın GitHub'da bir kayıt. Bir şeyi
 bozduğunu düşünürsen söyle, geri alırım.
+
+---
+
+## Künye ve altyazılar (2026-10)
+
+`sergi.txt` başına eklenen satırlar — hepsi isteğe bağlı, doluysa proje sayfasında **Facts** bloğunda görünür:
+
+```
+Şimdi: evet          ← ana sayfada "Now" satırına girer (şu an açık sergiler)
+Tarihler: 14 Mart – 2 Ağustos 2026   ← doluysa yılın yerine bu yazılır
+Küratör: Paz Guevara, Bonaventure Soh Bejeng Ndikung
+Kurum: Haus der Kulturen der Welt (HKW), Berlin
+Ekip: …
+Fotoğraf: Hanna Wiedemann / HKW      ← tüm fotoğrafların kredisi
+```
+
+Altyazılar ayrı bölümde, fotoğraf numarasıyla (klasördeki sıra):
+
+```
+--- Altyazılar ---
+01: Giriş holü, bemalt zemin cam cepheye kadar | Hanna Wiedemann
+03: Batı salonunda tekstil işler
+```
+
+Altyazı yazmadığın fotoğraf "Installation view" olarak kalır. Aynı alanlar panelde de var (Dates, On view now, Curated by, Commissioned by, Team, Photography, Captions).

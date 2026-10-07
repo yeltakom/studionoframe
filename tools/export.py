@@ -41,8 +41,14 @@ for path in sorted(CONTENT_DIR.glob('*.md')):
     info = empty_info()
     info.update(title=field(front, 'title'), venue=field(front, 'venue'), year=field(front, 'year'),
                 role=field(front, 'role'), summary=field(front, 'summary'), description=body,
+                curator=field(front, 'curator'), client=field(front, 'client'), team=field(front, 'team'),
+                photo=field(front, 'photo'), dates=field(front, 'dates'), current=(field(front, 'current') == 'true'),
                 thread=field(front, 'thread') or LEGACY_THREAD.get(path.stem, ''),
                 home=(field(front, 'home') == 'true') or path.stem in LEGACY_HOME)
+    images = re.findall(r'^\s+-\s+"([^"]+)"$', front, re.M)
+    for m in re.finditer(r'^\s+-\s+\{\s*image:\s*"([^"]*)",\s*text:\s*"((?:[^"\\]|\\.)*)",\s*credit:\s*"((?:[^"\\]|\\.)*)"\s*\}', front, re.M):
+        if m.group(1) in images:
+            info['captions'][images.index(m.group(1)) + 1] = (json.loads('"' + m.group(2) + '"'), json.loads('"' + m.group(3) + '"'))
     de = CONTENT_DE_DIR / path.name
     if de.exists():
         de_front, de_body = parts(de)

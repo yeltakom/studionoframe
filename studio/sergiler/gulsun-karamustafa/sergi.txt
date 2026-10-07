@@ -4,6 +4,12 @@ Yıl: 2024
 Rol: Exhibition Design Consultant & Installation Supervisor
 Hat: monographs
 Ana sayfa: hayır
+Şimdi: hayır
+Tarihler: 
+Küratör: 
+Kurum: 
+Ekip: 
+Fotoğraf: 
 Özet: Exhibition design and spatial layout contribution for the Türkiye Pavilion at the 60th International Art Exhibition — La Biennale di Venezia, featuring Gülsün Karamustafa's installation.
 
 --- Açıklama ---
@@ -14,3 +20,6 @@ Rol: Beratung Ausstellungsgestaltung & Aufbauleitung
 Özet: Beitrag zur Ausstellungsgestaltung und räumlichen Disposition des Pavillons der Türkei auf der 60.
 
 Beitrag zur Ausstellungsgestaltung und räumlichen Disposition des Pavillons der Türkei auf der 60. Internationalen Kunstausstellung — La Biennale di Venezia, mit der Installation von Gülsün Karamustafa. Die gemeinsam mit dem kuratorischen Team entwickelte Raumstrategie folgt der vielschichtigen, erzählenden Struktur der Arbeit.
+
+--- Altyazılar ---
+(fotoğraf numarası: ne görünüyor | fotoğrafçı — örnek  03: Giriş holü | Hanna Wiedemann)

@@ -15,6 +15,7 @@ const home = `${base}/de`;
 const works = await getThread(x.key, lang);
 const title = lang === 'de' ? x.de : x.title;
 const line = lang === 'de' ? x.lineDe : x.line;
+const text = lang === 'de' ? x.textDe : x.text;
 ---
 
 <Base lang={lang} title={title} description={line} image={`${base}${works[0]?.data.cover ?? '/images/og/default.jpg'}`}>
@@ -25,6 +26,7 @@ const line = lang === 'de' ? x.lineDe : x.line;
     <span class="label">{i + 1}</span>
     <h1>{title}</h1>
     <p>{line}</p>
+    <p class="essay">{text}</p>
   </header>
 
   <Feed works={works} lang={lang} root={`${home}/projects`} />

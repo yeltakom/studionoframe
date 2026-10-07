@@ -4,6 +4,12 @@ Yıl: 2014
 Rol: Participant & Exhibition Designer — with Herkes İçin Mimarlık
 Hat: archives
 Ana sayfa: hayır
+Şimdi: hayır
+Tarihler: 
+Küratör: 
+Kurum: 
+Ekip: 
+Fotoğraf: 
 Özet: Curated by Marco Scotini and Andris Brinkmanis, with architectural setting by Herkes İçin Mimarlık.
 
 --- Açıklama ---
@@ -14,3 +20,6 @@ Rol: Teilnehmer & Ausstellungsgestalter — mit Herkes İçin Mimarlık
 Özet: Kuratiert von Marco Scotini und Andris Brinkmanis, mit der räumlichen Einrichtung von Herkes İçin Mimarlık.
 
 Kuratiert von Marco Scotini und Andris Brinkmanis, mit der räumlichen Einrichtung von Herkes İçin Mimarlık. <em>Disobedience Archive</em> bringt eine umfassende Kartierung sozialer Konflikte und ein Netzwerk zeitgenössischen Aktivismus in die Stadt — kurz nachdem die Gezi-Proteste den Kampf um das Recht auf Stadt neu bestimmt hatten.
+
+--- Altyazılar ---
+(fotoğraf numarası: ne görünüyor | fotoğrafçı — örnek  03: Giriş holü | Hanna Wiedemann)

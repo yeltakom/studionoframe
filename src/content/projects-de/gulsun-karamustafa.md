@@ -6,12 +6,20 @@ role: "Beratung Ausstellungsgestaltung & Aufbauleitung"
 order: 5
 thread: "monographs"
 home: false
+current: false
+dates: ""
+curator: ""
+client: ""
+team: ""
+photo: ""
 summary: "Beitrag zur Ausstellungsgestaltung und räumlichen Disposition des Pavillons der Türkei auf der 60."
+cover: "/images/projects/gulsun-karamustafa/gulsun-karamustafa-01.jpg"
 images:
   - "/images/projects/gulsun-karamustafa/gulsun-karamustafa-01.jpg"
   - "/images/projects/gulsun-karamustafa/gulsun-karamustafa-02.jpg"
   - "/images/projects/gulsun-karamustafa/gulsun-karamustafa-03.jpg"
   - "/images/projects/gulsun-karamustafa/gulsun-karamustafa-04.jpg"
+captions: []
 ---
 
 Beitrag zur Ausstellungsgestaltung und räumlichen Disposition des Pavillons der Türkei auf der 60. Internationalen Kunstausstellung — La Biennale di Venezia, mit der Installation von Gülsün Karamustafa. Die gemeinsam mit dem kuratorischen Team entwickelte Raumstrategie folgt der vielschichtigen, erzählenden Struktur der Arbeit.

@@ -68,7 +68,9 @@ def first_sentence(text: str) -> str:
 
 def sync_photos(folder: Path, slug: str) -> list[str]:
     out_dir = IMAGES_DIR / slug
-    existing = sorted(p.name for p in out_dir.glob('*.jpg')) if out_dir.is_dir() else []
+    # the site's own photographs — not the smaller copies the build makes (…-800w.jpg)
+    originals = lambda d: sorted(p.name for p in d.glob('*.*') if p.suffix.lower() in ('.jpg', '.jpeg', '.webp', '.png') and not re.search(r'-\d+w\.\w+$', p.name))
+    existing = originals(out_dir) if out_dir.is_dir() else []
     sources = [p for p in folder.iterdir() if p.suffix.lower() in SOURCE_TYPES and not p.name.startswith('.')]
     if not sources:
         return existing
@@ -89,6 +91,8 @@ def sync_photos(folder: Path, slug: str) -> list[str]:
 
 
 def page(info: dict, role: str, summary: str, body: str, web: list[str], order: int) -> str:
+    caps = [f'  - {{ image: {yaml_str(web[n - 1])}, text: {yaml_str(txt)}, credit: {yaml_str(credit)} }}'
+            for n, (txt, credit) in sorted(info['captions'].items()) if 1 <= n <= len(web)]
     return '\n'.join([
         '---',
         f'title: {yaml_str(info["title"])}',
@@ -98,10 +102,18 @@ def page(info: dict, role: str, summary: str, body: str, web: list[str], order: 
         f'order: {order}',
         f'thread: {yaml_str(info["thread"])}',
         f'home: {"true" if info["home"] else "false"}',
+        f'current: {"true" if info["current"] else "false"}',
+        f'dates: {yaml_str(info["dates"])}',
+        f'curator: {yaml_str(info["curator"])}',
+        f'client: {yaml_str(info["client"])}',
+        f'team: {yaml_str(info["team"])}',
+        f'photo: {yaml_str(info["photo"])}',
         f'summary: {yaml_str(summary)}',
         f'cover: {yaml_str(web[0] if web else "")}',
-        'images:',
+        'images:' + ('' if web else ' []'),
         *[f'  - {yaml_str(u)}' for u in web],
+        'captions:' + ('' if caps else ' []'),
+        *caps,
         '---',
         '',
         body,
