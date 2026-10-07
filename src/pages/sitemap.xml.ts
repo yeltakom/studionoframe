@@ -1,5 +1,6 @@
 import type { APIRoute } from 'astro';
 import { getCollection } from 'astro:content';
+import { THREADS } from '../lib/threads';
 
 export const GET: APIRoute = async ({ site, url }) => {
   const origin = (site ?? new URL(url.origin)).href.replace(/\/+$/, '');
@@ -8,10 +9,10 @@ export const GET: APIRoute = async ({ site, url }) => {
 
   const paths: { path: string; priority: string }[] = [
     { path: '/', priority: '1.0' },
-    { path: '/works', priority: '0.9' },
     { path: '/about', priority: '0.8' },
     { path: '/contact', priority: '0.7' },
     { path: '/internships', priority: '0.5' },
+    ...THREADS.map((x) => ({ path: `/threads/${x.key}`, priority: '0.8' })),
     ...projects.map((p) => ({ path: `/projects/${p.id}`, priority: '0.9' })),
   ];
 

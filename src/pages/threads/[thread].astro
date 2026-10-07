@@ -1,0 +1,40 @@
+---
+import Base from '../../layouts/Base.astro';
+import Chrome from '../../components/Chrome.astro';
+import SiteFoot from '../../components/SiteFoot.astro';
+import ThreadsRow from '../../components/ThreadsRow.astro';
+import IndexTable from '../../components/IndexTable.astro';
+import { getThreaded, THREADS } from '../../lib/threads';
+import { UI } from '../../i18n';
+
+export async function getStaticPaths() {
+  return THREADS.map((x, i) => ({ params: { thread: x.key }, props: { x, i } }));
+}
+const lang = 'en' as const;
+const t = UI[lang];
+const { x, i } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const home = base;
+const all = await getThreaded(lang);
+const works = all.filter((w) => w.thread.key === x.key);
+const title = lang === 'de' ? x.de : x.title;
+const line = lang === 'de' ? x.lineDe : x.line;
+const text = lang === 'de' ? x.textDe : x.text;
+---
+
+<Base lang={lang} title={title} description={line} image={`${base}${works[0]?.data.cover ?? '/images/og/default.jpg'}`}>
+  <Chrome lang={lang} here="index" />
+  <div class="below"></div>
+
+  <header class="head">
+    <span class="label">{t.threadOf(i + 1, THREADS.length)}</span>
+    <h1>{title}</h1>
+    <p>{line}</p>
+    <p class="essay">{text}</p>
+    <ThreadsRow lang={lang} home={home} current={x.key} works={all} />
+  </header>
+
+  <IndexTable works={works} lang={lang} root={`${home}/projects`} />
+
+  <SiteFoot lang={lang} />
+</Base>

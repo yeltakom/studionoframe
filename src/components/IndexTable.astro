@@ -1,0 +1,59 @@
+---
+/* The index: № · Exhibition · Venue · Thread · Year. Beside it, the room of
+   the line under the cursor. The same table everywhere it appears. */
+import { UI, type Lang } from '../i18n';
+import type { Threaded } from '../lib/threads';
+import { srcset, SIZES } from '../lib/img';
+interface Props { works: Threaded[]; lang?: Lang; root: string; peek?: boolean; head?: boolean }
+const { works, lang = 'en', root, peek = true, head = true } = Astro.props;
+const t = UI[lang];
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const tt = (w: Threaded) => (lang === 'de' ? w.thread.de : w.thread.title);
+/* the room shown before anything is touched: the first work marked for the home page */
+const first = works.find((w) => w.data.home) ?? works[0];
+---
+<div class={`catalogue${peek ? '' : ' no-peek'}`}>
+  <div class="list">
+    <ol class="cat">
+      {head && (
+        <li class="h">
+          <span class="label">{t.columns.no}</span><span class="label">{t.columns.exhibition}</span><span class="label">{t.columns.venue}</span><span class="label th">{t.columns.thread}</span><span class="label" style="text-align:right">{t.columns.year}</span>
+        </li>
+      )}
+      {works.map((w) => (
+        <li>
+          <a class="r" href={`${root}/${w.id}`} data-id={w.id} data-no={w.no} data-ttl={w.data.title} data-ven={w.data.venue}>
+            <span class="no">{w.no}</span>
+            <span class="ttl">{w.data.title}</span>
+            <span class="ven">{w.data.venue}</span>
+            <span class="th">{tt(w)}</span>
+            <span class="yr">{w.data.year}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </div>
+  {peek && (
+    <aside class="peek" aria-hidden="true">
+      <div class="frame">
+        {works.map((w, i) => (
+          <img class={w === first ? 'is-on' : ''} data-id={w.id} src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes={SIZES.side} alt="" loading={w === first ? 'eager' : 'lazy'} decoding="async" />
+        ))}
+      </div>
+      <p class="cap"><span class="pk-no">{first?.no}</span><span><b class="pk-ttl">{first?.data.title}</b><span class="pk-ven">{first?.data.venue}</span></span></p>
+    </aside>
+  )}
+</div>
+{peek && (
+  <script is:inline>
+    /* the room beside the table follows the line under the cursor */
+    document.querySelectorAll('.catalogue:not(.no-peek)').forEach((box) => {
+      const imgs = [...box.querySelectorAll('.peek img')];
+      const no = box.querySelector('.pk-no'), ttl = box.querySelector('.pk-ttl'), ven = box.querySelector('.pk-ven');
+      box.querySelectorAll('.cat .r').forEach((a) => {
+        const show = () => { imgs.forEach((im) => im.classList.toggle('is-on', im.dataset.id === a.dataset.id)); no.textContent = a.dataset.no; ttl.textContent = a.dataset.ttl; ven.textContent = a.dataset.ven; };
+        a.addEventListener('mouseenter', show); a.addEventListener('focus', show);
+      });
+    });
+  </script>
+)}

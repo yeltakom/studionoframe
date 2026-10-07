@@ -1,0 +1,16 @@
+---
+/* The five threads, as a line under the head: All · 1 Displacement · 2 … */
+import { UI, type Lang } from '../i18n';
+import { THREADS, type Threaded } from '../lib/threads';
+interface Props { lang?: Lang; home: string; current?: string; works: Threaded[] }
+const { lang = 'en', home, current, works } = Astro.props;
+const t = UI[lang];
+const tt = (x: (typeof THREADS)[number]) => (lang === 'de' ? x.de : x.title);
+const count = (key: string) => works.filter((w) => w.thread.key === key).length;
+---
+<nav class="threads-row" aria-label={t.threads}>
+  <a href={`${home}/`} aria-current={!current ? 'page' : undefined}>{t.all} <span class="cnt">{works.length}</span></a>
+  {THREADS.map((x, i) => (
+    <a href={`${home}/threads/${x.key}`} aria-current={current === x.key ? 'page' : undefined}><span class="no">{i + 1}</span>{tt(x)} <span class="cnt">{count(x.key)}</span></a>
+  ))}
+</nav>

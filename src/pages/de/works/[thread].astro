@@ -1,35 +1,6 @@
 ---
-import Base from '../../../layouts/Base.astro';
-import Chrome from '../../../components/Chrome.astro';
-import SiteFoot from '../../../components/SiteFoot.astro';
-import Feed from '../../../components/Feed.astro';
-import { getThread, THREADS } from '../../../lib/threads';
-
-export async function getStaticPaths() {
-  return THREADS.map((x, i) => ({ params: { thread: x.key }, props: { x, i } }));
-}
-const lang = 'de' as const;
-const { x, i } = Astro.props;
+import { THREADS } from '../../../lib/threads';
+export async function getStaticPaths() { return THREADS.map((x) => ({ params: { thread: x.key } })); }
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
-const home = `${base}/de`;
-const works = await getThread(x.key, lang);
-const title = lang === 'de' ? x.de : x.title;
-const line = lang === 'de' ? x.lineDe : x.line;
-const text = lang === 'de' ? x.textDe : x.text;
+return Astro.redirect(`${base}/de/threads/${Astro.params.thread}`);
 ---
-
-<Base lang={lang} title={title} description={line} image={`${base}${works[0]?.data.cover ?? '/images/og/default.jpg'}`}>
-  <Chrome lang={lang} here="work" />
-  <div class="below"></div>
-
-  <header class="head">
-    <span class="label">{i + 1}</span>
-    <h1>{title}</h1>
-    <p>{line}</p>
-    <p class="essay">{text}</p>
-  </header>
-
-  <Feed works={works} lang={lang} root={`${home}/projects`} />
-
-  <SiteFoot lang={lang} />
-</Base>

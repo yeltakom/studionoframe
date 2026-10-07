@@ -1,9 +1,7 @@
 ---
 import { UI, altPath, type Lang } from '../i18n';
-import IndexOverlay from './IndexOverlay.astro';
-import MenuOverlay from './MenuOverlay.astro';
 
-interface Props { lang?: Lang; here?: 'home' | 'work' | 'about' | 'contact'; over?: boolean }
+interface Props { lang?: Lang; here?: 'index' | 'about' | 'contact' }
 const { lang = 'en', here } = Astro.props;
 const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
@@ -14,7 +12,10 @@ const other = altPath(Astro.url.pathname, base);
 <header class="rhead" id="rhead">
   <a class="studio" href={`${home}/`}>Studio No Frame</a>
   <span class="spacer"></span>
-  <button type="button" class="menu-btn" id="menu-btn" aria-expanded="false" aria-controls="menu">{t.menu}</button>
+  <nav aria-label="Site">
+    <a href={`${home}/`} aria-current={here === 'index' ? 'page' : undefined}>{t.nav.index}</a>
+    <a href={`${home}/about`} aria-current={here === 'about' ? 'page' : undefined}>{t.nav.studio}</a>
+    <a href={`${home}/contact`} aria-current={here === 'contact' ? 'page' : undefined}>{t.nav.contact}</a>
+    <a class="lang" href={other} lang={lang === 'de' ? 'en' : 'de'} aria-label={t.switchTo}>{t.short}</a>
+  </nav>
 </header>
-<MenuOverlay lang={lang} home={home} other={other} />
-{here !== 'work' && <IndexOverlay lang={lang} root={`${home}/projects`} worksHref={`${home}/works`} />}

@@ -4,6 +4,7 @@
    works of the thread, and the way on. */
 import { UI, type Lang } from '../i18n';
 import { srcset, SIZES } from '../lib/img';
+import IndexTable from './IndexTable.astro';
 interface Props { p: any; prev: any; next: any; related: any[]; root: string; threadHref: string; lang?: Lang }
 const { p, prev, next, related = [], root, threadHref, lang = 'en' } = Astro.props;
 const t = UI[lang];
@@ -46,7 +47,7 @@ const facts: [string, string | undefined][] = [
   <div class="pj-text"><div class="prose"><slot /></div></div>
   <dl class="pj-facts">
     {facts.filter(([, v]) => v).map(([k, v]) => <div><dt class="label">{k}</dt><dd>{v}</dd></div>)}
-    <div><dt class="label">{t.facts.catalogue}</dt><dd>№ {p.no} · <a href={threadHref}>{threadTitle}</a></dd></div>
+    <div><dt class="label">{t.facts.no}</dt><dd>№ {p.no} · <a href={threadHref}>{threadTitle}</a></dd></div>
   </dl>
 </div>
 
@@ -63,12 +64,8 @@ const facts: [string, string | undefined][] = [
 
 {related.length > 0 && (
   <section class="pj-related">
-    <h2 class="label">{t.related} — <a href={threadHref}>{threadTitle}</a></h2>
-    <ol class="cat">
-      {related.map((w: any) => (
-        <li><a class="r" href={`${root}/${w.id}`}><span class="no">{w.no}</span><span class="ttl">{w.data.title}</span><span class="ven">{w.data.venue}</span><span class="th"></span><span class="yr">{w.data.year}</span></a></li>
-      ))}
-    </ol>
+    <h2 class="label">{t.related} <a href={threadHref}>{threadTitle}</a></h2>
+    <IndexTable works={related} lang={lang} root={root} peek={false} head={false} />
   </section>
 )}
 
