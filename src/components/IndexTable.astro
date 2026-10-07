@@ -1,14 +1,19 @@
 ---
-/* The index: № · Exhibition · Venue · Thread · Year. Beside it, the room of
-   the line under the cursor. The same table everywhere it appears. */
+/* The index: № · Exhibition · Venue · Year, grouped by thread — each thread
+   a heading with its line, then its works. Beside it, the room of the line
+   under the cursor. The same table everywhere it appears. */
 import { UI, type Lang } from '../i18n';
-import type { Threaded } from '../lib/threads';
+import { THREADS, type Threaded } from '../lib/threads';
 import { srcset, SIZES } from '../lib/img';
-interface Props { works: Threaded[]; lang?: Lang; root: string; peek?: boolean; head?: boolean }
-const { works, lang = 'en', root, peek = true, head = true } = Astro.props;
+interface Props { works: Threaded[]; lang?: Lang; root: string; home?: string; peek?: boolean; head?: boolean; grouped?: boolean }
+const { works, lang = 'en', root, home = '', peek = true, head = true, grouped = false } = Astro.props;
 const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
-const tt = (w: Threaded) => (lang === 'de' ? w.thread.de : w.thread.title);
+const tt = (x: (typeof THREADS)[number]) => (lang === 'de' ? x.de : x.title);
+const tl = (x: (typeof THREADS)[number]) => (lang === 'de' ? x.lineDe : x.line);
+const groups = grouped
+  ? THREADS.map((x, i) => ({ x, i, rows: works.filter((w) => w.thread.key === x.key) })).filter((g) => g.rows.length)
+  : [{ x: null, i: -1, rows: works }];
 /* the room shown before anything is touched: the first work marked for the home page */
 const first = works.find((w) => w.data.home) ?? works[0];
 ---
@@ -17,26 +22,38 @@ const first = works.find((w) => w.data.home) ?? works[0];
     <ol class="cat">
       {head && (
         <li class="h">
-          <span class="label">{t.columns.no}</span><span class="label">{t.columns.exhibition}</span><span class="label">{t.columns.venue}</span><span class="label th">{t.columns.thread}</span><span class="label" style="text-align:right">{t.columns.year}</span>
+          <span class="label">{t.columns.no}</span><span class="label">{t.columns.exhibition}</span><span class="label">{t.columns.venue}</span><span class="label" style="text-align:right">{t.columns.year}</span>
         </li>
       )}
-      {works.map((w) => (
-        <li>
-          <a class="r" href={`${root}/${w.id}`} data-id={w.id} data-no={w.no} data-ttl={w.data.title} data-ven={w.data.venue}>
-            <span class="no">{w.no}</span>
-            <span class="ttl">{w.data.title}</span>
-            <span class="ven">{w.data.venue}</span>
-            <span class="th">{tt(w)}</span>
-            <span class="yr">{w.data.year}</span>
-          </a>
-        </li>
+      {groups.map(({ x, i, rows }) => (
+        <>
+          {x && (
+            <li class="group">
+              <a href={`${home}/threads/${x.key}`}>
+                <span class="no">{i + 1}</span>
+                <span class="ttl">{tt(x)}</span>
+                <span class="line">{tl(x)}</span>
+              </a>
+            </li>
+          )}
+          {rows.map((w) => (
+            <li>
+              <a class="r" href={`${root}/${w.id}`} data-id={w.id} data-no={w.no} data-ttl={w.data.title} data-ven={w.data.venue}>
+                <span class="no">{w.no}</span>
+                <span class="ttl">{w.data.title}</span>
+                <span class="ven">{w.data.venue}</span>
+                <span class="yr">{w.data.year}</span>
+              </a>
+            </li>
+          ))}
+        </>
       ))}
     </ol>
   </div>
   {peek && (
     <aside class="peek" aria-hidden="true">
       <div class="frame">
-        {works.map((w, i) => (
+        {works.map((w) => (
           <img class={w === first ? 'is-on' : ''} data-id={w.id} src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes={SIZES.side} alt="" loading={w === first ? 'eager' : 'lazy'} decoding="async" />
         ))}
       </div>

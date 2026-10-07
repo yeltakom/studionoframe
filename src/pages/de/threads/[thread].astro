@@ -2,7 +2,6 @@
 import Base from '../../../layouts/Base.astro';
 import Chrome from '../../../components/Chrome.astro';
 import SiteFoot from '../../../components/SiteFoot.astro';
-import ThreadsRow from '../../../components/ThreadsRow.astro';
 import IndexTable from '../../../components/IndexTable.astro';
 import { getThreaded, THREADS } from '../../../lib/threads';
 import { UI } from '../../../i18n';
@@ -31,10 +30,14 @@ const text = lang === 'de' ? x.textDe : x.text;
     <h1>{title}</h1>
     <p>{line}</p>
     <p class="essay">{text}</p>
-    <ThreadsRow lang={lang} home={home} current={x.key} works={all} />
   </header>
 
   <IndexTable works={works} lang={lang} root={`${home}/projects`} />
+
+  <p class="others">
+    <span class="label">{t.threads}</span>
+    {THREADS.filter((o) => o.key !== x.key).map((o) => <a href={`${home}/threads/${o.key}`}>{lang === 'de' ? o.de : o.title}</a>)}
+  </p>
 
   <SiteFoot lang={lang} />
 </Base>

@@ -2,7 +2,6 @@
 import Base from '../layouts/Base.astro';
 import Chrome from '../components/Chrome.astro';
 import SiteFoot from '../components/SiteFoot.astro';
-import ThreadsRow from '../components/ThreadsRow.astro';
 import IndexTable from '../components/IndexTable.astro';
 import { getThreaded } from '../lib/threads';
 import { studioSchema } from '../lib/schema';
@@ -29,10 +28,9 @@ const now = works.filter((w) => w.data.current);
     {now.length > 0 && (
       <p class="now"><span class="label">{t.now}</span>{now.map((w) => <a href={`${home}/projects/${w.id}`}>{w.data.title}, {w.data.venue}{w.data.dates ? ` — ${w.data.dates}` : ''}</a>)}</p>
     )}
-    <ThreadsRow lang={lang} home={home} works={works} />
   </header>
 
-  <IndexTable works={works} lang={lang} root={`${home}/projects`} />
+  <IndexTable works={works} lang={lang} root={`${home}/projects`} home={home} grouped />
 
   <SiteFoot lang={lang} />
 </Base>
