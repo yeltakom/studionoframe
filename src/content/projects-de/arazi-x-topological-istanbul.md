@@ -4,7 +4,7 @@ venue: "17th Istanbul Biennial"
 year: "2022"
 role: "Künstler, Aufbau & Produktionsdesign"
 order: 10
-thread: "displacement"
+category: "artist-collaborations"
 home: false
 current: false
 dates: ""

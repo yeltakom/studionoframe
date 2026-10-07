@@ -4,7 +4,7 @@ venue: "SALT Beyoğlu, Istanbul"
 year: "2014"
 role: "Editor & Coordinator — with Herkes İçin Mimarlık"
 order: 19
-thread: "archives"
+category: "research"
 home: false
 current: false
 dates: ""

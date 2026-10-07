@@ -2,7 +2,7 @@ Başlık: Calculations and Coincidences
 Mekân: Pera Museum, Istanbul
 Yıl: 2024
 Rol: Exhibition Design & Installation Management
-Hat: collections
+Kategori: exhibition-design
 Ana sayfa: hayır
 Şimdi: hayır
 Tarihler: 

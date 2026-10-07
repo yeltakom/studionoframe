@@ -2,7 +2,7 @@ Başlık: #OccupyGezi Architecture
 Mekân: SALT Beyoğlu, Istanbul
 Yıl: 2014
 Rol: Editor & Coordinator — with Herkes İçin Mimarlık
-Hat: archives
+Kategori: research
 Ana sayfa: hayır
 Şimdi: hayır
 Tarihler: 

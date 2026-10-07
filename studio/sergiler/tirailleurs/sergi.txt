@@ -2,7 +2,7 @@ Başlık: Tirailleurs: Trials and Tribulations
 Mekân: HKW, Berlin
 Yıl: 2026
 Rol: Exhibition Architecture
-Hat: archives
+Kategori: exhibition-design
 Ana sayfa: evet
 Şimdi: hayır
 Tarihler: 

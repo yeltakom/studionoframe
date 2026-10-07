@@ -14,13 +14,13 @@ CONTENT_DE_DIR = ROOT / 'src' / 'content' / 'projects-de'
 IMAGES_DIR = ROOT / 'public' / 'images' / 'projects'
 INFO_NAME = 'sergi.txt'
 
-THREADS = ['displacement', 'archives', 'monographs', 'collections', 'commons']
-THREAD_ALIASES = {
-    'yerinden edilme': 'displacement', 'vertreibung': 'displacement',
-    'arşiv': 'archives', 'arsiv': 'archives', 'archive': 'archives', 'direniş arşivleri': 'archives',
-    'monografi': 'monographs', 'monograph': 'monographs', 'monografien': 'monographs',
-    'koleksiyon': 'collections', 'collection': 'collections', 'sammlungen': 'collections',
-    'müşterek': 'commons', 'musterek': 'commons', 'müşterekler': 'commons', 'common': 'commons', 'gemeingüter': 'commons',
+CATEGORIES = ['exhibition-design', 'artist-collaborations', 'production', 'research', 'curation']
+CATEGORY_ALIASES = {
+    'exhibition design': 'exhibition-design', 'sergi tasarımı': 'exhibition-design', 'sergi tasarimi': 'exhibition-design', 'ausstellungsgestaltung': 'exhibition-design', 'design': 'exhibition-design',
+    'artist collaborations': 'artist-collaborations', 'artist collaboration': 'artist-collaborations', 'sanatçı işbirliği': 'artist-collaborations', 'sanatci isbirligi': 'artist-collaborations', 'künstlerische zusammenarbeit': 'artist-collaborations', 'artist': 'artist-collaborations',
+    'production support': 'production', 'prodüksiyon': 'production', 'produksiyon': 'production', 'produktion': 'production',
+    'spatial research': 'research', 'araştırma': 'research', 'arastirma': 'research', 'räumliche forschung': 'research', 'spatial concept': 'research',
+    'küratörlük': 'curation', 'kuratorluk': 'curation', 'kuratierung': 'curation', 'curator': 'curation',
 }
 
 # what may stand left of the colon in sergi.txt → field
@@ -29,7 +29,7 @@ KEYS = {
     'mekân': 'venue', 'mekan': 'venue', 'venue': 'venue', 'ort': 'venue',
     'yıl': 'year', 'yil': 'year', 'year': 'year', 'jahr': 'year',
     'rol': 'role', 'role': 'role', 'rolle': 'role',
-    'hat': 'thread', 'thread': 'thread', 'linie': 'thread',
+    'kategori': 'category', 'category': 'category', 'kategorie': 'category', 'hat': 'category',
     'ana sayfa': 'home', 'anasayfa': 'home', 'home': 'home',
     'özet': 'summary', 'ozet': 'summary', 'summary': 'summary',
     'küratör': 'curator', 'kurator': 'curator', 'curator': 'curator', 'kuratiert von': 'curator',
@@ -45,7 +45,7 @@ SECTIONS = {
     'açıklama': 'en', 'aciklama': 'en', 'metin': 'en', 'description': 'en', 'english': 'en', 'ingilizce': 'en', 'i̇ngilizce': 'en',
     'almanca': 'de', 'deutsch': 'de', 'german': 'de', 'beschreibung': 'de',
 }
-FIELDS = ['title', 'venue', 'year', 'role', 'thread', 'home', 'summary', 'curator', 'client', 'team', 'photo', 'dates', 'current', 'captions', 'description', 'role_de', 'summary_de', 'description_de']
+FIELDS = ['title', 'venue', 'year', 'role', 'category', 'home', 'summary', 'curator', 'client', 'team', 'photo', 'dates', 'current', 'captions', 'description', 'role_de', 'summary_de', 'description_de']
 
 TR = str.maketrans('çğıöşüÇĞİÖŞÜåÅäÄéÉèÈüÜñÑ', 'cgiosucgiosuaAaAeEeEuUnN')
 
@@ -104,9 +104,9 @@ def parse_info(text: str) -> dict:
                     info[k + '_de'] = value
                 elif k in ('home', 'current'):
                     info[k] = value.lower() in ('evet', 'x', 'yes', 'ja', 'true', '1')
-                elif k == 'thread':
+                elif k == 'category':
                     v = value.strip().lower()
-                    info['thread'] = THREAD_ALIASES.get(v, v)
+                    info['category'] = CATEGORY_ALIASES.get(v, v)
                 else:
                     info[k] = value
                 continue
@@ -127,7 +127,7 @@ def render_info(info: dict) -> str:
         f'Mekân: {info.get("venue", "")}',
         f'Yıl: {info.get("year", "")}',
         f'Rol: {info.get("role", "")}',
-        f'Hat: {info.get("thread", "")}',
+        f'Kategori: {info.get("category", "")}',
         f'Ana sayfa: {"evet" if info.get("home") else "hayır"}',
         f'Şimdi: {"evet" if info.get("current") else "hayır"}',
         f'Tarihler: {info.get("dates", "")}',

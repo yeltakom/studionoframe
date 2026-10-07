@@ -4,7 +4,7 @@ venue: "Türkiye Pavilion, 60th Venice Biennale"
 year: "2024"
 role: "Exhibition Design Consultant & Installation Supervisor"
 order: 5
-thread: "monographs"
+category: "production"
 home: false
 current: false
 dates: ""

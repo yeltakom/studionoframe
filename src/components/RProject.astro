@@ -1,17 +1,17 @@
 ---
-/* A project, read like an archive entry: number and thread, title, the room,
-   then the text beside the facts, the plates with their captions, the other
-   works of the thread, and the way on. */
+/* A project, read like an archive entry: number and category, title, the
+   room, then the text beside the facts, the plates with their captions, the
+   other projects of the category, and the way on. */
 import { UI, type Lang } from '../i18n';
 import { srcset, SIZES } from '../lib/img';
 import IndexTable from './IndexTable.astro';
-interface Props { p: any; prev: any; next: any; related: any[]; root: string; threadHref: string; lang?: Lang }
-const { p, prev, next, related = [], root, threadHref, lang = 'en' } = Astro.props;
+interface Props { p: any; prev: any; next: any; related: any[]; root: string; catHref: string; lang?: Lang }
+const { p, prev, next, related = [], root, catHref, lang = 'en' } = Astro.props;
 const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const d = p.data;
 const [lead, ...rest] = d.images as string[];
-const threadTitle = lang === 'de' ? p.thread.de : p.thread.title;
+const catName = lang === 'de' ? p.cat.de : p.cat.title;
 const capOf = (src: string) => (d.captions as { image: string; text: string; credit: string }[]).find((c) => c.image === src || src.endsWith(c.image) || c.image.endsWith(src.split('/').pop() ?? '#'));
 const caption = (src: string, n: number) => {
   const c = capOf(src);
@@ -30,7 +30,7 @@ const facts: [string, string | undefined][] = [
 ];
 ---
 <header class="pj-head">
-  <span class="no">№ {p.no} · <a href={threadHref}>{threadTitle}</a></span>
+  <span class="no">№ {p.no} · <a href={catHref}>{catName}</a></span>
   <h1>{d.title}</h1>
 </header>
 
@@ -47,7 +47,7 @@ const facts: [string, string | undefined][] = [
   <div class="pj-text"><div class="prose"><slot /></div></div>
   <dl class="pj-facts">
     {facts.filter(([, v]) => v).map(([k, v]) => <div><dt class="label">{k}</dt><dd>{v}</dd></div>)}
-    <div><dt class="label">{t.facts.no}</dt><dd>№ {p.no} · <a href={threadHref}>{threadTitle}</a></dd></div>
+    <div><dt class="label">{t.facts.no}</dt><dd>№ {p.no} · <a href={catHref}>{catName}</a></dd></div>
   </dl>
 </div>
 
@@ -64,7 +64,7 @@ const facts: [string, string | undefined][] = [
 
 {related.length > 0 && (
   <section class="pj-related">
-    <h2 class="label">{t.related} <a href={threadHref}>{threadTitle}</a></h2>
+    <h2 class="label">{t.related} <a href={catHref}>{catName}</a></h2>
     <IndexTable works={related} lang={lang} root={root} peek={false} head={false} />
   </section>
 )}

@@ -1,38 +1,36 @@
 ---
-/* The index: № · Exhibition · Venue · Year, grouped by thread — each thread
-   a heading with its line, then its works. Beside it, the room of the line
+/* The index: № · Project · Venue · Year, grouped by category — each category
+   a heading with its line, then its projects. Beside it, the room of the line
    under the cursor. The same table everywhere it appears. */
 import { UI, type Lang } from '../i18n';
-import { THREADS, type Threaded } from '../lib/threads';
+import { CATEGORIES, catTitle, catLine, type Entry } from '../lib/categories';
 import { srcset, SIZES } from '../lib/img';
-interface Props { works: Threaded[]; lang?: Lang; root: string; home?: string; peek?: boolean; head?: boolean; grouped?: boolean }
+interface Props { works: Entry[]; lang?: Lang; root: string; home?: string; peek?: boolean; head?: boolean; grouped?: boolean }
 const { works, lang = 'en', root, home = '', peek = true, head = true, grouped = false } = Astro.props;
 const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
-const tt = (x: (typeof THREADS)[number]) => (lang === 'de' ? x.de : x.title);
-const tl = (x: (typeof THREADS)[number]) => (lang === 'de' ? x.lineDe : x.line);
 const groups = grouped
-  ? THREADS.map((x, i) => ({ x, i, rows: works.filter((w) => w.thread.key === x.key) })).filter((g) => g.rows.length)
+  ? CATEGORIES.map((x, i) => ({ x, i, rows: works.filter((w) => w.cat.key === x.key) })).filter((g) => g.rows.length)
   : [{ x: null, i: -1, rows: works }];
-/* the room shown before anything is touched: the first work marked for the home page */
-const first = works.find((w) => w.data.home) ?? works[0];
+/* the room shown before anything is touched: the newest project marked for the home page */
+const first = works.filter((w) => w.data.home).sort((a, b) => b.year - a.year)[0] ?? works[0];
 ---
 <div class={`catalogue${peek ? '' : ' no-peek'}`}>
   <div class="list">
     <ol class="cat">
       {head && (
         <li class="h">
-          <span class="label">{t.columns.no}</span><span class="label">{t.columns.exhibition}</span><span class="label">{t.columns.venue}</span><span class="label" style="text-align:right">{t.columns.year}</span>
+          <span class="label">{t.columns.no}</span><span class="label">{t.columns.project}</span><span class="label">{t.columns.venue}</span><span class="label" style="text-align:right">{t.columns.year}</span>
         </li>
       )}
       {groups.map(({ x, i, rows }) => (
         <>
           {x && (
             <li class="group">
-              <a href={`${home}/threads/${x.key}`}>
+              <a href={`${home}/category/${x.key}`}>
                 <span class="no">{i + 1}</span>
-                <span class="ttl">{tt(x)}</span>
-                <span class="line">{tl(x)}</span>
+                <span class="ttl">{catTitle(x, lang)}</span>
+                <span class="line">{catLine(x, lang)}</span>
               </a>
             </li>
           )}

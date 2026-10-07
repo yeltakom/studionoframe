@@ -1,0 +1,38 @@
+---
+import Base from '../../layouts/Base.astro';
+import Chrome from '../../components/Chrome.astro';
+import SiteFoot from '../../components/SiteFoot.astro';
+import IndexTable from '../../components/IndexTable.astro';
+import { getCatalogue, CATEGORIES, catTitle, catLine } from '../../lib/categories';
+import { UI } from '../../i18n';
+
+export async function getStaticPaths() {
+  return CATEGORIES.map((x) => ({ params: { category: x.key }, props: { x } }));
+}
+const lang = 'en' as const;
+const t = UI[lang];
+const { x } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const home = base;
+const works = (await getCatalogue(lang)).filter((w) => w.cat.key === x.key);
+---
+
+<Base lang={lang} title={catTitle(x, lang)} description={catLine(x, lang)} image={`${base}${works[0]?.data.cover ?? '/images/og/default.jpg'}`}>
+  <Chrome lang={lang} here="index" />
+  <div class="below"></div>
+
+  <header class="head">
+    <a class="label" href={`${home}/`}>{t.index.label}</a>
+    <h1>{catTitle(x, lang)}</h1>
+    <p>{catLine(x, lang)}</p>
+  </header>
+
+  <IndexTable works={works} lang={lang} root={`${home}/projects`} />
+
+  <p class="others">
+    <span class="label">{t.categories}</span>
+    {CATEGORIES.filter((o) => o.key !== x.key).map((o) => <a href={`${home}/category/${o.key}`}>{catTitle(o, lang)}</a>)}
+  </p>
+
+  <SiteFoot lang={lang} />
+</Base>

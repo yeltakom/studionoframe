@@ -4,7 +4,7 @@ venue: "Pavilion of Turkey, 16th Venice Architecture Biennale"
 year: "2018"
 role: "Assoziierter Kurator"
 order: 16
-thread: "commons"
+category: "curation"
 home: false
 current: false
 dates: ""

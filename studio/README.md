@@ -36,7 +36,7 @@ Başlık: Tirailleurs: Trials and Tribulations
 Mekân: HKW, Berlin
 Yıl: 2026
 Rol: Exhibition Architecture
-Hat: archives
+Kategori: exhibition-design
 Ana sayfa: evet
 Özet: Tek cümle. Google'da ve link paylaşımında görünür. Boşsa metnin ilk cümlesi kullanılır.
 
@@ -57,7 +57,7 @@ Almanca metin. Boş bırakırsan o sergi Almanca sitede İngilizce metinle gör�
 | `Mekân` | `Pera Museum, Istanbul` |
 | `Yıl` | `2025` ya da `2018–2019`. Sıralama bu yıla göre. |
 | `Rol` | `Exhibition Design & Installation Management` |
-| `Hat` | Araştırma hattı — beş taneden biri: **displacement** (yerinden edilme) · **archives** (direniş arşivleri) · **monographs** (monografiler) · **collections** (koleksiyonlar) · **commons** (müşterekler). Katalog numarası buradan çıkar: 2.3 = archives hattının 3. işi. Türkçesini yazsan da anlar. |
+| `Kategori` | İşin türü — beşinden biri: **exhibition-design** (sergi tasarımı) · **artist-collaborations** (sanatçı işbirliği) · **production** (prodüksiyon) · **research** (mekânsal araştırma) · **curation** (küratörlük). Katalog numarası buradan çıkar: 2.3 = üçüncü sanatçı işbirliği. Türkçesini yazsan da anlar. |
 | `Ana sayfa` | `evet` → bu serginin kapağı ana sayfadaki büyük fotoğraflarda döner. |
 | `Özet` | İsteğe bağlı. |
 
@@ -111,7 +111,7 @@ adres kendiliğinden `a-z` ve tire olur.
 Yayınlama bir sorun görürse durur ve nedenini yazar — yarım iş yayınlanmaz:
 
 - **"sergi.txt içinde eksik: venue"** → o satırı doldur.
-- **"Hat tanınmadı"** → beş addan birini yaz.
+- **"Kategori tanınmadı"** → beş addan birini yaz.
 - **"hiç fotoğraf yok"** → klasöre fotoğraf koy.
 - **"Değişen bir şey yok"** → zaten güncel.
 

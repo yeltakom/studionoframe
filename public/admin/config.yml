@@ -33,25 +33,25 @@ collections:
     slug: '{{slug}}'
     media_folder: '/public/images/projects/{{slug}}'
     public_folder: '/images/projects/{{slug}}'
-    sortable_fields: [year, title, thread]
+    sortable_fields: [year, title, category]
     summary: '{{title}} — {{venue}}, {{year}}'
     view_groups:
-      - { label: Thread, field: thread }
+      - { label: Category, field: category }
     fields:
       - { label: Title, name: title, widget: string }
       - { label: Venue, name: venue, widget: string, hint: 'e.g. Pera Museum, Istanbul' }
-      - { label: Year, name: year, widget: string, hint: '2025, or 2018–2019 for a run. Ordering within a thread follows this.' }
+      - { label: Year, name: year, widget: string, hint: '2025, or 2018–2019 for a run. Ordering within a category follows this.' }
       - { label: Role, name: role, widget: string, hint: 'e.g. Exhibition Architecture' }
-      - label: Thread
-        name: thread
+      - label: Category
+        name: category
         widget: select
-        hint: 'The research thread. The catalogue number (2.3) comes from this.'
+        hint: 'What kind of work it was. The catalogue number (2.3) comes from this.'
         options:
-          - { label: '1 Displacement', value: displacement }
-          - { label: '2 Archives of resistance', value: archives }
-          - { label: '3 Monographs', value: monographs }
-          - { label: '4 Collections', value: collections }
-          - { label: '5 Commons', value: commons }
+          - { label: '1 Exhibition Design', value: exhibition-design }
+          - { label: '2 Artist Collaborations', value: artist-collaborations }
+          - { label: '3 Production Support', value: production }
+          - { label: '4 Spatial Research', value: research }
+          - { label: '5 Curation', value: curation }
       - { label: Show on home page, name: home, widget: boolean, default: false, hint: 'Its cover opens the home page and joins the rotation' }
       - label: Photographs
         name: images
@@ -97,15 +97,15 @@ collections:
       - { label: Ort, name: venue, widget: string }
       - { label: Jahr, name: year, widget: string }
       - { label: Rolle, name: role, widget: string, hint: 'e.g. Ausstellungsarchitektur' }
-      - label: Linie
-        name: thread
+      - label: Kategorie
+        name: category
         widget: select
         options:
-          - { label: '1 Vertreibung', value: displacement }
-          - { label: '2 Archive des Widerstands', value: archives }
-          - { label: '3 Monografien', value: monographs }
-          - { label: '4 Sammlungen', value: collections }
-          - { label: '5 Gemeingüter', value: commons }
+          - { label: '1 Ausstellungsgestaltung', value: exhibition-design }
+          - { label: '2 Künstlerische Zusammenarbeit', value: artist-collaborations }
+          - { label: '3 Produktion', value: production }
+          - { label: '4 Räumliche Forschung', value: research }
+          - { label: '5 Kuratierung', value: curation }
       - { label: Auf der Startseite, name: home, widget: boolean, default: false }
       - { label: Fotos, name: images, widget: image, multiple: true, hint: 'Same photographs as the English entry' }
       - { label: Kurzfassung, name: summary, widget: text, required: false }

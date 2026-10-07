@@ -2,7 +2,7 @@ Başlık: Åsa Jungnelius: A Verse, Written with Earth, Fire, Water, and Air
 Mekân: Pera Museum, Istanbul
 Yıl: 2025
 Rol: Exhibition Design & Installation Management
-Hat: monographs
+Kategori: exhibition-design
 Ana sayfa: hayır
 Şimdi: hayır
 Tarihler: 

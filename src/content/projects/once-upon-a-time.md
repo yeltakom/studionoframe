@@ -4,7 +4,7 @@ venue: "Pavilion of Turkey, 59th Venice Biennale"
 year: "2022"
 role: "Exhibition Designer"
 order: 11
-thread: "monographs"
+category: "exhibition-design"
 home: false
 current: false
 dates: ""

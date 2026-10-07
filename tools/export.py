@@ -10,17 +10,6 @@ from pathlib import Path
 sys.path.insert(0, str(Path(__file__).parent))
 from lib import CONTENT_DIR, CONTENT_DE_DIR, STUDIO_DIR, INFO_NAME, render_info, empty_info
 
-# where the first nineteen belong; a project's own `thread:` line wins
-LEGACY_THREAD = {
-    'arazi-x-topological-istanbul': 'displacement', 'topological-atlas-berlin': 'displacement', 'silent-university-istanbul': 'displacement',
-    'occupy-gezi-architecture': 'archives', 'disobedience-archive': 'archives', 'tirailleurs': 'archives',
-    'once-upon-a-time': 'monographs', 'fusun-onur-ludwig': 'monographs', 'marcel-dzama-istanbul': 'monographs',
-    'vera-molnar-tribute': 'monographs', 'gulsun-karamustafa': 'monographs', 'a-verse': 'monographs',
-    'gelecek-hatiralari': 'collections', 'feelings-in-common': 'collections', 'vera-molnar': 'collections',
-    'secret-ingredient': 'commons', 'vardiya': 'commons', 'istanbul-modern-culture': 'commons', 'tomas-saraceno-aerocene': 'commons',
-}
-LEGACY_HOME = {'tirailleurs', 'topological-atlas-berlin', 'fusun-onur-ludwig', 'gelecek-hatiralari', 'tomas-saraceno-aerocene'}
-
 
 def field(front: str, name: str) -> str:
     m = re.search(rf'^{name}:\s*(.*)$', front, re.M)
@@ -43,8 +32,8 @@ for path in sorted(CONTENT_DIR.glob('*.md')):
                 role=field(front, 'role'), summary=field(front, 'summary'), description=body,
                 curator=field(front, 'curator'), client=field(front, 'client'), team=field(front, 'team'),
                 photo=field(front, 'photo'), dates=field(front, 'dates'), current=(field(front, 'current') == 'true'),
-                thread=field(front, 'thread') or LEGACY_THREAD.get(path.stem, ''),
-                home=(field(front, 'home') == 'true') or path.stem in LEGACY_HOME)
+                category=field(front, 'category'),
+                home=(field(front, 'home') == 'true'))
     images = re.findall(r'^\s+-\s+"([^"]+)"$', front, re.M)
     for m in re.finditer(r'^\s+-\s+\{\s*image:\s*"([^"]*)",\s*text:\s*"((?:[^"\\]|\\.)*)",\s*credit:\s*"((?:[^"\\]|\\.)*)"\s*\}', front, re.M):
         if m.group(1) in images:

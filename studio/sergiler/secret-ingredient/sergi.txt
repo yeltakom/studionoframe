@@ -2,7 +2,7 @@ Başlık: Secret Ingredient
 Mekân: 3rd Chicago Architecture Biennial
 Yıl: 2019
 Rol: With Architecture for All (Herkes İçin Mimarlık)
-Hat: commons
+Kategori: research
 Ana sayfa: hayır
 Şimdi: hayır
 Tarihler: 

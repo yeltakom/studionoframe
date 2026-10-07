@@ -4,7 +4,7 @@ venue: "3rd Chicago Architecture Biennial"
 year: "2019"
 role: "With Architecture for All (Herkes İçin Mimarlık)"
 order: 14
-thread: "commons"
+category: "research"
 home: false
 current: false
 dates: ""

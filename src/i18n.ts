@@ -1,6 +1,5 @@
 /** Everything the interface says, in both languages — one word for one thing.
- *  The list of works is the Index. A work is an Exhibition. A group is a
- *  Thread. Facts are nouns. Exhibition titles, venues and years are proper
+ *  The list is the Index. An entry is a Project. A group is a Category. Facts are nouns. Exhibition titles, venues and years are proper
  *  names and stay as they are. */
 
 export const LANGS = ['en', 'de'] as const;
@@ -16,13 +15,11 @@ export const UI = {
     index: {
       label: 'Index',
       title: 'Exhibitions for museums, biennials and artists.',
-      line: (n: number, from: number, to: number) => `${n} works, ${from}–${to}, in five research threads.`,
+      line: (n: number, from: number, to: number) => `${n} projects, ${from}–${to}.`,
     },
-    threads: 'Threads',
-    all: 'All',
-    threadOf: (i: number, n: number) => `Thread ${i} of ${n}`,
-    columns: { no: '№', exhibition: 'Exhibition', venue: 'Venue', thread: 'Thread', year: 'Year' },
-    facts: { venue: 'Venue', dates: 'Dates', year: 'Year', role: 'Role', curator: 'Curator', client: 'Commissioner', team: 'Team', photo: 'Photography', thread: 'Thread', no: 'Catalogue' },
+    categories: 'Categories',
+    columns: { no: '№', project: 'Project', venue: 'Venue', year: 'Year' },
+    facts: { venue: 'Venue', dates: 'Dates', year: 'Year', role: 'Role', curator: 'Curator', client: 'Commissioner', team: 'Team', photo: 'Photography', category: 'Category', no: 'Catalogue' },
     view: 'Installation view',
     related: 'Also in',
     prev: 'Previous',
@@ -45,13 +42,11 @@ export const UI = {
     index: {
       label: 'Index',
       title: 'Ausstellungen für Museen, Biennalen und Künstler:innen.',
-      line: (n: number, from: number, to: number) => `${n} Arbeiten, ${from}–${to}, in fünf Forschungslinien.`,
+      line: (n: number, from: number, to: number) => `${n} Projekte, ${from}–${to}.`,
     },
-    threads: 'Linien',
-    all: 'Alle',
-    threadOf: (i: number, n: number) => `Linie ${i} von ${n}`,
-    columns: { no: '№', exhibition: 'Ausstellung', venue: 'Ort', thread: 'Linie', year: 'Jahr' },
-    facts: { venue: 'Ort', dates: 'Laufzeit', year: 'Jahr', role: 'Rolle', curator: 'Kuration', client: 'Auftrag', team: 'Team', photo: 'Fotografie', thread: 'Linie', no: 'Katalog' },
+    categories: 'Kategorien',
+    columns: { no: '№', project: 'Projekt', venue: 'Ort', year: 'Jahr' },
+    facts: { venue: 'Ort', dates: 'Laufzeit', year: 'Jahr', role: 'Rolle', curator: 'Kuration', client: 'Auftrag', team: 'Team', photo: 'Fotografie', category: 'Kategorie', no: 'Katalog' },
     view: 'Ausstellungsansicht',
     related: 'Ebenfalls in',
     prev: 'Zurück',

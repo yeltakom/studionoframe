@@ -4,7 +4,7 @@ venue: "TOP e.V., Berlin"
 year: "2022"
 role: "Ausstellungsgestaltung & Recherche"
 order: 13
-thread: "displacement"
+category: "research"
 home: true
 current: false
 dates: ""

@@ -4,7 +4,7 @@ venue: "Studio Tomás Saraceno — Art Basel Miami, Palais de Tokyo, Tanya Bonak
 year: "2018–2019"
 role: "Project Leader, Architect, Designer & Visual Researcher"
 order: 15
-thread: "commons"
+category: "artist-collaborations"
 home: true
 current: false
 dates: ""

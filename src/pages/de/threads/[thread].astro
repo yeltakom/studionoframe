@@ -1,43 +1,6 @@
 ---
-import Base from '../../../layouts/Base.astro';
-import Chrome from '../../../components/Chrome.astro';
-import SiteFoot from '../../../components/SiteFoot.astro';
-import IndexTable from '../../../components/IndexTable.astro';
-import { getThreaded, THREADS } from '../../../lib/threads';
-import { UI } from '../../../i18n';
-
-export async function getStaticPaths() {
-  return THREADS.map((x, i) => ({ params: { thread: x.key }, props: { x, i } }));
-}
-const lang = 'de' as const;
-const t = UI[lang];
-const { x, i } = Astro.props;
+/* old address — the index lives at the root now */
+export function getStaticPaths() { return ['displacement', 'archives', 'monographs', 'collections', 'commons'].map((k) => ({ params: { thread: k } })); }
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
-const home = `${base}/de`;
-const all = await getThreaded(lang);
-const works = all.filter((w) => w.thread.key === x.key);
-const title = lang === 'de' ? x.de : x.title;
-const line = lang === 'de' ? x.lineDe : x.line;
-const text = lang === 'de' ? x.textDe : x.text;
+return Astro.redirect(`${base}/de/`);
 ---
-
-<Base lang={lang} title={title} description={line} image={`${base}${works[0]?.data.cover ?? '/images/og/default.jpg'}`}>
-  <Chrome lang={lang} here="index" />
-  <div class="below"></div>
-
-  <header class="head">
-    <span class="label">{t.threadOf(i + 1, THREADS.length)}</span>
-    <h1>{title}</h1>
-    <p>{line}</p>
-    <p class="essay">{text}</p>
-  </header>
-
-  <IndexTable works={works} lang={lang} root={`${home}/projects`} />
-
-  <p class="others">
-    <span class="label">{t.threads}</span>
-    {THREADS.filter((o) => o.key !== x.key).map((o) => <a href={`${home}/threads/${o.key}`}>{lang === 'de' ? o.de : o.title}</a>)}
-  </p>
-
-  <SiteFoot lang={lang} />
-</Base>

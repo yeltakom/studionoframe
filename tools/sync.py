@@ -13,7 +13,7 @@ import re, sys, shutil
 from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).parent))
-from lib import (CONTENT_DIR, CONTENT_DE_DIR, IMAGES_DIR, STUDIO_DIR, INFO_NAME, THREADS,
+from lib import (CONTENT_DIR, CONTENT_DE_DIR, IMAGES_DIR, STUDIO_DIR, INFO_NAME, CATEGORIES,
                  parse_info, render_info, slugify, yaml_str, run)
 
 OG_DIR = IMAGES_DIR.parent / 'og'
@@ -100,7 +100,7 @@ def page(info: dict, role: str, summary: str, body: str, web: list[str], order: 
         f'year: {yaml_str(info["year"])}',
         f'role: {yaml_str(role)}',
         f'order: {order}',
-        f'thread: {yaml_str(info["thread"])}',
+        f'category: {yaml_str(info["category"])}',
         f'home: {"true" if info["home"] else "false"}',
         f'current: {"true" if info["current"] else "false"}',
         f'dates: {yaml_str(info["dates"])}',
@@ -147,7 +147,7 @@ def main() -> None:
         info_path = folder / INFO_NAME
         if not info_path.exists():
             info = {'title': folder.name}
-            info_path.write_text(render_info({**{'thread': '', 'home': False}, **info}))
+            info_path.write_text(render_info({**{'category': '', 'home': False}, **info}))
             print(f'  ! {folder.name}: {INFO_NAME} yoktu, boş bir tane açtım — doldurup tekrar yayınla')
             skipped.append(folder.name)
             continue
@@ -157,9 +157,9 @@ def main() -> None:
             print(f'  ! {folder.name}: {INFO_NAME} içinde eksik: {", ".join(missing)} — atlandı')
             skipped.append(folder.name)
             continue
-        if info['thread'] and info['thread'] not in THREADS:
-            print(f'  ! {folder.name}: Hat tanınmadı ("{info["thread"]}") — şunlardan biri olmalı: {", ".join(THREADS)}')
-            info['thread'] = ''
+        if info['category'] not in CATEGORIES:
+            print(f'  ! {folder.name}: Kategori tanınmadı ("{info["category"]}") — şunlardan biri olmalı: {", ".join(CATEGORIES)}')
+            info['category'] = ''
 
         print(f'{slug}')
         images = sync_photos(folder, slug)

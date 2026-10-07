@@ -1,6 +1,6 @@
 ---
-import { THREADS } from '../../../lib/threads';
-export async function getStaticPaths() { return THREADS.map((x) => ({ params: { thread: x.key } })); }
+/* old address — the index lives at the root now */
+export function getStaticPaths() { return ['displacement', 'archives', 'monographs', 'collections', 'commons'].map((k) => ({ params: { thread: k } })); }
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
-return Astro.redirect(`${base}/de/threads/${Astro.params.thread}`);
+return Astro.redirect(`${base}/de/`);
 ---

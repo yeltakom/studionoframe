@@ -2,7 +2,7 @@ Başlık: In Search of Vera Molnár
 Mekân: Pera Museum, Istanbul
 Yıl: 2024
 Rol: Exhibition Design & Installation Management
-Hat: monographs
+Kategori: exhibition-design
 Ana sayfa: hayır
 Şimdi: hayır
 Tarihler: 

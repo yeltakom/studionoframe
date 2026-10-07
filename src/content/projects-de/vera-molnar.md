@@ -4,7 +4,7 @@ venue: "Pera Museum, Istanbul"
 year: "2024"
 role: "Ausstellungsgestaltung & Aufbauleitung"
 order: 6
-thread: "collections"
+category: "exhibition-design"
 home: false
 current: false
 dates: ""

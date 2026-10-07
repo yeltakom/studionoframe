@@ -2,7 +2,7 @@ Başlık: Vardiya / The Shift
 Mekân: Pavilion of Turkey, 16th Venice Architecture Biennale
 Yıl: 2018
 Rol: Associate Curator
-Hat: commons
+Kategori: curation
 Ana sayfa: hayır
 Şimdi: hayır
 Tarihler: 

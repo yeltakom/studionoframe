@@ -4,7 +4,7 @@ venue: "Museum Ludwig, Cologne"
 year: "2023"
 role: "Exhibition Layout & Design Consultancy"
 order: 8
-thread: "monographs"
+category: "artist-collaborations"
 home: true
 current: false
 dates: ""

@@ -4,7 +4,7 @@ venue: "Istanbul Modern"
 year: "2015"
 role: "Curator & Exhibition Designer — KOTUstudio"
 order: 17
-thread: "commons"
+category: "curation"
 home: false
 current: false
 dates: ""

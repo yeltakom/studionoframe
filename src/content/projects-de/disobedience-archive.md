@@ -4,7 +4,7 @@ venue: "SALT Beyoğlu, Istanbul"
 year: "2014"
 role: "Teilnehmer & Ausstellungsgestalter — mit Herkes İçin Mimarlık"
 order: 18
-thread: "archives"
+category: "exhibition-design"
 home: false
 current: false
 dates: ""

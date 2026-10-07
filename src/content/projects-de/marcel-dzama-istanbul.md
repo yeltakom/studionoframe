@@ -4,7 +4,7 @@ venue: "Pera Museum, Istanbul"
 year: "2025"
 role: "Ausstellungsgestaltung & Aufbauleitung"
 order: 4
-thread: "monographs"
+category: "exhibition-design"
 home: false
 current: false
 dates: ""

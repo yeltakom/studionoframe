@@ -4,7 +4,7 @@ venue: "HKW, Berlin"
 year: "2026"
 role: "Ausstellungsarchitektur"
 order: 1
-thread: "archives"
+category: "exhibition-design"
 home: true
 current: false
 dates: ""

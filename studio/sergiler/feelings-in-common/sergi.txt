@@ -2,7 +2,7 @@ Başlık: Feelings in Common
 Mekân: Pera Museum, Istanbul
 Yıl: 2025
 Rol: Exhibition Design & Installation Management
-Hat: collections
+Kategori: exhibition-design
 Ana sayfa: hayır
 Şimdi: hayır
 Tarihler: 

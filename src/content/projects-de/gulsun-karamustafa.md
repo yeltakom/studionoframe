@@ -4,7 +4,7 @@ venue: "Türkiye Pavilion, 60th Venice Biennale"
 year: "2024"
 role: "Beratung Ausstellungsgestaltung & Aufbauleitung"
 order: 5
-thread: "monographs"
+category: "production"
 home: false
 current: false
 dates: ""

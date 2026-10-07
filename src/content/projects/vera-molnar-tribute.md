@@ -4,7 +4,7 @@ venue: "Pera Museum, Istanbul"
 year: "2024"
 role: "Exhibition Design & Installation Management"
 order: 7
-thread: "monographs"
+category: "exhibition-design"
 home: false
 current: false
 dates: ""

@@ -4,7 +4,7 @@ venue: "17th Istanbul Biennial"
 year: "2022"
 role: "Exhibition Coordination, Installation & Production Design"
 order: 12
-thread: "displacement"
+category: "production"
 home: false
 current: false
 dates: ""
