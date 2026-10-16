@@ -5,11 +5,42 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const projects = await getProjects('en');
 const sample = projects[12]; // Vardiya — orta uzunlukta metin, 8 fotoğraf
 
+/* the candidates for the final decision, each shown live in a small frame */
+const board = [
+  { href: '/', name: 'Index', tag: 'Yayında', line: 'Projeler türüne göre gruplu liste; satıra gelince yanda fotoğraf. Proje sayfası künyeli, altyazılı.' },
+  { href: '/designs/akis/', name: 'Akış', tag: '25 Eylül', line: 'Saraceno mantığı: kapak, numara, başlık, künye alt alta; en yeni üstte. "Açılış sayfası güzel" dediğin.' },
+  { href: '/designs/kartothek/', name: 'Kartothek', tag: '11 Ekim', line: 'Arc UI ile: ⌘K arama, çip filtreleri, sıralanan tablo, yanda oda. Archivo + IBM Plex Mono.' },
+  { href: '/designs/kabinett/', name: 'Kabinett', tag: '11 Ekim', line: 'Arc UI ile: koyu zemin, 19 sergi bir deste kart; savurarak geziliyor. Instrument Serif + Inter.' },
+  { href: '/designs/hybrid/', name: 'Afiş + şerit', tag: 'Hybrid', line: 'Tek büyük kare, altında bütün karelerin şeridi; şeritte gezdikçe afiş değişiyor.' },
+  { href: '/designs/liste/', name: 'Liste', tag: 'Checklist', line: 'Sevdiğin tipografik liste, kalıcı numaralar, sağ yarıda büyük imaj.' },
+  { href: '/designs/werkindex/', name: 'Werkindex', tag: 'HdM', line: 'Herzog & de Meuron kütüğü: 001–019, arama, sıralama, tür ve şehir filtresi.' },
+  { href: '/designs/plakat-3/', name: 'Plakat 3', tag: 'Afiş', line: 'Her sergi tam ekran bir afiş; onayladığın proje sayfasının ilk hâli buradan.' },
+];
+
 const themes = [
   { key: 'katalog', name: 'Katalog', pitch: 'Oxblood zemin, altın çizgiler, kağıt dokusu. Bodoni Moda + EB Garamond — bir müze kataloğunun kapağı. Metin sayfasında ilk harf altın drop-cap.', tone: 'Koyu · serif · sakin lüks' },
   { key: 'bauplan', name: 'Bauplan', pitch: 'Prusya mavisi zemin, altında milimetrik çizim ızgarası, camgöbeği çizgiler ve turuncu işaretler. Big Shoulders + Martian Mono. Açılışta başlık soldan sağa çiziliyor.', tone: 'Koyu · teknik · mühendislik' },
   { key: 'saal', name: 'Saal', pitch: 'Beyaz değil: müze duvarının soğuk sıva grisi. Tek doygun kobalt her şeyi işaretliyor. Bricolage Grotesque + Newsreader.', tone: 'Açık · editoryal · kobalt' },
   { key: 'nacht', name: 'Nacht', pitch: 'Siyah zemin, magenta ve limon yeşili, halftone nokta dokusu, üstte kayan şerit. Unbounded + Kode Mono — Berlin afişi. Satıra gelince fotokopi gibi bir kare beliriyor.', tone: 'Siyah · yüksek sesli · afiş' },
+];
+
+/* uiarc.dev (Arc UI) ile kurulan iki deneme. Arc hazır React bileşenleri
+   veriyor — komut paleti, çip filtresi, sıralanabilir tablo, kart destesi,
+   imaj karşılaştırma — ve hepsi kendi hareketiyle geliyor. Bu iki sayfa React
+   adası kullanan tek yer; sitenin kalanı sade Astro. */
+const arc = [
+  {
+    key: 'kartothek',
+    name: 'Kartothek',
+    pitch: 'Kütük bu kez gerçekten çalışıyor: ⌘K (ya da “/”) ile komut paleti açılıp 19 serginin içinde arama yapıyor, çiplerle mekân türüne ve şehre göre süzülüyor, sütun başlıklarından sıralanıyor, satıra gelince sağdaki kare o odaya dönüyor. Sayaç filtre değişince yeni sayıya dönüyor. Proje sayfasında plakalar sürüklenen bir şeritte.',
+    note: 'Açık · arşiv kağıdı · Archivo + IBM Plex Mono. Arc: command palette, chip group, segmented control, sortable table, badge, slot text, dialog, carousel.',
+  },
+  {
+    key: 'kabinett',
+    name: 'Kabinett',
+    pitch: 'Arşiv sana tek tek uzatılıyor: 19 sergi bir deste; kartı sola savurursan sıradaki geliyor, sağa savurursan o odaya giriyorsun. Üstte başlık satır satır açılıyor. Proje sayfasında aynı kurulumun ilk ve son plakası tek çerçevede, aralarındaki sürgüyü çekerek okuyorsun.',
+    note: 'Koyu · fotoğraf önde · Instrument Serif + Inter. Arc: card stack, in-view title, image compare, carousel, segmented control, slot text, badge.',
+  },
 ];
 
 const full = [
@@ -90,17 +121,57 @@ const inners = [
       .go.ghost { background: none; color: #111; border: 1px solid #d7d7d7; }
       .foot { border-top: 1px solid #111; margin-top: 2rem; padding-top: 1.25rem; color: #6f6f6f; max-width: 64ch; }
       @media (max-width: 720px) { .opt { grid-template-columns: 1fr; } }
+          .board { display: grid; grid-template-columns: repeat(auto-fill, minmax(min(100%, 340px), 1fr)); gap: 2rem 1.5rem; margin-top: 1rem; }
+      .card { display: block; color: inherit; text-decoration: none; }
+      .card .shot { position: relative; display: block; aspect-ratio: 16 / 10; overflow: hidden; border: 1px solid #ddd; background: #f4f4f4; }
+      .card iframe { position: absolute; top: 0; left: 0; width: 1440px; height: 900px; border: 0; transform: scale(var(--k, 0.25)); transform-origin: 0 0; pointer-events: none; }
+      .card .meta { display: flex; align-items: baseline; gap: 0.6rem; margin-top: 0.6rem; }
+      .card .meta b { font-size: 1.05rem; }
+      .card .tag { font-size: 0.72rem; letter-spacing: 0.08em; text-transform: uppercase; color: #888; }
+      .card .line { display: block; margin-top: 0.2rem; font-size: 0.86rem; line-height: 1.4; color: #555; }
+      .card:hover .shot { border-color: #111; }
+      .card:hover b { text-decoration: underline; text-underline-offset: 0.15em; }
     </style>
   </head>
   <body>
     <div class="wrap">
       <h1>Tasarım yönleri</h1>
       <p class="lede">
-        Hepsi senin gerçek içeriğinle çalışıyor: 19 sergi, 135 fotoğraf. En üstte
-        dört tam kimlik — her birinin kendi yazı tipi, rengi, dokusu ve açılış
-        animasyonu var, ana sayfası ve proje sayfası birlikte geliyor. Altta
-        önceki yapısal denemeler duruyor. Yayındaki tasarıma hiçbiri dokunmadı.
+        Son karar için: en üstte sekiz aday, her biri canlı, küçük bir çerçevede.
+        Tıklayınca tam sayfa açılıyor. Hepsi aynı gerçek içerikle — 19 proje,
+        135 fotoğraf. Altta bütün eski denemeler arşiv olarak duruyor.
       </p>
+
+      <h2 class="group">Son karar — sekiz aday</h2>
+      <div class="board">
+        {board.map((b) => (
+          <a class="card" href={`${base}${b.href}`}>
+            <span class="shot"><iframe src={`${base}${b.href}`} loading="lazy" tabindex="-1" aria-hidden="true" title={b.name}></iframe></span>
+            <span class="meta"><b>{b.name}</b><span class="tag">{b.tag}</span></span>
+            <span class="line">{b.line}</span>
+          </a>
+        ))}
+      </div>
+      <script is:inline>
+        /* each frame shows the page at 1440 px wide, scaled down to the card */
+        const fit = () => document.querySelectorAll('.board .shot').forEach((s) => s.style.setProperty('--k', s.clientWidth / 1440));
+        fit(); addEventListener('resize', fit);
+      </script>
+
+      <h2 class="group" style="margin-top:4rem">Arşiv — bütün denemeler</h2>
+
+      <h2 class="group">Yeni — Arc UI (uiarc.dev) ile iki deneme</h2>
+      {arc.map((o) => (
+        <div class="opt">
+          <span class="key">{o.name}</span>
+          <div>
+            <h3>{o.name}</h3>
+            <p>{o.pitch}</p>
+            <p class="note">{o.note}</p>
+          </div>
+          <a class="go" href={`${base}/designs/${o.key}/`}>Aç</a>
+        </div>
+      ))}
 
       <h2 class="group">En son — sevdiğin listenin büyümüş hâli</h2>
       <div class="opt">
@@ -182,21 +253,9 @@ const inners = [
         </div>
       ))}
 
-      <h2 class="group">Yayında olan</h2>
-      <div class="opt">
-        <span class="key">Checklist</span>
-        <div>
-          <h3>Checklist</h3>
-          <p>Index: projeler kategorilere göre (Exhibition Design, Artist Collaborations, Production Support, Spatial Research, Curation), yanda satırı takip eden fotoğraf. Proje sayfası: künye, altyazılı plakalar, aynı kategorideki diğer projeler. İki dil.</p>
-          <p class="note">En hızlı ve en kolay taranan.</p>
-        </div>
-        <a class="go ghost" href={`${base}/`}>Aç</a>
-      </div>
-
       <p class="foot">
-        Beğendiğin ana sayfa yönü ile iç sayfa alternatifini söyle — ikisini
-        birleştirip asıl tasarım yapayım, kalanları sileyim. Karıştırmak da
-        serbest: örneğin ana sayfa F, iç sayfa P2 gibi.
+        Kararını adıyla söyle — örneğin “Index” ya da “Akış ana sayfa, Index
+        proje sayfası”. Onu yayına alır, kalanları silerim.
       </p>
     </div>
   </body>

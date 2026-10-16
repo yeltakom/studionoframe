@@ -1,0 +1,50 @@
+---
+import ArcShell from '../../../layouts/ArcShell.astro';
+import { getRegister } from '../../../lib/register';
+import KartothekIndex, { type Card } from '../../../islands/KartothekIndex';
+import '../../../styles/t-kartothek.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const FONTS = 'family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500';
+
+const register = await getRegister();
+const cards: Card[] = register.map((e) => ({
+  nr: e.nr,
+  id: e.id,
+  title: e.data.title,
+  venue: e.data.venue,
+  year: e.year,
+  city: e.city,
+  type: e.type,
+  role: e.data.role,
+  cover: e.data.cover,
+  summary: e.data.summary,
+  shots: e.data.images.length,
+}));
+const plates = cards.reduce((n, c) => n + c.shots, 0);
+const years = [Math.min(...cards.map((c) => c.year)), Math.max(...cards.map((c) => c.year))];
+---
+
+<ArcShell title="Studio No Frame — Kartothek" design="kartothek" theme="light" accent="coral" fonts={FONTS}>
+  <header class="k-head">
+    <div class="k-ident">
+      <h1>Studio <span>No Frame</span></h1>
+      <p>Exhibition architecture, artist collaborations, production and curation. Berlin and Istanbul.</p>
+    </div>
+    <dl class="k-facts">
+      <div><dt>Exhibitions</dt><dd>{cards.length}</dd></div>
+      <div><dt>Plates</dt><dd>{plates}</dd></div>
+      <div><dt>Years</dt><dd>{years[0]}—{years[1]}</dd></div>
+    </dl>
+  </header>
+
+  <main>
+    <KartothekIndex cards={cards} base={base} client:load />
+  </main>
+
+  <footer class="k-foot">
+    <div><b>Studio</b> Led by Yelta Köm, architect and artist.</div>
+    <div><b>Contact</b> <a href="mailto:contact@noframe.studio">contact@noframe.studio</a></div>
+    <div><b>Interface</b> Arc UI — command palette, chip group, segmented control, sortable table, badge, slot text.</div>
+  </footer>
+</ArcShell>

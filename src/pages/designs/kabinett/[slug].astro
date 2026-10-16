@@ -1,0 +1,105 @@
+---
+import { render } from 'astro:content';
+import ArcShell from '../../../layouts/ArcShell.astro';
+import { getRegister } from '../../../lib/register';
+import PlateCarousel, { type Plate } from '../../../islands/PlateCarousel';
+import RoomCompare from '../../../islands/RoomCompare';
+import { InViewTitle } from '../../../components/arc/in-view-title/in-view-title';
+import accents from '../../../data/accents.json';
+import '../../../styles/t-kabinett.css';
+
+export async function getStaticPaths() {
+  const entries = await getRegister();
+  return entries.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: {
+      entry,
+      prev: entries[i - 1] ?? entries[entries.length - 1],
+      next: entries[i + 1] ?? entries[0],
+    },
+  }));
+}
+
+const { entry, prev, next } = Astro.props;
+const { Content } = await render(entry.entry);
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const { title, venue, year, role, images, captions, curator, client, team, photo, dates } = entry.data;
+const FONTS = 'family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@400';
+
+const accent = (accents as Record<string, string>)[entry.id] ?? '#d9a227';
+const caption = new Map<string, { text: string; credit: string }>(
+  (captions ?? []).map((c: any) => [c.image, { text: c.text, credit: c.credit }]),
+);
+const plates: Plate[] = images.map((src: string) => ({
+  src,
+  text: caption.get(src)?.text ?? '',
+  credit: caption.get(src)?.credit ?? photo ?? '',
+}));
+
+/** The first and last plate of the same installation, for the divider. */
+const pair: [string, string] | null = images.length >= 2 ? [images[0], images[images.length - 1]] : null;
+const pairLabels: [string, string] = ['Plate 01', `Plate ${String(images.length).padStart(2, '0')}`];
+
+const facts = [
+  ['Venue', venue],
+  ['Year', dates || year],
+  ['Role', role],
+  ['City', entry.city],
+  ['Room', entry.type],
+  ['Curator', curator],
+  ['Client', client],
+  ['Team', team],
+  ['Photography', photo],
+].filter(([, value]) => Boolean(value));
+---
+
+<ArcShell title={`${title} — Studio No Frame`} design="kabinett" theme="dark" accent="amber" fonts={FONTS}>
+  <div class="b-room" style={`--room:${accent}`}>
+    {images[0] && (
+      <div class="b-opener">
+        <img src={`${base}${images[0]}`} alt={`${title} — ${venue}`} fetchpriority="high" decoding="async" />
+      </div>
+    )}
+
+    <nav class="b-slugbar">
+      <a href={`${base}/designs/kabinett/`}>Kabinett</a>
+      <span class="b-nr">{entry.nr}</span>
+      <span class="b-slugnav">
+        <a href={`${base}/designs/kabinett/${prev.id}`}>← {prev.data.title}</a>
+        <a href={`${base}/designs/kabinett/${next.id}`}>{next.data.title} →</a>
+      </span>
+    </nav>
+
+    <article class="b-article">
+      <header>
+        <InViewTitle as="h1" variant="line" text={title} className="b-roomtitle" client:load />
+        <p class="b-where">{venue} · {dates || year}</p>
+      </header>
+
+      <div class="b-split">
+        <div class="b-text"><Content /></div>
+        <dl class="b-facts-list">
+          {facts.map(([label, value]) => (
+            <div><dt>{label}</dt><dd>{value}</dd></div>
+          ))}
+          <div><dt>Plates</dt><dd>{images.length}</dd></div>
+        </dl>
+      </div>
+
+      {pair && (
+        <section class="b-pair">
+          <h2>Two plates, one room</h2>
+          <RoomCompare base={base} left={pair[0]} right={pair[1]} labels={pairLabels} alt={title} client:visible />
+          <p class="b-pair-note">Drag the divider. Both photographs are of the same installation; neither is a before.</p>
+        </section>
+      )}
+
+      {plates.length > 0 && (
+        <section class="b-all">
+          <h2>All {plates.length} plates</h2>
+          <PlateCarousel plates={plates} base={base} label={`${title} — plates`} client:visible />
+        </section>
+      )}
+    </article>
+  </div>
+</ArcShell>

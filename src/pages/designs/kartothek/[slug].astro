@@ -1,0 +1,98 @@
+---
+import { render } from 'astro:content';
+import ArcShell from '../../../layouts/ArcShell.astro';
+import { getRegister } from '../../../lib/register';
+import PlateCarousel, { type Plate } from '../../../islands/PlateCarousel';
+import '../../../styles/t-kartothek.css';
+
+export async function getStaticPaths() {
+  const entries = await getRegister();
+  return entries.map((entry, i) => ({
+    params: { slug: entry.id },
+    props: {
+      entry,
+      prev: entries[i - 1] ?? entries[entries.length - 1],
+      next: entries[i + 1] ?? entries[0],
+      /** Same room, or the same city: the two cross-references an archive is asked for. */
+      near: entries
+        .filter((o) => o.id !== entry.id && (o.city === entry.city || o.type === entry.type))
+        .slice(0, 4),
+    },
+  }));
+}
+
+const { entry, prev, next, near } = Astro.props;
+const { Content } = await render(entry.entry);
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const { title, venue, year, role, images, captions, curator, client, team, photo, dates } = entry.data;
+const FONTS = 'family=Archivo:wght@400;500;600;700&family=IBM+Plex+Mono:wght@400;500';
+
+const caption = new Map<string, { text: string; credit: string }>(
+  (captions ?? []).map((c: any) => [c.image, { text: c.text, credit: c.credit }]),
+);
+const plates: Plate[] = images.map((src: string) => ({
+  src,
+  text: caption.get(src)?.text ?? '',
+  credit: caption.get(src)?.credit ?? photo ?? '',
+}));
+
+const facts = [
+  ['Venue', venue],
+  ['Year', dates || year],
+  ['Role', role],
+  ['City', entry.city],
+  ['Room', entry.type],
+  ['Curator', curator],
+  ['Client', client],
+  ['Team', team],
+  ['Photography', photo],
+].filter(([, value]) => Boolean(value));
+---
+
+<ArcShell title={`${entry.nr} ${title} — Studio No Frame`} design="kartothek" theme="light" accent="coral" fonts={FONTS}>
+  <nav class="k-slugbar">
+    <a href={`${base}/designs/kartothek/`}>Kartothek</a>
+    <span class="k-nr">{entry.nr}</span>
+    <span class="k-slugnav">
+      <a href={`${base}/designs/kartothek/${prev.id}`}>← {prev.nr}</a>
+      <a href={`${base}/designs/kartothek/${next.id}`}>{next.nr} →</a>
+    </span>
+  </nav>
+
+  <article class="k-sheet">
+    <header>
+      <h1>{title}</h1>
+      <p class="k-venue">{venue} · {dates || year}</p>
+    </header>
+
+    <div class="k-body">
+      <dl class="k-card">
+        {facts.map(([label, value]) => (
+          <div><dt>{label}</dt><dd>{value}</dd></div>
+        ))}
+        <div><dt>Plates</dt><dd>{images.length}</dd></div>
+      </dl>
+      <div class="k-text"><Content /></div>
+    </div>
+
+    {plates.length > 0 && <PlateCarousel plates={plates} base={base} label={`${title} — plates`} client:visible />}
+
+    {near.length > 0 && (
+      <section class="k-near">
+        <h2>Nearby in the register</h2>
+        <ul>
+          {near.map((o) => (
+            <li>
+              <a href={`${base}/designs/kartothek/${o.id}`}>
+                <img src={`${base}${o.data.cover}`} alt="" loading="lazy" decoding="async" />
+                <span class="k-nr">{o.nr}</span>
+                <span>{o.data.title}</span>
+                <small>{o.city} · {o.year}</small>
+              </a>
+            </li>
+          ))}
+        </ul>
+      </section>
+    )}
+  </article>
+</ArcShell>

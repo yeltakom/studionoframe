@@ -1,0 +1,54 @@
+---
+/* Akış — the home page as it was on 25 September ("açılış sayfası güzel"):
+   one project after another, newest first, the cover held large, then its
+   number and category, the title, the facts. Nothing moves. Kept here as a
+   preview beside the live Index. */
+import Base from '../../../layouts/Base.astro';
+import Chrome from '../../../components/Chrome.astro';
+import SiteFoot from '../../../components/SiteFoot.astro';
+import { getCatalogue } from '../../../lib/categories';
+import { srcset, SIZES } from '../../../lib/img';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const works = (await getCatalogue('en')).sort((a, b) => b.year - a.year || a.no.localeCompare(b.no, undefined, { numeric: true }));
+---
+
+<Base lang="en" title="Akış" image={`${base}/images/og/default.jpg`}>
+  <Chrome lang="en" here="index" />
+  <div class="below"></div>
+
+  <header class="head">
+    <h1>Exhibitions as research.</h1>
+    <p>Studio No Frame builds exhibitions for museums, biennials and artists. Each one starts as a question and ends as a room people walk through.</p>
+  </header>
+
+  <section class="feed">
+    {works.map((w, i) => (
+      <article class="feed-item">
+        <a class="pic" href={`${base}/projects/${w.id}`} tabindex="-1" aria-hidden="true">
+          <img src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes={SIZES.full} alt="" loading={i < 2 ? 'eager' : 'lazy'} decoding="async" />
+        </a>
+        <div class="text">
+          <span class="label">№ {w.no} · {w.cat.title}</span>
+          <h2><a href={`${base}/projects/${w.id}`}>{w.data.title}</a></h2>
+          <p class="meta">{w.data.venue}, {w.data.year} · {w.data.role}</p>
+        </div>
+      </article>
+    ))}
+  </section>
+
+  <SiteFoot lang="en" />
+</Base>
+
+<style>
+  .feed { padding: 0 var(--gutter) clamp(2rem, 5vw, 3.5rem); }
+  .feed-item { padding-bottom: clamp(2.5rem, 7vh, 5rem); }
+  .feed-item .pic { display: block; background: var(--wash); }
+  .feed-item img { width: 100%; aspect-ratio: 3 / 2; object-fit: cover; }
+  .feed-item .text { padding-top: 0.85rem; max-width: 60ch; }
+  .feed-item .label { display: block; margin-bottom: 0.35rem; }
+  .feed-item h2 { margin: 0; font-size: clamp(1.25rem, 2.4vw, 1.9rem); font-weight: 700; line-height: 1.08; letter-spacing: -0.03em; text-wrap: balance; }
+  .feed-item h2 a:hover { text-decoration: underline; text-underline-offset: 0.14em; }
+  .feed-item .meta { margin: 0.35rem 0 0; font-size: 0.86rem; color: var(--grey); }
+  @media (max-width: 760px) { .feed-item img { aspect-ratio: 4 / 3; } }
+</style>

@@ -1,0 +1,453 @@
+/* Kabinett — the archive handed over one room at a time.
+ *
+ * Dark, photograph-led, built on Arc UI's dark tokens (uiarc.dev). Arc's own
+ * components carry their CSS modules; this sheet sets the typeface, the ground
+ * and the furniture, and overrides nothing inside a component. */
+
+:root[data-theme='dark'] {
+  --font-geist: 'Inter';
+  --font-inter: 'Inter';
+  --serif: 'Instrument Serif', Georgia, serif;
+  --mono: 'IBM Plex Mono', ui-monospace, monospace;
+  /* Not black: the grey a gallery goes to when the lights drop. */
+  --background: oklch(16.5% 0.004 260);
+  --surface: oklch(20% 0.005 260);
+  --surface-raised: oklch(23% 0.006 260);
+  --surface-muted: oklch(25% 0.006 260);
+  --border: oklch(28% 0.006 260);
+  --border-subtle: oklch(23% 0.005 260);
+  --border-strong: oklch(40% 0.008 260);
+}
+
+*, *::before, *::after { box-sizing: border-box; }
+
+body.arc-kabinett {
+  margin: 0;
+  background: var(--background);
+  color: var(--foreground);
+  font-family: 'Inter', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  font-size: 0.95rem;
+  line-height: 1.55;
+  letter-spacing: -0.008em;
+  -webkit-font-smoothing: antialiased;
+}
+
+.arc-kabinett .escape {
+  position: fixed;
+  right: 1rem; bottom: 1rem;
+  z-index: 60;
+  background: var(--foreground);
+  color: var(--background);
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  text-decoration: none;
+  padding: 0.45rem 0.7rem;
+  border-radius: var(--radius-pill);
+}
+
+.arc-kabinett .b-head,
+.arc-kabinett main,
+.arc-kabinett .b-foot,
+.arc-kabinett .b-slugbar,
+.arc-kabinett .b-article {
+  max-width: 82rem;
+  margin: 0 auto;
+  padding-inline: clamp(1.1rem, 3vw, 2.5rem);
+}
+
+/* ── the head ─────────────────────────────────────────────────────────── */
+
+/* The deck is the page; the head says who, in one screen, and gets out of
+   the way. Title left, the reading of it right. */
+.b-head { padding-block: clamp(1.5rem, 3vw, 2.25rem) clamp(1.25rem, 3vw, 1.75rem); }
+.b-eyebrow {
+  margin: 0 0 1.1rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.b-headgrid {
+  display: grid;
+  grid-template-columns: minmax(0, 1.15fr) minmax(0, 1fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: end;
+}
+.b-title {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(1.9rem, 3.4vw, 3.1rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.04;
+  max-width: 24ch;
+}
+/* Arc puts the className on InViewTitle's wrapper, not on the heading, so the
+   heading inside still carries the browser's own h1 margin and size. */
+.b-title :is(h1, h2, h3),
+.b-roomtitle :is(h1, h2, h3) {
+  margin: 0;
+  font: inherit;
+  letter-spacing: inherit;
+  line-height: inherit;
+}
+
+.b-lede {
+  margin: 0;
+  max-width: 48ch;
+  font-size: 0.98rem;
+  color: var(--text-secondary);
+}
+.b-facts {
+  display: flex;
+  gap: clamp(1.25rem, 4vw, 2.5rem);
+  margin: clamp(1rem, 2.5vw, 1.75rem) 0 0;
+}
+.b-facts dt {
+  font-family: var(--mono);
+  font-size: 0.62rem;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.b-facts dd {
+  margin: 0.2rem 0 0;
+  font-family: var(--serif);
+  font-size: 1.7rem;
+  line-height: 1;
+}
+
+/* ── the deck ─────────────────────────────────────────────────────────── */
+
+.b-deck-root { padding-bottom: 4rem; }
+.b-deck-bar {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem 2rem;
+  align-items: center;
+  justify-content: space-between;
+  border-top: 1px solid var(--border-strong);
+  padding-top: 1.1rem;
+  margin-bottom: clamp(1.5rem, 4vw, 2.5rem);
+}
+.b-left {
+  display: flex;
+  align-items: baseline;
+  gap: 0.55rem;
+  font-family: var(--mono);
+  font-size: 1.3rem;
+  font-variant-numeric: tabular-nums;
+}
+.b-left span:last-child {
+  font-size: 0.7rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+
+/* The deck on the left, the whole register beside it: the card you are holding
+   and where it sits in nineteen, on one screen. */
+.b-deal {
+  display: grid;
+  grid-template-columns: 21rem minmax(0, 1fr);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  align-items: start;
+}
+
+/* Arc sizes a card from --card-height on the stack root; a photograph needs
+   more room than a triage card, so the deck is dealt as a postcard. */
+.b-stack > div { --card-height: 30rem; }
+
+.b-running {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  counter-reset: none;
+  border-top: 1px solid var(--border-subtle);
+}
+.b-running a {
+  display: grid;
+  grid-template-columns: 3.2rem minmax(0, 1fr) auto;
+  gap: 0.75rem;
+  align-items: baseline;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+  color: inherit;
+  text-decoration: none;
+  transition: color var(--duration-fast) var(--ease-standard);
+}
+.b-run-nr { font-family: var(--mono); font-size: 0.66rem; color: var(--text-muted); }
+.b-run-name {
+  font-family: var(--serif);
+  font-size: 1.1rem;
+  line-height: 1.2;
+  overflow: hidden;
+  text-overflow: ellipsis;
+  white-space: nowrap;
+}
+.b-run-where { font-size: 0.72rem; color: var(--text-muted); white-space: nowrap; }
+
+.b-running li[data-state='seen'] a { color: var(--text-muted); }
+.b-running li[data-state='ahead'] a { color: var(--text-secondary); }
+.b-running li[data-state='now'] a { color: var(--foreground); }
+.b-running li[data-state='now'] .b-run-nr { color: var(--accent); }
+.b-running li[data-state='now'] .b-run-name { font-size: 1.3rem; }
+.b-running a:hover { color: var(--accent); }
+
+.b-card {
+  display: grid;
+  grid-template-rows: auto minmax(0, 1fr);
+  height: 100%;
+  overflow: hidden;
+  border-radius: var(--radius-surface);
+  background: var(--surface);
+}
+.b-card img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--surface-muted);
+  user-select: none;
+}
+.b-card-text {
+  min-height: 0;
+  padding: clamp(0.9rem, 3vw, 1.25rem);
+  display: flex;
+  flex-direction: column;
+}
+.b-card-nr {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  color: var(--accent);
+}
+.b-card h3 {
+  margin: 0.3rem 0 0;
+  font-family: var(--serif);
+  font-size: 1.4rem;
+  font-weight: 400;
+  line-height: 1.1;
+  letter-spacing: -0.015em;
+  display: -webkit-box;
+  -webkit-line-clamp: 2;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.b-card-where { margin: 0.3rem 0 0; font-size: 0.78rem; color: var(--text-secondary); }
+.b-card-sum {
+  margin: 0.55rem 0 0;
+  font-size: 0.8rem;
+  line-height: 1.4;
+  color: var(--text-muted);
+  display: -webkit-box;
+  -webkit-line-clamp: 3;
+  -webkit-box-orient: vertical;
+  overflow: hidden;
+}
+.b-card-tags { display: flex; flex-wrap: wrap; gap: 0.3rem; margin: auto 0 0; padding-top: 0.75rem; }
+
+.b-empty {
+  display: grid;
+  place-items: center;
+  gap: 1rem;
+  text-align: center;
+  padding: clamp(2rem, 6vw, 4rem) 1.5rem;
+}
+.b-empty p { margin: 0; max-width: 34ch; color: var(--text-secondary); }
+.b-empty button {
+  height: var(--control-height-sm);
+  padding: 0 1rem;
+  border: 1px solid var(--border-strong);
+  border-radius: var(--radius-pill);
+  background: transparent;
+  color: var(--foreground);
+  font: inherit;
+  font-size: 0.82rem;
+  cursor: pointer;
+}
+.b-empty button:hover { background: var(--surface-muted); }
+
+/* ── the wall ─────────────────────────────────────────────────────────── */
+
+.b-wall {
+  list-style: none;
+  margin: 0;
+  padding: 0;
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(16rem, 1fr));
+  gap: clamp(0.75rem, 2vw, 1.5rem);
+}
+.b-wall a { display: grid; gap: 0.1rem; color: inherit; text-decoration: none; }
+.b-wall img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 4 / 3;
+  object-fit: cover;
+  background: var(--surface-muted);
+  border-radius: var(--radius-panel);
+  transition: opacity var(--duration-standard) var(--ease-standard);
+  opacity: 0.86;
+}
+.b-wall a:hover img, .b-wall a:focus-visible img { opacity: 1; }
+.b-wall-nr {
+  font-family: var(--mono);
+  font-size: 0.64rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+  padding-top: 0.6rem;
+}
+.b-wall-name { font-family: var(--serif); font-size: 1.15rem; line-height: 1.15; }
+.b-wall-where { font-size: 0.78rem; color: var(--text-muted); }
+
+/* ── project page ─────────────────────────────────────────────────────── */
+
+.b-opener { position: relative; }
+.b-opener img {
+  display: block;
+  width: 100%;
+  height: clamp(18rem, 62vh, 40rem);
+  object-fit: cover;
+  background: var(--surface-muted);
+}
+.b-opener::after {
+  content: '';
+  position: absolute;
+  inset: auto 0 0;
+  height: 45%;
+  background: linear-gradient(to bottom, transparent, var(--background));
+  pointer-events: none;
+}
+
+.b-slugbar {
+  display: flex;
+  align-items: center;
+  gap: 1rem;
+  padding-block: 1rem;
+  font-family: var(--mono);
+  font-size: 0.68rem;
+  letter-spacing: 0.08em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.b-slugbar a { color: inherit; text-decoration: none; }
+.b-slugbar a:hover { color: var(--room, var(--accent)); }
+.b-nr { color: var(--room, var(--accent)); }
+.b-slugnav { margin-left: auto; display: flex; gap: 1.25rem; }
+
+.b-article { padding-bottom: 5rem; }
+.b-roomtitle {
+  margin: 0;
+  font-family: var(--serif);
+  font-size: clamp(2rem, 6vw, 4.2rem);
+  font-weight: 400;
+  letter-spacing: -0.02em;
+  line-height: 1.03;
+  max-width: 28ch;
+}
+.b-where { margin: 0.7rem 0 0; color: var(--text-secondary); }
+
+.b-split {
+  display: grid;
+  grid-template-columns: minmax(0, 1fr) clamp(13rem, 24vw, 18rem);
+  gap: clamp(1.5rem, 5vw, 4rem);
+  padding-block: clamp(1.75rem, 5vw, 3rem);
+}
+.b-text { font-size: 1.08rem; max-width: 60ch; color: var(--text-secondary); }
+.b-text :first-child { margin-top: 0; }
+.b-text em, .b-text i { font-family: var(--serif); font-size: 1.1em; font-style: italic; }
+
+.b-facts-list { margin: 0; font-size: 0.82rem; border-top: 1px solid var(--border); }
+.b-facts-list > div {
+  display: grid;
+  grid-template-columns: 6.5rem minmax(0, 1fr);
+  gap: 0.6rem;
+  padding: 0.5rem 0;
+  border-bottom: 1px solid var(--border-subtle);
+}
+.b-facts-list dt {
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  letter-spacing: 0.1em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+  padding-top: 0.2rem;
+}
+.b-facts-list dd { margin: 0; }
+
+.b-pair, .b-all { padding-top: clamp(1.5rem, 4vw, 2.5rem); }
+.b-pair h2, .b-all h2 {
+  margin: 0 0 1rem;
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  font-weight: 400;
+  letter-spacing: 0.14em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.b-compare { border-radius: var(--radius-panel); overflow: hidden; }
+.b-pair-note { margin: 0.9rem 0 0; max-width: 54ch; font-size: 0.8rem; color: var(--text-muted); }
+
+/* the carousel of plates, dark */
+.plates { padding-block: 0.5rem; }
+.plate { margin: 0; }
+.plate img {
+  display: block;
+  width: 100%;
+  aspect-ratio: 3 / 2;
+  object-fit: cover;
+  background: var(--surface-muted);
+  border-radius: var(--radius-panel);
+  user-select: none;
+}
+.plate-caption {
+  display: grid;
+  gap: 0.15rem;
+  margin: 0.9rem 0 0;
+  max-width: 60ch;
+  font-size: 0.84rem;
+  color: var(--text-secondary);
+}
+.plate-nr {
+  font-family: var(--mono);
+  font-size: 0.66rem;
+  letter-spacing: 0.1em;
+  color: var(--text-muted);
+}
+.plate-caption small { color: var(--text-muted); font-size: 0.74rem; }
+
+/* ── foot ─────────────────────────────────────────────────────────────── */
+
+.b-foot {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(16rem, 1fr));
+  gap: 0.75rem 2rem;
+  border-top: 1px solid var(--border);
+  padding-block: 1.25rem 3rem;
+  font-size: 0.8rem;
+  color: var(--text-secondary);
+}
+.b-foot b {
+  display: block;
+  font-family: var(--mono);
+  font-size: 0.6rem;
+  font-weight: 400;
+  letter-spacing: 0.12em;
+  text-transform: uppercase;
+  color: var(--text-muted);
+}
+.b-foot a { color: inherit; }
+
+@media (max-width: 1100px) {
+  .b-deal { grid-template-columns: minmax(0, 1fr); justify-items: center; }
+  .b-running { width: 100%; }
+}
+
+@media (max-width: 900px) {
+  .b-headgrid { grid-template-columns: minmax(0, 1fr); align-items: start; }
+  .b-split { grid-template-columns: minmax(0, 1fr); }
+  .b-slugnav { gap: 0.75rem; }
+}

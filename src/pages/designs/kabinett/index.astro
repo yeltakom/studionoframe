@@ -1,0 +1,64 @@
+---
+import ArcShell from '../../../layouts/ArcShell.astro';
+import { getRegister } from '../../../lib/register';
+import KabinettDeck, { type Room } from '../../../islands/KabinettDeck';
+import { InViewTitle } from '../../../components/arc/in-view-title/in-view-title';
+import '../../../styles/t-kabinett.css';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const FONTS = 'family=Instrument+Serif:ital@0;1&family=Inter:wght@400;500&family=IBM+Plex+Mono:wght@400';
+
+const register = await getRegister();
+const rooms: Room[] = register.map((e) => ({
+  id: e.id,
+  nr: e.nr,
+  title: e.data.title,
+  venue: e.data.venue,
+  year: e.year,
+  city: e.city,
+  type: e.type,
+  role: e.data.role,
+  summary: e.data.summary,
+  cover: e.data.cover,
+  shots: e.data.images.length,
+}));
+const plates = rooms.reduce((n, r) => n + r.shots, 0);
+const cities = [...new Set(rooms.map((r) => r.city))].filter((c) => c !== '—');
+---
+
+<ArcShell title="Studio No Frame — Kabinett" design="kabinett" theme="dark" accent="amber" fonts={FONTS}>
+  <header class="b-head">
+    <p class="b-eyebrow">Studio No Frame · Berlin and Istanbul</p>
+    <div class="b-headgrid">
+      <InViewTitle
+        as="h1"
+        variant="wipe"
+        text="We build the rooms exhibitions happen in."
+        className="b-title"
+        client:load
+      />
+      <div>
+        <p class="b-lede">
+          Nineteen exhibitions since 2014, with museums, biennials and artists:
+          sightlines, walls, budgets, crews, and the {plates} photographs that
+          stay after everything is taken down again.
+        </p>
+        <dl class="b-facts">
+          <div><dt>Exhibitions</dt><dd>{rooms.length}</dd></div>
+          <div><dt>Photographs</dt><dd>{plates}</dd></div>
+          <div><dt>Cities</dt><dd>{cities.length}</dd></div>
+        </dl>
+      </div>
+    </div>
+  </header>
+
+  <main>
+    <KabinettDeck rooms={rooms} base={base} client:load />
+  </main>
+
+  <footer class="b-foot">
+    <div><b>Studio</b> Led by Yelta Köm, architect and artist.</div>
+    <div><b>Contact</b> <a href="mailto:contact@noframe.studio">contact@noframe.studio</a></div>
+    <div><b>Interface</b> Arc UI — card stack, in-view title, carousel, image compare, segmented control, slot text, badge.</div>
+  </footer>
+</ArcShell>
