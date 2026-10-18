@@ -62,7 +62,8 @@ def make_share_image(cover: Path, dst: Path) -> bool:
 
 def first_sentence(text: str) -> str:
     plain = re.sub(r'\s+', ' ', re.sub(r'<[^>]+>', '', text)).strip()
-    head = re.split(r'(?<=[.!?])\s', plain)[0].strip()
+    # a period after a number is an ordinal ("auf der 59."), not the end of a sentence
+    head = re.split(r'(?<=[^\d\s][.!?])\s', plain)[0].strip()
     return head if head.endswith(('.', '!', '?')) else head + '.'
 
 

@@ -12,7 +12,7 @@ curator: ""
 client: ""
 team: ""
 photo: ""
-summary: "Beitrag zur Ausstellungsgestaltung und räumlichen Disposition des Pavillons der Türkei auf der 60."
+summary: "Beitrag zur Ausstellungsgestaltung und räumlichen Disposition des Pavillons der Türkei auf der 60. Internationalen Kunstausstellung — La Biennale di Venezia, mit der Installation von Gülsün Karamustafa."
 cover: "/images/projects/gulsun-karamustafa/gulsun-karamustafa-01.jpg"
 images:
   - "/images/projects/gulsun-karamustafa/gulsun-karamustafa-01.jpg"

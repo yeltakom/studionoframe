@@ -12,7 +12,7 @@ curator: ""
 client: ""
 team: ""
 photo: ""
-summary: "Koordination, Aufbau und Produktionsdesign für The Silent University Orientation Program, initiiert von Ahmet Öğüt auf der 17."
+summary: "Koordination, Aufbau und Produktionsdesign für The Silent University Orientation Program, initiiert von Ahmet Öğüt auf der 17. Istanbul Biennale."
 cover: "/images/projects/silent-university-istanbul/silent-university-istanbul-01.jpg"
 images:
   - "/images/projects/silent-university-istanbul/silent-university-istanbul-01.jpg"
