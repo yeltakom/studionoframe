@@ -1,0 +1,109 @@
+---
+/* Selected — MYTH structure: one statement, a large photograph that turns,
+   then the selected projects as a grid, filterable by category. The full
+   archive stays in the Index. */
+import Base from '../../../layouts/Base.astro';
+import SelHead from '../../../components/SelHead.astro';
+import SiteFoot from '../../../components/SiteFoot.astro';
+import { getCatalogue, CATEGORIES } from '../../../lib/categories';
+import { srcset, SIZES } from '../../../lib/img';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const works = (await getCatalogue('en')).sort((a, b) => b.year - a.year);
+const slides = works.filter((w) => w.data.home);
+---
+<Base lang="en" title="Selected" image={`${base}/images/og/default.jpg`}>
+  <SelHead here="selected" />
+  <div class="below"></div>
+
+  <header class="head">
+    <h1>Exhibitions as research.</h1>
+    <p>Since 2014, Studio No Frame has designed and built exhibitions for museums, biennials and artists, from Berlin and Istanbul.</p>
+  </header>
+
+  <section class="slider" aria-label="Selected projects">
+    {slides.map((w, i) => (
+      <a href={`${base}/projects/${w.id}`} class={i === 0 ? 'is-on' : ''} tabindex={i === 0 ? 0 : -1}>
+        <img src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes={SIZES.full} alt={`${w.data.title} — ${w.data.venue}`} loading={i === 0 ? 'eager' : 'lazy'} decoding="async" />
+      </a>
+    ))}
+    <p class="dots">{slides.map((_, i) => <button type="button" data-i={i} aria-label={`Photograph ${i + 1}`} aria-pressed={i === 0 ? 'true' : 'false'}></button>)}</p>
+  </section>
+
+  <section class="selected" id="selected">
+    <div class="sel-head">
+      <h2>Selected Projects</h2>
+      <div class="filters" role="group" aria-label="Filter by category">
+        <button type="button" data-f="" aria-pressed="true">All</button>
+        {CATEGORIES.map((c) => <button type="button" data-f={c.key} aria-pressed="false">{c.title}</button>)}
+      </div>
+    </div>
+    <ul class="grid">
+      {works.map((w) => (
+        <li data-c={w.cat.key}>
+          <a href={`${base}/projects/${w.id}`}>
+            <img src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes="(min-width: 1000px) 32vw, (min-width: 600px) 48vw, 100vw" alt="" loading="lazy" decoding="async" />
+            <b>{w.data.title}</b>
+            <span>{w.data.venue} / {w.data.year}</span>
+          </a>
+        </li>
+      ))}
+    </ul>
+    <p class="all"><a href={`${base}/`}>All projects →</a></p>
+  </section>
+
+  <SiteFoot lang="en" />
+</Base>
+
+<script is:inline>
+(() => {
+  const slides = [...document.querySelectorAll('.slider > a')];
+  const dots = [...document.querySelectorAll('.slider .dots button')];
+  let i = 0, timer;
+  const go = (n) => {
+    i = (n + slides.length) % slides.length;
+    slides.forEach((s, k) => { s.classList.toggle('is-on', k === i); s.tabIndex = k === i ? 0 : -1; });
+    dots.forEach((d, k) => d.setAttribute('aria-pressed', String(k === i)));
+  };
+  const auto = () => { clearInterval(timer); if (!matchMedia('(prefers-reduced-motion: reduce)').matches) timer = setInterval(() => !document.hidden && go(i + 1), 4000); };
+  dots.forEach((d) => d.addEventListener('click', () => { go(Number(d.dataset.i)); auto(); }));
+  if (slides.length > 1) auto();
+
+  const items = [...document.querySelectorAll('.grid li')];
+  const btns = [...document.querySelectorAll('.selected .filters button')];
+  btns.forEach((b) => b.addEventListener('click', () => {
+    btns.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
+    items.forEach((li) => { li.hidden = !!b.dataset.f && li.dataset.c !== b.dataset.f; });
+  }));
+})();
+</script>
+
+<style>
+  .slider { position: relative; margin: 0 var(--gutter); aspect-ratio: 16 / 9; background: var(--wash); overflow: hidden; }
+  .slider > a { position: absolute; inset: 0; opacity: 0; transition: opacity 900ms ease; }
+  .slider > a.is-on { opacity: 1; }
+  .slider img { width: 100%; height: 100%; object-fit: cover; }
+  .slider .dots { position: absolute; left: 0; right: 0; bottom: 0.9rem; margin: 0; display: flex; justify-content: center; gap: 0.5rem; }
+  .slider .dots button { width: 7px; height: 7px; padding: 0; border: 0; border-radius: 50%; background: #fff; opacity: 0.5; cursor: pointer; }
+  .slider .dots button[aria-pressed='true'] { opacity: 1; }
+
+  .selected { padding: clamp(3rem, 8vh, 5rem) var(--gutter) clamp(3rem, 7vw, 5rem); }
+  .sel-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.75rem 2rem; padding-bottom: 1rem; }
+  .sel-head h2 { margin: 0; font-size: clamp(1.3rem, 2.4vw, 1.9rem); font-weight: 700; letter-spacing: -0.03em; }
+  .filters { display: flex; flex-wrap: wrap; gap: 0.3rem 1.2rem; font-size: 0.88rem; }
+  .filters button { appearance: none; border: 0; background: none; padding: 0 0 2px; color: var(--grey); cursor: pointer; border-bottom: 1px solid transparent; }
+  .filters button:hover { color: var(--ink); }
+  .filters button[aria-pressed='true'] { color: var(--ink); border-bottom-color: var(--ink); }
+
+  .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.25rem 1.25rem; }
+  .grid li[hidden] { display: none; }
+  .grid a { display: block; }
+  .grid img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--wash); }
+  .grid b { display: block; margin-top: 0.6rem; font-size: 0.98rem; font-weight: 700; letter-spacing: -0.018em; line-height: 1.25; }
+  .grid span { display: block; margin-top: 0.15rem; font-size: 0.82rem; color: var(--grey); }
+  .grid a:hover b { text-decoration: underline; text-underline-offset: 0.15em; }
+  .all { margin: 2.5rem 0 0; font-size: 1rem; }
+  .all a { border-bottom: 1px solid var(--ink); }
+  @media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, 1fr); } }
+  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } .slider { aspect-ratio: 4 / 3; } }
+</style>

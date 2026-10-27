@@ -1,0 +1,18 @@
+---
+/* Header for the MYTH-structured preview: Selected · Index · Profile · Services · Contact. */
+interface Props { here?: 'selected' | 'services' }
+const { here } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const root = `${base}/designs/selected`;
+---
+<header class="rhead">
+  <a class="studio" href={`${root}/`}>Studio No Frame</a>
+  <span class="spacer"></span>
+  <nav aria-label="Site">
+    <a href={`${root}/`} aria-current={here === 'selected' ? 'page' : undefined}>Selected</a>
+    <a href={`${base}/`}>Index</a>
+    <a href={`${base}/about`}>Profile</a>
+    <a href={`${root}/services/`} aria-current={here === 'services' ? 'page' : undefined}>Services</a>
+    <a href={`${base}/contact`}>Contact</a>
+  </nav>
+</header>

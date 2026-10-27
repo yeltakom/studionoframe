@@ -1,0 +1,43 @@
+---
+/* Services — the five categories, each with its line and its projects. */
+import Base from '../../../layouts/Base.astro';
+import SelHead from '../../../components/SelHead.astro';
+import SiteFoot from '../../../components/SiteFoot.astro';
+import { getCatalogue, CATEGORIES } from '../../../lib/categories';
+
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const works = await getCatalogue('en');
+---
+<Base lang="en" title="Services">
+  <SelHead here="services" />
+  <div class="below"></div>
+  <header class="head">
+    <h1>Services</h1>
+    <p>From the first spatial idea to the last screw on site, alone or inside an artist’s team.</p>
+  </header>
+  <ol class="services">
+    {CATEGORIES.map((c, i) => (
+      <li>
+        <span class="no">{i + 1}</span>
+        <div>
+          <h2>{c.title}</h2>
+          <p>{c.line}</p>
+          <ul>{works.filter((w) => w.cat === c).map((w) => <li><a href={`${base}/projects/${w.id}`}>{w.data.title}</a> <span>{w.data.venue}, {w.data.year}</span></li>)}</ul>
+        </div>
+      </li>
+    ))}
+  </ol>
+  <SiteFoot lang="en" />
+</Base>
+<style>
+  .services { list-style: none; margin: 0; padding: 0 var(--gutter) clamp(3rem, 7vw, 5rem); }
+  .services > li { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 0 1.5rem; padding: 1.5rem 0 2rem; border-top: 1px solid var(--ink); }
+  .services .no { font-size: 0.8rem; color: var(--grey); padding-top: 0.4rem; }
+  .services h2 { margin: 0; font-size: clamp(1.3rem, 2.6vw, 2.1rem); font-weight: 700; letter-spacing: -0.032em; }
+  .services p { margin: 0.5rem 0 1rem; max-width: 56ch; color: var(--grey); }
+  .services ul { list-style: none; margin: 0; padding: 0; font-size: 0.9rem; }
+  .services ul li { padding: 0.25rem 0; }
+  .services ul a { border-bottom: 1px solid var(--rule); }
+  .services ul a:hover { border-bottom-color: var(--ink); }
+  .services ul span { color: var(--grey); margin-left: 0.4rem; }
+</style>
