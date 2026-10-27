@@ -5,6 +5,7 @@
 import { UI, type Lang } from '../i18n';
 import { CATEGORIES, catTitle, type Entry } from '../lib/categories';
 import { srcset, SIZES } from '../lib/img';
+import ProjectGrid from './ProjectGrid.astro';
 
 interface Props { works: Entry[]; lang?: Lang }
 const { lang = 'en' } = Astro.props;
@@ -42,17 +43,7 @@ const now = works.filter((w) => w.data.current);
         {CATEGORIES.map((c) => <button type="button" data-f={c.key} aria-pressed="false">{catTitle(c, lang)}</button>)}
       </div>
     </div>
-    <ul class="grid">
-      {works.map((w) => (
-        <li data-c={w.cat.key}>
-          <a href={`${home}/projects/${w.id}`}>
-            <img src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes="(min-width: 1000px) 32vw, (min-width: 600px) 48vw, 100vw" alt="" loading="lazy" decoding="async" />
-            <b>{w.data.title}</b>
-            <span>{w.data.venue} / {w.data.year}</span>
-          </a>
-        </li>
-      ))}
-    </ul>
+    <ProjectGrid works={works} lang={lang} filterable />
     <p class="all"><a href={`${home}/projects/`}>{h.allProjects}</a></p>
   </section>
 
@@ -71,7 +62,7 @@ const now = works.filter((w) => w.data.current);
   dots.forEach((d) => d.addEventListener('click', () => { go(Number(d.dataset.i)); auto(); }));
   if (slides.length > 1) auto();
 
-  const items = [...document.querySelectorAll('.grid li')];
+  const items = [...document.querySelectorAll('.pgrid li')];
   const btns = [...document.querySelectorAll('.selected .filters button')];
   btns.forEach((b) => b.addEventListener('click', () => {
     btns.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
@@ -97,15 +88,7 @@ const now = works.filter((w) => w.data.current);
   .filters button:hover { color: var(--ink); }
   .filters button[aria-pressed='true'] { color: var(--ink); border-bottom-color: var(--ink); }
 
-  .grid { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 2.25rem 1.25rem; }
-  .grid li[hidden] { display: none; }
-  .grid a { display: block; }
-  .grid img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; background: var(--wash); }
-  .grid b { display: block; margin-top: 0.6rem; font-size: 0.98rem; font-weight: 700; letter-spacing: -0.018em; line-height: 1.25; }
-  .grid span { display: block; margin-top: 0.15rem; font-size: 0.82rem; color: var(--grey); }
-  .grid a:hover b { text-decoration: underline; text-underline-offset: 0.15em; }
   .all { margin: 2.5rem 0 0; font-size: 1rem; }
   .all a { border-bottom: 1px solid var(--ink); }
-  @media (max-width: 1000px) { .grid { grid-template-columns: repeat(2, 1fr); } }
-  @media (max-width: 600px) { .grid { grid-template-columns: 1fr; } .slider { aspect-ratio: 4 / 3; } }
+  @media (max-width: 600px) { .slider { aspect-ratio: 4 / 3; } }
 </style>

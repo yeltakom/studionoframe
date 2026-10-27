@@ -2,7 +2,7 @@
 import Base from '../../layouts/Base.astro';
 import Chrome from '../../components/Chrome.astro';
 import SiteFoot from '../../components/SiteFoot.astro';
-import IndexTable from '../../components/IndexTable.astro';
+import ProjectGrid from '../../components/ProjectGrid.astro';
 import { getCatalogue, CATEGORIES, catTitle, catLine } from '../../lib/categories';
 import { UI } from '../../i18n';
 
@@ -22,12 +22,11 @@ const works = (await getCatalogue(lang)).filter((w) => w.cat.key === x.key);
   <div class="below"></div>
 
   <header class="head">
-    <a class="label" href={`${home}/`}>{t.index.label}</a>
     <h1>{catTitle(x, lang)}</h1>
     <p>{catLine(x, lang)}</p>
   </header>
 
-  <IndexTable works={works} lang={lang} root={`${home}/projects`} />
+  <div class="cat-grid"><ProjectGrid works={[...works].sort((a, b) => b.year - a.year)} lang={lang} /></div>
 
   <p class="others">
     <span class="label">{t.categories}</span>

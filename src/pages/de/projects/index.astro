@@ -21,7 +21,6 @@ const now = works.filter((w) => w.data.current);
   <div class="below"></div>
 
   <header class="head">
-    <span class="label">{t.index.label}</span>
     <h1>{t.index.title}</h1>
     <p>{t.index.line(works.length, Math.min(...years), Math.max(...years))}</p>
     {now.length > 0 && (

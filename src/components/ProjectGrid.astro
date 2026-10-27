@@ -1,0 +1,22 @@
+---
+/* Projects as pictures: 16:9 photograph, title, venue / year. The same grid
+   on the home page, the category pages and under each project. */
+import { type Lang } from '../i18n';
+import { type Entry } from '../lib/categories';
+import { srcset } from '../lib/img';
+interface Props { works: Entry[]; lang?: Lang; filterable?: boolean }
+const { works, lang = 'en', filterable = false } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const home = lang === 'de' ? `${base}/de` : base;
+---
+<ul class="pgrid">
+  {works.map((w) => (
+    <li data-c={filterable ? w.cat.key : undefined}>
+      <a href={`${home}/projects/${w.id}`}>
+        <img src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes="(min-width: 1000px) 32vw, (min-width: 600px) 48vw, 100vw" alt="" loading="lazy" decoding="async" />
+        <b>{w.data.title}</b>
+        <span>{w.data.venue} / {w.data.year}</span>
+      </a>
+    </li>
+  ))}
+</ul>
