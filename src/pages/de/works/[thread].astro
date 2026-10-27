@@ -2,5 +2,5 @@
 /* old address — the index lives at the root now */
 export function getStaticPaths() { return ['displacement', 'archives', 'monographs', 'collections', 'commons'].map((k) => ({ params: { thread: k } })); }
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
-return Astro.redirect(`${base}/de/`);
+return Astro.redirect(`${base}/de/projects/`);
 ---

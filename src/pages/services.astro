@@ -1,0 +1,17 @@
+---
+import Base from '../layouts/Base.astro';
+import Chrome from '../components/Chrome.astro';
+import SiteFoot from '../components/SiteFoot.astro';
+import ServicesList from '../components/ServicesList.astro';
+import { getCatalogue } from '../lib/categories';
+import { UI } from '../i18n';
+
+const lang = 'en' as const;
+const works = await getCatalogue(lang);
+---
+<Base lang={lang} title={UI[lang].services.title}>
+  <Chrome lang={lang} here="services" />
+  <div class="below"></div>
+  <ServicesList works={works} lang={lang} />
+  <SiteFoot lang={lang} />
+</Base>

@@ -2,35 +2,19 @@
 import Base from '../layouts/Base.astro';
 import Chrome from '../components/Chrome.astro';
 import SiteFoot from '../components/SiteFoot.astro';
-import IndexTable from '../components/IndexTable.astro';
+import SelectedHome from '../components/SelectedHome.astro';
 import { getCatalogue } from '../lib/categories';
 import { studioSchema } from '../lib/schema';
-import { UI } from '../i18n';
 
 const lang = 'en' as const;
-const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
-const home = base;
 const site = (Astro.site ?? new URL(Astro.url.origin)).href.replace(/\/+$/, '');
 const works = await getCatalogue(lang);
-const years = works.map((w) => w.year);
-const now = works.filter((w) => w.data.current);
 ---
 
 <Base lang={lang} image={`${base}/images/og/default.jpg`} schema={studioSchema(lang, site, base, works)}>
-  <Chrome lang={lang} here="index" />
+  <Chrome lang={lang} here="selected" />
   <div class="below"></div>
-
-  <header class="head">
-    <span class="label">{t.index.label}</span>
-    <h1>{t.index.title}</h1>
-    <p>{t.index.line(works.length, Math.min(...years), Math.max(...years))}</p>
-    {now.length > 0 && (
-      <p class="now"><span class="label">{t.now}</span>{now.map((w) => <a href={`${home}/projects/${w.id}`}>{w.data.title}, {w.data.venue}{w.data.dates ? ` — ${w.data.dates}` : ''}</a>)}</p>
-    )}
-  </header>
-
-  <IndexTable works={works} lang={lang} root={`${home}/projects`} home={home} grouped />
-
+  <SelectedHome works={works} lang={lang} />
   <SiteFoot lang={lang} />
 </Base>

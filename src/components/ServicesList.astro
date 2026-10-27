@@ -1,34 +1,29 @@
 ---
 /* Services — the five categories, each with its line and its projects. */
-import Base from '../../../layouts/Base.astro';
-import SelHead from '../../../components/SelHead.astro';
-import SiteFoot from '../../../components/SiteFoot.astro';
-import { getCatalogue, CATEGORIES } from '../../../lib/categories';
-
+import { UI, type Lang } from '../i18n';
+import { CATEGORIES, catTitle, catLine, type Entry } from '../lib/categories';
+interface Props { works: Entry[]; lang?: Lang }
+const { works, lang = 'en' } = Astro.props;
+const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
-const works = await getCatalogue('en');
+const home = lang === 'de' ? `${base}/de` : base;
 ---
-<Base lang="en" title="Services">
-  <SelHead here="services" />
-  <div class="below"></div>
-  <header class="head">
-    <h1>Services</h1>
-    <p>From the first spatial idea to the last screw on site, alone or inside an artist’s team.</p>
-  </header>
-  <ol class="services">
-    {CATEGORIES.map((c, i) => (
-      <li>
-        <span class="no">{i + 1}</span>
-        <div>
-          <h2>{c.title}</h2>
-          <p>{c.line}</p>
-          <ul>{works.filter((w) => w.cat === c).map((w) => <li><a href={`${base}/projects/${w.id}`}>{w.data.title}</a> <span>{w.data.venue}, {w.data.year}</span></li>)}</ul>
-        </div>
-      </li>
-    ))}
-  </ol>
-  <SiteFoot lang="en" />
-</Base>
+<header class="head">
+  <h1>{t.services.title}</h1>
+  <p>{t.services.line}</p>
+</header>
+<ol class="services">
+  {CATEGORIES.map((c, i) => (
+    <li>
+      <span class="no">{i + 1}</span>
+      <div>
+        <h2><a href={`${home}/category/${c.key}`}>{catTitle(c, lang)}</a></h2>
+        <p>{catLine(c, lang)}</p>
+        <ul>{works.filter((w) => w.cat.key === c.key).map((w) => <li><a href={`${home}/projects/${w.id}`}>{w.data.title}</a> <span>{w.data.venue}, {w.data.year}</span></li>)}</ul>
+      </div>
+    </li>
+  ))}
+</ol>
 <style>
   .services { list-style: none; margin: 0; padding: 0 var(--gutter) clamp(3rem, 7vw, 5rem); }
   .services > li { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 0 1.5rem; padding: 1.5rem 0 2rem; border-top: 1px solid var(--ink); }

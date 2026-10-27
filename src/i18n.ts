@@ -11,7 +11,13 @@ export const UI = {
     label: 'English',
     switchTo: 'Deutsch',
     short: 'DE',
-    nav: { index: 'Index', studio: 'Studio', contact: 'Contact' },
+    nav: { selected: 'Selected', index: 'Index', studio: 'Profile', services: 'Services', contact: 'Contact' },
+    home: {
+      title: 'Exhibitions as research.',
+      line: 'Since 2014, Studio No Frame has designed and built exhibitions for museums, biennials and artists, from Berlin and Istanbul.',
+      selected: 'Selected Projects', all: 'All', allProjects: 'All projects →', filter: 'Filter by category', photo: 'Photograph',
+    },
+    services: { title: 'Services', line: 'From the first spatial idea to the last screw on site, alone or inside an artist’s team.' },
     index: {
       label: 'Index',
       title: 'Exhibitions for museums, biennials and artists.',
@@ -38,7 +44,13 @@ export const UI = {
     label: 'Deutsch',
     switchTo: 'English',
     short: 'EN',
-    nav: { index: 'Index', studio: 'Studio', contact: 'Kontakt' },
+    nav: { selected: 'Auswahl', index: 'Index', studio: 'Profil', services: 'Leistungen', contact: 'Kontakt' },
+    home: {
+      title: 'Ausstellungen als Forschung.',
+      line: 'Seit 2014 entwirft und baut Studio No Frame Ausstellungen für Museen, Biennalen und Künstler:innen, von Berlin und Istanbul aus.',
+      selected: 'Ausgewählte Projekte', all: 'Alle', allProjects: 'Alle Projekte →', filter: 'Nach Kategorie filtern', photo: 'Fotografie',
+    },
+    services: { title: 'Leistungen', line: 'Von der ersten räumlichen Idee bis zur letzten Schraube vor Ort, eigenständig oder im Team von Künstler:innen.' },
     index: {
       label: 'Index',
       title: 'Ausstellungen für Museen, Biennalen und Künstler:innen.',

@@ -1,0 +1,35 @@
+---
+import Base from '../../../layouts/Base.astro';
+import Chrome from '../../../components/Chrome.astro';
+import SiteFoot from '../../../components/SiteFoot.astro';
+import IndexTable from '../../../components/IndexTable.astro';
+import { getCatalogue } from '../../../lib/categories';
+import { UI } from '../../../i18n';
+
+const lang = 'de' as const;
+const t = UI[lang];
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const home = `${base}/de`;
+/* one list, newest first; the kind of work is a column, not a heading */
+const works = (await getCatalogue(lang)).sort((a, b) => b.year - a.year || a.data.title.localeCompare(b.data.title));
+const years = works.map((w) => w.year);
+const now = works.filter((w) => w.data.current);
+---
+
+<Base lang={lang} title={t.index.label}>
+  <Chrome lang={lang} here="index" />
+  <div class="below"></div>
+
+  <header class="head">
+    <span class="label">{t.index.label}</span>
+    <h1>{t.index.title}</h1>
+    <p>{t.index.line(works.length, Math.min(...years), Math.max(...years))}</p>
+    {now.length > 0 && (
+      <p class="now"><span class="label">{t.now}</span>{now.map((w) => <a href={`${home}/projects/${w.id}`}>{w.data.title}, {w.data.venue}{w.data.dates ? ` — ${w.data.dates}` : ''}</a>)}</p>
+    )}
+  </header>
+
+  <IndexTable works={works} lang={lang} root={`${home}/projects`} home={home} peek={false} motion type />
+
+  <SiteFoot lang={lang} />
+</Base>
