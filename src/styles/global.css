@@ -179,6 +179,8 @@ button { font: inherit; }
   .cat .r { grid-template-columns: 2.8rem 1fr 3.2rem; grid-template-areas: 'no ttl yr' '. ven ven'; }
   .cat .group a { grid-template-columns: 2.8rem 1fr; }
   .cat .no { grid-area: no; } .cat .ttl { grid-area: ttl; } .cat .yr { grid-area: yr; } .cat .ven { grid-area: ven; }
+  .cat .group .ttl, .cat .group .line { grid-area: auto; grid-column: 2; }
+  .cat .group .no { grid-area: auto; }
 }
 
 @media (prefers-reduced-motion: reduce) {
@@ -188,4 +190,26 @@ button { font: inherit; }
 @media (max-width: 480px) {
   .rhead nav { gap: 0.7rem; font-size: 0.64rem; letter-spacing: 0.06em; }
   .rhead nav .lang { margin-left: 0; }
+}
+
+/* the index in motion: lines arrive one after another, the line under the cursor leans in */
+.catalogue.motion .cat li { animation: row-in 560ms cubic-bezier(.2,.7,.2,1) both; animation-delay: calc(var(--i, 0) * 32ms); }
+@keyframes row-in { from { opacity: 0; transform: translateY(0.6rem); } }
+.catalogue.motion .cat .r { position: relative; }
+.catalogue.motion .cat .r .ttl, .catalogue.motion .cat .r .ven { transition: transform 260ms cubic-bezier(.2,.7,.2,1); }
+.catalogue.motion .cat .r:hover .ttl, .catalogue.motion .cat .r:focus-visible .ttl { transform: translateX(0.6rem); }
+.catalogue.motion .cat .r:hover .ven, .catalogue.motion .cat .r:focus-visible .ven { transform: translateX(0.3rem); }
+.catalogue.motion .cat .go { position: absolute; right: 3.6rem; top: 0; bottom: 0; display: flex; align-items: center; font-size: 0.9rem; opacity: 0; transform: translateX(-0.5rem); transition: opacity 200ms ease, transform 260ms cubic-bezier(.2,.7,.2,1); }
+.catalogue.motion .cat .r:hover .go, .catalogue.motion .cat .r:focus-visible .go { opacity: 1; transform: none; }
+.catalogue.motion .cat .r::before { content: ''; position: absolute; left: 0; bottom: -1px; height: 1px; width: 100%; background: var(--ink); transform: scaleX(0); transform-origin: left; transition: transform 380ms cubic-bezier(.2,.7,.2,1); }
+.catalogue.motion .cat .r:hover::before { transform: scaleX(1); }
+@media (prefers-reduced-motion: reduce) { .catalogue.motion .cat li { animation: none; } .catalogue.motion .cat .r * , .catalogue.motion .cat .r::before { transition: none; } }
+.catalogue.motion.no-peek { padding: 0 var(--gutter); }
+@media (hover: none) { .catalogue.motion .cat .go { display: none; } }
+/* five words in the bar: on a phone the name takes the first line, the menu the second */
+@media (max-width: 560px) {
+  :root:has(.rhead.five) { --bar: 5.2rem; }
+  .rhead.five { flex-wrap: wrap; align-content: center; row-gap: 0.55rem; }
+  .rhead.five .spacer { display: none; }
+  .rhead.five nav { width: 100%; justify-content: space-between; gap: 0; }
 }
