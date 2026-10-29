@@ -1,7 +1,8 @@
 ---
-/* The home page as a bureau: four columns divided by rules, each scrolling
-   on its own. ABOUT · PROJECTS · the figure of the project under the pointer
-   · SERVICES and CONTACT. */
+/* The home page as a ruled sheet. Above: the statement in a narrow cell and
+   the figure of the newest project in a wide one. Below: every project as a
+   row — the row under the pointer turns black and changes the figure. Then
+   the services as five cells. */
 import { UI, type Lang } from '../i18n';
 import { CATEGORIES, catTitle, catLine, type Entry } from '../lib/categories';
 import { srcset } from '../lib/img';
@@ -13,71 +14,65 @@ const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const home = lang === 'de' ? `${base}/de` : base;
 const works = [...Astro.props.works].sort((a, b) => b.year - a.year);
-const now = works.filter((w) => w.data.current);
 const first = works.find((w) => w.data.home) ?? works[0];
 const de = lang === 'de';
-const heads = de ? ['Studio', 'Projekte', 'Abbildung', 'Leistungen'] : ['About', 'Projects', 'Figure', 'Services'];
 ---
 
-<main class="bureau">
-  <section class="col about">
-    <h2>{heads[0]}</h2>
-    <div class="scroll">
+<main class="sheet">
+  <section class="top">
+    <div class="cell about">
+      <span class="label">{de ? 'Studio' : 'About'}</span>
       <p class="big">{t.home.title}</p>
       <p>{t.home.line}</p>
-      {now.length > 0 && <p>{t.now}: {now.map((w) => <a href={`${home}/projects/${w.id}`}>{w.data.title}, {w.data.venue}{w.data.dates ? ` — ${w.data.dates}` : ''}</a>)}</p>}
       <p>{de
-        ? 'Das Studio arbeitet mit Künstler:innen, Museen, Biennalen, NGOs, Projekträumen und Universitäten an interdisziplinären und sozial engagierten Projekten. Jedes Projekt beginnt bei seinem eigenen Material: den Werken, dem Gebäude, den Menschen, die sich darin bewegen werden.'
-        : 'The studio works with artists, museums, biennials, NGOs, project spaces and universities on interdisciplinary and socially engaged projects. Each project starts from its own material: the works, the building, the people who will move through it.'}</p>
-      <p>{de ? 'Partner' : 'Partners'}: Haus der Kulturen der Welt, İKSV, Istanbul Modern, Museum Ludwig, MAXXI, Pera Museum, SALT, La Biennale di Venezia, Istanbul Biennial, Istanbul Design Biennial, Timișoara Biennial.</p>
-      <p><a href={`${home}/about`}>{de ? 'Mehr' : 'Read more'} -&gt;</a></p>
+        ? 'Jedes Projekt beginnt bei seinem eigenen Material: den Werken, dem Gebäude, den Menschen, die sich darin bewegen werden.'
+        : 'Each project starts from its own material: the works, the building, the people who will move through it.'}</p>
+      <p class="more"><a href={`${home}/about`}>{de ? 'Profil' : 'Profile'} →</a></p>
     </div>
-  </section>
-
-  <section class="col projects">
-    <h2>{heads[1]}</h2>
-    <div class="scroll">
-      {CATEGORIES.map((c) => (
-        <div class="grp">
-          <h3><a href={`${home}/category/${c.key}`}>{catTitle(c, lang)}</a></h3>
-          <ul>{works.filter((w) => w.cat.key === c.key).map((w) => (
-            <li><a href={`${home}/projects/${w.id}`} data-id={w.id}>{w.data.title}</a><span>{w.data.venue}, {w.data.year}</span></li>
-          ))}</ul>
-        </div>
-      ))}
-      <p><a href={`${home}/projects/`}>{t.home.allProjects}</a></p>
-    </div>
-  </section>
-
-  <section class="col figure" id="figure">
-    <h2>{heads[2]}</h2>
-    <div class="frame">
-      {works.map((w, i) => (
+    <div class="cell figure" id="figure">
+      {works.map((w) => (
         <a href={`${home}/projects/${w.id}`} data-id={w.id} class={w === first ? 'on' : ''} aria-hidden={w === first ? undefined : 'true'} tabindex={w === first ? undefined : -1}>
-          <img src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes="(min-width: 900px) 25vw, 100vw" alt="" loading={w === first ? 'eager' : 'lazy'} decoding="async" />
-          <span class="cap">{w.data.title}<br />{w.data.venue}, {w.data.year}</span>
+          <img src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes="(min-width: 900px) 66vw, 100vw" alt="" loading={w === first ? 'eager' : 'lazy'} decoding="async" />
+          <span class="cap"><span>{w.data.title}</span><span>{w.data.venue}, {w.data.year}</span></span>
         </a>
       ))}
     </div>
   </section>
 
-  <section class="col services">
-    <h2>{heads[3]}</h2>
-    <div class="scroll">
-      <p>{t.services.line}</p>
-      <ol>{CATEGORIES.map((c) => <li><a href={`${home}/category/${c.key}`}>{catTitle(c, lang)}</a><span>{catLine(c, lang)}</span></li>)}</ol>
-      <h3>{t.nav.contact}</h3>
-      <p>Studio No Frame<br />Berlin / Istanbul<br /><a href={`mailto:${SITE.email}`}>{SITE.email}</a><br /><a href={SITE.instagram} rel="me noopener" target="_blank">Instagram</a></p>
-      <p><a href={`${home}/contact`}>{t.nav.contact} -&gt;</a></p>
+  <section class="rows">
+    <div class="h"><span>{t.columns.no}</span><span>{t.columns.project}</span><span>{t.columns.type}</span><span>{t.columns.venue}</span><span>{t.columns.year}</span></div>
+    {works.map((w, i) => (
+      <a class="r" href={`${home}/projects/${w.id}`} data-id={w.id}>
+        <span>{String(i + 1).padStart(2, '0')}</span>
+        <span class="ttl">{w.data.title}</span>
+        <span>{catTitle(w.cat, lang)}</span>
+        <span>{w.data.venue}</span>
+        <span>{w.data.year}</span>
+      </a>
+    ))}
+  </section>
+
+  <section class="cells">
+    {CATEGORIES.map((c, i) => (
+      <a class="cell" href={`${home}/category/${c.key}`}>
+        <span class="label">{t.nav.services} {i + 1}</span>
+        <b>{catTitle(c, lang)}</b>
+        <span>{catLine(c, lang)}</span>
+      </a>
+    ))}
+    <div class="cell contact">
+      <span class="label">{t.nav.contact}</span>
+      <b>Studio No Frame</b>
+      <span>Berlin / Istanbul<br /><a href={`mailto:${SITE.email}`}>{SITE.email}</a><br /><a href={SITE.instagram} rel="me noopener" target="_blank">Instagram</a></span>
     </div>
   </section>
 </main>
 
 <script is:inline>
 (() => {
-  const figs = [...document.querySelectorAll('#figure .frame a')];
+  const figs = [...document.querySelectorAll('#figure a')];
   const show = (id) => figs.forEach((f) => { const on = f.dataset.id === id; f.classList.toggle('on', on); f.tabIndex = on ? 0 : -1; });
-  document.querySelectorAll('.projects a[data-id]').forEach((a) => {
+  document.querySelectorAll('.rows a[data-id]').forEach((a) => {
     a.addEventListener('pointerenter', () => show(a.dataset.id));
     a.addEventListener('focus', () => show(a.dataset.id));
   });
@@ -85,33 +80,42 @@ const heads = de ? ['Studio', 'Projekte', 'Abbildung', 'Leistungen'] : ['About',
 </script>
 
 <style>
-  .bureau { display: grid; grid-template-columns: repeat(4, 1fr); height: calc(100vh - var(--bar)); height: calc(100dvh - var(--bar)); }
-  .col { display: flex; flex-direction: column; min-height: 0; border-right: 1px solid var(--ink); }
-  .col:last-child { border-right: 0; }
-  .col h2 { margin: 0; padding: 0 var(--gutter); height: var(--tick); display: flex; align-items: center; font-size: 0.95rem; text-transform: uppercase; border-bottom: 1px solid var(--ink); flex: none; }
-  .scroll { overflow-y: auto; padding: var(--gutter); padding-right: 30px; flex: 1; min-height: 0; }
-  .about { background: var(--wash); }
-  .scroll p { margin: 0 0 1em; font-size: 0.9rem; line-height: 1.3; }
-  .scroll .big { font-size: 1.25rem; line-height: 1.2; }
-  .scroll a { text-decoration: underline; }
-  .grp { margin-bottom: 1.4em; }
-  .grp h3, .services h3 { margin: 0 0 0.4em; font-size: 0.9rem; text-transform: uppercase; }
-  .grp ul, .services ol { list-style: none; margin: 0; padding: 0; }
-  .grp li { margin: 0 0 0.6em; font-size: 0.9rem; line-height: 1.3; }
-  .grp li a { text-decoration: none; }
-  .grp li a:hover { text-decoration: underline; }
-  .grp li span, .services li span { display: block; font-size: 0.8rem; }
-  .services li { margin: 0 0 0.9em; font-size: 0.9rem; line-height: 1.3; }
-  .services ol { margin-bottom: 1.6em; }
-  .frame { position: relative; flex: 1; min-height: 0; background: #000; }
-  .frame a { position: absolute; inset: 0; opacity: 0; transition: opacity 0.3s; }
-  .frame a.on { opacity: 1; }
-  .frame img { width: 100%; height: 100%; object-fit: cover; }
-  .frame .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 0.6rem var(--gutter); background: #000; color: #fff; font-size: 0.8rem; line-height: 1.3; }
+  .sheet { display: block; }
+  .top { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); border-bottom: 1px solid var(--ink); }
+  .cell { padding: var(--gutter); }
+  .top .about { border-right: 1px solid var(--ink); display: flex; flex-direction: column; }
+  .about .label { margin-bottom: 1.2rem; }
+  .about p { margin: 0 0 1em; font-size: 1rem; line-height: 1.3; max-width: 40ch; }
+  .about .big { font-size: clamp(1.6rem, 2.8vw, 2.6rem); line-height: 1.0; text-transform: uppercase; letter-spacing: -0.01em; margin-bottom: 1.2rem; max-width: 14ch; }
+  .about .more { margin-top: auto; margin-bottom: 0; }
+  .about a { text-decoration: underline; }
+  .figure { position: relative; padding: 0; aspect-ratio: 16 / 10; background: #000; overflow: hidden; }
+  .figure a { position: absolute; inset: 0; opacity: 0; transition: opacity 0.25s; }
+  .figure a.on { opacity: 1; }
+  .figure img { width: 100%; height: 100%; object-fit: cover; }
+  .figure .cap { position: absolute; left: 0; right: 0; bottom: 0; display: flex; justify-content: space-between; gap: 1rem; padding: 0.55rem var(--gutter); background: #000; color: #fff; font-size: 0.85rem; text-transform: uppercase; }
+  .rows { display: block; }
+  .rows .h, .rows .r { display: grid; grid-template-columns: 3rem minmax(0, 2fr) minmax(0, 1fr) minmax(0, 1.2fr) 4rem; gap: 0 1rem; padding: 0.6rem var(--gutter); border-bottom: 1px solid var(--ink); font-size: 0.9rem; line-height: 1.25; align-items: baseline; }
+  .rows .h { text-transform: uppercase; font-size: 0.75rem; }
+  .rows .r .ttl { text-transform: uppercase; }
+  .rows .r:hover { background: #000; color: #fff; text-decoration: none; }
+  .rows .r span:last-child { text-align: right; }
+  .cells { display: grid; grid-template-columns: repeat(6, 1fr); }
+  .cells .cell { border-right: 1px solid var(--ink); display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.85rem; line-height: 1.3; min-height: 12rem; }
+  .cells .cell:last-child { border-right: 0; }
+  .cells .cell b { text-transform: uppercase; font-size: 1rem; }
+  .cells a.cell:hover { background: #000; color: #fff; text-decoration: none; }
+  .cells a.cell:hover .label { color: #fff; }
+  .cells .contact { background: var(--wash); }
+  .cells .contact a { text-decoration: underline; }
   @media (max-width: 900px) {
-    .bureau { grid-template-columns: 1fr; height: auto; }
-    .col { border-right: 0; border-bottom: 1px solid var(--ink); }
-    .scroll { overflow: visible; }
-    .frame { height: 60vw; }
+    .top { grid-template-columns: 1fr; }
+    .top .about { border-right: 0; border-bottom: 1px solid var(--ink); }
+    .rows .h { display: none; }
+    .rows .r { grid-template-columns: 2.2rem minmax(0, 1fr) 3.4rem; }
+    .rows .r span:nth-child(3), .rows .r span:nth-child(4) { grid-column: 2; font-size: 0.8rem; }
+    .cells { grid-template-columns: repeat(2, 1fr); }
+    .cells .cell { border-bottom: 1px solid var(--ink); min-height: 0; }
+    .cells .cell:nth-child(2n) { border-right: 0; }
   }
 </style>

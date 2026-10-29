@@ -270,33 +270,46 @@ button { font: inherit; }
 @media (max-width: 600px) { .cases li, .cases li.s-a, .cases li.s-b, .cases li.s-c { grid-column: span 12; } .cases .s-c img { aspect-ratio: 3 / 2; } }
 
 
-/* ---------- the bureau: what the language changes everywhere ---------- */
+/* ---------- the ruled sheet: what the language changes everywhere ----------
+   Black on white, bold Helvetica, 1px black rules making cells. The one
+   gesture: a cell turns black — the name band, the current menu cell, the
+   row under the pointer, the caption under a photograph. */
 .label, .note, .rhead nav, .rfoot, .cat .no, .cat .typ, .cat .yr, .pj-facts dd, .pj-lead figcaption, .pj-figs figcaption { font-family: var(--sans); font-weight: 700; letter-spacing: 0; }
 .label { font-size: 0.8rem; text-transform: uppercase; }
 .note { font-size: 0.8rem; }
 .note .no { color: var(--ink); }
 .fig::before, .fig::after, .fig > i::before, .fig > i::after { display: none; }
-a:hover { text-decoration: underline; }
-.head h1, .pj-head h1, .page h1 { font-weight: 700; font-stretch: normal; letter-spacing: 0; text-transform: uppercase; font-size: clamp(1.3rem, 2.2vw, 1.8rem); max-width: none; line-height: 1.15; }
+.head h1, .pj-head h1, .page h1 { font-weight: 700; font-stretch: normal; letter-spacing: -0.01em; text-transform: uppercase; font-size: clamp(1.6rem, 3.4vw, 3rem); max-width: 18ch; line-height: 1.0; }
 .head p { color: var(--ink); font-size: 1rem; }
 .sec-h, .page .body h2, .page .prose h2 { text-transform: uppercase; }
-/* chrome: a ticker and a row of cells */
+/* chrome: the name band, then the menu as cells */
 .rhead { height: var(--bar); display: block; padding: 0; border-bottom: 1px solid var(--ink); background: var(--paper); }
-.rhead .ticker { height: var(--tick); background: #000; color: #fff; overflow: hidden; display: flex; align-items: center; white-space: nowrap; font-style: italic; font-weight: 700; font-size: 0.95rem; text-transform: uppercase; }
-.rhead .ticker > span { display: inline-block; padding-right: 3rem; animation: tick 40s linear infinite; }
-@keyframes tick { to { transform: translateX(-100%); } }
-.rhead .studio { position: absolute; left: -9999px; }
+.rhead .band { height: var(--tick); background: #000; color: #fff; display: flex; align-items: center; justify-content: space-between; gap: 2rem; padding: 0 var(--gutter); text-transform: uppercase; font-size: 0.95rem; white-space: nowrap; overflow: hidden; }
+.rhead .band .studio { position: static; color: #fff; font-size: 1.05rem; letter-spacing: 0.02em; }
+.rhead .band .onview { font-weight: 400; overflow: hidden; text-overflow: ellipsis; }
+.rhead .band .onview b { font-weight: 700; margin-right: 0.6rem; }
 .rhead .spacer { display: none; }
-.rhead nav { display: grid; grid-template-columns: repeat(5, 1fr) auto; height: var(--tick); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0; }
+.rhead nav { display: grid; grid-template-columns: repeat(5, 1fr) var(--tick); height: var(--tick); font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0; }
 .rhead nav a { opacity: 1; display: flex; align-items: center; padding: 0 var(--gutter); border-right: 1px solid var(--ink); border-bottom: 0; }
-.rhead nav a:last-child { border-right: 0; }
-.rhead nav a[aria-current='page'] { color: var(--ink); text-decoration: underline; }
+.rhead nav a:last-child { border-right: 0; justify-content: center; padding: 0; }
+.rhead nav a:hover { text-decoration: none; background: var(--wash); }
+.rhead nav a[aria-current='page'] { color: #fff; background: #000; }
 .rhead nav .lang { margin: 0; }
 .rhead.over { background: var(--paper); color: var(--ink); border-bottom-color: var(--ink); }
 .rfoot { font-size: 0.8rem; color: var(--ink); }
+/* the index: rows are cells; the row under the pointer turns black */
+.cat .r:hover { background: #000; color: #fff; }
+.cat .r:hover .ttl, .cat .r:hover .ven, .cat .r:hover .typ, .cat .r:hover .yr, .cat .r:hover .no { color: #fff; }
+.cat .ttl { text-transform: uppercase; }
+.catalogue.motion .cat .r::before { display: none; }
+.catalogue.motion .cat .go { color: #fff; }
+.pj-lead figcaption, .pj-figs figcaption { margin-top: 0; padding: 0.5rem var(--gutter); background: #000; color: #fff; }
+.pj-lead figcaption b, .pj-figs figcaption b { color: #fff; }
 @media (max-width: 760px) {
   .rhead nav { grid-template-columns: repeat(3, 1fr); height: auto; }
   .rhead nav a { height: var(--tick); border-bottom: 1px solid var(--ink); }
   .rhead nav a:nth-child(3n) { border-right: 0; }
+  .rhead nav a:last-child { justify-content: flex-start; padding: 0 var(--gutter); }
+  .rhead .band .onview { display: none; }
   :root { --bar: 138px; }
 }
