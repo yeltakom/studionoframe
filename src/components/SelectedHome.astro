@@ -1,75 +1,117 @@
 ---
-/* Selected — the home page: one statement, then the projects as case files,
-   each photograph at the size its evidence deserves, filterable by category.
-   The full archive is the Index. */
+/* The home page as a bureau: four columns divided by rules, each scrolling
+   on its own. ABOUT · PROJECTS · the figure of the project under the pointer
+   · SERVICES and CONTACT. */
 import { UI, type Lang } from '../i18n';
-import { CATEGORIES, catTitle, type Entry } from '../lib/categories';
-import { srcset, SIZES } from '../lib/img';
+import { CATEGORIES, catTitle, catLine, type Entry } from '../lib/categories';
+import { srcset } from '../lib/img';
+import { SITE } from '../site';
 
 interface Props { works: Entry[]; lang?: Lang }
 const { lang = 'en' } = Astro.props;
 const t = UI[lang];
-const h = t.home;
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const home = lang === 'de' ? `${base}/de` : base;
 const works = [...Astro.props.works].sort((a, b) => b.year - a.year);
 const now = works.filter((w) => w.data.current);
+const first = works.find((w) => w.data.home) ?? works[0];
+const de = lang === 'de';
+const heads = de ? ['Studio', 'Projekte', 'Abbildung', 'Leistungen'] : ['About', 'Projects', 'Figure', 'Services'];
 ---
 
-  <header class="head">
-    <h1>{h.title}</h1>
-    <p>{h.line}</p>
-    {now.length > 0 && (
-      <p class="now"><span class="label">{t.now}</span>{now.map((w) => <a href={`${home}/projects/${w.id}`}>{w.data.title}, {w.data.venue}{w.data.dates ? ` — ${w.data.dates}` : ''}</a>)}</p>
-    )}
-  </header>
-
-  <section class="selected" id="selected">
-    <div class="sel-head">
-      <h2>{h.selected}</h2>
-      <div class="filters" role="group" aria-label={h.filter}>
-        <button type="button" data-f="" aria-pressed="true">{h.all}</button>
-        {CATEGORIES.map((c) => <button type="button" data-f={c.key} aria-pressed="false">{catTitle(c, lang)}</button>)}
-      </div>
+<main class="bureau">
+  <section class="col about">
+    <h2>{heads[0]}</h2>
+    <div class="scroll">
+      <p class="big">{t.home.title}</p>
+      <p>{t.home.line}</p>
+      {now.length > 0 && <p>{t.now}: {now.map((w) => <a href={`${home}/projects/${w.id}`}>{w.data.title}, {w.data.venue}{w.data.dates ? ` — ${w.data.dates}` : ''}</a>)}</p>}
+      <p>{de
+        ? 'Das Studio arbeitet mit Künstler:innen, Museen, Biennalen, NGOs, Projekträumen und Universitäten an interdisziplinären und sozial engagierten Projekten. Jedes Projekt beginnt bei seinem eigenen Material: den Werken, dem Gebäude, den Menschen, die sich darin bewegen werden.'
+        : 'The studio works with artists, museums, biennials, NGOs, project spaces and universities on interdisciplinary and socially engaged projects. Each project starts from its own material: the works, the building, the people who will move through it.'}</p>
+      <p>{de ? 'Partner' : 'Partners'}: Haus der Kulturen der Welt, İKSV, Istanbul Modern, Museum Ludwig, MAXXI, Pera Museum, SALT, La Biennale di Venezia, Istanbul Biennial, Istanbul Design Biennial, Timișoara Biennial.</p>
+      <p><a href={`${home}/about`}>{de ? 'Mehr' : 'Read more'} -&gt;</a></p>
     </div>
-    <ul class="cases">
-      {works.map((w, i) => (
-        <li data-c={w.cat.key} class={['s-a', 's-b', '', '', '', 's-c', 's-b', 's-a'][i % 8]}>
-          <a href={`${home}/projects/${w.id}`}>
-            <span class="fig"><img src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes="(min-width: 1000px) 66vw, 100vw" alt="" loading={i < 2 ? 'eager' : 'lazy'} decoding="async" /><i></i></span>
-            <span class="cap"><b>{w.data.title}</b><span class="note"><span class="no">Fig. {String(i + 1).padStart(2, '0')}</span>{w.data.venue}, {w.data.year} · {catTitle(w.cat, lang)}</span></span>
-          </a>
-        </li>
-      ))}
-    </ul>
-    <p class="all"><a href={`${home}/projects/`}>{h.allProjects}</a></p>
   </section>
 
+  <section class="col projects">
+    <h2>{heads[1]}</h2>
+    <div class="scroll">
+      {CATEGORIES.map((c) => (
+        <div class="grp">
+          <h3><a href={`${home}/category/${c.key}`}>{catTitle(c, lang)}</a></h3>
+          <ul>{works.filter((w) => w.cat.key === c.key).map((w) => (
+            <li><a href={`${home}/projects/${w.id}`} data-id={w.id}>{w.data.title}</a><span>{w.data.venue}, {w.data.year}</span></li>
+          ))}</ul>
+        </div>
+      ))}
+      <p><a href={`${home}/projects/`}>{t.home.allProjects}</a></p>
+    </div>
+  </section>
+
+  <section class="col figure" id="figure">
+    <h2>{heads[2]}</h2>
+    <div class="frame">
+      {works.map((w, i) => (
+        <a href={`${home}/projects/${w.id}`} data-id={w.id} class={w === first ? 'on' : ''} aria-hidden={w === first ? undefined : 'true'} tabindex={w === first ? undefined : -1}>
+          <img src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes="(min-width: 900px) 25vw, 100vw" alt="" loading={w === first ? 'eager' : 'lazy'} decoding="async" />
+          <span class="cap">{w.data.title}<br />{w.data.venue}, {w.data.year}</span>
+        </a>
+      ))}
+    </div>
+  </section>
+
+  <section class="col services">
+    <h2>{heads[3]}</h2>
+    <div class="scroll">
+      <p>{t.services.line}</p>
+      <ol>{CATEGORIES.map((c) => <li><a href={`${home}/category/${c.key}`}>{catTitle(c, lang)}</a><span>{catLine(c, lang)}</span></li>)}</ol>
+      <h3>{t.nav.contact}</h3>
+      <p>Studio No Frame<br />Berlin / Istanbul<br /><a href={`mailto:${SITE.email}`}>{SITE.email}</a><br /><a href={SITE.instagram} rel="me noopener" target="_blank">Instagram</a></p>
+      <p><a href={`${home}/contact`}>{t.nav.contact} -&gt;</a></p>
+    </div>
+  </section>
+</main>
 
 <script is:inline>
 (() => {
-  const items = [...document.querySelectorAll('.cases li')];
-  const pattern = ['s-a', 's-b', '', '', '', 's-c', 's-b', 's-a'];
-  const relayout = () => { let k = 0; items.forEach((li) => { li.classList.remove('s-a', 's-b', 's-c'); if (!li.hidden) { const c = pattern[k++ % 8]; if (c) li.classList.add(c); } }); };
-  const btns = [...document.querySelectorAll('.selected .filters button')];
-  btns.forEach((b) => b.addEventListener('click', () => {
-    btns.forEach((x) => x.setAttribute('aria-pressed', String(x === b)));
-    items.forEach((li) => { li.hidden = !!b.dataset.f && li.dataset.c !== b.dataset.f; });
-    relayout();
-  }));
+  const figs = [...document.querySelectorAll('#figure .frame a')];
+  const show = (id) => figs.forEach((f) => { const on = f.dataset.id === id; f.classList.toggle('on', on); f.tabIndex = on ? 0 : -1; });
+  document.querySelectorAll('.projects a[data-id]').forEach((a) => {
+    a.addEventListener('pointerenter', () => show(a.dataset.id));
+    a.addEventListener('focus', () => show(a.dataset.id));
+  });
 })();
 </script>
 
 <style>
-
-  .selected { padding: clamp(1rem, 3vh, 2rem) var(--gutter) clamp(3rem, 7vw, 5rem); }
-  .sel-head { display: flex; flex-wrap: wrap; justify-content: space-between; align-items: baseline; gap: 0.75rem 2rem; padding-bottom: 1rem; }
-  .sel-head h2 { margin: 0; font-size: clamp(1.3rem, 2.4vw, 1.9rem); font-weight: 600; font-stretch: 112%; letter-spacing: -0.025em; }
-  .filters { display: flex; flex-wrap: wrap; gap: 0.3rem 1.2rem; font-family: var(--mono); font-size: 0.68rem; letter-spacing: 0.02em; }
-  .filters button { appearance: none; border: 0; background: none; padding: 0 0 2px; color: var(--grey); cursor: pointer; border-bottom: 1px solid transparent; }
-  .filters button:hover { color: var(--ink); }
-  .filters button[aria-pressed='true'] { color: var(--mark); border-bottom-color: var(--mark); }
-
-  .all { margin: 2.5rem 0 0; font-size: 1rem; }
-  .all a { border-bottom: 1px solid var(--ink); }
-  </style>
+  .bureau { display: grid; grid-template-columns: repeat(4, 1fr); height: calc(100vh - var(--bar)); height: calc(100dvh - var(--bar)); }
+  .col { display: flex; flex-direction: column; min-height: 0; border-right: 1px solid var(--ink); }
+  .col:last-child { border-right: 0; }
+  .col h2 { margin: 0; padding: 0 var(--gutter); height: var(--tick); display: flex; align-items: center; font-size: 0.95rem; text-transform: uppercase; border-bottom: 1px solid var(--ink); flex: none; }
+  .scroll { overflow-y: auto; padding: var(--gutter); padding-right: 30px; flex: 1; min-height: 0; }
+  .about { background: var(--wash); }
+  .scroll p { margin: 0 0 1em; font-size: 0.9rem; line-height: 1.3; }
+  .scroll .big { font-size: 1.25rem; line-height: 1.2; }
+  .scroll a { text-decoration: underline; }
+  .grp { margin-bottom: 1.4em; }
+  .grp h3, .services h3 { margin: 0 0 0.4em; font-size: 0.9rem; text-transform: uppercase; }
+  .grp ul, .services ol { list-style: none; margin: 0; padding: 0; }
+  .grp li { margin: 0 0 0.6em; font-size: 0.9rem; line-height: 1.3; }
+  .grp li a { text-decoration: none; }
+  .grp li a:hover { text-decoration: underline; }
+  .grp li span, .services li span { display: block; font-size: 0.8rem; }
+  .services li { margin: 0 0 0.9em; font-size: 0.9rem; line-height: 1.3; }
+  .services ol { margin-bottom: 1.6em; }
+  .frame { position: relative; flex: 1; min-height: 0; background: #000; }
+  .frame a { position: absolute; inset: 0; opacity: 0; transition: opacity 0.3s; }
+  .frame a.on { opacity: 1; }
+  .frame img { width: 100%; height: 100%; object-fit: cover; }
+  .frame .cap { position: absolute; left: 0; right: 0; bottom: 0; padding: 0.6rem var(--gutter); background: #000; color: #fff; font-size: 0.8rem; line-height: 1.3; }
+  @media (max-width: 900px) {
+    .bureau { grid-template-columns: 1fr; height: auto; }
+    .col { border-right: 0; border-bottom: 1px solid var(--ink); }
+    .scroll { overflow: visible; }
+    .frame { height: 60vw; }
+  }
+</style>

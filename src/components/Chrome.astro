@@ -1,5 +1,7 @@
 ---
+/* The chrome of every page: the black ticker, then the menu as a row of cells. */
 import { UI, altPath, type Lang } from '../i18n';
+import { getCatalogue } from '../lib/categories';
 
 interface Props { lang?: Lang; here?: 'selected' | 'index' | 'about' | 'services' | 'contact' }
 const { lang = 'en', here } = Astro.props;
@@ -7,9 +9,13 @@ const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const home = lang === 'de' ? `${base}/de` : base;
 const other = altPath(Astro.url.pathname, base);
+const now = (await getCatalogue(lang)).filter((w) => w.data.current);
+const office = lang === 'de' ? 'Büro für Raumerfahrung und Forschung' : 'Spatial-experience research office';
+const line = ['Studio No Frame', office, 'Berlin / Istanbul', ...now.map((w) => `${t.now}: ${w.data.title}, ${w.data.venue}${w.data.dates ? ` — ${w.data.dates}` : ''}`)].join('  ');
 ---
 
-<header class="rhead five" id="rhead">
+<header class="rhead" id="rhead">
+  <div class="ticker" aria-hidden="true">{[0, 1, 2, 3].map(() => <span>{line}</span>)}</div>
   <a class="studio" href={`${home}/`}>Studio No Frame</a>
   <span class="spacer"></span>
   <nav aria-label="Site">

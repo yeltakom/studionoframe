@@ -1,23 +1,26 @@
 /* Studio No Frame — the site.
-   A spatial-experience research office. The pages read like a report:
-   paper, ink, one marker colour for the notes; photographs are evidence,
-   each one a figure with registration marks and a numbered caption. */
+   A bureau. The graphic language of urban-surveillance.com (İpek Erdöl):
+   a black running ticker, a menu of ruled cells, columns divided by 1px
+   black rules that scroll on their own, uppercase heads, everything in
+   bold Helvetica, black on white, nothing else. */
 
 :root {
-  --paper: #fbfbf8;
-  --ink: #111;
-  --grey: #77776f;
-  --rule: #dcdcd5;
-  --wash: #efeee9;
-  --mark: #ff3d00;
-  --sans: 'Archivo', 'Helvetica Neue', Helvetica, Arial, sans-serif;
-  --mono: 'Azeret Mono', ui-monospace, 'SF Mono', Menlo, monospace;
-  --gutter: clamp(1.1rem, 3.5vw, 3.25rem);
-  --bar: 3.2rem;
+  --paper: #fff;
+  --ink: #000;
+  --grey: #000;
+  --rule: #000;
+  --wash: #f2f2f2;
+  --mark: #000;
+  --sans: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --mono: 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --gutter: 15px;
+  --tick: 45px;
+  --bar: 90px;
 }
 
 *, *::before, *::after { box-sizing: border-box; }
 html { scroll-behavior: smooth; }
+::-webkit-scrollbar { width: 1px; height: 1px; } ::-webkit-scrollbar-track { background: #f1f1f1; } ::-webkit-scrollbar-thumb { background: #000; }
 body {
   margin: 0;
   background: var(--paper);
@@ -25,7 +28,7 @@ body {
   font-family: var(--sans);
   font-size: clamp(0.92rem, 0.3vw + 0.85rem, 1rem);
   line-height: 1.55;
-  letter-spacing: -0.008em;
+  font-weight: 700;
   font-variant-numeric: tabular-nums;
   -webkit-font-smoothing: antialiased;
   overflow-x: clip;
@@ -265,3 +268,35 @@ button { font: inherit; }
 .cases a:hover b { color: var(--mark); }
 @media (max-width: 1000px) { .cases li, .cases li.s-a, .cases li.s-b { grid-column: span 6; } }
 @media (max-width: 600px) { .cases li, .cases li.s-a, .cases li.s-b, .cases li.s-c { grid-column: span 12; } .cases .s-c img { aspect-ratio: 3 / 2; } }
+
+
+/* ---------- the bureau: what the language changes everywhere ---------- */
+.label, .note, .rhead nav, .rfoot, .cat .no, .cat .typ, .cat .yr, .pj-facts dd, .pj-lead figcaption, .pj-figs figcaption { font-family: var(--sans); font-weight: 700; letter-spacing: 0; }
+.label { font-size: 0.8rem; text-transform: uppercase; }
+.note { font-size: 0.8rem; }
+.note .no { color: var(--ink); }
+.fig::before, .fig::after, .fig > i::before, .fig > i::after { display: none; }
+a:hover { text-decoration: underline; }
+.head h1, .pj-head h1, .page h1 { font-weight: 700; font-stretch: normal; letter-spacing: 0; text-transform: uppercase; font-size: clamp(1.3rem, 2.2vw, 1.8rem); max-width: none; line-height: 1.15; }
+.head p { color: var(--ink); font-size: 1rem; }
+.sec-h, .page .body h2, .page .prose h2 { text-transform: uppercase; }
+/* chrome: a ticker and a row of cells */
+.rhead { height: var(--bar); display: block; padding: 0; border-bottom: 1px solid var(--ink); background: var(--paper); }
+.rhead .ticker { height: var(--tick); background: #000; color: #fff; overflow: hidden; display: flex; align-items: center; white-space: nowrap; font-style: italic; font-weight: 700; font-size: 0.95rem; text-transform: uppercase; }
+.rhead .ticker > span { display: inline-block; padding-right: 3rem; animation: tick 40s linear infinite; }
+@keyframes tick { to { transform: translateX(-100%); } }
+.rhead .studio { position: absolute; left: -9999px; }
+.rhead .spacer { display: none; }
+.rhead nav { display: grid; grid-template-columns: repeat(5, 1fr) auto; height: var(--tick); font-size: 0.95rem; text-transform: uppercase; letter-spacing: 0; }
+.rhead nav a { opacity: 1; display: flex; align-items: center; padding: 0 var(--gutter); border-right: 1px solid var(--ink); border-bottom: 0; }
+.rhead nav a:last-child { border-right: 0; }
+.rhead nav a[aria-current='page'] { color: var(--ink); text-decoration: underline; }
+.rhead nav .lang { margin: 0; }
+.rhead.over { background: var(--paper); color: var(--ink); border-bottom-color: var(--ink); }
+.rfoot { font-size: 0.8rem; color: var(--ink); }
+@media (max-width: 760px) {
+  .rhead nav { grid-template-columns: repeat(3, 1fr); height: auto; }
+  .rhead nav a { height: var(--tick); border-bottom: 1px solid var(--ink); }
+  .rhead nav a:nth-child(3n) { border-right: 0; }
+  :root { --bar: 138px; }
+}
