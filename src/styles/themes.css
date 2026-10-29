@@ -1,0 +1,104 @@
+/* Three graphic languages on the same structure, switched with ?theme=…
+   (kept in localStorage, ?theme=off clears). None of them touches the
+   layout: only colour, type and one signature each. */
+
+/* ---------- 1 · Spektrum: black, white, and the studio's spectrum as a line ---------- */
+html[data-theme='spektrum'] {
+  --paper: #0a0a0a; --ink: #f3f3f3; --grey: #8d8d8d; --rule: #262626; --wash: #161616;
+  --sans: 'Instrument Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --display: 'Unbounded', 'Helvetica Neue', sans-serif;
+  --spectrum: linear-gradient(90deg, #ff3b3b, #ffb000, #38e05a, #1fb8ff, #7b3bff, #ff3bd6, #ff3b3b);
+}
+html[data-theme='spektrum'] .head h1, html[data-theme='spektrum'] .pj-head h1, html[data-theme='spektrum'] .page h1,
+html[data-theme='spektrum'] .sec-h, html[data-theme='spektrum'] .services h2 {
+  font-family: var(--display); font-weight: 500; letter-spacing: -0.01em; line-height: 1.08;
+}
+html[data-theme='spektrum'] .head h1, html[data-theme='spektrum'] .page h1 { font-size: clamp(1.9rem, 4.6vw, 4.2rem); }
+html[data-theme='spektrum'] .pj-head h1 { font-size: clamp(1.6rem, 3.6vw, 3.2rem); }
+html[data-theme='spektrum'] .rhead .studio { font-family: var(--display); font-weight: 500; font-size: 0.84rem; letter-spacing: 0; }
+html[data-theme='spektrum'] .rhead { border-bottom: 0; }
+html[data-theme='spektrum'] .rhead::after { content: ''; position: absolute; left: 0; right: 0; bottom: -2px; height: 2px; background: var(--spectrum); background-size: 200% 100%; animation: spectrum-run 18s linear infinite; }
+@keyframes spectrum-run { to { background-position: -200% 0; } }
+html[data-theme='spektrum'] .rhead nav a[aria-current='page'] { border-bottom: 0; background: var(--spectrum); -webkit-background-clip: text; background-clip: text; color: transparent; opacity: 1; }
+html[data-theme='spektrum'] .slider .dots button { background: #fff; }
+html[data-theme='spektrum'] .slider .dots button[aria-pressed='true'] { background: var(--spectrum); }
+html[data-theme='spektrum'] .filters button[aria-pressed='true'] { border-image: var(--spectrum) 1; border-bottom-width: 2px; }
+html[data-theme='spektrum'] .catalogue.motion .cat .r::before { background: var(--spectrum); height: 2px; bottom: -1px; }
+html[data-theme='spektrum'] .cat .r:hover { background: transparent; }
+html[data-theme='spektrum'] .cat .h, html[data-theme='spektrum'] .cat .group a, html[data-theme='spektrum'] .rfoot,
+html[data-theme='spektrum'] .pj-facts, html[data-theme='spektrum'] .pj-nav, html[data-theme='spektrum'] .others,
+html[data-theme='spektrum'] .services > li, html[data-theme='spektrum'] .head .now, html[data-theme='spektrum'] .pj-related .cat li:first-child .r { border-color: var(--ink); }
+html[data-theme='spektrum'] .page .mail { border-bottom: 2px solid transparent; border-image: var(--spectrum) 1; }
+html[data-theme='spektrum'] :focus-visible { outline-color: #fff; }
+@media (prefers-reduced-motion: reduce) { html[data-theme='spektrum'] .rhead::after { animation: none; } }
+
+/* ---------- 2 · Infrarot: a cold room, the photographs warm up under the hand ---------- */
+html[data-theme='infrarot'] {
+  --paper: #0e0b2b; --ink: #ffe14d; --grey: #a493e6; --rule: #2a2360; --wash: #171340;
+  --sans: 'Instrument Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --display: 'Chakra Petch', 'Helvetica Neue', sans-serif;
+}
+html[data-theme='infrarot'] body { color: #efe9ff; }
+html[data-theme='infrarot'] .head h1, html[data-theme='infrarot'] .pj-head h1, html[data-theme='infrarot'] .page h1,
+html[data-theme='infrarot'] .sec-h, html[data-theme='infrarot'] .services h2, html[data-theme='infrarot'] .cat .ttl, html[data-theme='infrarot'] .pgrid b,
+html[data-theme='infrarot'] .pj-nav strong {
+  font-family: var(--display); font-weight: 600; text-transform: uppercase; letter-spacing: 0.01em; color: var(--ink);
+}
+html[data-theme='infrarot'] .head h1, html[data-theme='infrarot'] .page h1 { font-size: clamp(2rem, 5vw, 4.6rem); line-height: 1; }
+html[data-theme='infrarot'] .pj-head h1 { font-size: clamp(1.7rem, 4vw, 3.6rem); line-height: 1; }
+html[data-theme='infrarot'] .cat .ttl { font-size: 1rem; }
+html[data-theme='infrarot'] .rhead .studio, html[data-theme='infrarot'] .rhead nav, html[data-theme='infrarot'] .label, html[data-theme='infrarot'] .filters,
+html[data-theme='infrarot'] .cat .h .label, html[data-theme='infrarot'] .rfoot { font-family: var(--display); }
+html[data-theme='infrarot'] .rhead .studio { text-transform: uppercase; letter-spacing: 0.04em; color: var(--ink); }
+html[data-theme='infrarot'] .rhead nav a { opacity: 0.75; color: #efe9ff; }
+html[data-theme='infrarot'] .rhead nav a:hover, html[data-theme='infrarot'] .rhead nav a[aria-current='page'] { opacity: 1; color: var(--ink); }
+html[data-theme='infrarot'] .rhead, html[data-theme='infrarot'] .cat .h, html[data-theme='infrarot'] .rfoot, html[data-theme='infrarot'] .pj-facts,
+html[data-theme='infrarot'] .pj-nav, html[data-theme='infrarot'] .others, html[data-theme='infrarot'] .services > li, html[data-theme='infrarot'] .head .now,
+html[data-theme='infrarot'] .cat .group a, html[data-theme='infrarot'] .pj-related .cat li:first-child .r { border-color: var(--ink); }
+html[data-theme='infrarot'] .filters button[aria-pressed='true'], html[data-theme='infrarot'] .page .mail, html[data-theme='infrarot'] .all a { color: var(--ink); border-color: var(--ink); }
+html[data-theme='infrarot'] .catalogue.motion .cat .r::before { background: var(--ink); }
+html[data-theme='infrarot'] .cat .r:hover { background: var(--wash); }
+html[data-theme='infrarot'] .slider .dots button { background: var(--ink); }
+/* the signature: every photograph arrives as a cold thermal plate and warms to colour under the cursor */
+html[data-theme='infrarot'] .slider img, html[data-theme='infrarot'] .pgrid img, html[data-theme='infrarot'] .pj-lead img, html[data-theme='infrarot'] .pj-figs img, html[data-theme='infrarot'] .peek img {
+  filter: grayscale(1) contrast(1.15) brightness(0.9) sepia(1) hue-rotate(205deg) saturate(4);
+  transition: filter 700ms cubic-bezier(.2,.7,.2,1);
+}
+html[data-theme='infrarot'] .pgrid a:hover img, html[data-theme='infrarot'] .pgrid a:focus-visible img, html[data-theme='infrarot'] .pj-lead figure:hover img, html[data-theme='infrarot'] .pj-figs figure:hover img, html[data-theme='infrarot'] .slider a.is-on:hover img, html[data-theme='infrarot'] .slider a:focus-visible img { filter: none; }
+html[data-theme='infrarot'] :focus-visible { outline-color: var(--ink); }
+html[data-theme='infrarot'] .pj-text .prose, html[data-theme='infrarot'] .page .body, html[data-theme='infrarot'] .page .prose { color: #efe9ff; }
+@media (hover: none) { html[data-theme='infrarot'] .pj-lead img, html[data-theme='infrarot'] .pj-figs img { filter: none; } }
+
+/* ---------- 3 · Raster: grey stock, riso green, headlines in a dot matrix ---------- */
+html[data-theme='raster'] {
+  --paper: #ecece7; --ink: #141414; --grey: #6f6f6c; --rule: #c6c6c0; --wash: #e0e0da; --riso: #00a95c;
+  --sans: 'Work Sans', 'Helvetica Neue', Helvetica, Arial, sans-serif;
+  --display: 'Doto', 'Courier New', monospace;
+}
+html[data-theme='raster'] .head h1, html[data-theme='raster'] .pj-head h1, html[data-theme='raster'] .page h1,
+html[data-theme='raster'] .sec-h, html[data-theme='raster'] .services h2 {
+  font-family: var(--display); font-weight: 800; letter-spacing: 0.02em; line-height: 1.02; font-variation-settings: 'ROND' 100;
+}
+html[data-theme='raster'] .head h1, html[data-theme='raster'] .page h1 { font-size: clamp(2.2rem, 6vw, 5.4rem); }
+html[data-theme='raster'] .pj-head h1 { font-size: clamp(1.9rem, 4.4vw, 4rem); }
+html[data-theme='raster'] .sec-h, html[data-theme='raster'] .services h2 { font-size: clamp(1.4rem, 2.8vw, 2.3rem); }
+html[data-theme='raster'] .rhead .studio { font-family: var(--display); font-weight: 800; font-size: 1.05rem; letter-spacing: 0.02em; font-variation-settings: 'ROND' 100; }
+html[data-theme='raster'] .rhead nav a { font-weight: 600; }
+html[data-theme='raster'] .rhead nav a[aria-current='page'], html[data-theme='raster'] .filters button[aria-pressed='true'],
+html[data-theme='raster'] .page .mail, html[data-theme='raster'] .all a, html[data-theme='raster'] .pj-head .meta a:hover,
+html[data-theme='raster'] .cat .r:hover .ttl, html[data-theme='raster'] .pgrid a:hover b, html[data-theme='raster'] .pj-related h2 a:hover { color: var(--riso); border-color: var(--riso); text-decoration: none; }
+html[data-theme='raster'] .cat .h, html[data-theme='raster'] .cat .r, html[data-theme='raster'] .rfoot, html[data-theme='raster'] .pj-facts, html[data-theme='raster'] .pj-nav,
+html[data-theme='raster'] .others, html[data-theme='raster'] .services > li, html[data-theme='raster'] .head .now, html[data-theme='raster'] .cat .group a, html[data-theme='raster'] .rhead { border-style: dotted; border-width: 2px 0 0; }
+html[data-theme='raster'] .cat .h { border-bottom: 2px dotted var(--ink); } html[data-theme='raster'] .cat .r { border-top: 0; border-bottom: 2px dotted var(--rule); }
+html[data-theme='raster'] .rhead { border-width: 0 0 2px; border-color: var(--ink); }
+html[data-theme='raster'] .catalogue.motion .cat .r::before { background: var(--riso); height: 2px; }
+html[data-theme='raster'] .catalogue.motion .cat .go { color: var(--riso); }
+html[data-theme='raster'] .cat .r:hover { background: transparent; }
+html[data-theme='raster'] .slider .dots button[aria-pressed='true'] { background: var(--riso); opacity: 1; }
+html[data-theme='raster'] .pgrid img, html[data-theme='raster'] .slider, html[data-theme='raster'] .pj-lead img, html[data-theme='raster'] .pj-figs img { outline: 2px dotted var(--ink); outline-offset: -2px; }
+html[data-theme='raster'] :focus-visible { outline: 2px dotted var(--riso); }
+
+/* ---------- the small switch at the foot of the window while trying them ---------- */
+.theme-pill { position: fixed; left: 0.75rem; bottom: 0.75rem; z-index: 70; display: flex; gap: 0.6rem; padding: 0.45rem 0.7rem; font: 500 0.66rem/1 'Helvetica Neue', Helvetica, Arial, sans-serif; letter-spacing: 0.1em; text-transform: uppercase; background: #111; color: #fff; }
+.theme-pill a { opacity: 0.55; } .theme-pill a:hover, .theme-pill a.on { opacity: 1; text-decoration: underline; text-underline-offset: 0.2em; }
+@media print { .theme-pill { display: none; } }

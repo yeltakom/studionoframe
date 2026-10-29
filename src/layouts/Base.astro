@@ -2,6 +2,7 @@
 import { SITE } from '../site';
 import { UI, type Lang } from '../i18n';
 import '../styles/global.css';
+import '../styles/themes.css';
 
 interface Props { title?: string; description?: string; image?: string; lang?: Lang; schema?: any }
 const { title, description, image, lang = 'en', schema } = Astro.props;
@@ -32,6 +33,25 @@ const ga = SITE.GA_MEASUREMENT_ID;
     <meta property="og:image" content={share} />
     <meta name="twitter:card" content="summary_large_image" />
     <meta name="twitter:image" content={share} />
+    <script is:inline>
+      /* the graphic-language trials: ?theme=spektrum|infrarot|raster sticks until ?theme=off */
+      (() => { try {
+        const FONTS = 'https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Doto:wght@600;800&family=Instrument+Sans:wght@400;500;600&family=Unbounded:wght@500;700&family=Work+Sans:wght@400;500;600&display=swap';
+        const u = new URL(location.href), q = u.searchParams.get('theme'), peek = u.searchParams.has('peek');
+        if (peek && q) { document.documentElement.dataset.theme = q; const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = FONTS; document.head.appendChild(l); return; }
+        if (q !== null) { q && q !== 'off' ? localStorage.setItem('snf-theme', q) : localStorage.removeItem('snf-theme'); u.searchParams.delete('theme'); history.replaceState(null, '', u); }
+        const t = localStorage.getItem('snf-theme');
+        if (t) {
+          document.documentElement.dataset.theme = t;
+          const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = FONTS; document.head.appendChild(l);
+          addEventListener('DOMContentLoaded', () => {
+            const p = document.createElement('div'); p.className = 'theme-pill';
+            p.innerHTML = ['spektrum', 'infrarot', 'raster'].map((k) => `<a href="?theme=${k}" class="${k === t ? 'on' : ''}">${k}</a>`).join('') + '<a href="?theme=off">kapat</a>';
+            document.body.appendChild(p);
+          });
+        }
+      } catch (e) {} })();
+    </script>
     <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
     <link rel="sitemap" href={`${base}/sitemap.xml`} />
     {schema && <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />}
