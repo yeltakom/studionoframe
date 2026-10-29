@@ -1,0 +1,53 @@
+---
+/* Giriş C — Dossier: text first, like Space Caviar. The left column is the
+   whole studio statement and stays put; the right column is the evidence,
+   one figure per project passing by as you read. */
+import Base from '../../../layouts/Base.astro';
+import Chrome from '../../../components/Chrome.astro';
+import SiteFoot from '../../../components/SiteFoot.astro';
+import { getCatalogue, catTitle } from '../../../lib/categories';
+import { srcset } from '../../../lib/img';
+import { SITE } from '../../../site';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const works = (await getCatalogue('en')).sort((a, b) => b.year - a.year);
+---
+<Base title="Giriş C — Dossier">
+  <Chrome here="selected" />
+  <div class="below"></div>
+  <section class="dossier">
+    <div class="text">
+      <p class="big">Studio No Frame is a spatial-experience research office working at the intersection of exhibition architecture, art production and curation.</p>
+      <p>Founded in 2014 in Istanbul and based in Berlin since 2016, the studio uses built exhibitions, installations and documentation to investigate what a room does to the people inside it. Its work has been shown at Haus der Kulturen der Welt, Pera Museum, SALT, Museum Ludwig, MAXXI and the Venice and Istanbul biennials.</p>
+      <p><span class="k">Who we are</span> Yelta Köm, with a rotating group of designers, researchers and production managers.</p>
+      <p><span class="k">Artists we have worked with</span> Abbas Zahedi, Ahmet Öğüt, Amy Lien &amp; Enzo Camacho, Ayşe Erkmen, Füsun Onur, Gülsün Karamustafa, Leman Darıcıoğlu, Monira Al Qadiri, Raul Walch, Tomás Saraceno, Vera Molnár.</p>
+      <p><span class="k">Contact</span> <a href={`mailto:${SITE.email}`}>{SITE.email}</a> · <a href={SITE.instagram}>Instagram</a></p>
+      <p class="idx"><a href={`${base}/projects/`}>Index of all 19 projects →</a></p>
+    </div>
+    <ol class="figs">
+      {works.map((w, i) => (
+        <li>
+          <a href={`${base}/projects/${w.id}`}>
+            <span class="fig"><img src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes="(min-width: 900px) 55vw, 100vw" alt="" loading={i < 2 ? 'eager' : 'lazy'} /><i></i></span>
+            <span class="note"><span class="no">Fig. {String(i + 1).padStart(2, '0')}</span><b>{w.data.title}</b> — {w.data.venue}, {w.year} · {catTitle(w.cat, 'en')}</span>
+          </a>
+        </li>
+      ))}
+    </ol>
+  </section>
+  <SiteFoot />
+</Base>
+
+<style>
+  .dossier { padding: clamp(1.5rem, 5vh, 3rem) var(--gutter) clamp(3rem, 7vw, 5rem); display: grid; grid-template-columns: minmax(0, 5fr) minmax(0, 7fr); gap: 2rem clamp(2rem, 6vw, 7rem); align-items: start; }
+  .text { position: sticky; top: calc(var(--bar) + 1.5rem); }
+  .text p { margin: 0 0 1.1rem; max-width: 46ch; font-size: 0.98rem; line-height: 1.45; }
+  .text .big { font-size: clamp(1.2rem, 1.9vw, 1.7rem); line-height: 1.25; letter-spacing: -0.02em; font-weight: 600; font-stretch: 112%; margin-bottom: 1.5rem; }
+  .k { display: block; font-family: var(--mono); font-size: 0.66rem; color: var(--mark); margin-bottom: 0.2rem; }
+  .text a { border-bottom: 1px solid var(--rule); }
+  .idx { margin-top: 2rem; }
+  .figs { list-style: none; margin: 0; padding: 0; display: grid; gap: clamp(2rem, 4vw, 3.5rem); }
+  .figs img { aspect-ratio: 3/2; object-fit: cover; }
+  .figs .note { display: block; margin-top: 0.6rem; }
+  .figs a:hover b { color: var(--mark); }
+  @media (max-width: 900px) { .dossier { grid-template-columns: 1fr; } .text { position: static; } }
+</style>
