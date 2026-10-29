@@ -36,9 +36,10 @@ const facts: [string, string | undefined][] = [
 
 {lead && (
   <div class="pj-lead">
-    <figure>
+    <figure class="fig">
       <img src={`${base}${lead}`} srcset={srcset(base, lead)} sizes={SIZES.full} alt={`${d.title} — ${d.venue}`} fetchpriority="high" decoding="async" />
-      <figcaption>{caption(lead, 1).text}{caption(lead, 1).credit && <span class="credit"> · {caption(lead, 1).credit}</span>}</figcaption>
+      <i></i>
+      <figcaption><b>Fig. 01</b>{caption(lead, 1).text}{caption(lead, 1).credit && <span class="credit"> · {caption(lead, 1).credit}</span>}</figcaption>
     </figure>
   </div>
 )}
@@ -54,9 +55,10 @@ const facts: [string, string | undefined][] = [
 {rest.length > 0 && (
   <div class="pj-figs">
     {rest.map((src: string, i: number) => (
-      <figure>
+      <figure class="fig">
         <img src={`${base}${src}`} srcset={srcset(base, src)} sizes={SIZES.half} alt={capOf(src)?.text || `${d.title} — ${d.venue}`} loading="lazy" decoding="async" />
-        <figcaption>{caption(src, i + 2).text}{caption(src, i + 2).credit && <span class="credit"> · {caption(src, i + 2).credit}</span>}</figcaption>
+        <i></i>
+        <figcaption><b>Fig. {String(i + 2).padStart(2, '0')}</b>{caption(src, i + 2).text}{caption(src, i + 2).credit && <span class="credit"> · {caption(src, i + 2).credit}</span>}</figcaption>
       </figure>
     ))}
   </div>
