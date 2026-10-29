@@ -46,7 +46,7 @@ const ga = SITE.GA_MEASUREMENT_ID;
           const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = FONTS; document.head.appendChild(l);
           addEventListener('DOMContentLoaded', () => {
             const p = document.createElement('div'); p.className = 'theme-pill';
-            p.innerHTML = ['spektrum', 'infrarot', 'raster'].map((k) => `<a href="?theme=${k}" class="${k === t ? 'on' : ''}">${k}</a>`).join('') + '<a href="?theme=off">kapat</a>';
+            p.innerHTML = ['spektrum', 'weiss', 'infrarot', 'raster'].map((k) => `<a href="?theme=${k}" class="${k === t ? 'on' : ''}">${k}</a>`).join('') + '<a href="?theme=off">kapat</a>';
             document.body.appendChild(p);
           });
         }
