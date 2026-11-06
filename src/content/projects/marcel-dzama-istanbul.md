@@ -10,7 +10,7 @@ current: false
 dates: ""
 curator: ""
 client: ""
-team: ""
+team: "Serap Kaçmaz"
 photo: ""
 summary: "Complete exhibition design and installation management for the first solo exhibition of Marcel Dzama in Turkey at Pera Museum, featuring drawings, sculptures, and video."
 cover: "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-01.jpg"

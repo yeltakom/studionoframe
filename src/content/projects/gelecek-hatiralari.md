@@ -10,7 +10,7 @@ current: false
 dates: ""
 curator: ""
 client: ""
-team: ""
+team: "Nisa Gökgöz, Bengü Erdem, Elif Tan, Serap Kaçmaz"
 photo: ""
 summary: "Full exhibition design and installation management for Souvenirs of the Future at Pera Museum."
 cover: "/images/projects/gelecek-hatiralari/gelecek-hatiralari-01.jpg"

@@ -10,7 +10,7 @@ current: false
 dates: ""
 curator: "Paz Guevara, Bonaventure Soh Bejeng Ndikung"
 client: "Haus der Kulturen der Welt (HKW), Berlin"
-team: ""
+team: "Serap Kaçmaz, Pelin Gezer"
 photo: "Hanna Wiedemann / HKW"
 summary: "Exhibition architecture for Tirailleurs: Trials and Tribulations at Haus der Kulturen der Welt (HKW), Berlin, curated by Paz Guevara and Bonaventure Soh Bejeng Ndikung."
 cover: "/images/projects/tirailleurs/tirailleurs-01.jpg"

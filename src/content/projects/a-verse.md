@@ -10,7 +10,7 @@ current: false
 dates: ""
 curator: ""
 client: ""
-team: ""
+team: "Pelin Gezer"
 photo: ""
 summary: "Exhibition architecture and spatial concept for the first solo exhibition of Swedish artist Åsa Jungnelius in Turkey, curated by Elif Kamışlı."
 cover: "/images/projects/a-verse/a-verse-01.jpg"

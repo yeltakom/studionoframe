@@ -10,7 +10,7 @@ current: false
 dates: ""
 curator: ""
 client: ""
-team: ""
+team: "Serap Kaçmaz, Pelin Gezer"
 photo: ""
 summary: "Ausstellungsarchitektur für Feelings in Common: Works from the British Council Collection, kuratiert von Ulya Soley, entlang der drei Kapitel der Schau — „Preserving Care“, „Familiar Faces“ und „Future Perfect“."
 cover: "/images/projects/feelings-in-common/feelings-in-common-01.jpg"
