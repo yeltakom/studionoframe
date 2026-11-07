@@ -40,3 +40,23 @@ const office = lang === 'de' ? 'Forschungsbasierte Praxis räumlicher und visuel
     <a class="lang" href={other} lang={lang === 'de' ? 'en' : 'de'} aria-label={t.switchTo}>{t.short}</a>
   </nav>
 </header>
+
+<aside class="wip" id="wip" role="status" hidden>
+  <p>{t.home.note}</p>
+  <button type="button" aria-label={lang === 'de' ? 'Schließen' : 'Close'}>×</button>
+</aside>
+
+<script is:inline>
+(() => {
+  /* once per visit: it slides in, and it stays closed from page to page */
+  const box = document.getElementById('wip');
+  let seen = false;
+  try { seen = sessionStorage.getItem('wip') === '1'; sessionStorage.setItem('wip', '1'); } catch (e) {}
+  if (seen) return;
+  box.hidden = false;
+  box.querySelector('button').addEventListener('click', () => {
+    box.classList.add('out');
+    setTimeout(() => { box.hidden = true; }, 450);
+  });
+})();
+</script>
