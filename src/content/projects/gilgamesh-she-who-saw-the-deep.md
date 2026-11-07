@@ -10,7 +10,7 @@ current: false
 dates: ""
 curator: ""
 client: ""
-team: ""
+team: "Serap Kaçmaz, Kubilay Ercelep, Elif Çak"
 photo: ""
 summary: "Line production for the film by Anton Vidokle and Pelin Tan, shot along the Tigris near Mardin, Hasankeyf and Dara with an all-women cast from the Amed Theater in Diyarbakır."
 images: []

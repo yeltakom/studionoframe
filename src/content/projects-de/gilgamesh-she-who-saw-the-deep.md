@@ -10,7 +10,7 @@ current: false
 dates: ""
 curator: ""
 client: ""
-team: ""
+team: "Serap Kaçmaz, Kubilay Ercelep, Elif Çak"
 photo: ""
 summary: "Line Production für den Film von Anton Vidokle und Pelin Tan, gedreht am Tigris bei Mardin, Hasankeyf und Dara, mit einem rein weiblichen Ensemble des Amed Theaters in Diyarbakır."
 images: []
