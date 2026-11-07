@@ -2,9 +2,9 @@
 title: "Leman Sevda Darıcıoğlu: Leaking time"
 venue: "Depo, Istanbul"
 year: "2021"
-role: "Video"
+role: "Videoproduktion"
 order: 23
-category: "artist-collaborations"
+category: "production"
 home: false
 current: false
 dates: ""
@@ -13,9 +13,25 @@ artists: "Leman Sevda Darıcıoğlu"
 client: ""
 team: "Elif Çak"
 photo: "Yelta Köm"
-summary: "Video für Leaking time (2021) von Leman Sevda Darıcıoğlu, zwei Arbeiten über hegemoniale Zeit und den queeren Körper, gezeigt in Tempo Incognito: On Flows, Rhythm, and Movement, kuratiert von Rana Öztürk im Depo, Istanbul."
-images: []
-captions: []
+summary: "Videoproduktion für Leaking time (2021) von Leman Sevda Darıcıoğlu, zwei Videoarbeiten von Darıcıoğlu über hegemoniale Zeit und den queeren Körper, gezeigt in Tempo Incognito: On Flows, Rhythm, and Movement, kuratiert von Rana Öztürk im Depo, Istanbul."
+images:
+  - "/images/projects/leman-daricioglu-leaking-time/leman-daricioglu-leaking-time-01.jpg"
+  - "/images/projects/leman-daricioglu-leaking-time/leman-daricioglu-leaking-time-02.jpg"
+  - "/images/projects/leman-daricioglu-leaking-time/leman-daricioglu-leaking-time-03.jpg"
+  - "/images/projects/leman-daricioglu-leaking-time/leman-daricioglu-leaking-time-04.jpg"
+captions:
+  - image: "/images/projects/leman-daricioglu-leaking-time/leman-daricioglu-leaking-time-01.jpg"
+    text: "Leaking time, installation view, Tempo Incognito, Depo, Istanbul, 2021"
+    credit: "Photo: Yelta Köm"
+  - image: "/images/projects/leman-daricioglu-leaking-time/leman-daricioglu-leaking-time-02.jpg"
+    text: "Leaking time, installation view, Tempo Incognito, Depo, Istanbul, 2021"
+    credit: "Photo: Yelta Köm"
+  - image: "/images/projects/leman-daricioglu-leaking-time/leman-daricioglu-leaking-time-03.jpg"
+    text: "Leaking time, 2021 © Leman Sevda Darıcıoğlu"
+    credit: "Photo: Yelta Köm"
+  - image: "/images/projects/leman-daricioglu-leaking-time/leman-daricioglu-leaking-time-04.jpg"
+    text: "Leaking time, 2021 © Leman Sevda Darıcıoğlu"
+    credit: "Photo: Yelta Köm"
 ---
 
-Video für Leaking time (2021) von Leman Sevda Darıcıoğlu, zwei Arbeiten über hegemoniale Zeit und den queeren Körper, gezeigt in Tempo Incognito: On Flows, Rhythm, and Movement, kuratiert von Rana Öztürk im Depo, Istanbul.
+Videoproduktion für Leaking time (2021) von Leman Sevda Darıcıoğlu, zwei Videoarbeiten von Darıcıoğlu über hegemoniale Zeit und den queeren Körper, gezeigt in Tempo Incognito: On Flows, Rhythm, and Movement, kuratiert von Rana Öztürk im Depo, Istanbul.

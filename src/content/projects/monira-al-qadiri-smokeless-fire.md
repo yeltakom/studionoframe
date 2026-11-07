@@ -14,8 +14,32 @@ client: "Bradford City of Culture 2025"
 team: ""
 photo: ""
 summary: "Production drawings for Monira Al Qadiri’s The Children of Smokeless Fire, seventeen outdoor printed aluminium panels that place djinn cutouts in natural settings, commissioned by Bradford City of Culture 2025."
-images: []
-captions: []
+images:
+  - "/images/projects/monira-al-qadiri-smokeless-fire/monira-al-qadiri-smokeless-fire-01.jpg"
+  - "/images/projects/monira-al-qadiri-smokeless-fire/monira-al-qadiri-smokeless-fire-02.jpg"
+  - "/images/projects/monira-al-qadiri-smokeless-fire/monira-al-qadiri-smokeless-fire-03.jpg"
+  - "/images/projects/monira-al-qadiri-smokeless-fire/monira-al-qadiri-smokeless-fire-04.jpg"
+  - "/images/projects/monira-al-qadiri-smokeless-fire/monira-al-qadiri-smokeless-fire-05.jpg"
+  - "/images/projects/monira-al-qadiri-smokeless-fire/monira-al-qadiri-smokeless-fire-06.jpg"
+captions:
+  - image: "/images/projects/monira-al-qadiri-smokeless-fire/monira-al-qadiri-smokeless-fire-01.jpg"
+    text: "The Children of Smokeless Fire, 2025 © Monira Al Qadiri"
+    credit: "Photo: David Lindsay"
+  - image: "/images/projects/monira-al-qadiri-smokeless-fire/monira-al-qadiri-smokeless-fire-02.jpg"
+    text: "The Children of Smokeless Fire, 2025 © Monira Al Qadiri"
+    credit: "Photo: David Lindsay"
+  - image: "/images/projects/monira-al-qadiri-smokeless-fire/monira-al-qadiri-smokeless-fire-03.jpg"
+    text: "The Children of Smokeless Fire, 2025 © Monira Al Qadiri"
+    credit: "Photo: David Lindsay"
+  - image: "/images/projects/monira-al-qadiri-smokeless-fire/monira-al-qadiri-smokeless-fire-04.jpg"
+    text: "The Children of Smokeless Fire, 2025 © Monira Al Qadiri"
+    credit: "Photo: David Lindsay"
+  - image: "/images/projects/monira-al-qadiri-smokeless-fire/monira-al-qadiri-smokeless-fire-05.jpg"
+    text: "The Children of Smokeless Fire, 2025 © Monira Al Qadiri"
+    credit: "Photo: Jon Super / PA Media Assignments"
+  - image: "/images/projects/monira-al-qadiri-smokeless-fire/monira-al-qadiri-smokeless-fire-06.jpg"
+    text: "The Children of Smokeless Fire, 2025 © Monira Al Qadiri"
+    credit: ""
 ---
 
 Production drawings for Monira Al Qadiri’s The Children of Smokeless Fire, seventeen outdoor printed aluminium panels that place djinn cutouts in natural settings, commissioned by Bradford City of Culture 2025.
