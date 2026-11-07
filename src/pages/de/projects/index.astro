@@ -2,7 +2,7 @@
 import Base from '../../../layouts/Base.astro';
 import Chrome from '../../../components/Chrome.astro';
 import SiteFoot from '../../../components/SiteFoot.astro';
-import IndexTable from '../../../components/IndexTable.astro';
+import YearIndex from '../../../components/YearIndex.astro';
 import { getCatalogue } from '../../../lib/categories';
 import { UI } from '../../../i18n';
 
@@ -26,7 +26,7 @@ const now = works.filter((w) => w.data.current);
     )}
   </header>
 
-  <IndexTable works={works} lang={lang} root={`${home}/projects`} home={home} peek={false} motion type />
+  <YearIndex works={works} lang={lang} pad />
 
   <SiteFoot lang={lang} />
 </Base>

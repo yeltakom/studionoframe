@@ -1,0 +1,58 @@
+---
+/* The list of projects: by year, then by place, each written once. The rows
+   under them belong to it, so a museum never stacks up within a year. A
+   project without a place simply leaves the cell empty. */
+import { UI, type Lang } from '../i18n';
+import { catTitle, type Entry } from '../lib/categories';
+
+interface Props { works: Entry[]; lang?: Lang; pad?: boolean }
+const { lang = 'en', pad = false } = Astro.props;
+const t = UI[lang];
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const home = lang === 'de' ? `${base}/de` : base;
+const sorted = [...Astro.props.works].sort((a, b) =>
+  b.year - a.year || a.data.venue.localeCompare(b.data.venue) || a.data.title.localeCompare(b.data.title));
+const rows = sorted.map((w, i) => {
+  const prev = sorted[i - 1];
+  const newYear = !prev || prev.year !== w.year;
+  const newPlace = newYear || prev.data.venue !== w.data.venue;
+  return { w, newYear, newPlace };
+});
+---
+
+<div class:list={['yi', { pad }]}>
+  <div class="h">
+    <span>{t.columns.year}</span><span>{t.columns.venue}</span><span>{t.columns.project}</span><span>{t.columns.type}</span>
+  </div>
+  {rows.map(({ w, newYear, newPlace }, i) => (
+    <a class:list={['r', { ny: newYear && i > 0, np: newPlace && !newYear }]} href={`${home}/projects/${w.id}`} data-id={w.id}>
+      <span class="y">{newYear ? w.year : ''}</span>
+      <span class="p">{newPlace ? w.data.venue : ''}</span>
+      <span class="ttl">{w.data.title}</span>
+      <span class="k">{catTitle(w.cat, lang)}</span>
+    </a>
+  ))}
+</div>
+
+<style>
+  .yi { display: block; }
+  .yi.pad { padding: 0 var(--gutter) 3rem; }
+  .h, .r { display: grid; grid-template-columns: 4.5rem minmax(0, 17rem) minmax(0, 1fr) 11rem; gap: 0 1rem; align-items: baseline; line-height: 1.25; }
+  .h { padding-bottom: 1rem; font-size: 0.75rem; text-transform: uppercase; }
+  .r { padding: 0.3rem 0; }
+  .r.ny { margin-top: 1.1rem; }
+  .r.np { margin-top: 0.5rem; }
+  .p { font-size: 0.92rem; font-weight: 400; }
+  .ttl { text-transform: uppercase; }
+  .k { font-size: 0.75rem; font-weight: 400; }
+  .r:hover { text-decoration: none; }
+  .r:hover .ttl { text-decoration: underline; }
+  @media (max-width: 760px) {
+    .h { display: none; }
+    .r { grid-template-columns: 3.4rem minmax(0, 1fr); }
+    .p, .ttl, .k { grid-column: 2; }
+    .p:empty { display: none; }
+    .p { margin-bottom: 0.15rem; }
+    .y { grid-row: 1; }
+  }
+</style>
