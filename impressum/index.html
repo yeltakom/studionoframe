@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="en"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Impressum — Studio No Frame</title><meta name="description" content="Angaben gemäß § 5 TMG."><link rel="canonical" href="https://noframe.studio/impressum/"><meta property="og:type" content="website"><meta property="og:site_name" content="Studio No Frame"><meta property="og:locale" content="en_GB"><meta property="og:title" content="Impressum — Studio No Frame"><meta property="og:description" content="Angaben gemäß § 5 TMG."><meta property="og:url" content="https://noframe.studio/impressum/"><meta property="og:image" content="https://noframe.studio/images/og/default.jpg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://noframe.studio/images/og/default.jpg"><script>
+      /* the graphic-language trials: ?theme=spektrum|infrarot|raster sticks until ?theme=off */
+      (() => { try {
+        const FONTS = 'https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Doto:wght@600;800&family=Instrument+Sans:wght@400;500;600&family=Unbounded:wght@500;700&family=Work+Sans:wght@400;500;600&display=swap';
+        const u = new URL(location.href), q = u.searchParams.get('theme'), peek = u.searchParams.has('peek');
+        if (peek && q) { document.documentElement.dataset.theme = q; const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = FONTS; document.head.appendChild(l); return; }
+        if (q !== null) { q && q !== 'off' ? localStorage.setItem('snf-theme', q) : localStorage.removeItem('snf-theme'); u.searchParams.delete('theme'); history.replaceState(null, '', u); }
+        const t = localStorage.getItem('snf-theme');
+        if (t) {
+          document.documentElement.dataset.theme = t;
+          const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = FONTS; document.head.appendChild(l);
+          addEventListener('DOMContentLoaded', () => {
+            const p = document.createElement('div'); p.className = 'theme-pill';
+            p.innerHTML = ['spektrum', 'weiss', 'infrarot', 'raster'].map((k) => `<a href="?theme=${k}" class="${k === t ? 'on' : ''}">${k}</a>`).join('') + '<a href="?theme=off">kapat</a>';
+            document.body.appendChild(p);
+          });
+        }
+      } catch (e) {} })();
+    </script><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/favicon.png"><link rel="sitemap" href="/sitemap.xml"><link rel="stylesheet" href="/_astro/SiteFoot.CUJA6JMh.css"></head><body><header class="rhead" id="rhead"><div class="band"><a class="studio" href="/">Studio No Frame</a><span class="tick"><span class="run"><span class="item">Research-based spatial and visual experience practice · Office · Berlin</span><span class="item">Research-based spatial and visual experience practice · Office · Berlin</span><span class="item">Research-based spatial and visual experience practice · Office · Berlin</span></span><span class="run" aria-hidden="true"><span class="item">Research-based spatial and visual experience practice · Office · Berlin</span><span class="item">Research-based spatial and visual experience practice · Office · Berlin</span><span class="item">Research-based spatial and visual experience practice · Office · Berlin</span></span></span></div><nav aria-label="Site"><a href="/">Selected</a><a href="/projects/">Index</a><a href="/about">Profile</a><a href="/services">Practice</a><a href="/contact">Contact</a><a class="lang" href="/de/" lang="de" aria-label="Deutsch">DE</a></nav></header><aside class="wip" id="wip" role="status" hidden><p>This site is still being built, so texts and images may be incomplete. Please bear with us.</p><button type="button" aria-label="Close">×</button></aside><script>
+(() => {
+  /* once per visit: it slides in, and it stays closed from page to page */
+  const box = document.getElementById('wip');
+  let seen = false;
+  try { seen = sessionStorage.getItem('wip') === '1'; sessionStorage.setItem('wip', '1'); } catch (e) {}
+  if (seen) return;
+  box.hidden = false;
+  box.querySelector('button').addEventListener('click', () => {
+    box.classList.add('out');
+    setTimeout(() => { box.hidden = true; }, 450);
+  });
+})();
+</script><section class="page"><h1>Impressum</h1><div class="body"><h2>Angaben gemäß § 5 TMG</h2><p>Studio No Frame<br>Yelta Köm<br>[Straße und Hausnummer]<br>[PLZ] Berlin<br>Deutschland</p><h2>Kontakt</h2><p>E-Mail: <a href="mailto:contact@noframe.studio">contact@noframe.studio</a></p><h2>Verantwortlich für den Inhalt nach § 55 Abs. 2 RStV</h2><p>Yelta Köm, Anschrift wie oben.</p><h2>Haftung für Inhalte</h2><p>Die Inhalte dieser Seiten wurden mit größter Sorgfalt erstellt. Für die Richtigkeit, Vollständigkeit und Aktualität der Inhalte können wir jedoch keine Gewähr übernehmen.</p><h2>Urheberrecht</h2><p>Die durch die Seitenbetreiber erstellten Inhalte und Werke auf diesen Seiten unterliegen dem deutschen Urheberrecht. Fotografien sind, soweit angegeben, mit Bildnachweis versehen; alle Rechte verbleiben bei den jeweiligen Urheber:innen.</p></div></section><footer class="rfoot"><span>© 2026 Studio No Frame · Berlin</span><nav><a href="mailto:contact@noframe.studio">contact@noframe.studio</a><a href="https://www.instagram.com/studio.no.frame/" rel="me noopener" target="_blank">Instagram</a><a href="/internships">Internships</a><a href="/impressum">Impressum</a><a href="/datenschutz">Datenschutz</a></nav></footer></body></html>

@@ -1,0 +1,32 @@
+<!DOCTYPE html><html lang="de"><head><meta charset="utf-8"><meta name="viewport" content="width=device-width, initial-scale=1"><title>Kontakt — Studio No Frame</title><meta name="description" content="Studio No Frame für Ausstellungsarchitektur, Produktion oder Kuratierung beauftragen. Schreiben Sie an contact@noframe.studio mit Ausstellung, Ort und Zeitraum."><link rel="canonical" href="https://noframe.studio/de/contact/"><meta property="og:type" content="website"><meta property="og:site_name" content="Studio No Frame"><meta property="og:locale" content="de_DE"><meta property="og:title" content="Kontakt — Studio No Frame"><meta property="og:description" content="Studio No Frame für Ausstellungsarchitektur, Produktion oder Kuratierung beauftragen. Schreiben Sie an contact@noframe.studio mit Ausstellung, Ort und Zeitraum."><meta property="og:url" content="https://noframe.studio/de/contact/"><meta property="og:image" content="https://noframe.studio/images/og/default.jpg"><meta name="twitter:card" content="summary_large_image"><meta name="twitter:image" content="https://noframe.studio/images/og/default.jpg"><script>
+      /* the graphic-language trials: ?theme=spektrum|infrarot|raster sticks until ?theme=off */
+      (() => { try {
+        const FONTS = 'https://fonts.googleapis.com/css2?family=Chakra+Petch:wght@500;600;700&family=Doto:wght@600;800&family=Instrument+Sans:wght@400;500;600&family=Unbounded:wght@500;700&family=Work+Sans:wght@400;500;600&display=swap';
+        const u = new URL(location.href), q = u.searchParams.get('theme'), peek = u.searchParams.has('peek');
+        if (peek && q) { document.documentElement.dataset.theme = q; const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = FONTS; document.head.appendChild(l); return; }
+        if (q !== null) { q && q !== 'off' ? localStorage.setItem('snf-theme', q) : localStorage.removeItem('snf-theme'); u.searchParams.delete('theme'); history.replaceState(null, '', u); }
+        const t = localStorage.getItem('snf-theme');
+        if (t) {
+          document.documentElement.dataset.theme = t;
+          const l = document.createElement('link'); l.rel = 'stylesheet'; l.href = FONTS; document.head.appendChild(l);
+          addEventListener('DOMContentLoaded', () => {
+            const p = document.createElement('div'); p.className = 'theme-pill';
+            p.innerHTML = ['spektrum', 'weiss', 'infrarot', 'raster'].map((k) => `<a href="?theme=${k}" class="${k === t ? 'on' : ''}">${k}</a>`).join('') + '<a href="?theme=off">kapat</a>';
+            document.body.appendChild(p);
+          });
+        }
+      } catch (e) {} })();
+    </script><link rel="icon" type="image/png" href="/favicon.png"><link rel="apple-touch-icon" href="/favicon.png"><link rel="sitemap" href="/sitemap.xml"><link rel="stylesheet" href="/_astro/SiteFoot.CUJA6JMh.css"></head><body><header class="rhead" id="rhead"><div class="band"><a class="studio" href="/de/">Studio No Frame</a><span class="tick"><span class="run"><span class="item">Forschungsbasierte Praxis räumlicher und visueller Erfahrung · Büro · Berlin</span><span class="item">Forschungsbasierte Praxis räumlicher und visueller Erfahrung · Büro · Berlin</span><span class="item">Forschungsbasierte Praxis räumlicher und visueller Erfahrung · Büro · Berlin</span></span><span class="run" aria-hidden="true"><span class="item">Forschungsbasierte Praxis räumlicher und visueller Erfahrung · Büro · Berlin</span><span class="item">Forschungsbasierte Praxis räumlicher und visueller Erfahrung · Büro · Berlin</span><span class="item">Forschungsbasierte Praxis räumlicher und visueller Erfahrung · Büro · Berlin</span></span></span></div><nav aria-label="Site"><a href="/de/">Auswahl</a><a href="/de/projects/">Index</a><a href="/de/about">Profil</a><a href="/de/services">Praxis</a><a href="/de/contact" aria-current="page">Kontakt</a><a class="lang" href="/contact" lang="en" aria-label="English">EN</a></nav></header><aside class="wip" id="wip" role="status" hidden><p>Diese Website befindet sich noch im Aufbau, Texte und Bilder können daher unvollständig sein. Wir bitten um Nachsicht.</p><button type="button" aria-label="Schließen">×</button></aside><script>
+(() => {
+  /* once per visit: it slides in, and it stays closed from page to page */
+  const box = document.getElementById('wip');
+  let seen = false;
+  try { seen = sessionStorage.getItem('wip') === '1'; sessionStorage.setItem('wip', '1'); } catch (e) {}
+  if (seen) return;
+  box.hidden = false;
+  box.querySelector('button').addEventListener('click', () => {
+    box.classList.add('out');
+    setTimeout(() => { box.hidden = true; }, 450);
+  });
+})();
+</script><section class="page"><h1>Erzählen Sie uns, was Sie bauen.</h1><div class="body"><p>Schreiben Sie uns mit der Ausstellung, dem Ort und dem Zeitraum, auf den Sie hinarbeiten — wir schicken das vollständige Portfolio und eine erste Einschätzung, was das Projekt braucht.</p><p style="margin: 2rem 0 2.5rem"><a class="mail" href="mailto:contact@noframe.studio">contact@noframe.studio</a></p><p>Sie suchen ein Praktikum? Lesen Sie zuerst die <a href="/de/internships">Praktikumsseite</a> — dort steht, was wir anbieten und was Sie schicken sollten.</p></div></section><footer class="rfoot"><span>© 2026 Studio No Frame · Berlin</span><nav><a href="mailto:contact@noframe.studio">contact@noframe.studio</a><a href="https://www.instagram.com/studio.no.frame/" rel="me noopener" target="_blank">Instagram</a><a href="/de/internships">Praktika</a><a href="/impressum">Impressum</a><a href="/datenschutz">Datenschutz</a></nav></footer></body></html>
