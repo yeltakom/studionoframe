@@ -10,7 +10,7 @@ current: false
 dates: ""
 curator: ""
 client: ""
-team: "Nisa Gökgöz, Bengü Erdem, Serap Kaçmaz, Kubilay Ercelep"
+team: "Nisa Gökgöz, Bengü Erdem, Serap Kaçmaz, Pelin Gezer, Kubilay Ercelep"
 photo: ""
 summary: "Exhibition layout and design consultancy for the spatial arrangement of the installation Once upon a time… within the Füsun Onur retrospective at Museum Ludwig, Cologne, developed in collaboration with the curatorial team and the museum's architectural context."
 cover: "/images/projects/fusun-onur-ludwig/fusun-onur-ludwig-01.jpg"
