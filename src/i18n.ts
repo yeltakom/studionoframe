@@ -14,6 +14,7 @@ export const UI = {
     nav: { selected: 'Selected', index: 'Index', studio: 'Profile', services: 'Practice', contact: 'Contact' },
     home: {
       title: 'Exhibitions as research.',
+      led: 'Led by Yelta Köm',
       line: 'A research-based practice of spatial and visual experience, working across spatial design, scenography and exhibition architecture. Office in Berlin.',
       note: 'This site is still being built, so texts and images may be incomplete. Please bear with us.',
       selected: 'Selected Projects', all: 'All', allProjects: 'All projects →', filter: 'Filter by category', photo: 'Photograph',
@@ -48,6 +49,7 @@ export const UI = {
     nav: { selected: 'Auswahl', index: 'Index', studio: 'Profil', services: 'Praxis', contact: 'Kontakt' },
     home: {
       title: 'Ausstellungen als Forschung.',
+      led: 'Geleitet von Yelta Köm',
       line: 'Eine forschungsbasierte Praxis räumlicher und visueller Erfahrung, zwischen Raumgestaltung, Szenografie und Ausstellungsarchitektur. Büro in Berlin.',
       note: 'Diese Website befindet sich noch im Aufbau, Texte und Bilder können daher unvollständig sein. Wir bitten um Nachsicht.',
       selected: 'Ausgewählte Projekte', all: 'Alle', allProjects: 'Alle Projekte →', filter: 'Nach Kategorie filtern', photo: 'Fotografie',
