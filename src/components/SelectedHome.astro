@@ -1,12 +1,10 @@
 ---
 /* The home page as a ruled sheet. Above: the statement in a narrow cell and
    the figure of the newest project in a wide one. Below: every project as a
-   row — the row under the pointer turns black and changes the figure. Then
-   the services as five cells. */
+   row; the row under the pointer changes the figure. */
 import { UI, type Lang } from '../i18n';
-import { CATEGORIES, catTitle, catLine, type Entry } from '../lib/categories';
+import { catTitle, type Entry } from '../lib/categories';
 import { srcset } from '../lib/img';
-import { SITE } from '../site';
 
 interface Props { works: Entry[]; lang?: Lang }
 const { lang = 'en' } = Astro.props;
@@ -14,7 +12,7 @@ const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const home = lang === 'de' ? `${base}/de` : base;
 const works = [...Astro.props.works].sort((a, b) => b.year - a.year);
-const first = works.find((w) => w.data.home) ?? works[0];
+const first = works.find((w) => w.data.home && w.data.cover) ?? works.find((w) => w.data.cover);
 const de = lang === 'de';
 ---
 
@@ -24,13 +22,11 @@ const de = lang === 'de';
       <span class="label">{de ? 'Studio' : 'About'}</span>
       <h1 class="big">{t.home.title}</h1>
       <p>{t.home.line}</p>
-      <p>{de
-        ? 'Jedes Projekt beginnt bei seinem eigenen Material: den Werken, dem Gebäude, den Menschen, die sich darin bewegen werden.'
-        : 'Each project starts from its own material: the works, the building, the people who will move through it.'}</p>
+      <p>{t.home.note}</p>
       <p class="more"><a href={`${home}/about`}>{de ? 'Profil' : 'Profile'} →</a></p>
     </div>
     <div class="cell figure" id="figure">
-      {works.map((w) => (
+      {works.filter((w) => w.data.cover).map((w) => (
         <a href={`${home}/projects/${w.id}`} data-id={w.id} class={w === first ? 'on' : ''} aria-hidden={w === first ? undefined : 'true'} tabindex={w === first ? undefined : -1}>
           <img src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes="(min-width: 900px) 66vw, 100vw" alt={`${w.data.title}, ${w.data.venue}`} loading={w === first ? 'eager' : 'lazy'} decoding="async" />
           <span class="cap"><span>{w.data.title}</span><span>{w.data.venue}, {w.data.year}</span></span>
@@ -52,26 +48,12 @@ const de = lang === 'de';
     ))}
   </section>
 
-  <section class="cells">
-    {CATEGORIES.map((c, i) => (
-      <a class="cell" href={`${home}/category/${c.key}`}>
-        <span class="label">{t.nav.services} {i + 1}</span>
-        <b>{catTitle(c, lang)}</b>
-        <span>{catLine(c, lang)}</span>
-      </a>
-    ))}
-    <div class="cell contact">
-      <span class="label">{t.nav.contact}</span>
-      <b>Studio No Frame</b>
-      <span>Berlin / Istanbul<br /><a href={`mailto:${SITE.email}`}>{SITE.email}</a><br /><a href={SITE.instagram} rel="me noopener" target="_blank">Instagram</a></span>
-    </div>
-  </section>
 </main>
 
 <script is:inline>
 (() => {
   const figs = [...document.querySelectorAll('#figure a')];
-  const show = (id) => figs.forEach((f) => { const on = f.dataset.id === id; f.classList.toggle('on', on); f.tabIndex = on ? 0 : -1; });
+  const show = (id) => figs.some((f) => f.dataset.id === id) && figs.forEach((f) => { const on = f.dataset.id === id; f.classList.toggle('on', on); f.tabIndex = on ? 0 : -1; });
   document.querySelectorAll('.rows a[data-id]').forEach((a) => {
     a.addEventListener('pointerenter', () => show(a.dataset.id));
     a.addEventListener('focus', () => show(a.dataset.id));
@@ -101,18 +83,11 @@ const de = lang === 'de';
   .rows .r:hover { text-decoration: none; }
   .rows .r:hover .ttl { text-decoration: underline; }
   .rows .r span:last-child { text-align: right; }
-  .cells { display: grid; grid-template-columns: repeat(6, 1fr); gap: 0 2rem; }
-  .cells .cell { display: flex; flex-direction: column; gap: 0.5rem; font-size: 0.85rem; line-height: 1.3; }
-  .cells .cell b { text-transform: uppercase; font-size: 1rem; }
-  .cells a.cell:hover { text-decoration: none; }
-  .cells a.cell:hover b { text-decoration: underline; }
-  .cells .contact a { text-decoration: underline; }
   @media (max-width: 900px) {
     .top { grid-template-columns: 1fr; gap: 2rem 0; }
     .top .figure { margin-bottom: 2.5rem; }
     .rows .h { display: none; }
     .rows .r { grid-template-columns: 2.2rem minmax(0, 1fr) 3.4rem; }
     .rows .r span:nth-child(3), .rows .r span:nth-child(4) { grid-column: 2; font-size: 0.8rem; }
-    .cells { grid-template-columns: repeat(2, 1fr); gap: 2rem; }
   }
 </style>

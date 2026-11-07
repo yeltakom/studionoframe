@@ -4,9 +4,9 @@
  *  noframe.studio is a two-line change there and nothing else. */
 export const SITE = {
   name: 'Studio No Frame',
-  tagline: 'Exhibition architecture, production and curation. Berlin.',
+  tagline: 'Spatial design, scenography, exhibition architecture. Berlin.',
   description:
-    'Studio No Frame is a Berlin studio for exhibition architecture, art production and curation, working with museums, biennials and artists. Led by Yelta Köm.',
+    'Studio No Frame is a research-based practice of spatial and visual experience in Berlin, working across spatial design, scenography and exhibition architecture. Led by Yelta Köm.',
   email: 'contact@noframe.studio',
   instagram: 'https://www.instagram.com/noframe.studio/',
   founder: 'Yelta Köm',

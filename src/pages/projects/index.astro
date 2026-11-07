@@ -12,17 +12,15 @@ const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const home = base;
 /* one list, newest first; the kind of work is a column, not a heading */
 const works = (await getCatalogue(lang)).sort((a, b) => b.year - a.year || a.data.title.localeCompare(b.data.title));
-const years = works.map((w) => w.year);
 const now = works.filter((w) => w.data.current);
 ---
 
-<Base lang={lang} title={t.index.label} description="Index of Studio No Frame projects: exhibition design, artist collaborations, production, spatial research and curation for museums and biennials.">
+<Base lang={lang} title={t.index.label} description="Index of projects by Studio No Frame in spatial design, scenography, exhibition architecture, spatial research and curation.">
   <Chrome lang={lang} here="index" />
   <div class="below"></div>
 
   <header class="head">
-    <h1>{t.index.title}</h1>
-    <p>{t.index.line(works.length, Math.min(...years), Math.max(...years))}</p>
+    <h1 class="sr">{t.index.label}</h1>
     {now.length > 0 && (
       <p class="now"><span class="label">{t.now}</span>{now.map((w) => <a href={`${home}/projects/${w.id}`}>{w.data.title}, {w.data.venue}{w.data.dates ? ` — ${w.data.dates}` : ''}</a>)}</p>
     )}

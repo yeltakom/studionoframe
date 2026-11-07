@@ -6,10 +6,10 @@ import { getProjects, type Project } from './projects';
 export const CATEGORIES = [
   {
     key: 'exhibition-design',
-    title: 'Exhibition Design',
-    de: 'Ausstellungsgestaltung',
-    line: 'Exhibition architecture for museums, biennials and institutions, from the spatial concept to the installation.',
-    lineDe: 'Ausstellungsarchitektur für Museen, Biennalen und Institutionen, vom Raumkonzept bis zum Aufbau.',
+    title: 'Exhibition Architecture',
+    de: 'Ausstellungsarchitektur',
+    line: 'Spatial design and scenography for exhibitions, developed from the conditions of each site and work.',
+    lineDe: 'Raumgestaltung und Szenografie für Ausstellungen, entwickelt aus den Bedingungen des jeweiligen Ortes und Werks.',
   },
   {
     key: 'artist-collaborations',
@@ -20,7 +20,7 @@ export const CATEGORIES = [
   },
   {
     key: 'production',
-    title: 'Production Support',
+    title: 'Production',
     de: 'Produktion',
     line: 'Coordination, production design and installation on site, for artists and their teams.',
     lineDe: 'Koordination, Produktionsdesign und Aufbau vor Ort, für Künstler:innen und ihre Teams.',

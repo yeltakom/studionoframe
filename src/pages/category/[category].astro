@@ -17,7 +17,7 @@ const home = base;
 const works = (await getCatalogue(lang)).filter((w) => w.cat.key === x.key);
 ---
 
-<Base lang={lang} title={catTitle(x, lang)} description={catLine(x, lang)} image={`${base}${works[0]?.data.cover ?? '/images/og/default.jpg'}`}>
+<Base lang={lang} title={catTitle(x, lang)} description={catLine(x, lang)} image={`${base}${works.find((w) => w.data.cover)?.data.cover ?? '/images/og/default.jpg'}`}>
   <Chrome lang={lang} here="index" />
   <div class="below"></div>
 

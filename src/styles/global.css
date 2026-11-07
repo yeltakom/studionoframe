@@ -316,3 +316,4 @@ button { font: inherit; }
 @media (max-width: 360px) {
   .rhead nav { gap: 0.55rem; font-size: 0.68rem; }
 }
+.sr { position: absolute; width: 1px; height: 1px; overflow: hidden; clip-path: inset(50%); white-space: nowrap; }

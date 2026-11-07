@@ -11,13 +11,14 @@ export const UI = {
     label: 'English',
     switchTo: 'Deutsch',
     short: 'DE',
-    nav: { selected: 'Selected', index: 'Index', studio: 'Profile', services: 'Services', contact: 'Contact' },
+    nav: { selected: 'Selected', index: 'Index', studio: 'Profile', services: 'Practice', contact: 'Contact' },
     home: {
       title: 'Exhibitions as research.',
-      line: 'Since 2014, Studio No Frame has designed and built exhibitions for museums, biennials and artists, from Berlin and Istanbul.',
+      line: 'A research-based practice of spatial and visual experience, working across spatial design, scenography and exhibition architecture. Office in Berlin.',
+      note: 'This site is still being built, so texts and images may be incomplete. Please bear with us.',
       selected: 'Selected Projects', all: 'All', allProjects: 'All projects →', filter: 'Filter by category', photo: 'Photograph',
     },
-    services: { title: 'Services', line: 'From the first spatial idea to the last screw on site, alone or inside an artist’s team.' },
+    services: { title: 'Practice', line: 'Spatial design, scenography and exhibition architecture, developed through research with artists and institutions.' },
     index: {
       label: 'Index',
       title: 'Exhibitions for museums, biennials and artists.',
@@ -35,22 +36,23 @@ export const UI = {
     contact: { label: 'Contact' },
     internships: { label: 'Internships' },
     footer: { internships: 'Internships', imprint: 'Impressum', privacy: 'Datenschutz' },
-    siteTitle: 'Studio No Frame — Exhibition architecture, Berlin',
+    siteTitle: 'Studio No Frame — Spatial design, scenography, exhibition architecture, Berlin',
     description:
-      'Studio No Frame is a Berlin studio for exhibition architecture, art production and curation, working with museums, biennials and artists. Led by Yelta Köm.',
+      'Studio No Frame is a research-based practice of spatial and visual experience in Berlin, working across spatial design, scenography and exhibition architecture. Led by Yelta Köm.',
   },
   de: {
     htmlLang: 'de',
     label: 'Deutsch',
     switchTo: 'English',
     short: 'EN',
-    nav: { selected: 'Auswahl', index: 'Index', studio: 'Profil', services: 'Leistungen', contact: 'Kontakt' },
+    nav: { selected: 'Auswahl', index: 'Index', studio: 'Profil', services: 'Praxis', contact: 'Kontakt' },
     home: {
       title: 'Ausstellungen als Forschung.',
-      line: 'Seit 2014 entwirft und baut Studio No Frame Ausstellungen für Museen, Biennalen und Künstler:innen, von Berlin und Istanbul aus.',
+      line: 'Eine forschungsbasierte Praxis räumlicher und visueller Erfahrung, zwischen Raumgestaltung, Szenografie und Ausstellungsarchitektur. Büro in Berlin.',
+      note: 'Diese Website befindet sich noch im Aufbau, Texte und Bilder können daher unvollständig sein. Wir bitten um Nachsicht.',
       selected: 'Ausgewählte Projekte', all: 'Alle', allProjects: 'Alle Projekte →', filter: 'Nach Kategorie filtern', photo: 'Fotografie',
     },
-    services: { title: 'Leistungen', line: 'Von der ersten räumlichen Idee bis zur letzten Schraube vor Ort, eigenständig oder im Team von Künstler:innen.' },
+    services: { title: 'Praxis', line: 'Raumgestaltung, Szenografie und Ausstellungsarchitektur, entwickelt in der Forschung mit Künstler:innen und Institutionen.' },
     index: {
       label: 'Index',
       title: 'Ausstellungen für Museen, Biennalen und Künstler:innen.',
@@ -68,9 +70,9 @@ export const UI = {
     contact: { label: 'Kontakt' },
     internships: { label: 'Praktika' },
     footer: { internships: 'Praktika', imprint: 'Impressum', privacy: 'Datenschutz' },
-    siteTitle: 'Studio No Frame — Ausstellungsarchitektur, Berlin',
+    siteTitle: 'Studio No Frame — Raumgestaltung, Szenografie, Ausstellungsarchitektur, Berlin',
     description:
-      'Studio No Frame ist ein Berliner Studio für Ausstellungsarchitektur, Kunstproduktion und Kuratierung — für Museen, Biennalen und Künstler:innen. Geleitet von Yelta Köm.',
+      'Studio No Frame ist eine forschungsbasierte Praxis räumlicher und visueller Erfahrung in Berlin, zwischen Raumgestaltung, Szenografie und Ausstellungsarchitektur. Geleitet von Yelta Köm.',
   },
 } as const;
 

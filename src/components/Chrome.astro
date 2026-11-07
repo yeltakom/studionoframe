@@ -11,7 +11,7 @@ const home = lang === 'de' ? `${base}/de` : base;
 /* the legal pages exist once, in German: their language link goes to the German home */
 const other = /\/(impressum|datenschutz)\/?$/.test(Astro.url.pathname) ? `${base}/de/` : altPath(Astro.url.pathname, base);
 const now = (await getCatalogue(lang)).filter((w) => w.data.current);
-const office = lang === 'de' ? 'Büro für Raumerfahrung und Forschung · Berlin / Istanbul' : 'Spatial-experience research office · Berlin / Istanbul';
+const office = lang === 'de' ? 'Forschungsbasierte Praxis räumlicher und visueller Erfahrung · Büro · Berlin' : 'Research-based spatial and visual experience practice · Office · Berlin';
 ---
 
 <header class="rhead" id="rhead">
