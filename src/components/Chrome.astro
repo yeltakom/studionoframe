@@ -24,7 +24,7 @@ const office = lang === 'de' ? 'Forschungsbasierte Praxis räumlicher und visuel
           {[0, 1, 2].map(() => (
             <span class="item">
               {now.length > 0 && <>{now.map((w) => <a href={`${home}/projects/${w.id}`} tabindex={n ? -1 : undefined}><b>{t.now}</b> {w.data.title}, {w.data.venue}</a>)} · </>}
-              {office} · {t.home.led} ·&nbsp;
+              {office}
             </span>
           ))}
         </span>
