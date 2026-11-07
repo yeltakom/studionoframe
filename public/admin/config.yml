@@ -109,6 +109,7 @@ collections:
           - { label: '3 Produktion', value: production }
           - { label: '4 Räumliche Forschung', value: research }
           - { label: '5 Kuratierung', value: curation }
+          - { label: '6 Web & Visualisierung', value: web }
       - { label: Auf der Startseite, name: home, widget: boolean, default: false }
       - { label: Fotos, name: images, widget: image, multiple: true, hint: 'Same photographs as the English entry' }
       - { label: Kurzfassung, name: summary, widget: text, required: false }
