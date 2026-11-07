@@ -27,16 +27,16 @@ images:
   - "/images/projects/tirailleurs/tirailleurs-09.jpg"
   - "/images/projects/tirailleurs/tirailleurs-10.jpg"
 captions:
-  - { image: "/images/projects/tirailleurs/tirailleurs-01.jpg", text: "Entrance hall: the painted floor meets a field of furrowed earth along the glass front", credit: "" }
-  - { image: "/images/projects/tirailleurs/tirailleurs-02.jpg", text: "Painted cloths hung from wooden poles, over the blue and orange ground", credit: "" }
-  - { image: "/images/projects/tirailleurs/tirailleurs-03.jpg", text: "Textile works on poles in the west hall; the floor carries the colour plan", credit: "" }
+  - { image: "/images/projects/tirailleurs/tirailleurs-01.jpg", text: "Binta Diaw, 1.12.44-1 – Édition 1/3 (2021)", credit: "" }
+  - { image: "/images/projects/tirailleurs/tirailleurs-02.jpg", text: "Pélagie Gbaguidi, The Architecture of Courage (2026)", credit: "" }
+  - { image: "/images/projects/tirailleurs/tirailleurs-03.jpg", text: "Pélagie Gbaguidi, The Architecture of Courage (2026)", credit: "" }
   - { image: "/images/projects/tirailleurs/tirailleurs-04.jpg", text: "Across the green floor to the bead curtain and the freestanding frame with video", credit: "" }
   - { image: "/images/projects/tirailleurs/tirailleurs-05.jpg", text: "Portrait on a terracotta plinth where the floor zones meet under the stair", credit: "" }
-  - { image: "/images/projects/tirailleurs/tirailleurs-06.jpg", text: "The yellow wall with the embroidered world maps; stair to the upper foyer", credit: "" }
-  - { image: "/images/projects/tirailleurs/tirailleurs-07.jpg", text: "Sculpture of barrels, bags and cloth on a round base, the bead curtain behind", credit: "" }
-  - { image: "/images/projects/tirailleurs/tirailleurs-08.jpg", text: "The same work seen from the glass front, with the leaning concrete pier", credit: "" }
-  - { image: "/images/projects/tirailleurs/tirailleurs-09.jpg", text: "Four reflective panels with lettering on the blue wall", credit: "" }
-  - { image: "/images/projects/tirailleurs/tirailleurs-10.jpg", text: "Embroidered map of the routes on the yellow wall", credit: "" }
+  - { image: "/images/projects/tirailleurs/tirailleurs-06.jpg", text: "Tiffany Chung, Tirailleurs, Worker-Soldiers, ‘Comfort Women’: Sea Voyages, Global Movements, Disremembered Histories of WWII (2026)", credit: "" }
+  - { image: "/images/projects/tirailleurs/tirailleurs-07.jpg", text: "Daniel Lind-Ramos, Re-inventario de la desmemoria (2026)", credit: "" }
+  - { image: "/images/projects/tirailleurs/tirailleurs-08.jpg", text: "Daniel Lind-Ramos, Re-inventario de la desmemoria (2026)", credit: "" }
+  - { image: "/images/projects/tirailleurs/tirailleurs-09.jpg", text: "Slavs and Tatars, Reverse Dschihad (Urdu) (2015)", credit: "" }
+  - { image: "/images/projects/tirailleurs/tirailleurs-10.jpg", text: "Tiffany Chung, Tirailleurs, Worker-Soldiers, ‘Comfort Women’: Sea Voyages, Global Movements, Disremembered Histories of WWII (2026)", credit: "" }
 ---
 
 Exhibition architecture for <em>Tirailleurs: Trials and Tribulations</em> at Haus der Kulturen der Welt (HKW), Berlin, curated by Paz Guevara and Bonaventure Soh Bejeng Ndikung. The exhibition reframes the marginalized histories of the Tirailleurs through works by contemporary artists alongside archival and thematic sections. The spatial language, developed in close collaboration with the curatorial team, opens the exhibition as a common space for celebration and listening.
