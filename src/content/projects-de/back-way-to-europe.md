@@ -6,6 +6,7 @@ role: "Webdesign, Konzeptentwicklung, Visualisierung"
 order: 22
 category: "web"
 home: false
+selected: false
 current: false
 dates: ""
 curator: ""

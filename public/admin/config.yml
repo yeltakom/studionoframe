@@ -54,6 +54,7 @@ collections:
           - { label: '5 Curation', value: curation }
           - { label: '6 Web & Visualization', value: web }
       - { label: Show on home page, name: home, widget: boolean, default: false, hint: 'Its cover opens the home page and joins the rotation' }
+      - { label: Listed on home page, name: selected, widget: boolean, default: true, hint: 'Off keeps it in the Index only' }
       - label: Photographs
         name: images
         widget: image
@@ -111,6 +112,7 @@ collections:
           - { label: '5 Kuratierung', value: curation }
           - { label: '6 Web & Visualisierung', value: web }
       - { label: Auf der Startseite, name: home, widget: boolean, default: false }
+      - { label: In der Startseiten-Liste, name: selected, widget: boolean, default: true }
       - { label: Fotos, name: images, widget: image, multiple: true, hint: 'Same photographs as the English entry' }
       - { label: Kurzfassung, name: summary, widget: text, required: false }
       - { label: Text, name: body, widget: markdown, required: false }

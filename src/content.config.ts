@@ -9,6 +9,8 @@ const shared = {
   order: z.number(),
   category: z.string().default(''),
   home: z.boolean().default(false),
+  /* false keeps a project off the home list; it stays in the Index */
+  selected: z.boolean().default(true),
   summary: z.string(),
   cover: z.string().optional(),
   images: z.array(z.string()).default([]),
