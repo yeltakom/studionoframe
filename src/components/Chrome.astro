@@ -1,5 +1,6 @@
 ---
-/* The chrome of every page: one white line — name, office sentence, menu. */
+/* The chrome of every page: one white line. The name and the menu stay put,
+   the sentence between them runs. */
 import { UI, altPath, type Lang } from '../i18n';
 import { getCatalogue } from '../lib/categories';
 
@@ -17,9 +18,18 @@ const office = lang === 'de' ? 'Forschungsbasierte Praxis räumlicher und visuel
 <header class="rhead" id="rhead">
   <div class="band">
     <a class="studio" href={`${home}/`}>Studio No Frame</a>
-    <span class="onview">{now.length
-      ? <><b>{t.now}</b>{now.map((w) => <a href={`${home}/projects/${w.id}`}>{w.data.title}, {w.data.venue}{w.data.dates ? ` — ${w.data.dates}` : ''}</a>)}</>
-      : office}</span>
+    <span class="tick">
+      {[0, 1].map((n) => (
+        <span class="run" aria-hidden={n ? 'true' : undefined}>
+          {[0, 1, 2].map(() => (
+            <span class="item">
+              {now.length > 0 && <>{now.map((w) => <a href={`${home}/projects/${w.id}`} tabindex={n ? -1 : undefined}><b>{t.now}</b> {w.data.title}, {w.data.venue}</a>)} · </>}
+              {office} · {t.home.led} ·&nbsp;
+            </span>
+          ))}
+        </span>
+      ))}
+    </span>
   </div>
   <nav aria-label="Site">
     <a href={`${home}/`} aria-current={here === 'selected' ? 'page' : undefined}>{t.nav.selected}</a>

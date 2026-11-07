@@ -282,10 +282,15 @@ button { font: inherit; }
 .sec-h, .page .body h2, .page .prose h2 { text-transform: uppercase; }
 /* chrome: one white line. name, office sentence, menu. */
 .rhead { height: var(--bar); display: flex; align-items: center; justify-content: space-between; gap: 1rem 2rem; padding: 0 var(--gutter); border-bottom: 0; background: var(--paper); text-transform: uppercase; font-size: 0.9rem; }
-.rhead .band { display: flex; align-items: baseline; gap: 2rem; min-width: 0; white-space: nowrap; overflow: hidden; }
+.rhead .band { display: flex; flex: 1; align-items: baseline; gap: 2rem; min-width: 0; white-space: nowrap; overflow: hidden; }
 .rhead .band .studio { position: static; font-size: 0.9rem; letter-spacing: 0; }
-.rhead .band .onview { font-weight: 400; overflow: hidden; text-overflow: ellipsis; }
-.rhead .band .onview b { font-weight: 700; margin-right: 0.6rem; }
+.rhead .tick { flex: 1; min-width: 0; overflow: hidden; display: flex; font-weight: 400; }
+.rhead .tick:hover .run { animation-play-state: paused; }
+.rhead .run { flex: none; display: flex; animation: run 90s linear infinite; }
+.rhead .item { flex: none; }
+.rhead .item b { font-weight: 700; }
+@keyframes run { to { transform: translateX(-100%); } }
+@media (prefers-reduced-motion: reduce) { .rhead .run { animation: none; } }
 .rhead .spacer { display: none; }
 .rhead nav { display: flex; gap: 1.5rem; font-size: 0.9rem; text-transform: uppercase; letter-spacing: 0; flex-shrink: 0; }
 .rhead nav a { opacity: 1; padding: 0; border: 0; }
@@ -307,11 +312,13 @@ button { font: inherit; }
 .pj-lead figcaption b, .pj-figs figcaption b { color: var(--ink); }
 @media (max-width: 760px) {
   .rhead { flex-wrap: wrap; align-content: center; gap: 0.3rem 1.2rem; }
-  .rhead .band { flex-basis: 100%; }
-  .rhead .band .onview { display: none; }
+  .rhead { --row: 30px; }
+  .rhead .band { flex: 0 0 100%; flex-wrap: wrap; gap: 0.2rem 0; padding-right: 2.5rem; }
+  .rhead .band .studio { flex: 0 0 100%; }
+  .rhead .tick { flex: 0 0 calc(100% + 2.5rem); font-size: 0.75rem; }
   .rhead nav { gap: 0.9rem; flex-wrap: nowrap; font-size: 0.8rem; max-width: 100%; }
-  .rhead nav .lang { position: absolute; top: 0; right: var(--gutter); height: calc(var(--bar) / 2); display: flex; align-items: flex-end; padding-bottom: 0.15rem; }
-  :root { --bar: 90px; }
+  .rhead nav .lang { position: absolute; top: 0.9rem; right: var(--gutter); }
+  :root { --bar: 104px; }
 }
 @media (max-width: 360px) {
   .rhead nav { gap: 0.55rem; font-size: 0.68rem; }

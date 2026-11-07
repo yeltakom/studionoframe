@@ -25,7 +25,7 @@ const rows = sorted.map((w, i) => {
     <span>{t.columns.year}</span><span>{t.columns.venue}</span><span>{t.columns.project}</span><span>{t.columns.type}</span>
   </div>
   {rows.map(({ w, newYear, newPlace }, i) => (
-    <a class:list={['r', { ny: newYear && i > 0, np: newPlace && !newYear }]} href={`${home}/projects/${w.id}`} data-id={w.id}>
+    <a class:list={['r', { ny: newYear && i > 0, np: newPlace && !newYear }]} style={`--i:${i}`} href={`${home}/projects/${w.id}`} data-id={w.id}>
       <span class="y">{newYear ? w.year : ''}</span>
       <span class="p">{newPlace ? w.data.venue : ''}</span>
       <span class="ttl">{w.data.title}</span>
@@ -46,7 +46,12 @@ const rows = sorted.map((w, i) => {
   .ttl { text-transform: uppercase; }
   .k { font-size: 0.75rem; font-weight: 400; }
   .r:hover { text-decoration: none; }
-  .r:hover .ttl { text-decoration: underline; }
+  .ttl { display: block; transition: transform 0.35s ease; }
+  .r:hover .ttl { text-decoration: underline; transform: translateX(0.8rem); }
+  /* the list slides in, line after line */
+  .pad .r { animation: line 0.6s ease backwards; animation-delay: calc(var(--i) * 45ms); }
+  @keyframes line { from { opacity: 0; transform: translateX(-1.5rem); } }
+  @media (prefers-reduced-motion: reduce) { .pad .r { animation: none; } .ttl { transition: none; } }
   @media (max-width: 760px) {
     .h { display: none; }
     .r { grid-template-columns: 3.4rem minmax(0, 1fr); }
