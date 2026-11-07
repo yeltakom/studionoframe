@@ -1,6 +1,6 @@
 ---
 title: "Ayşe Erkmen: Golden Horn in the Golden Horn"
-venue: "Akşemsettin Park, Istanbul, 17th Istanbul Biennial"
+venue: "Akşemsettin Park, Istanbul"
 year: "2022"
 role: "Drawings"
 order: 25

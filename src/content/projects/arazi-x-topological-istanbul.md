@@ -1,6 +1,6 @@
 ---
 title: "State of Displacement: Entangled Topographies"
-venue: "17th Istanbul Biennial"
+venue: "Müze Gazhane, Istanbul"
 year: "2022"
 role: "Artist, Installation & Production Design"
 order: 10

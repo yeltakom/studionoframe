@@ -1,6 +1,6 @@
 ---
 title: "Monira Al Qadiri: The Children of Smokeless Fire"
-venue: "Bradford City of Culture 2025"
+venue: "Bradford"
 year: "2025"
 role: "Produktionszeichnungen"
 order: 24

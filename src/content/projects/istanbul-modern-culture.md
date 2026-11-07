@@ -1,6 +1,6 @@
 ---
 title: "Caution! Slippery Ground"
-venue: "Istanbul Modern"
+venue: "Istanbul Modern, Istanbul"
 year: "2015"
 role: "Curator & Exhibition Designer — KOTUstudio"
 order: 17

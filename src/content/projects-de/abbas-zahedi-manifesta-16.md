@@ -1,6 +1,6 @@
 ---
 title: "Abbas Zahedi: Ouranophobia 47051"
-venue: "Kulturkirche Liebfrauen, Duisburg, Manifesta 16 Ruhr"
+venue: "Kulturkirche Liebfrauen, Duisburg"
 year: "2026"
 role: "Konzeptionelles Design für die Produktion"
 order: 20

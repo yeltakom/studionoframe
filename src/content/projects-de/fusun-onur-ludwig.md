@@ -1,6 +1,6 @@
 ---
 title: "Füsun Onur: Retrospective"
-venue: "Museum Ludwig, Cologne"
+venue: "Museum Ludwig, Köln"
 year: "2023"
 role: "Ausstellungslayout & Gestaltungsberatung"
 order: 8

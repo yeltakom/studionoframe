@@ -1,6 +1,6 @@
 ---
 title: "Vardiya / The Shift"
-venue: "Pavilion of Turkey, 16th Venice Architecture Biennale"
+venue: "Pavillon der Türkei, Venedig"
 year: "2018"
 role: "Assoziierter Kurator"
 order: 16

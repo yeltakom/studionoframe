@@ -1,6 +1,6 @@
 ---
 title: "Back Way to Europe"
-venue: "Online, Allegra Lab"
+venue: "Online"
 year: "2026"
 role: "Web Design, Concept Development, Visualization"
 order: 22

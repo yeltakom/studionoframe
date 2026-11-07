@@ -1,6 +1,6 @@
 ---
 title: "The Silent University Orientation Program"
-venue: "17th Istanbul Biennial"
+venue: "Müze Gazhane, Istanbul"
 year: "2022"
 role: "Ausstellungskoordination, Aufbau & Produktionsdesign"
 order: 12

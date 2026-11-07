@@ -1,6 +1,6 @@
 ---
 title: "Gilgamesh: She Who Saw the Deep"
-venue: "Film, Mardin, Hasankeyf, Dara"
+venue: "Mardin, Hasankeyf, Dara"
 year: "2022"
 role: "Line Production"
 order: 21

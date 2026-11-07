@@ -1,6 +1,6 @@
 ---
 title: "Gülsün Karamustafa: Hollow and Broken—A State of the World"
-venue: "Türkiye Pavilion, 60th Venice Biennale"
+venue: "Pavillon der Türkei, Venedig"
 year: "2024"
 role: "Beratung Ausstellungsgestaltung & Aufbauleitung"
 order: 5

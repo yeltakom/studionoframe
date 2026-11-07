@@ -1,6 +1,6 @@
 ---
 title: "Füsun Onur: Once Upon a Time…"
-venue: "Pavilion of Turkey, 59th Venice Biennale"
+venue: "Pavillon der Türkei, Venedig"
 year: "2022"
 role: "Ausstellungsgestaltung"
 order: 11

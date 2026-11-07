@@ -1,6 +1,6 @@
 ---
 title: "Secret Ingredient"
-venue: "3rd Chicago Architecture Biennial"
+venue: "Anthony Overton Elementary School, Chicago"
 year: "2019"
 role: "With Architecture for All (Herkes İçin Mimarlık)"
 order: 14
