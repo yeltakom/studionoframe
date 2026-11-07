@@ -22,7 +22,7 @@ const de = lang === 'de';
   <section class="top">
     <div class="cell about">
       <span class="label">{de ? 'Studio' : 'About'}</span>
-      <p class="big">{t.home.title}</p>
+      <h1 class="big">{t.home.title}</h1>
       <p>{t.home.line}</p>
       <p>{de
         ? 'Jedes Projekt beginnt bei seinem eigenen Material: den Werken, dem Gebäude, den Menschen, die sich darin bewegen werden.'
@@ -32,7 +32,7 @@ const de = lang === 'de';
     <div class="cell figure" id="figure">
       {works.map((w) => (
         <a href={`${home}/projects/${w.id}`} data-id={w.id} class={w === first ? 'on' : ''} aria-hidden={w === first ? undefined : 'true'} tabindex={w === first ? undefined : -1}>
-          <img src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes="(min-width: 900px) 66vw, 100vw" alt="" loading={w === first ? 'eager' : 'lazy'} decoding="async" />
+          <img src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes="(min-width: 900px) 66vw, 100vw" alt={`${w.data.title}, ${w.data.venue}`} loading={w === first ? 'eager' : 'lazy'} decoding="async" />
           <span class="cap"><span>{w.data.title}</span><span>{w.data.venue}, {w.data.year}</span></span>
         </a>
       ))}
@@ -86,7 +86,7 @@ const de = lang === 'de';
   .top .about { display: flex; flex-direction: column; }
   .about .label { margin-bottom: 1.2rem; }
   .about p { margin: 0 0 1em; font-size: 1rem; line-height: 1.3; max-width: 40ch; }
-  .about .big { font-size: clamp(1.6rem, 2.8vw, 2.6rem); line-height: 1.0; text-transform: uppercase; letter-spacing: -0.01em; margin-bottom: 1.2rem; max-width: 14ch; }
+  .about .big { margin: 0 0 1.2rem; font-size: clamp(1.6rem, 2.8vw, 2.6rem); line-height: 1.0; text-transform: uppercase; letter-spacing: -0.01em; max-width: 14ch; }
   .about .more { margin-top: auto; margin-bottom: 0; }
   .about a { text-decoration: underline; }
   .figure { position: relative; padding: 0; aspect-ratio: 16 / 10; overflow: visible; }

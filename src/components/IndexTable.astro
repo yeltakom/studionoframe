@@ -55,7 +55,7 @@ const first = works.filter((w) => w.data.home).sort((a, b) => b.year - a.year)[0
     <aside class="peek" aria-hidden="true">
       <div class="frame">
         {works.map((w) => (
-          <img class={w === first ? 'is-on' : ''} data-id={w.id} src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes={SIZES.side} alt="" loading={w === first ? 'eager' : 'lazy'} decoding="async" />
+          <img class={w === first ? 'is-on' : ''} data-id={w.id} src={`${base}${w.data.cover}`} srcset={srcset(base, w.data.cover)} sizes={SIZES.side} alt={`${w.data.title}, ${w.data.venue}`} loading={w === first ? 'eager' : 'lazy'} decoding="async" />
         ))}
       </div>
       <p class="cap"><span class="pk-no">{first?.no}</span><span><b class="pk-ttl">{first?.data.title}</b><span class="pk-ven">{first?.data.venue}</span></span></p>

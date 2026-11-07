@@ -313,3 +313,6 @@ button { font: inherit; }
   .rhead nav .lang { position: absolute; top: 0; right: var(--gutter); height: calc(var(--bar) / 2); display: flex; align-items: flex-end; padding-bottom: 0.15rem; }
   :root { --bar: 90px; }
 }
+@media (max-width: 360px) {
+  .rhead nav { gap: 0.55rem; font-size: 0.68rem; }
+}
