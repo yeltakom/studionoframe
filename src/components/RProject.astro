@@ -83,3 +83,63 @@ const facts: [string, string | undefined][] = [
   <a href={`${root}/${prev.id}`}><span class="label">{t.prev}</span><strong>{prev.data.title}</strong></a>
   <a href={`${root}/${next.id}`} style="text-align:right;margin-left:auto"><span class="label">{t.next}</span><strong>{next.data.title}</strong></a>
 </nav>
+
+{d.images.length > 0 && (
+  <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label={d.title}>
+    <button type="button" class="lb-x" aria-label={lang === 'de' ? 'Schließen' : 'Close'}>×</button>
+    <figure class="lb-fig"><img alt="" /><figcaption></figcaption></figure>
+    <div class="lb-bar">
+      <button type="button" class="lb-p" aria-label={lang === 'de' ? 'Zurück' : 'Previous'}>←</button>
+      <span class="lb-c"></span>
+      <button type="button" class="lb-n" aria-label={lang === 'de' ? 'Weiter' : 'Next'}>→</button>
+    </div>
+  </div>
+)}
+
+<script is:inline>
+(() => {
+  /* the photographs open full screen and slide from one to the next */
+  const box = document.getElementById('lb');
+  if (!box) return;
+  const imgs = [...document.querySelectorAll('.pj-lead img, .pj-figs img')];
+  const big = box.querySelector('img'), cap = box.querySelector('figcaption'), count = box.querySelector('.lb-c');
+  const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
+  let i = 0, last = null;
+  const show = (n, dir) => {
+    i = (n + imgs.length) % imgs.length;
+    const src = imgs[i];
+    big.src = src.getAttribute('src'); big.alt = src.alt;
+    const fc = src.closest('figure')?.querySelector('figcaption');
+    cap.textContent = fc ? [...fc.childNodes].filter((x) => x.nodeName !== 'B').map((x) => x.textContent).join('').trim() : '';
+    count.textContent = `${i + 1} / ${imgs.length}`;
+    if (dir && !still) big.animate([{ transform: `translateX(${dir * 3}rem)`, opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 380, easing: 'ease' });
+  };
+  const open = (n) => {
+    last = document.activeElement; show(n, 0); box.hidden = false; document.documentElement.style.overflow = 'hidden';
+    if (!still) box.animate([{ opacity: 0 }, { opacity: 1 }], { duration: 250, easing: 'ease' });
+    box.querySelector('.lb-x').focus();
+  };
+  const close = () => { box.hidden = true; document.documentElement.style.overflow = ''; last?.focus?.(); };
+  imgs.forEach((im, n) => {
+    im.tabIndex = 0; im.setAttribute('role', 'button');
+    im.addEventListener('click', () => open(n));
+    im.addEventListener('keydown', (e) => { if (e.key === 'Enter' || e.key === ' ') { e.preventDefault(); open(n); } });
+  });
+  box.querySelector('.lb-x').addEventListener('click', close);
+  box.querySelector('.lb-p').addEventListener('click', () => show(i - 1, -1));
+  box.querySelector('.lb-n').addEventListener('click', () => show(i + 1, 1));
+  box.addEventListener('click', (e) => { if (e.target === box) close(); });
+  document.addEventListener('keydown', (e) => {
+    if (box.hidden) return;
+    if (e.key === 'Escape') close();
+    if (e.key === 'ArrowRight') show(i + 1, 1);
+    if (e.key === 'ArrowLeft') show(i - 1, -1);
+  });
+  let x0 = null;
+  box.addEventListener('pointerdown', (e) => { x0 = e.clientX; });
+  box.addEventListener('pointerup', (e) => {
+    if (x0 === null) return; const dx = e.clientX - x0; x0 = null;
+    if (Math.abs(dx) > 50) dx < 0 ? show(i + 1, 1) : show(i - 1, -1);
+  });
+})();
+</script>
