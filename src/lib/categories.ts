@@ -39,6 +39,13 @@ export const CATEGORIES = [
     line: 'Curatorial work on exhibitions and pavilions.',
     lineDe: 'Kuratorische Arbeit an Ausstellungen und Pavillons.',
   },
+  {
+    key: 'web',
+    title: 'Web & Visualization',
+    de: 'Web & Visualisierung',
+    line: 'Web design, concept development and visualization for research and publishing projects.',
+    lineDe: 'Webdesign, Konzeptentwicklung und Visualisierung für Forschungs- und Publikationsprojekte.',
+  },
 ] as const;
 
 export type Category = (typeof CATEGORIES)[number];

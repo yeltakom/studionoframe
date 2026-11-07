@@ -52,6 +52,7 @@ collections:
           - { label: '3 Production Support', value: production }
           - { label: '4 Spatial Research', value: research }
           - { label: '5 Curation', value: curation }
+          - { label: '6 Web & Visualization', value: web }
       - { label: Show on home page, name: home, widget: boolean, default: false, hint: 'Its cover opens the home page and joins the rotation' }
       - label: Photographs
         name: images
