@@ -12,26 +12,12 @@ curator: ""
 artists: "Ayşe Erkmen"
 client: ""
 team: ""
-photo: "Nick Ash"
+photo: ""
 summary: "Drawings for Ayşe Erkmen’s Hochstapler at MARIE 10, Berlin: a roll of bubble wrap set upright between floor and ceiling and held in the room by red adhesive tape."
-images:
-  - "/images/projects/ayse-erkmen-hochstapler/ayse-erkmen-hochstapler-01.jpg"
-  - "/images/projects/ayse-erkmen-hochstapler/ayse-erkmen-hochstapler-02.jpg"
-  - "/images/projects/ayse-erkmen-hochstapler/ayse-erkmen-hochstapler-03.jpg"
-  - "/images/projects/ayse-erkmen-hochstapler/ayse-erkmen-hochstapler-04.jpg"
-captions:
-  - image: "/images/projects/ayse-erkmen-hochstapler/ayse-erkmen-hochstapler-01.jpg"
-    text: "Hochstapler, 2022 © Ayşe Erkmen"
-    credit: "Photo: Nick Ash"
-  - image: "/images/projects/ayse-erkmen-hochstapler/ayse-erkmen-hochstapler-02.jpg"
-    text: "Hochstapler, 2022 © Ayşe Erkmen"
-    credit: "Photo: Nick Ash"
-  - image: "/images/projects/ayse-erkmen-hochstapler/ayse-erkmen-hochstapler-03.jpg"
-    text: "Hochstapler, 2022 © Ayşe Erkmen"
-    credit: "Photo: Nick Ash"
-  - image: "/images/projects/ayse-erkmen-hochstapler/ayse-erkmen-hochstapler-04.jpg"
-    text: "Hochstapler, 2022 © Ayşe Erkmen"
-    credit: "Photo: Nick Ash"
+images: []
+captions: []
 ---
 
 Drawings for Ayşe Erkmen’s Hochstapler at MARIE 10, Berlin: a roll of bubble wrap set upright between floor and ceiling and held in the room by red adhesive tape.
+
+<a href="https://www.ayseerkmen.com/works/hochstapler">See the work on the artist’s website →</a>

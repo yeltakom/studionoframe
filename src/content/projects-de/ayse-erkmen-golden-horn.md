@@ -14,32 +14,10 @@ client: "İKSV"
 team: ""
 photo: ""
 summary: "Zeichnungen für Golden Horn in the Golden Horn von Ayşe Erkmen, eine Skulptur aus Edelstahl (420 × 14 × 800 cm) im Akşemsettin-Park am Goldenen Horn, beauftragt von İKSV für die 17. Istanbul Biennale und als dauerhafte Arbeit vor Ort belassen."
-images:
-  - "/images/projects/ayse-erkmen-golden-horn/ayse-erkmen-golden-horn-01.jpg"
-  - "/images/projects/ayse-erkmen-golden-horn/ayse-erkmen-golden-horn-02.jpg"
-  - "/images/projects/ayse-erkmen-golden-horn/ayse-erkmen-golden-horn-03.jpg"
-  - "/images/projects/ayse-erkmen-golden-horn/ayse-erkmen-golden-horn-04.jpg"
-  - "/images/projects/ayse-erkmen-golden-horn/ayse-erkmen-golden-horn-05.jpg"
-  - "/images/projects/ayse-erkmen-golden-horn/ayse-erkmen-golden-horn-06.jpg"
-captions:
-  - image: "/images/projects/ayse-erkmen-golden-horn/ayse-erkmen-golden-horn-01.jpg"
-    text: "Golden Horn in the Golden Horn, 2022 © Ayşe Erkmen"
-    credit: ""
-  - image: "/images/projects/ayse-erkmen-golden-horn/ayse-erkmen-golden-horn-02.jpg"
-    text: "Golden Horn in the Golden Horn, 2022 © Ayşe Erkmen"
-    credit: ""
-  - image: "/images/projects/ayse-erkmen-golden-horn/ayse-erkmen-golden-horn-03.jpg"
-    text: "Golden Horn in the Golden Horn, 2022 © Ayşe Erkmen"
-    credit: ""
-  - image: "/images/projects/ayse-erkmen-golden-horn/ayse-erkmen-golden-horn-04.jpg"
-    text: "Golden Horn in the Golden Horn, 2022 © Ayşe Erkmen"
-    credit: "Photo: Sahir Uğur Eren"
-  - image: "/images/projects/ayse-erkmen-golden-horn/ayse-erkmen-golden-horn-05.jpg"
-    text: "Golden Horn in the Golden Horn, 2022 © Ayşe Erkmen"
-    credit: ""
-  - image: "/images/projects/ayse-erkmen-golden-horn/ayse-erkmen-golden-horn-06.jpg"
-    text: "Golden Horn in the Golden Horn, 2022 © Ayşe Erkmen"
-    credit: ""
+images: []
+captions: []
 ---
 
 Zeichnungen für Golden Horn in the Golden Horn von Ayşe Erkmen, eine Skulptur aus Edelstahl (420 × 14 × 800 cm) im Akşemsettin-Park am Goldenen Horn, beauftragt von İKSV für die 17. Istanbul Biennale und als dauerhafte Arbeit vor Ort belassen.
+
+<a href="https://www.ayseerkmen.com/works/golden-horn-in-golden-horn">Die Arbeit auf der Website der Künstlerin →</a>
