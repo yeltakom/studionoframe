@@ -7,8 +7,9 @@ order: 4
 category: "exhibition-design"
 home: false
 current: false
-dates: ""
-curator: ""
+dates: "20. März – 17. August 2025"
+curator: "Alistair Hicks"
+artists: "Marcel Dzama, Raymond Pettibon"
 client: ""
 team: "Serap Kaçmaz"
 photo: ""

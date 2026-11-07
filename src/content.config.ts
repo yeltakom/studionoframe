@@ -14,6 +14,8 @@ const shared = {
   images: z.array(z.string()).default([]),
   /* the facts — all optional, shown when filled */
   curator: z.string().default(''),
+  artists: z.string().default(''),
+  graphic: z.string().default(''),
   client: z.string().default(''),
   team: z.string().default(''),
   photo: z.string().default(''),

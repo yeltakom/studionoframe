@@ -24,6 +24,7 @@ const facts: [string, string | undefined][] = [
   [d.dates ? t.facts.dates : t.facts.year, d.dates || d.year],
   [t.facts.role, d.role],
   [t.facts.curator, d.curator],
+  [t.facts.graphic, d.graphic],
   [t.facts.client, d.client],
   [t.facts.team, d.team],
   [t.facts.photo, d.photo],
@@ -51,6 +52,13 @@ const facts: [string, string | undefined][] = [
     <div><dt class="label">{t.columns.type}</dt><dd><a href={catHref}>{catName}</a></dd></div>
   </dl>
 </div>
+
+{d.artists && (
+  <section class="pj-artists">
+    <h2 class="label">{t.facts.artists}</h2>
+    <p>{d.artists}</p>
+  </section>
+)}
 
 {rest.length > 0 && (
   <div class="pj-figs">

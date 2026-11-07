@@ -8,7 +8,7 @@ export const SITE = {
   description:
     'Studio No Frame is a research-based practice of spatial and visual experience in Berlin, working across spatial design, scenography and exhibition architecture. Led by Yelta Köm.',
   email: 'contact@noframe.studio',
-  instagram: 'https://www.instagram.com/noframe.studio/',
+  instagram: 'https://www.instagram.com/studio.no.frame/',
   founder: 'Yelta Köm',
   city: 'Berlin',
   country: 'DE',

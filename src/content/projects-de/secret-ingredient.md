@@ -7,10 +7,11 @@ order: 14
 category: "research"
 home: false
 current: false
-dates: ""
-curator: ""
+dates: "19. September 2019 – 5. Januar 2020"
+curator: "Yesomi Umolu, Sepake Angiama, Paulo Tavares"
+graphic: "ELLA (Biennale-Identität)"
 client: ""
-team: ""
+team: "Beril Sezen, Emre Gündoğdu, Erdem Tüzün, Hayrettin Günç, Merve Gül Özokcu, Sarper Takkeci, Yelta Köm"
 photo: ""
 summary: "Ein Projekt für die 3. Chicago Architecture Biennial in der stillgelegten Anthony Overton Elementary School in Bronzeville, das die Schule über partizipatives Entwerfen und Esskultur wieder mit der Nachbarschaft verbindet."
 cover: "/images/projects/secret-ingredient/secret-ingredient-01.jpg"

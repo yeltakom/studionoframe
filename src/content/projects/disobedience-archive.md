@@ -7,8 +7,9 @@ order: 18
 category: "exhibition-design"
 home: false
 current: false
-dates: ""
-curator: ""
+dates: "22 April – 15 June 2014"
+curator: "Marco Scotini, Andris Brinkmanis"
+artists: "16 Beaver, Atelier d'Architecture Autogérée (AAA), Mitra Azar, Nanni Balestrini, Gianfranco Baruchello, Petra Bauer, Franco Berardi Bifo, Pauline Boudry, Brigitta Kuster and Renate Lorenz, Bernadette Corporation, Black Audio Film Collective, Ursula Biemann, Copenhagen Free University, Critical Art Ensemble, Cem Dinlenmiş, Dodo Brothers, Marcelo Expósito, Harun Farocki and Andrei Ujica, Rene Gabri and Ayreen Anastas, Grupo de Arte Callejero, Etcétera, Piero Gilardi, Alberto Grifi, Felix Guattari, Herkes için Mimarlık, Ashley Hunt, Sara Ishaq, Kanal B, Khaled Jarrar, John Jordan and Isabelle Fremeaux, Laboratorio di Comunicazione Militante, Carla Lonzi, Silvia Maglioni and Graeme Thomson, Enzo Mari, Angela Melitopoulos, Mosireen, Carlos Motta, Toni Negri, Non Governamental Control Commission, Wael Noureddine, Margit Czencki/Park Fiction, R.E.P. Group, Oliver Ressler and Zanny Begg, Roy Samaha, Eyal Sivan, Hito Steyerl, Superflex, The Department of Space and Land Reclamation, Mariette Schiltz and Bert Theis, Ultra-red, Nomeda & Gediminas Urbonas, Trampoline House (Morten Goll and Tone O. Nielsen), Dmitry Vilensky and Chto Delat?, Videoccupy, James Wentzy"
 client: ""
 team: ""
 photo: ""

@@ -7,8 +7,9 @@ order: 16
 category: "curation"
 home: false
 current: false
-dates: ""
-curator: ""
+dates: "26. Mai – 25. November 2018"
+curator: "Kerem Piker; assoziierte Kurator:innen Cansu Cürgen, Yelta Köm, Nizam Onur Sönmez, Yağız Söylev, Erdem Tüzün"
+graphic: "ONAGÖRE (Okay Karadayılar, Ali Taptık)"
 client: ""
 team: ""
 photo: ""

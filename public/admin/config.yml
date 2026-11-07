@@ -63,6 +63,8 @@ collections:
       - { label: Dates, name: dates, widget: string, required: false, hint: 'e.g. 14 March – 2 August 2026. Shown instead of the year when filled.' }
       - { label: On view now, name: current, widget: boolean, default: false, hint: 'Lists it under "Now" on the home page' }
       - { label: Curated by, name: curator, widget: string, required: false }
+      - { label: Artists, name: artists, widget: text, required: false }
+      - { label: Graphic design, name: graphic, widget: string, required: false }
       - { label: Commissioned by, name: client, widget: string, required: false, hint: 'Institution or commissioner' }
       - { label: Team, name: team, widget: string, required: false }
       - { label: Photography, name: photo, widget: string, required: false, hint: 'Credit for all photographs, e.g. Hanna Wiedemann / HKW' }
@@ -113,6 +115,8 @@ collections:
       - { label: Laufzeit, name: dates, widget: string, required: false }
       - { label: Aktuell zu sehen, name: current, widget: boolean, default: false }
       - { label: Kuratiert von, name: curator, widget: string, required: false }
+      - { label: Künstler:innen, name: artists, widget: text, required: false }
+      - { label: Grafikdesign, name: graphic, widget: string, required: false }
       - { label: Im Auftrag von, name: client, widget: string, required: false }
       - { label: Team, name: team, widget: string, required: false }
       - { label: Fotografie, name: photo, widget: string, required: false }

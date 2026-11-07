@@ -7,8 +7,10 @@ order: 11
 category: "exhibition-design"
 home: false
 current: false
-dates: ""
-curator: ""
+dates: "23 April – 27 November 2022"
+curator: "Bige Örer"
+graphic: "Marcello Jacopo Biffi, Mousse"
+artists: "Füsun Onur"
 client: ""
 team: "Serap Kaçmaz, Kubilay Ercelep"
 photo: ""

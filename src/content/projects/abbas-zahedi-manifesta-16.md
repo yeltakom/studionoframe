@@ -7,8 +7,10 @@ order: 20
 category: "artist-collaborations"
 home: false
 current: false
-dates: ""
-curator: ""
+dates: "21 June – 4 October 2026"
+curator: "Michael Kurtz, Henry Meyric Hughes (Creative Mediators)"
+graphic: "NODE (biennial identity)"
+artists: "Abbas Zahedi"
 client: ""
 team: ""
 photo: ""

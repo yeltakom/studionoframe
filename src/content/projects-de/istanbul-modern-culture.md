@@ -7,8 +7,9 @@ order: 17
 category: "curation"
 home: false
 current: false
-dates: ""
-curator: ""
+dates: "26. März – 31. Mai 2015"
+curator: "Yelta Köm"
+artists: "Damjan Jovanovic, DEPURati, Epitome {collaborative network}, Günce Eşingen & Gökhan Kınayoğlu, H. Cenk Dereli, Hayrettin Günç, vgpd"
 client: ""
 team: ""
 photo: ""

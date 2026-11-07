@@ -8,7 +8,9 @@ category: "exhibition-design"
 home: true
 current: false
 dates: ""
-curator: ""
+curator: "Ulya Soley"
+artists: "Adriana Varejão, Aslı Çavuşoğlu, Bilal Yılmaz, Burçak Bingöl, Candice Lin, Deniz Eroglu, Elif Uras, Francesco Simeti, Jorge Otero-Pailos, Livia Marin, Metehan Törer, Neven Allgeier, oddviz, Skuja Braden, Taner Ceylan, Volkan Aslan, Yasemin Özcan, Zsófia Keresztes"
+graphic: "Esen Karol"
 client: ""
 team: "Nisa Gökgöz, Bengü Erdem, Elif Tan, Serap Kaçmaz"
 photo: ""

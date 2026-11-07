@@ -7,8 +7,10 @@ order: 8
 category: "artist-collaborations"
 home: true
 current: false
-dates: ""
-curator: ""
+dates: "16 September 2023 – 28 January 2024"
+curator: "Barbara Engelbach, Emre Baykal"
+graphic: "Esen Karol (catalogue)"
+artists: "Füsun Onur"
 client: ""
 team: "Nisa Gökgöz, Bengü Erdem, Serap Kaçmaz, Pelin Gezer, Kubilay Ercelep"
 photo: ""

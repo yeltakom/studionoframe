@@ -52,7 +52,8 @@ const ga = SITE.GA_MEASUREMENT_ID;
         }
       } catch (e) {} })();
     </script>
-    <link rel="icon" type="image/svg+xml" href={`${base}/favicon.svg`} />
+    <link rel="icon" type="image/png" href={`${base}/favicon.png`} />
+    <link rel="apple-touch-icon" href={`${base}/favicon.png`} />
     <link rel="sitemap" href={`${base}/sitemap.xml`} />
     {schema && <script type="application/ld+json" is:inline set:html={JSON.stringify(schema)} />}
     {ga && (

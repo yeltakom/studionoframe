@@ -8,7 +8,8 @@ category: "exhibition-design"
 home: false
 current: false
 dates: ""
-curator: ""
+curator: "Kinga Rózsa Hamvai"
+artists: "Vera Molnár, Dóra Maurer, Gizella Rákóczy"
 client: ""
 team: "Serap Kaçmaz, Ece Aktuğ, Pelin Gezer, Deniz İnal, Kubilay Ercelep"
 photo: ""

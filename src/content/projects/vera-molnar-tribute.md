@@ -8,7 +8,8 @@ category: "exhibition-design"
 home: false
 current: false
 dates: ""
-curator: ""
+curator: "Richard Castelli, Zsófia Máté"
+artists: "Vera Molnár, Refik Anadol, Arno Beck, Peter Beyls, Snow Yunxue Fu, Mario Klingemann, Patrick Lichty, Frieder Nake, Casey Reas, Antoine Schmitt, Erwin Steller, Tamiko Thiel and /p, u2p050, Iskra Velitchkova, aurèce vettier, Mark Wilson, Samuel Yan"
 client: ""
 team: ""
 photo: ""

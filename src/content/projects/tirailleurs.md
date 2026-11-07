@@ -7,8 +7,9 @@ order: 1
 category: "exhibition-design"
 home: true
 current: false
-dates: ""
+dates: "21 March – 14 June 2026"
 curator: "Paz Guevara, Bonaventure Soh Bejeng Ndikung"
+artists: "Kader Attia, Yassine Balbzioui, Anguezomo Nzé Mba Bikoro, Kathleen Bomani, Halida Boughriet, Tiffany Chung, Binta Diaw, Godfried Donkor, Juan-Pedro Fabra Guemberena, Abrie Fourie, Othon Friesz, Pélagie Gbaguidi, Nadia Kaabi-Linke, Daniel Lind-Ramos, Mónica de Miranda, Oscar Ngu Atanga, Tuấn Andrew Nguyễn, Josèfa Ntjam, Mario Pfeifer, Slavs and Tatars, El Hadji Sy, Pascale Marthine Tayou, Dior Thiam, Barthélémy Toguo, Félix Vallotton, Francisco Vidal, Hana Yoo"
 client: "Haus der Kulturen der Welt (HKW), Berlin"
 team: "Serap Kaçmaz, Pelin Gezer, Ali Haydar Ararut, Melisa Karataş"
 photo: "Hanna Wiedemann / HKW"

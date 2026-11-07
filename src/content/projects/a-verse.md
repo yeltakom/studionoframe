@@ -8,7 +8,8 @@ category: "exhibition-design"
 home: false
 current: false
 dates: ""
-curator: ""
+curator: "Elif Kamışlı"
+artists: "Åsa Jungnelius"
 client: ""
 team: "Pelin Gezer"
 photo: ""

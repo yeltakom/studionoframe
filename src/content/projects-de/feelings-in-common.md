@@ -8,7 +8,8 @@ category: "exhibition-design"
 home: false
 current: false
 dates: ""
-curator: ""
+curator: "Ulya Soley"
+artists: "Larry Achiampong, Laura Aldridge, Ed Atkins, Sonia Boyce, Jake & Dinos Chapman, Eileen Cooper, Tony Cragg, Tracey Emin, Jane England, Cerith Wyn Evans, Graham Fagen, Lucian Freud, Anya Gallaccio, Gilbert & George, Richard Hamilton, Lubaina Himid, Damien Hirst, David Hockney, Michael Landy, Delaine Le Bas, Sarah Lucas, Kate Malone, Chris Ofili, Marc Quinn, Raqib Shaw, Wolfgang Tillmans, Suzanne Treister, Bedwyr Williams, Madame Yevonde"
 client: ""
 team: "Serap Kaçmaz, Pelin Gezer"
 photo: ""

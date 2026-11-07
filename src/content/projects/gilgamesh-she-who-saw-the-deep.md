@@ -9,6 +9,7 @@ home: false
 current: false
 dates: ""
 curator: ""
+artists: "Anton Vidokle, Pelin Tan"
 client: ""
 team: "Serap Kaçmaz, Kubilay Ercelep, Elif Çak"
 photo: ""

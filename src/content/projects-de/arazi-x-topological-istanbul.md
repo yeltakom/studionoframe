@@ -8,7 +8,9 @@ category: "artist-collaborations"
 home: false
 current: false
 dates: ""
-curator: ""
+curator: "Ute Meta Bauer, Amar Kanwar, David Teh"
+artists: "Zeynep Sıla Akıncı, Ruken Aydoğdu, Özge Çelikaslan, Leyla Keskin, Yelta Köm, Mezra Öner, Merve Gül Özokcu, Yıldız Tahtacı, Pelin Tan, Agit Ozdemir, Ekoloji Derneği, GaiaEkoloji, Nishat Awan, Zahra Hussain, Lena Saraj, Ishita Sharma, Asim Rafiqui, Atelier Cartographique, İlke Şanlıer Yüksel"
+graphic: "Emre Çıkınoğlu (Biennale-Identität)"
 client: ""
 team: ""
 photo: ""

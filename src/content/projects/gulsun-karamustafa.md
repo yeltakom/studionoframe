@@ -7,8 +7,10 @@ order: 5
 category: "production"
 home: false
 current: false
-dates: ""
+dates: "20 April – 24 November 2024"
 curator: ""
+graphic: "Esen Karol"
+artists: "Gülsün Karamustafa"
 client: ""
 team: ""
 photo: ""

@@ -8,7 +8,9 @@ category: "production"
 home: false
 current: false
 dates: ""
-curator: ""
+curator: "Ute Meta Bauer, Amar Kanwar, David Teh"
+artists: "Ahmet Öğüt, Yelta Köm, Pelin Tan, Amal Jibril, Suha Nabhan"
+graphic: "Emre Çıkınoğlu (Biennale-Identität)"
 client: ""
 team: ""
 photo: ""
