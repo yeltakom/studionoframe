@@ -15,24 +15,25 @@ const home = lang === 'de' ? `${base}/de` : base;
 <ol class="services">
   {CATEGORIES.map((c, i) => (
     <li>
-      <span class="no">{i + 1}</span>
       <div>
         <h2><a href={`${home}/category/${c.key}`}>{catTitle(c, lang)}</a></h2>
         <p>{catLine(c, lang)}</p>
-        <ul>{works.filter((w) => w.cat.key === c.key).map((w) => <li><a href={`${home}/projects/${w.id}`}>{w.data.title}</a> <span>{w.data.venue}, {w.data.year}</span></li>)}</ul>
       </div>
+      <ul>{works.filter((w) => w.cat.key === c.key).sort((a, b) => b.year - a.year).map((w) => <li><a href={`${home}/projects/${w.id}`}><b>{w.data.title}</b> <span>{w.data.venue}, {w.data.year}</span></a></li>)}</ul>
     </li>
   ))}
 </ol>
 <style>
+  /* same thirds as the home page: category and its line on the left, its projects from the figure line, newest first */
   .services { list-style: none; margin: 0; padding: 0 var(--gutter) clamp(3rem, 7vw, 5rem); }
-  .services > li { display: grid; grid-template-columns: 3rem minmax(0, 1fr); gap: 0 1.5rem; padding: 1.5rem 0 2rem; border-top: 1px solid var(--ink); }
-  .services .no { font-size: 0.8rem; color: var(--grey); padding-top: 0.4rem; }
-  .services h2 { margin: 0; font-size: clamp(1.3rem, 2.6vw, 2.1rem); font-weight: 700; letter-spacing: -0.032em; }
-  .services p { margin: 0.5rem 0 1rem; max-width: 56ch; color: var(--grey); }
-  .services ul { list-style: none; margin: 0; padding: 0; font-size: 0.9rem; }
-  .services ul li { padding: 0.25rem 0; }
-  .services ul a { border-bottom: 1px solid var(--rule); }
-  .services ul a:hover { border-bottom-color: var(--ink); }
-  .services ul span { color: var(--grey); margin-left: 0.4rem; }
+  .services > li { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 0.8rem 3rem; padding: 0 0 3rem; }
+  .services h2 { margin: 0 0 0.5rem; font-size: 1rem; font-weight: 700; text-transform: uppercase; }
+  .services h2 a:hover { text-decoration: underline; }
+  .services p { margin: 0; max-width: 40ch; font-weight: 400; line-height: 1.35; }
+  .services ul { list-style: none; margin: 0; padding: 0; }
+  .services ul li { padding: 0 0 0.45rem; line-height: 1.25; }
+  .services ul b { text-transform: uppercase; }
+  .services ul span { font-weight: 400; margin-left: 0.6rem; }
+  .services ul a:hover b { text-decoration: underline; }
+  @media (max-width: 900px) { .services > li { grid-template-columns: 1fr; } .services ul span { display: block; margin: 0.1rem 0 0; } .services ul li { padding-bottom: 0.7rem; } }
 </style>

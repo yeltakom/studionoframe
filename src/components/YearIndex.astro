@@ -37,14 +37,15 @@ const rows = sorted.map((w, i) => {
 <style>
   .yi { display: block; }
   .yi.pad { padding: 0 var(--gutter) 3rem; }
-  .h, .r { display: grid; grid-template-columns: 4.5rem minmax(0, 17rem) minmax(0, 1fr) 11rem; gap: 0 1rem; align-items: baseline; line-height: 1.25; }
-  .h { padding-bottom: 1rem; font-size: 0.75rem; text-transform: uppercase; }
+  /* Year and place fill the first third, so the project column starts on the same line as the home figure (1fr / 2fr, gap 3rem). */
+  .h, .r { display: grid; grid-template-columns: 4.5rem calc((100% - 3rem) / 3 - 3.5rem) minmax(0, 1fr) 13rem; gap: 0 1rem; align-items: baseline; line-height: 1.25; }
+  .h { padding-bottom: 1rem; font-size: 0.8rem; text-transform: uppercase; }
   .r { padding: 0.3rem 0; }
   .r.ny { margin-top: 1.1rem; }
   .r.np { margin-top: 0.5rem; }
-  .p { font-size: 0.92rem; font-weight: 400; }
+  .p { font-weight: 400; }
   .ttl { text-transform: uppercase; }
-  .k { font-size: 0.75rem; font-weight: 400; }
+  .k { font-size: 0.8rem; font-weight: 400; }
   .r:hover { text-decoration: none; }
   .ttl { display: block; transition: transform 0.35s ease; }
   .r:hover .ttl { text-decoration: underline; transform: translateX(0.8rem); }

@@ -67,10 +67,17 @@ const de = lang === 'de';
   .figure a { position: absolute; inset: 0; opacity: 0; transition: opacity 0.25s; }
   .figure a.on { opacity: 1; }
   .figure img { width: 100%; height: 100%; object-fit: contain; object-position: left top; }
-  .figure .cap { position: absolute; left: 0; right: 0; top: 100%; display: flex; justify-content: space-between; gap: 1rem; padding: 0.55rem 0; font-size: 0.85rem; text-transform: uppercase; }
+  .figure .cap { position: absolute; left: 0; right: 0; top: 100%; display: flex; flex-wrap: wrap; gap: 0 1.5rem; padding: 0.55rem 0; font-size: 0.8rem; text-transform: uppercase; }
+  .figure .cap span + span { font-weight: 400; }
   .rows { display: block; margin-bottom: 4rem; }
   @media (max-width: 900px) {
     .top { grid-template-columns: 1fr; gap: 2rem 0; }
-    .top .figure { margin-bottom: 2.5rem; }
+    .top .figure { margin-bottom: 0; aspect-ratio: auto; }
+    /* on a phone there is no pointer to swap the figure: show the first one at its own size, caption under it */
+    .figure a { position: static; display: none; }
+    .figure a.on { display: block; }
+    .figure img { height: auto; }
+    .figure .cap { position: static; }
+    .top { margin-bottom: 3rem; }
   }
 </style>

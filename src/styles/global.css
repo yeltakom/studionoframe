@@ -284,7 +284,7 @@ button { font: inherit; }
 .rhead { height: var(--bar); display: flex; align-items: center; justify-content: space-between; gap: 1rem 2rem; padding: 0 var(--gutter); border-bottom: 0; background: var(--paper); text-transform: uppercase; font-size: 0.9rem; }
 .rhead .band { display: flex; flex: 1; align-items: baseline; gap: 2rem; min-width: 0; white-space: nowrap; overflow: hidden; }
 .rhead .band .studio { position: static; font-size: 0.9rem; letter-spacing: 0; }
-.rhead .tick { flex: 1; min-width: 0; overflow: hidden; display: flex; font-weight: 400; }
+.rhead .tick { flex: 1; min-width: 0; overflow: hidden; display: flex; font-weight: 400; -webkit-mask-image: linear-gradient(90deg, transparent, #000 3rem, #000 calc(100% - 3rem), transparent); mask-image: linear-gradient(90deg, transparent, #000 3rem, #000 calc(100% - 3rem), transparent); }
 .rhead .tick:hover .run { animation-play-state: paused; }
 .rhead .run { flex: none; display: flex; animation: run 90s linear infinite; }
 .rhead .item { flex: none; padding-right: 10rem; font-size: 0.8rem; }
@@ -353,3 +353,39 @@ button { font: inherit; }
 .lb button { border: 0; background: none; padding: 0.3rem 0.6rem; font: inherit; font-size: 1.4rem; color: var(--ink); cursor: pointer; }
 .lb-x { position: absolute; top: 0.4rem; right: 0.6rem; z-index: 1; }
 .lb-bar { display: flex; justify-content: center; align-items: center; gap: 1.5rem; padding-top: 0.4rem; font-size: 0.8rem; }
+/* one grid for the whole site: a left third and two right thirds (1fr / 2fr, gap 3rem), as on the home page.
+   Project pages: facts in the left third, text and artists from the same line as the home figure and the Index project column. */
+.pj-body { grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 1.5rem 3rem; }
+.pj-body .pj-facts { grid-column: 1; grid-row: 1; padding-top: 0.3rem; }
+.pj-body .pj-text { grid-column: 2; grid-row: 1; }
+.pj-text .prose { font-size: 1.05rem; line-height: 1.45; }
+.pj-artists { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); gap: 0.6rem 3rem; max-width: none; }
+.pj-artists h2 { margin: 0; padding-top: 0.15rem; }
+.pj-artists p { max-width: 60ch; }
+/* small type has one size: 0.8rem */
+.pj-head .meta, .pj-facts dd, .pj-lead figcaption, .pj-figs figcaption { font-size: 0.8rem; color: var(--ink); }
+.pj-facts dd { font-weight: 400; line-height: 1.4; }
+@media (max-width: 900px) {
+  .pj-body, .pj-artists { grid-template-columns: 1fr; }
+  .pj-body .pj-text { grid-column: 1; grid-row: 1; }
+  .pj-body .pj-facts { grid-column: 1; grid-row: 2; position: static; }
+}
+/* photographs read in order, row by row (02 03 / 04 05), each at its own proportions */
+.pj-figs { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 1.25rem; align-items: start; columns: auto; }
+.pj-figs figure, .pj-figs figure:nth-child(3n), .pj-figs figure:last-child:nth-child(3n + 1) { grid-column: auto; margin: 0; }
+@media (max-width: 760px) { .pj-figs { grid-template-columns: 1fr; } }
+/* text pages on the same thirds: section heads in the left third, text from the figure line */
+.page .body { display: grid; grid-template-columns: minmax(0, 1fr) minmax(0, 2fr); column-gap: 3rem; max-width: none; align-items: start; }
+.page .body > * { grid-column: 2; max-width: 60ch; }
+.page .body > h2 { grid-column: 1; margin: 2.4rem 0 0; }
+.page .body > h2 + * { margin-top: 2.4rem; }
+.head > p { max-width: 40ch; }
+@media (max-width: 900px) {
+  .page .body { grid-template-columns: 1fr; }
+  .page .body > *, .page .body > h2 { grid-column: 1; }
+  .page .body > h2 + * { margin-top: 0.7rem; }
+}
+@media (max-width: 760px) {
+  /* DE/EN sits on the studio name's line */
+  .rhead nav .lang { top: 1.15rem; }
+}
