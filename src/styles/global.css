@@ -389,9 +389,6 @@ button { font: inherit; }
   /* DE/EN sits on the studio name's line */
   .rhead nav .lang { top: 1.15rem; }
 }
-/* ---- the spectrum from the logo: the circle beside the studio name and a strip on the notice box ---- */
+/* ---- the spectrum from the logo: a strip on the notice box ---- */
 :root { --spectrum: linear-gradient(90deg, #00a3e0, #3c3c9b, #d4007f, #e4232d, #f39200, #fde500, #3aa935); }
-/* the circle hangs in the gutter, so the name still starts on the page's left edge */
-.rhead .studio::before { content: ''; display: inline-block; width: 0.6em; height: 0.6em; margin: 0 0.25em 0 -0.85em; border-radius: 50%; background: var(--spectrum); vertical-align: -0.04em; }
 .wip { background: var(--spectrum) top / 100% 4px no-repeat, #000; }
-.rhead .band { overflow: visible; } /* the running line clips itself; the band must let the circle hang into the gutter */
