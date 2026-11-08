@@ -15,11 +15,11 @@ export const UI = {
     home: {
       title: 'Exhibitions as research.',
       led: 'Led by Yelta Köm',
-      line: 'A research-based practice of spatial and visual experience, working across spatial design, scenography and exhibition architecture. Office in Berlin.',
+      line: 'Studio No Frame designs exhibition architecture in Berlin. We work with curators, artists and institutions on exhibitions of contemporary art, architecture and research, from the first spatial concept to installation.',
       note: 'This site is still being built, so texts and images may be incomplete. Please bear with us.',
       selected: 'Selected Projects', all: 'All', allProjects: 'All projects →', filter: 'Filter by category', photo: 'Photograph',
     },
-    services: { title: 'Practice', line: 'Spatial design, scenography and exhibition architecture, developed through research with artists and institutions.' },
+    services: { title: 'Practice', line: 'Exhibition architecture, production, artist collaborations, spatial research and curation, for museums, biennials and artists.' },
     index: {
       label: 'Index',
       title: 'Exhibitions for museums, biennials and artists.',
@@ -37,9 +37,9 @@ export const UI = {
     contact: { label: 'Contact' },
     internships: { label: 'Internships' },
     footer: { internships: 'Internships', imprint: 'Impressum', privacy: 'Datenschutz' },
-    siteTitle: 'Studio No Frame — Spatial design, scenography, exhibition architecture, Berlin',
+    siteTitle: 'Exhibition Architecture and Design, Berlin | Studio No Frame',
     description:
-      'Studio No Frame is a research-based practice of spatial and visual experience in Berlin, working across spatial design, scenography and exhibition architecture. Led by Yelta Köm.',
+      'Exhibition architecture and design studio in Berlin, led by Yelta Köm. Projects with HKW, Pera Museum, Museum Ludwig and the Venice Biennale.',
   },
   de: {
     htmlLang: 'de',
@@ -50,11 +50,11 @@ export const UI = {
     home: {
       title: 'Ausstellungen als Forschung.',
       led: 'Geleitet von Yelta Köm',
-      line: 'Eine forschungsbasierte Praxis räumlicher und visueller Erfahrung, zwischen Raumgestaltung, Szenografie und Ausstellungsarchitektur. Büro in Berlin.',
+      line: 'Studio No Frame ist ein Büro für Ausstellungsarchitektur in Berlin. Wir arbeiten mit Kurator:innen, Künstler:innen und Institutionen an Ausstellungen zu zeitgenössischer Kunst, Architektur und Forschung, vom ersten räumlichen Konzept bis zum Aufbau.',
       note: 'Diese Website befindet sich noch im Aufbau, Texte und Bilder können daher unvollständig sein. Wir bitten um Nachsicht.',
       selected: 'Ausgewählte Projekte', all: 'Alle', allProjects: 'Alle Projekte →', filter: 'Nach Kategorie filtern', photo: 'Fotografie',
     },
-    services: { title: 'Praxis', line: 'Raumgestaltung, Szenografie und Ausstellungsarchitektur, entwickelt in der Forschung mit Künstler:innen und Institutionen.' },
+    services: { title: 'Praxis', line: 'Ausstellungsarchitektur, Produktion, Zusammenarbeit mit Künstler:innen, räumliche Forschung und Kuration, für Museen, Biennalen und Künstler:innen.' },
     index: {
       label: 'Index',
       title: 'Ausstellungen für Museen, Biennalen und Künstler:innen.',
@@ -72,9 +72,9 @@ export const UI = {
     contact: { label: 'Kontakt' },
     internships: { label: 'Praktika' },
     footer: { internships: 'Praktika', imprint: 'Impressum', privacy: 'Datenschutz' },
-    siteTitle: 'Studio No Frame — Raumgestaltung, Szenografie, Ausstellungsarchitektur, Berlin',
+    siteTitle: 'Ausstellungsarchitektur Berlin | Studio No Frame',
     description:
-      'Studio No Frame ist eine forschungsbasierte Praxis räumlicher und visueller Erfahrung in Berlin, zwischen Raumgestaltung, Szenografie und Ausstellungsarchitektur. Geleitet von Yelta Köm.',
+      'Büro für Ausstellungsarchitektur in Berlin unter der Leitung von Yelta Köm. Projekte mit HKW, Pera Museum, Museum Ludwig und der Biennale Venedig.',
   },
 } as const;
 

@@ -9,7 +9,7 @@ import { UI } from '../../i18n';
 const lang = 'de' as const;
 const works = await getCatalogue(lang);
 ---
-<Base lang={lang} title={UI[lang].services.title} description="Raumgestaltung, Szenografie, Ausstellungsarchitektur, räumliche Forschung und Kuratierung: die forschungsbasierte Praxis von Studio No Frame in Berlin.">
+<Base lang={lang} title={UI[lang].services.title} description="Ausstellungsarchitektur, Produktion, Zusammenarbeit mit Künstler:innen, räumliche Forschung und Kuration für Museen und Biennalen. Studio No Frame, Berlin.">
   <Chrome lang={lang} here="services" />
   <div class="below"></div>
   <ServicesList works={works} lang={lang} />

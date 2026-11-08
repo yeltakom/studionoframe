@@ -12,7 +12,7 @@ const home = lang === 'de' ? `${base}/de` : base;
 /* the legal pages exist once, in German: their language link goes to the German home */
 const other = /\/(impressum|datenschutz)\/?$/.test(Astro.url.pathname) ? `${base}/de/` : altPath(Astro.url.pathname, base);
 const now = (await getCatalogue(lang)).filter((w) => w.data.current);
-const office = lang === 'de' ? 'Forschungsbasierte Praxis räumlicher und visueller Erfahrung · Büro · Berlin' : 'Research-based spatial and visual experience practice · Office · Berlin';
+const office = lang === 'de' ? 'Ausstellungsarchitektur · Berlin' : 'Exhibition architecture · Berlin';
 ---
 
 <header class="rhead" id="rhead">
@@ -21,8 +21,8 @@ const office = lang === 'de' ? 'Forschungsbasierte Praxis räumlicher und visuel
     <span class="tick">
       {[0, 1].map((n) => (
         <span class="run" aria-hidden={n ? 'true' : undefined}>
-          {[0, 1, 2].map(() => (
-            <span class="item">
+          {[0, 1, 2].map((k) => (
+            <span class="item" aria-hidden={n || k ? 'true' : undefined}>
               {now.length > 0 && <>{now.map((w) => <a href={`${home}/projects/${w.id}`} tabindex={n ? -1 : undefined}><b>{t.now}</b> {w.data.title}, {w.data.venue}</a>)} · </>}
               {office}
             </span>

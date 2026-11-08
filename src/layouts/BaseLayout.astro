@@ -14,7 +14,7 @@ interface Props {
 const { title, description, image, schema, lang = 'en' } = Astro.props;
 const t = UI[lang];
 
-const pageTitle = title ? `${title} — ${SITE.name}` : t.siteTitle;
+const pageTitle = title ? `${title} | ${SITE.name}` : t.siteTitle;
 const pageDescription = description ?? t.description;
 
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');

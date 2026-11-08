@@ -7,7 +7,7 @@ import '../styles/themes.css';
 interface Props { title?: string; description?: string; image?: string; lang?: Lang; schema?: any }
 const { title, description, image, lang = 'en', schema } = Astro.props;
 const t = UI[lang];
-const pageTitle = title ? `${title} — ${SITE.name}` : t.siteTitle;
+const pageTitle = title ? `${title} | ${SITE.name}` : t.siteTitle;
 const pageDescription = description ?? t.description;
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const absolute = (p: string) => new URL(p, Astro.site ?? Astro.url.origin).href;

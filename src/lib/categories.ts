@@ -8,8 +8,8 @@ export const CATEGORIES = [
     key: 'exhibition-design',
     title: 'Exhibition Architecture',
     de: 'Ausstellungsarchitektur',
-    line: 'Spatial design and scenography for exhibitions, developed from the conditions of each site and work.',
-    lineDe: 'Raumgestaltung und Szenografie für Ausstellungen, entwickelt aus den Bedingungen des jeweiligen Ortes und Werks.',
+    line: 'Exhibition architecture for museums, biennials and institutions: the plan, the route through the rooms, the displays, the light.',
+    lineDe: 'Ausstellungsarchitektur für Museen, Biennalen und Institutionen: Grundriss, Weg durch die Räume, Displays, Licht.',
   },
   {
     key: 'artist-collaborations',
