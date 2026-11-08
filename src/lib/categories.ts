@@ -22,8 +22,8 @@ export const CATEGORIES = [
     key: 'production',
     title: 'Production',
     de: 'Produktion',
-    line: 'Coordination, production design and installation on site, for artists and their teams.',
-    lineDe: 'Koordination, Produktionsdesign und Aufbau vor Ort, für Künstler:innen und ihre Teams.',
+    line: 'Production drawings, production planning and coordination on site, for artists and their teams.',
+    lineDe: 'Produktionszeichnungen, Produktionsplanung und Koordination vor Ort, für Künstler:innen und ihre Teams.',
   },
   {
     key: 'research',
