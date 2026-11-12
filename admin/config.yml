@@ -1,0 +1,138 @@
+# Studio No Frame — content panel (Sveltia CMS)
+# Sign in with a GitHub personal access token: repository "studionoframe",
+# permissions Contents: read & write, Metadata: read.
+
+backend:
+  name: github
+  repo: yeltakom/studionoframe
+  branch: main
+
+media_folder: public/images/projects
+public_folder: /images/projects
+
+media_libraries:
+  default:
+    config:
+      max_file_size: 40000000
+      slugify_filename: true
+      transformations:
+        raster_image:
+          format: webp
+          quality: 82
+          width: 1800
+          height: 1800
+
+collections:
+  - name: projects
+    label: Exhibitions
+    label_singular: Exhibition
+    folder: src/content/projects
+    extension: md
+    format: frontmatter
+    create: true
+    slug: '{{slug}}'
+    media_folder: '/public/images/projects/{{slug}}'
+    public_folder: '/images/projects/{{slug}}'
+    sortable_fields: [year, title, category]
+    summary: '{{title}} — {{venue}}, {{year}}'
+    view_groups:
+      - { label: Category, field: category }
+    fields:
+      - { label: Title, name: title, widget: string }
+      - { label: Venue, name: venue, widget: string, hint: 'e.g. Pera Museum, Istanbul' }
+      - { label: Year, name: year, widget: string, hint: '2025, or 2018–2019 for a run. Ordering within a category follows this.' }
+      - { label: Role, name: role, widget: string, hint: 'e.g. Exhibition Architecture' }
+      - label: Category
+        name: category
+        widget: select
+        hint: 'What kind of work it was. The catalogue number (2.3) comes from this.'
+        options:
+          - { label: '1 Exhibition Design', value: exhibition-design }
+          - { label: '2 Artist Collaborations', value: artist-collaborations }
+          - { label: '3 Production Support', value: production }
+          - { label: '4 Spatial Research', value: research }
+          - { label: '5 Curation', value: curation }
+          - { label: '6 Web & Visualization', value: web }
+      - { label: Show on home page, name: home, widget: boolean, default: false, hint: 'Its cover opens the home page and joins the rotation' }
+      - { label: Listed on home page, name: selected, widget: boolean, default: true, hint: 'Off keeps it in the Index only' }
+      - label: Photographs
+        name: images
+        widget: image
+        multiple: true
+        hint: 'Select all at once. The first one is the cover — drag to reorder. Large files are resized to 1800 px on upload.'
+      - { label: Summary, name: summary, widget: text, required: false, hint: 'One sentence for search results and link previews. Empty = first sentence of the text.' }
+      - { label: Text, name: body, widget: markdown, required: false }
+      - { label: Dates, name: dates, widget: string, required: false, hint: 'e.g. 14 March – 2 August 2026. Shown instead of the year when filled.' }
+      - { label: On view now, name: current, widget: boolean, default: false, hint: 'Lists it under "Now" on the home page' }
+      - { label: Curated by, name: curator, widget: string, required: false }
+      - { label: Artists, name: artists, widget: text, required: false }
+      - { label: Graphic design, name: graphic, widget: string, required: false }
+      - { label: Commissioned by, name: client, widget: string, required: false, hint: 'Institution or commissioner' }
+      - { label: Team, name: team, widget: string, required: false }
+      - { label: Photography, name: photo, widget: string, required: false, hint: 'Credit for all photographs, e.g. Hanna Wiedemann / HKW' }
+      - label: Captions
+        name: captions
+        widget: list
+        required: false
+        collapsed: true
+        summary: '{{fields.text}}'
+        hint: 'Optional: a line for any photograph that deserves one. Pick the photograph you already uploaded.'
+        fields:
+          - { label: Photograph, name: image, widget: image, choose_url: false }
+          - { label: Caption, name: text, widget: string, required: false, hint: 'What is in the picture — the work, the room, the moment' }
+          - { label: Credit, name: credit, widget: string, required: false, hint: 'Only if different from the photography credit above' }
+
+      - { label: Order, name: order, widget: number, value_type: int, default: 99, required: false, hint: 'Not used on the site any more; leave it.' }
+
+  - name: projects_de
+    label: Ausstellungen (Deutsch)
+    label_singular: Ausstellung
+    folder: src/content/projects-de
+    extension: md
+    format: frontmatter
+    create: true
+    slug: '{{slug}}'
+    media_folder: '/public/images/projects/{{slug}}'
+    public_folder: '/images/projects/{{slug}}'
+    sortable_fields: [year, title]
+    summary: '{{title}} — {{venue}}, {{year}}'
+    fields:
+      - { label: Titel, name: title, widget: string, hint: 'Same as the English entry — the file name must match too' }
+      - { label: Ort, name: venue, widget: string }
+      - { label: Jahr, name: year, widget: string }
+      - { label: Rolle, name: role, widget: string, hint: 'e.g. Ausstellungsarchitektur' }
+      - label: Kategorie
+        name: category
+        widget: select
+        options:
+          - { label: '1 Ausstellungsgestaltung', value: exhibition-design }
+          - { label: '2 Künstlerische Zusammenarbeit', value: artist-collaborations }
+          - { label: '3 Produktion', value: production }
+          - { label: '4 Räumliche Forschung', value: research }
+          - { label: '5 Kuratierung', value: curation }
+          - { label: '6 Web & Visualisierung', value: web }
+      - { label: Auf der Startseite, name: home, widget: boolean, default: false }
+      - { label: In der Startseiten-Liste, name: selected, widget: boolean, default: true }
+      - { label: Fotos, name: images, widget: image, multiple: true, hint: 'Same photographs as the English entry' }
+      - { label: Kurzfassung, name: summary, widget: text, required: false }
+      - { label: Text, name: body, widget: markdown, required: false }
+      - { label: Laufzeit, name: dates, widget: string, required: false }
+      - { label: Aktuell zu sehen, name: current, widget: boolean, default: false }
+      - { label: Kuratiert von, name: curator, widget: string, required: false }
+      - { label: Künstler:innen, name: artists, widget: text, required: false }
+      - { label: Grafikdesign, name: graphic, widget: string, required: false }
+      - { label: Im Auftrag von, name: client, widget: string, required: false }
+      - { label: Team, name: team, widget: string, required: false }
+      - { label: Fotografie, name: photo, widget: string, required: false }
+      - label: Bildunterschriften
+        name: captions
+        widget: list
+        required: false
+        collapsed: true
+        summary: '{{fields.text}}'
+        fields:
+          - { label: Foto, name: image, widget: image, choose_url: false }
+          - { label: Bildunterschrift, name: text, widget: string, required: false }
+          - { label: Credit, name: credit, widget: string, required: false }
+
+      - { label: Reihenfolge, name: order, widget: number, value_type: int, default: 99, required: false }
