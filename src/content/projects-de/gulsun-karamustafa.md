@@ -1,5 +1,5 @@
 ---
-title: "Gülsün Karamustafa: Hollow and Broken—A State of the World"
+title: "Gülsün Karamustafa: Hollow and Broken. A State of the World"
 venue: "Pavillon der Türkei, Venedig"
 year: "2024"
 role: "Beratung Ausstellungsgestaltung & Aufbauleitung"
@@ -14,7 +14,7 @@ artists: "Gülsün Karamustafa"
 client: ""
 team: ""
 photo: ""
-summary: "Beitrag zur Ausstellungsgestaltung und räumlichen Disposition des Pavillons der Türkei auf der 60. Internationalen Kunstausstellung — La Biennale di Venezia, mit der Installation von Gülsün Karamustafa."
+summary: "Beitrag zur Ausstellungsgestaltung und räumlichen Disposition des Pavillons der Türkei auf der 60. Internationalen Kunstausstellung, La Biennale di Venezia, mit der Installation von Gülsün Karamustafa."
 cover: "/images/projects/gulsun-karamustafa/gulsun-karamustafa-01.jpg"
 images:
   - "/images/projects/gulsun-karamustafa/gulsun-karamustafa-01.jpg"
@@ -24,4 +24,4 @@ images:
 captions: []
 ---
 
-Beitrag zur Ausstellungsgestaltung und räumlichen Disposition des Pavillons der Türkei auf der 60. Internationalen Kunstausstellung — La Biennale di Venezia, mit der Installation von Gülsün Karamustafa. Die gemeinsam mit dem kuratorischen Team entwickelte Raumstrategie folgt der vielschichtigen, erzählenden Struktur der Arbeit.
+Beitrag zur Ausstellungsgestaltung und räumlichen Disposition des Pavillons der Türkei auf der 60. Internationalen Kunstausstellung, La Biennale di Venezia, mit der Installation von Gülsün Karamustafa. Die gemeinsam mit dem kuratorischen Team entwickelte Raumstrategie folgt der vielschichtigen, erzählenden Struktur der Arbeit.

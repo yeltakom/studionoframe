@@ -1,73 +1,98 @@
 ---
-/* A project: title with venue / year and category, the room, then the text
-   beside the facts, the plates with their captions, the other projects of the
-   category as pictures, and the way on. */
+/* A project: the title, the first photograph across the page, the facts in
+   the left third beside the text, then the photographs in rows. Every
+   photograph keeps its own proportions; two side by side share one height. */
 import { UI, type Lang } from '../i18n';
-import { srcset, SIZES } from '../lib/img';
+import { srcset, dims } from '../lib/img';
 import ProjectGrid from './ProjectGrid.astro';
 interface Props { p: any; prev: any; next: any; related: any[]; root: string; catHref: string; lang?: Lang }
 const { p, prev, next, related = [], root, catHref, lang = 'en' } = Astro.props;
 const t = UI[lang];
 const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
 const d = p.data;
-const [lead, ...rest] = d.images as string[];
+const images = [...new Set(d.images as string[])];
+const [lead, ...rest] = images;
 const catName = lang === 'de' ? p.cat.de : p.cat.title;
 const capOf = (src: string) => (d.captions as { image: string; text: string; credit: string }[]).find((c) => c.image === src || src.endsWith(c.image) || c.image.endsWith(src.split('/').pop() ?? '#'));
-const caption = (src: string, n: number) => {
+const caption = (src: string) => {
   const c = capOf(src);
-  const text = c?.text || `${t.view}${n === 1 ? `, ${d.venue}` : ''}`;
-  const credit = c?.credit || d.photo;
-  return { text, credit };
+  const text = (c?.text || '').trim();
+  const generic = !text || /^(installation view|ausstellungsansicht)$/i.test(text);
+  const credit = (c?.credit || d.photo || '').trim();
+  return { text: generic ? '' : text, credit };
 };
+const ratio = (src: string) => { const { w, h } = dims(src); return w / h; };
+
+/* rows: after the first photograph, pairs and single photographs take turns;
+   a single upright photograph is never stretched across the page */
+type Row = string[];
+const rows: Row[] = [];
+const upright = (src: string) => ratio(src) < 1.15;
+let queue = [...rest];
+/* an upright first photograph never stands alone with white beside it:
+   it shares the first row with the next photograph */
+const leadRow: Row = lead ? (upright(lead) && queue.length ? [lead, queue.shift()!] : [lead]) : [];
+const wide = (src: string) => ratio(src) > 2.2;
+let pair = true;
+while (queue.length) {
+  /* a panorama always has a row of its own; three uprights share one */
+  if (wide(queue[0])) { rows.push(queue.splice(0, 1)); pair = true; continue; }
+  if (queue.length >= 3 && queue.slice(0, 3).every(upright)) { rows.push(queue.splice(0, 3)); continue; }
+  if (queue.length >= 2 && !wide(queue[1]) && (pair || upright(queue[0]))) rows.push(queue.splice(0, 2));
+  else rows.push(queue.splice(0, 1));
+  pair = !pair;
+}
+/* a last upright photograph joins the row before it */
+const last = rows[rows.length - 1];
+if (rows.length > 1 && last.length === 1 && upright(last[0])) rows[rows.length - 2].push(...rows.pop()!);
 const facts: [string, string | undefined][] = [
   [t.facts.venue, d.venue],
   [d.dates ? t.facts.dates : t.facts.year, d.dates || d.year],
   [t.facts.role, d.role],
   [t.facts.curator, d.curator],
-  [t.facts.graphic, d.graphic],
   [t.facts.client, d.client],
+  [t.facts.graphic, d.graphic],
   [t.facts.team, d.team],
   [t.facts.photo, d.photo],
 ];
+const alt = (src: string) => capOf(src)?.text || `${d.title}, ${d.venue}`;
 ---
+<article class="pj">
 <header class="pj-head">
   <h1>{d.title}</h1>
-  <p class="meta">{d.venue} / {d.year} · <a href={catHref}>{catName}</a></p>
+  <p class="meta">{d.venue}, {d.year} · <a href={catHref}>{catName}</a></p>
 </header>
 
-{lead && (
-  <div class="pj-lead">
-    <figure class="fig">
-      <img src={`${base}${lead}`} srcset={srcset(base, lead)} sizes={SIZES.full} alt={`${d.title} — ${d.venue}`} fetchpriority="high" decoding="async" />
-      <i></i>
-      <figcaption><b>Fig. 01</b>{caption(lead, 1).text}{caption(lead, 1).credit && <span class="credit"> · {caption(lead, 1).credit}</span>}</figcaption>
-    </figure>
+{leadRow.length > 0 && (
+  <div class:list={['pj-row', 'pj-lead', leadRow.length === 1 && 'one', leadRow.length === 1 && upright(leadRow[0]) && 'upright']}>
+    {leadRow.map((src, n) => { const c = caption(src); const r = ratio(src); return (
+      <figure class="pj-ph" style={`--r:${r.toFixed(4)}`}>
+        <img src={`${base}${src}`} srcset={srcset(base, src)} sizes={leadRow.length === 1 ? 'calc(100vw - 30px)' : '(min-width: 760px) 50vw, 100vw'} width={dims(src).w} height={dims(src).h} alt={alt(src)} fetchpriority={n === 0 ? 'high' : undefined} decoding="async" />
+        {(c.text || c.credit) && <figcaption>{c.text}{c.text && c.credit && ' · '}{c.credit && <span class="credit">{c.credit}</span>}</figcaption>}
+      </figure>
+    ); })}
   </div>
 )}
 
 <div class="pj-body">
-  <div class="pj-text"><div class="prose"><slot /></div></div>
   <dl class="pj-facts">
-    {facts.filter(([, v]) => v).map(([k, v]) => <div><dt class="label">{k}</dt><dd>{v}</dd></div>)}
-    <div><dt class="label">{t.columns.type}</dt><dd><a href={catHref}>{catName}</a></dd></div>
+    {facts.filter(([, v]) => v).map(([k, v]) => <div><dt>{k}</dt><dd>{v}</dd></div>)}
+    {d.artists && <div><dt>{t.facts.artists}</dt><dd>{d.artists}</dd></div>}
   </dl>
+  <div class="pj-text prose"><slot /></div>
 </div>
 
-{d.artists && (
-  <section class="pj-artists">
-    <h2 class="label">{t.facts.artists}</h2>
-    <p>{d.artists}</p>
-  </section>
-)}
-
-{rest.length > 0 && (
-  <div class="pj-figs">
-    {rest.map((src: string, i: number) => (
-      <figure class="fig">
-        <img src={`${base}${src}`} srcset={srcset(base, src)} sizes={SIZES.half} alt={capOf(src)?.text || `${d.title} — ${d.venue}`} loading="lazy" decoding="async" />
-        <i></i>
-        <figcaption><b>Fig. {String(i + 2).padStart(2, '0')}</b>{caption(src, i + 2).text}{caption(src, i + 2).credit && <span class="credit"> · {caption(src, i + 2).credit}</span>}</figcaption>
-      </figure>
+{rows.length > 0 && (
+  <div class="pj-rows">
+    {rows.map((row) => (
+      <div class:list={['pj-row', row.length === 1 && 'one', row.length === 1 && upright(row[0]) && 'upright']}>
+        {row.map((src) => { const c = caption(src); const r = ratio(src); return (
+          <figure class="pj-ph" style={`--r:${r.toFixed(4)}`}>
+            <img src={`${base}${src}`} srcset={srcset(base, src)} sizes={row.length === 1 ? 'calc(100vw - 30px)' : '(min-width: 760px) 50vw, 100vw'} width={dims(src).w} height={dims(src).h} alt={alt(src)} loading="lazy" decoding="async" />
+            {(c.text || c.credit) && <figcaption>{c.text}{c.text && c.credit && ' · '}{c.credit && <span class="credit">{c.credit}</span>}</figcaption>}
+          </figure>
+        ); })}
+      </div>
     ))}
   </div>
 )}
@@ -80,9 +105,10 @@ const facts: [string, string | undefined][] = [
 )}
 
 <nav class="pj-nav">
-  <a href={`${root}/${prev.id}`}><span class="label">{t.prev}</span><strong>{prev.data.title}</strong></a>
-  <a href={`${root}/${next.id}`} style="text-align:right;margin-left:auto"><span class="label">{t.next}</span><strong>{next.data.title}</strong></a>
+  <a href={`${root}/${prev.id}`}><span>{t.prev}</span><strong>{prev.data.title}</strong></a>
+  <a href={`${root}/${next.id}`} class="nx"><span>{t.next}</span><strong>{next.data.title}</strong></a>
 </nav>
+</article>
 
 {d.images.length > 0 && (
   <div class="lb" id="lb" hidden role="dialog" aria-modal="true" aria-label={d.title}>
@@ -101,7 +127,7 @@ const facts: [string, string | undefined][] = [
   /* the photographs open full screen and slide from one to the next */
   const box = document.getElementById('lb');
   if (!box) return;
-  const imgs = [...document.querySelectorAll('.pj-lead img, .pj-figs img')];
+  const imgs = [...document.querySelectorAll('.pj-ph img')];
   const big = box.querySelector('img'), cap = box.querySelector('figcaption'), count = box.querySelector('.lb-c');
   const still = matchMedia('(prefers-reduced-motion: reduce)').matches;
   let i = 0, last = null;
@@ -110,7 +136,7 @@ const facts: [string, string | undefined][] = [
     const src = imgs[i];
     big.src = src.getAttribute('src'); big.alt = src.alt;
     const fc = src.closest('figure')?.querySelector('figcaption');
-    cap.textContent = fc ? [...fc.childNodes].filter((x) => x.nodeName !== 'B').map((x) => x.textContent).join('').trim() : '';
+    cap.textContent = fc ? fc.textContent.trim() : '';
     count.textContent = `${i + 1} / ${imgs.length}`;
     if (dir && !still) big.animate([{ transform: `translateX(${dir * 3}rem)`, opacity: 0 }, { transform: 'none', opacity: 1 }], { duration: 380, easing: 'ease' });
   };

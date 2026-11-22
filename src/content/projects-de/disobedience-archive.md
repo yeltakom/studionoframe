@@ -2,7 +2,7 @@
 title: "Disobedience Archive: Park"
 venue: "SALT Beyoğlu, Istanbul"
 year: "2014"
-role: "Teilnehmer & Ausstellungsgestalter — mit Herkes İçin Mimarlık"
+role: "Teilnehmer & Ausstellungsgestalter, mit Herkes İçin Mimarlık"
 order: 18
 category: "exhibition-design"
 home: false
@@ -28,4 +28,4 @@ images:
 captions: []
 ---
 
-Kuratiert von Marco Scotini und Andris Brinkmanis, mit der räumlichen Einrichtung von Herkes İçin Mimarlık. <em>Disobedience Archive</em> bringt eine umfassende Kartierung sozialer Konflikte und ein Netzwerk zeitgenössischen Aktivismus in die Stadt — kurz nachdem die Gezi-Proteste den Kampf um das Recht auf Stadt neu bestimmt hatten.
+Kuratiert von Marco Scotini und Andris Brinkmanis, mit der räumlichen Einrichtung von Herkes İçin Mimarlık. <em>Disobedience Archive</em> bringt eine umfassende Kartierung sozialer Konflikte und ein Netzwerk zeitgenössischen Aktivismus in die Stadt, kurz nachdem die Gezi-Proteste den Kampf um das Recht auf Stadt neu bestimmt hatten.

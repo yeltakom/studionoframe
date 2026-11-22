@@ -2,7 +2,7 @@
 title: "Caution! Slippery Ground"
 venue: "Istanbul Modern, Istanbul"
 year: "2015"
-role: "Kuratierung & Ausstellungsgestaltung — KOTUstudio"
+role: "Kuratierung & Ausstellungsgestaltung (KOTUstudio)"
 order: 17
 category: "curation"
 home: false

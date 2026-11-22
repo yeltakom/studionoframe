@@ -14,7 +14,7 @@ graphic: "Emre Çıkınoğlu (biennial identity)"
 client: ""
 team: ""
 photo: ""
-summary: "Organized by Arazi Assembly and Topological Atlas at the 17th Istanbul Biennial, the exhibition explored the displacement of communities in the Tigris basin — forced displacements, dispossessed female farmers, undocumented migrants, and urban/rural resistance practices."
+summary: "Organized by Arazi Assembly and Topological Atlas at the 17th Istanbul Biennial, the exhibition explored the displacement of communities in the Tigris basin: forced displacements, dispossessed female farmers, undocumented migrants, and urban/rural resistance practices."
 cover: "/images/projects/arazi-x-topological-istanbul/arazi-x-topological-istanbul-01.jpg"
 images:
   - "/images/projects/arazi-x-topological-istanbul/arazi-x-topological-istanbul-01.jpg"
@@ -30,4 +30,4 @@ images:
 captions: []
 ---
 
-Organized by Arazi Assembly and Topological Atlas at the 17th Istanbul Biennial, the exhibition explored the displacement of communities in the Tigris basin — forced displacements, dispossessed female farmers, undocumented migrants, and urban/rural resistance practices.
+Organized by Arazi Assembly and Topological Atlas at the 17th Istanbul Biennial, the exhibition explored the displacement of communities in the Tigris basin: forced displacements, dispossessed female farmers, undocumented migrants, and urban/rural resistance practices.

@@ -14,7 +14,7 @@ graphic: "Emre Çıkınoğlu (Biennale-Identität)"
 client: ""
 team: ""
 photo: ""
-summary: "Organisiert von Arazi Assembly und Topological Atlas auf der 17. Istanbul Biennale, untersuchte die Ausstellung die Vertreibung von Gemeinschaften im Tigris-Becken — Zwangsumsiedlungen, enteignete Bäuerinnen, Migrant:innen ohne Papiere sowie städtische und ländliche Formen des Widerstands."
+summary: "Organisiert von Arazi Assembly und Topological Atlas auf der 17. Istanbul Biennale, untersuchte die Ausstellung die Vertreibung von Gemeinschaften im Tigris-Becken: Zwangsumsiedlungen, enteignete Bäuerinnen, Migrant:innen ohne Papiere sowie städtische und ländliche Formen des Widerstands."
 cover: "/images/projects/arazi-x-topological-istanbul/arazi-x-topological-istanbul-01.jpg"
 images:
   - "/images/projects/arazi-x-topological-istanbul/arazi-x-topological-istanbul-01.jpg"
@@ -30,4 +30,4 @@ images:
 captions: []
 ---
 
-Organisiert von Arazi Assembly und Topological Atlas auf der 17. Istanbul Biennale, untersuchte die Ausstellung die Vertreibung von Gemeinschaften im Tigris-Becken — Zwangsumsiedlungen, enteignete Bäuerinnen, Migrant:innen ohne Papiere sowie städtische und ländliche Formen des Widerstands.
+Organisiert von Arazi Assembly und Topological Atlas auf der 17. Istanbul Biennale, untersuchte die Ausstellung die Vertreibung von Gemeinschaften im Tigris-Becken: Zwangsumsiedlungen, enteignete Bäuerinnen, Migrant:innen ohne Papiere sowie städtische und ländliche Formen des Widerstands.

@@ -13,7 +13,7 @@ artists: "Vera Molnár, Dóra Maurer, Gizella Rákóczy"
 client: ""
 team: "Serap Kaçmaz, Ece Aktuğ, Pelin Gezer, Deniz İnal, Kubilay Ercelep"
 photo: ""
-summary: "Ausstellungsgestaltung und Aufbauleitung für Calculations and Coincidences im Pera Museum, die drei Pionierinnen der algorithmischen Kunst zusammenführt — Vera Molnár, Dóra Maurer und Gizella Rákóczy — mit Arbeiten aus der Sammlung der Ungarischen Nationalbank."
+summary: "Ausstellungsgestaltung und Aufbauleitung für Calculations and Coincidences im Pera Museum, die drei Pionierinnen der algorithmischen Kunst zusammenführt (Vera Molnár, Dóra Maurer und Gizella Rákóczy) mit Arbeiten aus der Sammlung der Ungarischen Nationalbank."
 cover: "/images/projects/vera-molnar/vera-molnar-01.jpg"
 images:
   - "/images/projects/vera-molnar/vera-molnar-01.jpg"
@@ -23,4 +23,4 @@ images:
 captions: []
 ---
 
-Ausstellungsgestaltung und Aufbauleitung für <em>Calculations and Coincidences</em> im Pera Museum, die drei Pionierinnen der algorithmischen Kunst zusammenführt — Vera Molnár, Dóra Maurer und Gizella Rákóczy — mit Arbeiten aus der Sammlung der Ungarischen Nationalbank.
+Ausstellungsgestaltung und Aufbauleitung für <em>Calculations and Coincidences</em> im Pera Museum, die drei Pionierinnen der algorithmischen Kunst zusammenführt (Vera Molnár, Dóra Maurer und Gizella Rákóczy) mit Arbeiten aus der Sammlung der Ungarischen Nationalbank.

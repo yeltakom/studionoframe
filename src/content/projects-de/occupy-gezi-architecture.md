@@ -2,7 +2,7 @@
 title: "#OccupyGezi Architecture"
 venue: "SALT Beyoğlu, Istanbul"
 year: "2014"
-role: "Redaktion & Koordination — mit Herkes İçin Mimarlık"
+role: "Redaktion & Koordination, mit Herkes İçin Mimarlık"
 order: 19
 category: "research"
 home: false
@@ -19,7 +19,6 @@ images:
   - "/images/projects/occupy-gezi-architecture/occupy-gezi-architecture-02.jpg"
   - "/images/projects/occupy-gezi-architecture/occupy-gezi-architecture-03.jpg"
   - "/images/projects/occupy-gezi-architecture/occupy-gezi-architecture-04.jpg"
-  - "/images/projects/occupy-gezi-architecture/occupy-gezi-architecture-05.jpg"
 captions: []
 ---
 

@@ -2,7 +2,7 @@
 title: "Disobedience Archive: Park"
 venue: "SALT Beyoğlu, Istanbul"
 year: "2014"
-role: "Participant & Exhibition Designer — with Herkes İçin Mimarlık"
+role: "Participant & Exhibition Designer, with Herkes İçin Mimarlık"
 order: 18
 category: "exhibition-design"
 home: false

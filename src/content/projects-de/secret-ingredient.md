@@ -23,4 +23,4 @@ images:
 captions: []
 ---
 
-Ein Projekt für die 3. Chicago Architecture Biennial in der stillgelegten Anthony Overton Elementary School in Bronzeville, das die Schule über partizipatives Entwerfen und Esskultur wieder mit der Nachbarschaft verbindet. Große Picknicktische, angelehnt an die gemeinschaftlichen Esspraktiken des Viertels, schufen einen offenen Ort zum Zusammenkommen und Erzählen — Schauplatz des <em>Community Potluck</em>.
+Ein Projekt für die 3. Chicago Architecture Biennial in der stillgelegten Anthony Overton Elementary School in Bronzeville, das die Schule über partizipatives Entwerfen und Esskultur wieder mit der Nachbarschaft verbindet. Große Picknicktische, angelehnt an die gemeinschaftlichen Esspraktiken des Viertels, schufen einen offenen Ort zum Zusammenkommen und Erzählen, Schauplatz des <em>Community Potluck</em>.
