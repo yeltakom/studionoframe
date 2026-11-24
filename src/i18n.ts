@@ -14,7 +14,7 @@ export const UI = {
     nav: { selected: 'Selected', index: 'Index', studio: 'Profile', services: 'Practice', contact: 'Contact' },
     home: {
       title: 'Exhibitions as research.',
-      led: 'Led by Yelta Köm',
+      soon: 'This website is still being built and will be completed soon.',
       line: 'Studio No Frame designs exhibition architecture in Berlin. We work with curators, artists and institutions on exhibitions of contemporary art, architecture and research, from the first spatial concept to installation.',
       note: 'This site is still being built, so texts and images may be incomplete. Please bear with us.',
       selected: 'Selected Projects', all: 'All', allProjects: 'All projects →', filter: 'Filter by category', photo: 'Photograph',
@@ -49,7 +49,7 @@ export const UI = {
     nav: { selected: 'Auswahl', index: 'Index', studio: 'Profil', services: 'Praxis', contact: 'Kontakt' },
     home: {
       title: 'Ausstellungen als Forschung.',
-      led: 'Geleitet von Yelta Köm',
+      soon: 'Diese Website befindet sich noch im Aufbau und wird in Kürze fertiggestellt.',
       line: 'Studio No Frame ist ein Büro für Ausstellungsarchitektur in Berlin. Wir arbeiten mit Kurator:innen, Künstler:innen und Institutionen an Ausstellungen zu zeitgenössischer Kunst, Architektur und Forschung, vom ersten räumlichen Konzept bis zum Aufbau.',
       note: 'Diese Website befindet sich noch im Aufbau, Texte und Bilder können daher unvollständig sein. Wir bitten um Nachsicht.',
       selected: 'Ausgewählte Projekte', all: 'Alle', allProjects: 'Alle Projekte →', filter: 'Nach Kategorie filtern', photo: 'Fotografie',
