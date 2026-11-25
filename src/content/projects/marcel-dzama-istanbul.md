@@ -25,6 +25,7 @@ images:
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-03.png"
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-05.jpg"
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-06.jpg"
+  - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-05.png"
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-07.jpg"
 captions:
   - image: "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-01.png"
@@ -34,7 +35,10 @@ captions:
     text: "Exploded axonometric: gallery, frames, seats and floor, films and works"
     credit: "Studio No Frame"
   - image: "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-03.png"
-    text: "Diagram: sight lines from the seats to the two screens"
+    text: "Diagram: two cinemas turned 45° against the orthogonal order of the gallery"
+    credit: "Studio No Frame"
+  - image: "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-05.png"
+    text: "Detail: steel screen frame, elevation, plan and corner joint"
     credit: "Studio No Frame"
 ---
 

@@ -28,6 +28,7 @@ images:
   - "/images/projects/feelings-in-common/feelings-in-common-dwg-02.png"
   - "/images/projects/feelings-in-common/feelings-in-common-07.jpg"
   - "/images/projects/feelings-in-common/feelings-in-common-08.jpg"
+  - "/images/projects/feelings-in-common/feelings-in-common-dwg-05.png"
   - "/images/projects/feelings-in-common/feelings-in-common-09.jpg"
   - "/images/projects/feelings-in-common/feelings-in-common-10.jpg"
 captions:
@@ -38,7 +39,10 @@ captions:
     text: "Explosionsaxonometrie: Galerie, Wände und Sockel, Werke"
     credit: "Studio No Frame"
   - image: "/images/projects/feelings-in-common/feelings-in-common-dwg-03.png"
-    text: "Diagramm: zwei schräge Wände auf der Achse der Lobby teilen den Saal in ein Skulpturenfeld und einen Raum für Wandarbeiten"
+    text: "Diagramm: zwei schräge Glaswände auf der Achse der Lobby teilen den Saal in ein Skulpturenfeld und einen Raum für Wandarbeiten"
+    credit: "Studio No Frame"
+  - image: "/images/projects/feelings-in-common/feelings-in-common-dwg-05.png"
+    text: "Detail: Wand aus satiniertem Glas, Ansicht, Grundriss, Fußpunkt und Pfosten"
     credit: "Studio No Frame"
 ---
 

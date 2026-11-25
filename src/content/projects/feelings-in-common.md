@@ -28,6 +28,7 @@ images:
   - "/images/projects/feelings-in-common/feelings-in-common-dwg-02.png"
   - "/images/projects/feelings-in-common/feelings-in-common-07.jpg"
   - "/images/projects/feelings-in-common/feelings-in-common-08.jpg"
+  - "/images/projects/feelings-in-common/feelings-in-common-dwg-05.png"
   - "/images/projects/feelings-in-common/feelings-in-common-09.jpg"
   - "/images/projects/feelings-in-common/feelings-in-common-10.jpg"
 captions:
@@ -38,7 +39,10 @@ captions:
     text: "Exploded axonometric: gallery, walls and plinths, works"
     credit: "Studio No Frame"
   - image: "/images/projects/feelings-in-common/feelings-in-common-dwg-03.png"
-    text: "Diagram: two angled walls on the lobby axis divide the hall into a sculpture field and a room of wall works"
+    text: "Diagram: two angled glass walls on the lobby axis split the hall into a sculpture field and a room of wall works"
+    credit: "Studio No Frame"
+  - image: "/images/projects/feelings-in-common/feelings-in-common-dwg-05.png"
+    text: "Detail: frosted glass wall, elevation, plan, foot and post"
     credit: "Studio No Frame"
 ---
 
