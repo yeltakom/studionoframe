@@ -25,7 +25,6 @@ images:
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-03.png"
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-05.jpg"
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-06.jpg"
-  - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-04.png"
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-07.jpg"
 captions:
   - image: "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-01.png"
@@ -36,9 +35,6 @@ captions:
     credit: "Studio No Frame"
   - image: "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-03.png"
     text: "Diagram: sight lines from the seats to the two screens"
-    credit: "Studio No Frame"
-  - image: "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-04.png"
-    text: "Hand drawing: the south screen frame seen from behind the seats"
     credit: "Studio No Frame"
 ---
 

@@ -28,7 +28,6 @@ images:
   - "/images/projects/feelings-in-common/feelings-in-common-dwg-02.png"
   - "/images/projects/feelings-in-common/feelings-in-common-07.jpg"
   - "/images/projects/feelings-in-common/feelings-in-common-08.jpg"
-  - "/images/projects/feelings-in-common/feelings-in-common-dwg-04.png"
   - "/images/projects/feelings-in-common/feelings-in-common-09.jpg"
   - "/images/projects/feelings-in-common/feelings-in-common-10.jpg"
 captions:
@@ -40,9 +39,6 @@ captions:
     credit: "Studio No Frame"
   - image: "/images/projects/feelings-in-common/feelings-in-common-dwg-03.png"
     text: "Diagramm: zwei schräge Wände auf der Achse der Lobby teilen den Saal in ein Skulpturenfeld und einen Raum für Wandarbeiten"
-    credit: "Studio No Frame"
-  - image: "/images/projects/feelings-in-common/feelings-in-common-dwg-04.png"
-    text: "Handzeichnung, Grundriss"
     credit: "Studio No Frame"
 ---
 

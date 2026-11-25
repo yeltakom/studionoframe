@@ -25,7 +25,6 @@ images:
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-03.png"
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-05.jpg"
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-06.jpg"
-  - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-04.png"
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-07.jpg"
 captions:
   - image: "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-01.png"
@@ -36,9 +35,6 @@ captions:
     credit: "Studio No Frame"
   - image: "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-03.png"
     text: "Diagramm: Sichtlinien von den Sitzen zu den beiden Leinwänden"
-    credit: "Studio No Frame"
-  - image: "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-04.png"
-    text: "Handzeichnung: der südliche Leinwandrahmen, von hinter den Sitzen gesehen"
     credit: "Studio No Frame"
 ---
 
