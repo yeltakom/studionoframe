@@ -19,15 +19,31 @@ cover: "/images/projects/feelings-in-common/feelings-in-common-01.jpg"
 images:
   - "/images/projects/feelings-in-common/feelings-in-common-01.jpg"
   - "/images/projects/feelings-in-common/feelings-in-common-02.jpg"
+  - "/images/projects/feelings-in-common/feelings-in-common-dwg-01.png"
   - "/images/projects/feelings-in-common/feelings-in-common-03.jpg"
   - "/images/projects/feelings-in-common/feelings-in-common-04.jpg"
+  - "/images/projects/feelings-in-common/feelings-in-common-dwg-03.png"
   - "/images/projects/feelings-in-common/feelings-in-common-05.jpg"
   - "/images/projects/feelings-in-common/feelings-in-common-06.jpg"
+  - "/images/projects/feelings-in-common/feelings-in-common-dwg-02.png"
   - "/images/projects/feelings-in-common/feelings-in-common-07.jpg"
   - "/images/projects/feelings-in-common/feelings-in-common-08.jpg"
+  - "/images/projects/feelings-in-common/feelings-in-common-dwg-04.png"
   - "/images/projects/feelings-in-common/feelings-in-common-09.jpg"
   - "/images/projects/feelings-in-common/feelings-in-common-10.jpg"
-captions: []
+captions:
+  - image: "/images/projects/feelings-in-common/feelings-in-common-dwg-01.png"
+    text: "Grundriss, Galerieebene mit den zwei schrägen Wänden"
+    credit: "Studio No Frame"
+  - image: "/images/projects/feelings-in-common/feelings-in-common-dwg-02.png"
+    text: "Explosionsaxonometrie: Galerie, Wände und Sockel, Werke"
+    credit: "Studio No Frame"
+  - image: "/images/projects/feelings-in-common/feelings-in-common-dwg-03.png"
+    text: "Diagramm: zwei schräge Wände auf der Achse der Lobby teilen den Saal in ein Skulpturenfeld und einen Raum für Wandarbeiten"
+    credit: "Studio No Frame"
+  - image: "/images/projects/feelings-in-common/feelings-in-common-dwg-04.png"
+    text: "Handzeichnung, Grundriss"
+    credit: "Studio No Frame"
 ---
 
 Ausstellungsarchitektur für <em>Feelings in Common: Works from the British Council Collection</em>, kuratiert von Ulya Soley, entlang der drei Kapitel der Schau: „Preserving Care“, „Familiar Faces“ und „Future Perfect“. Die Gestaltung formt die Säle als Resonanzräume, in denen Arbeiten von 29 Künstler:innen (unter ihnen Lucian Freud, David Hockney, Sarah Lucas, Wolfgang Tillmans, Sonia Boyce und Gilbert &amp; George) über Generationen und Medien hinweg aufeinandertreffen.

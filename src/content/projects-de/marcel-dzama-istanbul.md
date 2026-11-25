@@ -18,12 +18,28 @@ cover: "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-01.jpg"
 images:
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-01.jpg"
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-02.jpg"
+  - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-01.png"
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-03.jpg"
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-04.jpg"
+  - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-02.png"
+  - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-03.png"
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-05.jpg"
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-06.jpg"
+  - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-04.png"
   - "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-07.jpg"
-captions: []
+captions:
+  - image: "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-01.png"
+    text: "Grundriss: zwei Leinwandrahmen aus Stahl und ein Fliesenboden, um 45° zu den Galeriewänden gedreht"
+    credit: "Studio No Frame"
+  - image: "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-02.png"
+    text: "Explosionsaxonometrie: Galerie, Rahmen, Sitze und Boden, Filme und Werke"
+    credit: "Studio No Frame"
+  - image: "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-03.png"
+    text: "Diagramm: Sichtlinien von den Sitzen zu den beiden Leinwänden"
+    credit: "Studio No Frame"
+  - image: "/images/projects/marcel-dzama-istanbul/marcel-dzama-istanbul-dwg-04.png"
+    text: "Handzeichnung: der südliche Leinwandrahmen, von hinter den Sitzen gesehen"
+    credit: "Studio No Frame"
 ---
 
 Gesamte Ausstellungsgestaltung und Aufbauleitung für die erste Einzelausstellung von Marcel Dzama in der Türkei im Pera Museum, mit Zeichnungen, Skulpturen und Video. Das Raumkonzept stärkt den erzählerischen Fluss zwischen Dzamas unterschiedlichen Arbeiten und hält die Atmosphäre mit einfachen Materialien zusammen.
