@@ -1,0 +1,38 @@
+---
+/* E: one full-screen opening photograph with the sentence on it; below it
+   the work as a quiet two-column grid with wide margins. */
+import Sade from '../_Sade.astro';
+import { works, sentence } from '../_works';
+import { srcset } from '../../../../lib/img';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const list = await works();
+const [first, ...rest] = list;
+---
+<Sade here="work">
+  <a href={`${base}/designs/sade/${first.id}/`} class="ev-e-hero">
+    <img src={`${base}${first.data.cover}`} srcset={srcset(base, first.data.cover)} sizes="100vw" alt={first.data.title} decoding="async" />
+    <p class="ev-e-line">{sentence}</p>
+    <p class="ev-e-n">{first.data.title}<br /><span>{first.data.venue}, {first.data.year}</span></p>
+  </a>
+  <div class="ev-e-grid">
+    {rest.map((p) => (
+      <a href={`${base}/designs/sade/${p.id}/`}>
+        <img src={`${base}${p.data.cover}`} srcset={srcset(base, p.data.cover)} sizes="(min-width: 760px) 40vw, 100vw" alt={p.data.title} loading="lazy" decoding="async" />
+        <p>{p.data.title}<br /><span class="mute">{p.data.venue}, {p.data.year}</span></p>
+      </a>
+    ))}
+  </div>
+</Sade>
+<style>
+  .ev-e-hero { position: relative; display: block; height: 100vh; margin-top: -58px; background: #111; }
+  .ev-e-hero img { width: 100%; height: 100%; object-fit: cover; }
+  .ev-e-hero::after { content: ''; position: absolute; inset: 0; background: linear-gradient(to top, rgba(0,0,0,.55), rgba(0,0,0,0) 55%); }
+  .ev-e-line { position: absolute; left: var(--g); top: 50%; transform: translateY(-50%); max-width: 16em; margin: 0; color: #fff; font-size: clamp(26px, 3.4vw, 46px); line-height: 1.1; letter-spacing: -0.015em; z-index: 1; text-shadow: 0 1px 24px rgba(0,0,0,.4); }
+  .ev-e-n { position: absolute; right: var(--g); bottom: var(--g); margin: 0; color: #fff; text-align: right; z-index: 1; }
+  .ev-e-n span { opacity: .7; }
+  .ev-e-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 120px 10vw; padding: 120px 10vw 0; }
+  .ev-e-grid a { display: block; }
+  .ev-e-grid img { width: 100%; aspect-ratio: 4 / 3; object-fit: cover; background: #f2f2f2; }
+  .ev-e-grid p { margin: 12px 0 0; }
+  @media (max-width: 760px) { .ev-e-grid { grid-template-columns: 1fr; gap: 56px; padding: 56px var(--g) 0; } }
+</style>
