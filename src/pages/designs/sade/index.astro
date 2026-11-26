@@ -1,0 +1,19 @@
+---
+import Sade from './_Sade.astro';
+import { getCatalogue } from '../../../lib/categories';
+import { srcset } from '../../../lib/img';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const works = (await getCatalogue('en'))
+  .filter((p) => p.data.cover)
+  .sort((a, b) => b.year - a.year || a.data.order - b.data.order);
+---
+<Sade here="work">
+  <div class="s-grid">
+    {works.map((p) => (
+      <a href={`${base}/designs/sade/${p.id}/`}>
+        <img src={`${base}${p.data.cover}`} srcset={srcset(base, p.data.cover)} sizes="(min-width: 760px) 50vw, 100vw" alt={p.data.title} loading="lazy" decoding="async" />
+        <p>{p.data.title}<br /><span class="mute">{p.data.venue}, {p.data.year}</span></p>
+      </a>
+    ))}
+  </div>
+</Sade>

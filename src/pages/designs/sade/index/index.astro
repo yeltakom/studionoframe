@@ -1,0 +1,19 @@
+---
+import Sade from '../_Sade.astro';
+import { getCatalogue } from '../../../../lib/categories';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const works = (await getCatalogue('en')).sort((a, b) => b.year - a.year || a.data.order - b.data.order);
+const pad = (n: number) => String(n).padStart(2, '0');
+---
+<Sade title="Index" here="index">
+  <div class="s-index">
+    {works.map((p, i) => (
+      <a href={`${base}/designs/sade/${p.id}/`}>
+        <span>{pad(works.length - i)}</span>
+        <span>{p.data.title}</span>
+        <span>{p.data.venue}</span>
+        <span>{p.data.year}</span>
+      </a>
+    ))}
+  </div>
+</Sade>

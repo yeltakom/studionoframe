@@ -1,0 +1,100 @@
+---
+/* "Sade" trial (2026-11-26): a calm page in the manner of the architecture
+   sites on minimal.gallery (reference: KAAN Architecten). One size of type,
+   regular weight, grey for secondary facts, large photographs at their own
+   proportions, nothing else. Standalone: does not load global.css. */
+interface Props { title?: string; here?: 'work' | 'index' | 'about' }
+const { title, here } = Astro.props;
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const root = `${base}/designs/sade`;
+---
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1" />
+  <meta name="robots" content="noindex" />
+  <title>{title ? `${title} | Studio No Frame` : 'Studio No Frame'}</title>
+  <link rel="icon" href={`${base}/favicon.png`} />
+</head>
+<body>
+  <header class="s-head">
+    <a class="s-name" href={`${root}/`}>Studio No Frame</a>
+    <nav>
+      <a href={`${root}/`} class:list={[here === 'work' && 'on']}>Work</a>
+      <a href={`${root}/index/`} class:list={[here === 'index' && 'on']}>Index</a>
+      <a href={`${root}/about/`} class:list={[here === 'about' && 'on']}>About</a>
+    </nav>
+  </header>
+  <main><slot /></main>
+  <footer class="s-foot">
+    <span>Studio No Frame, Berlin</span>
+    <a href="mailto:studio@noframe.studio">studio@noframe.studio</a>
+    <a href="https://www.instagram.com/studio.no.frame/">Instagram</a>
+  </footer>
+</body>
+</html>
+
+<style is:global>
+  :root {
+    --ink: #111; --mute: #8a8a8a; --paper: #fff; --g: 20px;
+    --f: "Helvetica Neue", Helvetica, Arial, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  body { margin: 0; background: var(--paper); color: var(--ink); font: 400 15px/1.4 var(--f); letter-spacing: 0.005em; }
+  a { color: inherit; text-decoration: none; }
+  img { display: block; max-width: 100%; height: auto; }
+  .mute { color: var(--mute); }
+
+  .s-head { position: sticky; top: 0; z-index: 5; display: flex; justify-content: space-between; align-items: baseline; padding: var(--g); background: var(--paper); }
+  .s-head nav { display: flex; gap: 24px; }
+  .s-head nav a { color: var(--mute); transition: color .2s; }
+  .s-head nav a:hover, .s-head nav a.on { color: var(--ink); }
+
+  .s-foot { display: flex; gap: 24px; flex-wrap: wrap; padding: 120px var(--g) var(--g); color: var(--mute); }
+  .s-foot a:hover { color: var(--ink); }
+
+  /* work: two columns of large photographs, title and place under each */
+  .s-grid { display: grid; grid-template-columns: 1fr 1fr; gap: 80px var(--g); padding: 40px var(--g) 0; align-items: start; }
+  .s-grid a { display: block; }
+  .s-grid img { width: 100%; background: #f2f2f2; transition: opacity .3s; }
+  .s-grid a:hover img { opacity: .85; }
+  .s-grid p { margin: 10px 0 0; }
+
+  /* index: one quiet table */
+  .s-index { padding: 40px var(--g) 0; }
+  .s-index a { display: grid; grid-template-columns: 4ch 1fr 1fr 6ch; gap: var(--g); padding: 6px 0; }
+  .s-index a span:first-child, .s-index a span:nth-child(3), .s-index a span:last-child { color: var(--mute); }
+  .s-index a:hover span { color: var(--ink); }
+  .s-index .hd { color: var(--mute); padding-bottom: 14px; }
+
+  /* project */
+  .s-pj-top { display: grid; grid-template-columns: 1fr 1fr; gap: var(--g); padding: 40px var(--g) 60px; }
+  .s-pj-top h1 { font: inherit; margin: 0; }
+  .s-facts { display: grid; grid-template-columns: 9em 1fr; gap: 2px var(--g); margin: 0; }
+  .s-facts dt { color: var(--mute); }
+  .s-facts dd { margin: 0; }
+  .s-text { max-width: 38em; margin: 24px 0 0; }
+  .s-text p { margin: 0 0 1em; }
+  .s-ims { display: grid; gap: 80px; padding: 0 var(--g); }
+  .s-ims figure { margin: 0; }
+  .s-ims figure.half { width: calc(50% - var(--g) / 2); }
+  .s-ims figure.half.r { margin-left: auto; }
+  .s-ims figcaption { margin-top: 10px; color: var(--mute); }
+  .s-next { display: flex; justify-content: space-between; padding: 120px var(--g) 0; }
+  .s-next a:hover { color: var(--mute); }
+
+  .s-about { display: grid; grid-template-columns: 1fr 1fr; gap: var(--g); padding: 40px var(--g) 0; }
+  .s-about p { max-width: 34em; margin: 0 0 1em; }
+
+  @media (max-width: 760px) {
+    :root { --g: 16px; }
+    .s-grid, .s-pj-top, .s-about { grid-template-columns: 1fr; }
+    .s-grid { gap: 48px; }
+    .s-index a { grid-template-columns: 1fr 6ch; }
+    .s-index a span:first-child, .s-index a span:nth-child(3) { display: none; }
+    .s-ims { gap: 40px; }
+    .s-ims figure.half { width: 100%; }
+  }
+</style>
