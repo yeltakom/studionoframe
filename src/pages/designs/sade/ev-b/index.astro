@@ -1,0 +1,33 @@
+---
+/* B: one sentence, then the photographs as a loose stack in three sizes,
+   moving between left, middle and right (Durup, Studio Chen) */
+import Sade from '../_Sade.astro';
+import { works, sentence } from '../_works';
+import { srcset } from '../../../../lib/img';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const list = await works();
+const place = ['l-big', 'r-mid', 'c-small', 'l-mid', 'r-big', 'c-mid'];
+---
+<Sade here="work">
+  <p class="ev-line">{sentence}</p>
+  <div class="ev-b">
+    {list.map((p, i) => (
+      <a href={`${base}/designs/sade/${p.id}/`} class={place[i % place.length]}>
+        <img src={`${base}${p.data.cover}`} srcset={srcset(base, p.data.cover)} sizes="(min-width: 760px) 66vw, 100vw" alt={p.data.title} loading={i ? 'lazy' : undefined} decoding="async" />
+        <p>{p.data.title} <span class="mute">{p.data.venue}, {p.data.year}</span></p>
+      </a>
+    ))}
+  </div>
+</Sade>
+<style>
+  .ev-line { max-width: 30em; margin: 0; padding: 80px var(--g) 120px; font-size: clamp(22px, 2.6vw, 34px); line-height: 1.2; letter-spacing: -0.01em; }
+  .ev-b { display: grid; gap: 140px; padding: 0 var(--g); }
+  .ev-b a { display: block; }
+  .ev-b img { width: 100%; transition: opacity .3s; }
+  .ev-b a:hover img { opacity: .9; }
+  .ev-b p { margin: 12px 0 0; }
+  .l-big { width: 66%; } .r-big { width: 66%; margin-left: auto; }
+  .r-mid { width: 46%; margin-left: auto; } .l-mid { width: 46%; } .c-mid { width: 46%; margin: 0 auto; }
+  .c-small { width: 30%; margin: 0 auto; }
+  @media (max-width: 760px) { .ev-line { padding: 40px var(--g) 60px; } .ev-b { gap: 56px; } .ev-b a { width: 100% !important; margin: 0 !important; } }
+</style>

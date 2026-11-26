@@ -1,0 +1,28 @@
+---
+/* A: one sentence, then one project per row, full width (KAAN, Groth) */
+import Sade from '../_Sade.astro';
+import { works, sentence } from '../_works';
+import { srcset } from '../../../../lib/img';
+const base = import.meta.env.BASE_URL.replace(/\/+$/, '');
+const list = await works();
+---
+<Sade here="work">
+  <p class="ev-line">{sentence}</p>
+  <div class="ev-a">
+    {list.map((p, i) => (
+      <a href={`${base}/designs/sade/${p.id}/`}>
+        <img src={`${base}${p.data.cover}`} srcset={srcset(base, p.data.cover)} sizes="100vw" alt={p.data.title} loading={i ? 'lazy' : undefined} decoding="async" />
+        <p>{p.data.title} <span class="mute">{p.data.venue}, {p.data.year}</span></p>
+      </a>
+    ))}
+  </div>
+</Sade>
+<style>
+  .ev-line { max-width: 30em; margin: 0; padding: 80px var(--g) 120px; font-size: clamp(22px, 2.6vw, 34px); line-height: 1.2; letter-spacing: -0.01em; }
+  .ev-a { display: grid; gap: 120px; padding: 0 var(--g); }
+  .ev-a a { display: block; }
+  .ev-a img { width: 100%; max-height: 92vh; object-fit: contain; object-position: left top; transition: opacity .3s; }
+  .ev-a a:hover img { opacity: .9; }
+  .ev-a p { margin: 12px 0 0; }
+  @media (max-width: 760px) { .ev-line { padding: 40px var(--g) 60px; } .ev-a { gap: 56px; } }
+</style>
